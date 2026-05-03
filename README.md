@@ -6,8 +6,6 @@
   <img src="./dataset.png" alt="DeformFieldBench dataset overview" width="100%">
 </p>
 
-<p align="center"><em>Dataset overview. If the preview does not render the image, open <a href="./dataset.png">dataset.png</a>.</em></p>
-
 ## Data and Checkpoints
 
 - Dataset: [Physical Field Material Parameter 5000 on Kaggle](https://www.kaggle.com/datasets/anonymous336/physical-field-material-parameter-5000)
