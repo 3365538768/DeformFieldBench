@@ -1,16 +1,9 @@
 # DeformFieldBench
 
-<p align="center">
-  <img src="./dataset.png" alt="DeformFieldBench dataset overview" width="100%">
-</p>
-
-DeformFieldBench 提供可复现的物理场数据生成、Arch4 监督基线训练、Logic Model 训练与消融、统一评估，以及 parameter ambiguity replay。发布版只保留论文最终实验使用的主路径，命令默认在本目录执行。
-
 ## 数据与 Checkpoint
 
 - Dataset: [Physical Field Material Parameter 5000 on Kaggle](https://www.kaggle.com/datasets/anonymous336/physical-field-material-parameter-5000)
 - Checkpoints: [HandsomeHusky/DeformFieldBench on Hugging Face](https://huggingface.co/HandsomeHusky/DeformFieldBench/tree/main)
-- Checkpoint manifest: `pretrained/models.yaml`
 
 下载 checkpoint:
 
@@ -92,10 +85,48 @@ Arch4 是监督参数回归基线，入口为 `my_model.train`，配置为 `conf
 NUM_GPUS=8 bash scripts/train_my_model_param_only.sh
 ```
 
+如果需要训练带场监督的 Arch4，不要使用上面的 `train_my_model_param_only.sh`，因为该脚本会强制传入 `--disable_aux_losses`。建议复制一份配置，只打开 Arch4 的辅助场头和场损失：
+
+```bash
+cp configs/my_model/train_dataset_5000_param_only.json \
+  configs/my_model/train_dataset_5000_with_fields.json
+```
+
+在新配置中设置：
+
+```json
+{
+  "model": {
+    "use_aux_field_heads": true,
+    "dec_h": 112,
+    "dec_w": 112
+  },
+  "train": {
+    "disable_aux_losses": false,
+    "lambda_stress": 1.0,
+    "lambda_flow": 1.0,
+    "lambda_force": 1.0,
+    "checkpoint": {
+      "save_dir": "output_checkpoints/my_model_dataset_5000_with_fields"
+    }
+  }
+}
+```
+
+然后直接启动训练：
+
+```bash
+source scripts/setup_env.sh
+NUM_GPUS=8
+python -m torch.distributed.run --nproc_per_node="$NUM_GPUS" -m my_model.train \
+  --config configs/my_model/train_dataset_5000_with_fields.json
+```
+
+此时总损失为参数回归损失加上 stress、flow、force 三个辅助场重建损失；最终参数输出仍然只包含 `E`、`nu`、`rho`、`sigma_y`，场监督只作为训练辅助信号。
+
 关键训练项：
 
 - `train.epochs=400`、`batch_size=1`、`lr=3e-4`。
-- `--disable_aux_losses` 或 `train.disable_aux_losses=true` 会令 `lambda_stress/lambda_flow/lambda_force=0`。
 - checkpoint 默认保存到 `output_checkpoints/my_model_dataset_5000_param_only/last.pt`。
 
 ## Logic Model 训练与消融
