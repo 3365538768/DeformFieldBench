@@ -2298,6 +2298,7 @@ def main() -> None:
             param_use_rgb_static=bool(_pick(cfg_model, "param_use_rgb_static", True)),
             param_use_rgb_residual=bool(_pick(cfg_model, "param_use_rgb_residual", True)),
             param_use_masked_field_tokens=bool(_pick(cfg_model, "param_use_masked_field_tokens", True)),
+            param_drop_fields=cfg_model.get("param_drop_fields", []),
         ).to(device)
         _startup_phase_log(
             "dino_load",

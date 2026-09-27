@@ -1,12 +1,12 @@
 Sample id: {sample_id}
 View name: {view_name}
 
-Generate exactly one PNG image: a 4-panel horizontal contact sheet of stress heatmaps for the object in the input video frames.
+Generate exactly one PNG image: a {num_frames}-panel horizontal contact sheet of stress heatmaps for the object in the input video frames.
 
 Panel layout:
 - Number of panels: {num_frames}
 - Order from left to right: early, early-middle, late-middle, late
-- The API may require a square canvas. Fill the whole canvas with 4 equal-width vertical panels from left to right.
+- The API may require a square canvas. Fill the whole canvas with {num_frames} equal-width vertical panels from left to right.
 - Do not leave empty margins. The evaluator will crop/slice the result into {num_frames} panels and resize each panel to {frame_w} x {frame_h}.
 
 Physics guidance:

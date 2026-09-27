@@ -15,8 +15,6 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import numpy as np
-
 try:
     from vlm_benchmark.parse_utils import (
         extract_json_from_response,
@@ -55,7 +53,7 @@ class OpenAIVideoClient:
         base_url: Optional[str] = None,
         api_key_env: str = "OPENAI_API_KEY",
         fps: float = 2.0,
-        max_frames: int = 64,
+        max_frames: int = 20,
         use_responses_api: bool = True,
         use_reasoning_summary: bool = True,
     ) -> None:
@@ -94,20 +92,18 @@ class OpenAIVideoClient:
             raise ValueError(f"无法打开视频文件: {video_path}")
 
         try:
-            total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
-            if total_frames <= 0:
-                raise ValueError(f"视频帧数无效: {video_path}")
-            indices = {
-                int(round(x))
-                for x in np.linspace(0, total_frames - 1, min(self.max_frames, total_frames))
-            }
+            total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            video_fps = cap.get(cv2.CAP_PROP_FPS) or 1.0
+            # 每帧间隔：例如 video_fps=30, self.fps=2 => 每 15 帧取一帧
+            step = max(1, int(round(video_fps / self.fps)))
+
             base64_frames: List[str] = []
             frame_idx = 0
             while len(base64_frames) < self.max_frames:
                 ret, frame = cap.read()
                 if not ret:
                     break
-                if frame_idx in indices:
+                if frame_idx % step == 0:
                     _, buffer = cv2.imencode(".jpg", frame)
                     b64 = base64.b64encode(buffer).decode("utf-8")
                     base64_frames.append(b64)

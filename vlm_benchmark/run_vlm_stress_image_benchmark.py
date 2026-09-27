@@ -57,7 +57,12 @@ except ModuleNotFoundError:
     from vlm_model_registry import VLM_REGISTRY, create_vlm_client
 
 from eval_abalation.field_export import export_field_tensors_pt
-from eval_abalation.metrics_field import _decode_stress_heat, aggregate_field_records, align_field_to_prediction, build_field_sample_record
+from eval_abalation.metrics_field import (
+    _decode_stress_heat,
+    aggregate_field_records,
+    align_field_to_prediction,
+    build_field_sample_record,
+)
 from eval_abalation.report_utils import write_csv, write_json, write_jsonl
 from eval_abalation.dataset_meta import load_sample_meta
 
@@ -94,7 +99,7 @@ def _image_sheet_to_stress_bvcthw(
 
     bgr = cv2.imread(str(image_path), cv2.IMREAD_COLOR)
     if bgr is None:
-        raise ValueError(f"无法读取生成图片: {image_path}")
+        raise ValueError(f"cannot read generated image: {image_path}")
 
     sheet_w = int(target_w) * int(num_frames)
     sheet_h = int(target_h)
@@ -107,7 +112,9 @@ def _image_sheet_to_stress_bvcthw(
         x1 = int(round((ti + 1) * sheet_w / float(num_frames)))
         panel = bgr[:, x0:x1, :]
         if panel.shape[1] != int(target_w) or panel.shape[0] != int(target_h):
-            panel = cv2.resize(panel, (int(target_w), int(target_h)), interpolation=cv2.INTER_AREA)
+            panel = cv2.resize(
+                panel, (int(target_w), int(target_h)), interpolation=cv2.INTER_AREA
+            )
         rgb = cv2.cvtColor(panel, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
         panels.append(rgb)
 
@@ -135,8 +142,12 @@ def _export_stress_prediction_visuals(
     stress_video = sample_dir / "stress_pred.mp4"
     stress_sheet = sample_dir / "stress_pred_sheet.png"
     stress_cpu = stress_pred.detach().cpu().float().contiguous()
-    _save_pred_video(stress_cpu, stress_video, view_idx=view_idx, fps=fps, color_mode="rgb")
-    _save_pred_contact_sheet(stress_cpu, stress_sheet, view_idx=view_idx, color_mode="rgb")
+    _save_pred_video(
+        stress_cpu, stress_video, view_idx=view_idx, fps=fps, color_mode="rgb"
+    )
+    _save_pred_contact_sheet(
+        stress_cpu, stress_sheet, view_idx=view_idx, color_mode="rgb"
+    )
     return {
         "sample_dir": str(sample_dir),
         "stress_pred_video": str(stress_video),
@@ -153,12 +164,18 @@ def _build_stress_export_payload(
     meta: Dict[str, object],
 ) -> Dict[str, object]:
     stress_pred_cpu = stress_pred.detach().cpu().float().contiguous()
-    stress_gt_cpu = align_field_to_prediction(stress_gt.detach().cpu().float(), stress_pred_cpu)
-    object_mask_cpu = None if object_mask is None else object_mask.detach().cpu().float().contiguous()
+    stress_gt_cpu = align_field_to_prediction(
+        stress_gt.detach().cpu().float(), stress_pred_cpu
+    )
+    object_mask_cpu = (
+        None if object_mask is None else object_mask.detach().cpu().float().contiguous()
+    )
     meta_out = dict(meta)
     meta_out.setdefault("field_metric_version", "rgb_semantic_v2_flow_uv")
     meta_out.setdefault("object_mask_policy", "all_ones_when_missing")
-    meta_out.setdefault("stress_visual_encoding", "jet_like_palette_nearest_or_gray_fallback")
+    meta_out.setdefault(
+        "stress_visual_encoding", "jet_like_palette_nearest_or_gray_fallback"
+    )
     meta_out.setdefault(
         "stress_palette_anchor_rgb",
         [
@@ -231,8 +248,12 @@ def run_stress_image_benchmark(
     resume_from_output_root: Optional[Path],
 ) -> Dict[str, Any]:
     script_dir = physgaussian_root / "vlm_benchmark"
-    system_prompt = _load_prompt(script_dir / "prompts" / "system_prompt_stress_image.txt")
-    user_prompt_template = _load_prompt(script_dir / "prompts" / "user_prompt_video_stress_image.txt")
+    system_prompt = _load_prompt(
+        script_dir / "prompts" / "system_prompt_stress_image.txt"
+    )
+    user_prompt_template = _load_prompt(
+        script_dir / "prompts" / "user_prompt_video_stress_image.txt"
+    )
 
     tag_chain = _parse_tag_chain(vlm_tag, fallback_vlm_tags)
     active_tag_idx = 0
@@ -249,7 +270,15 @@ def run_stress_image_benchmark(
     field_export_dir = output_root / "field_exports"
     field_metrics_dir = output_root / "field_metrics"
     pred_visual_dir = output_root / "pred_visuals"
-    for d in (reasoning_dir, predictions_dir, generated_image_dir, sample_metrics_dir, field_export_dir, field_metrics_dir, pred_visual_dir):
+    for d in (
+        reasoning_dir,
+        predictions_dir,
+        generated_image_dir,
+        sample_metrics_dir,
+        field_export_dir,
+        field_metrics_dir,
+        pred_visual_dir,
+    ):
         d.mkdir(parents=True, exist_ok=True)
 
     completed_sample_ids = _list_completed_sample_ids(sample_metrics_dir)
@@ -278,7 +307,11 @@ def run_stress_image_benchmark(
     num_attempted = 0
 
     for action, run_dir, _params in all_runs:
-        if max_videos is not None and int(max_videos) > 0 and (existing_completed + num_attempted) >= int(max_videos):
+        if (
+            max_videos is not None
+            and int(max_videos) > 0
+            and (existing_completed + num_attempted) >= int(max_videos)
+        ):
             break
         sample_id = str(run_dir.name)
         if sample_id in completed_sample_ids:
@@ -324,8 +357,8 @@ def run_stress_image_benchmark(
                     active_tag_idx += 1
                     active_tag = tag_chain[active_tag_idx]
                     print(
-                        f"[WARN] VLM 模型 {failed_tag} 可能已到额度/限流，"
-                        f"切换到 {active_tag} 并重试样本 {sample_id}: {exc}"
+                        f"[WARN] VLM {failed_tag} is unavailable; switching to "
+                        f"{active_tag} for {sample_id}: {exc}"
                     )
                     client = create_vlm_client(active_tag)
                     continue
@@ -333,7 +366,7 @@ def run_stress_image_benchmark(
                     f"[ERROR][{active_tag}] {exc}\n",
                     encoding="utf-8",
                 )
-                print(f"[WARN] Qwen 图片生成失败，跳过样本 {sample_id}: {exc}")
+                print(f"[WARN] stress image generation failed for {sample_id}: {exc}")
                 prediction = None
                 break
         if prediction is None:
@@ -345,7 +378,12 @@ def run_stress_image_benchmark(
         )
 
         try:
-            gt = _load_gt_fields(run_dir, num_frames=target_num_frames, target_h=target_h, target_w=target_w)
+            gt = _load_gt_fields(
+                run_dir,
+                num_frames=target_num_frames,
+                target_h=target_h,
+                target_w=target_w,
+            )
             stress_pred = _image_sheet_to_stress_bvcthw(
                 generated_image_path,
                 num_frames=image_num_frames,
@@ -367,9 +405,10 @@ def run_stress_image_benchmark(
                 )
             ]
         except Exception as exc:
-            print(f"[WARN] 解析生成图片或评估失败，跳过样本 {sample_id}: {exc}")
+            print(f"[WARN] generated-image evaluation failed for {sample_id}: {exc}")
             (reasoning_dir / f"{sample_id}.txt").write_text(
-                json.dumps(prediction, ensure_ascii=False, indent=2) + f"\n\n[PARSE_OR_EVAL_ERROR] {exc}\n",
+                json.dumps(prediction, ensure_ascii=False, indent=2)
+                + f"\n\n[PARSE_OR_EVAL_ERROR] {exc}\n",
                 encoding="utf-8",
             )
             continue
@@ -440,12 +479,14 @@ def run_stress_image_benchmark(
         chosen_sample_ids.append(sample_id)
         used_vlm_tags.append(used_tag)
         num_processed += 1
-        print(f"[OK] 已处理 stress image 样本 {num_processed}: {sample_id} [{used_tag}]")
+        print(f"[OK] processed stress-image sample {num_processed}: {sample_id} [{used_tag}]")
 
     sample_records = _read_all_sample_metric_rows(sample_metrics_dir)
     overall_rows = aggregate_field_records(sample_records, group_fields=())
     by_action_rows = aggregate_field_records(sample_records, group_fields=("action",))
-    by_material_rows = aggregate_field_records(sample_records, group_fields=("material",))
+    by_material_rows = aggregate_field_records(
+        sample_records, group_fields=("material",)
+    )
 
     write_jsonl(field_metrics_dir / "sample_records.jsonl", sample_records)
     write_csv(field_metrics_dir / "overall.csv", overall_rows)
@@ -488,7 +529,9 @@ def run_stress_image_benchmark(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Qwen image-generation stress field benchmark.")
+    parser = argparse.ArgumentParser(
+        description="Qwen image-generation stress field benchmark."
+    )
     parser.add_argument(
         "--physgaussian_root",
         type=str,
@@ -506,7 +549,9 @@ def main() -> None:
     parser.add_argument("--max_videos", type=int, default=100)
     parser.add_argument("--random_sample", action="store_true")
     parser.add_argument("--split_json", type=str, default="")
-    parser.add_argument("--eval_split", type=str, default="test", choices=("train", "test"))
+    parser.add_argument(
+        "--eval_split", type=str, default="test", choices=("train", "test")
+    )
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--image_num_frames", type=int, default=64)
     parser.add_argument("--target_num_frames", type=int, default=64)
@@ -521,13 +566,17 @@ def main() -> None:
     split_json = (
         Path(args.split_json).expanduser().resolve()
         if str(args.split_json).strip()
-        else (phys_root / "auto_output" / "dataset_5000" / "train_test_split.cleaned.json")
+        else (
+            phys_root / "auto_output" / "dataset_5000" / "train_test_split.cleaned.json"
+        )
     )
     run_stress_image_benchmark(
         physgaussian_root=phys_root,
         output_root=output_root,
         vlm_tag=args.vlm_tag,
-        fallback_vlm_tags=[x.strip() for x in str(args.fallback_vlm_tags).split(",") if x.strip()],
+        fallback_vlm_tags=[
+            x.strip() for x in str(args.fallback_vlm_tags).split(",") if x.strip()
+        ],
         max_videos=args.max_videos,
         random_sample=args.random_sample,
         split_json=split_json,
@@ -539,7 +588,10 @@ def main() -> None:
         target_w=args.target_w,
         request_interval_s=args.request_interval_s,
         resume_from_output_root=(
-            phys_root / "vlm_benchmark" / "output" / str(args.resume_from_output_tag).strip()
+            phys_root
+            / "vlm_benchmark"
+            / "output"
+            / str(args.resume_from_output_tag).strip()
             if str(args.resume_from_output_tag).strip()
             else None
         ),

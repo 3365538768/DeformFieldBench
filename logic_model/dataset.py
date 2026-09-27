@@ -11,6 +11,7 @@ from typing import Any, Dict, List, Optional, Sequence
 
 import numpy as np
 import torch
+import torch.nn.functional as F
 from torch.utils.data import Dataset
 
 # 与写入侧一致的时间重采样（避免重复实现）
@@ -527,6 +528,32 @@ def _np_to_torch_float32_share(x: np.ndarray) -> torch.Tensor:
     return torch.from_numpy(x)
 
 
+def _degrade_rgb_resolution(rgb: torch.Tensor, side: int) -> torch.Tensor:
+    """Downsample then restore RGB without changing the model input shape."""
+    if int(side) <= 0 or rgb.ndim != 5:
+        return rgb
+    views, channels, frames, height, width = rgb.shape
+    target = int(side)
+    if target >= min(height, width):
+        return rgb
+    original_dtype = rgb.dtype
+    flat = rgb.permute(0, 2, 1, 3, 4).reshape(views * frames, channels, height, width)
+    work = flat.float()
+    low = F.interpolate(work, size=(target, target), mode="area")
+    restored = F.interpolate(
+        low,
+        size=(height, width),
+        mode="bilinear",
+        align_corners=False,
+        antialias=True,
+    )
+    if original_dtype == torch.uint8:
+        restored = restored.round().clamp_(0, 255).to(dtype=original_dtype)
+    else:
+        restored = restored.to(dtype=original_dtype)
+    return restored.reshape(views, frames, channels, height, width).permute(0, 2, 1, 3, 4).contiguous()
+
+
 class _SharedSampleCache:
     """
     共享样本级 memmap 缓存：
@@ -764,6 +791,8 @@ class LmdbGtDataset(Dataset):
         force_mask_keep_three_channels: bool = True,
         force_mask_single_channel: bool = False,
         force_mask_binary_threshold: float = 0.5,
+        input_degrade_size: int = 0,
+        input_view_indices: Optional[Sequence[int]] = None,
     ):
         self.split_root = str(split_root)
         self.lmdb_env_subdir = str(lmdb_env_subdir)
@@ -785,6 +814,10 @@ class LmdbGtDataset(Dataset):
         self.force_mask_keep_three_channels = bool(force_mask_keep_three_channels)
         self.force_mask_single_channel = bool(force_mask_single_channel)
         self.force_mask_binary_threshold = float(force_mask_binary_threshold)
+        self.input_degrade_size = max(0, int(input_degrade_size))
+        self.input_view_indices = (
+            None if input_view_indices is None else tuple(int(index) for index in input_view_indices)
+        )
         self.cache_root = (
             Path(cache_root).expanduser().resolve()
             if (cache_root is not None and str(cache_root).strip() != "")
@@ -1013,9 +1046,24 @@ class LmdbGtDataset(Dataset):
 
         action_label = int(self.action_to_id.get(action_name, self.action_to_id.get("unknown", 0)))
         params = torch.tensor([gt["E"], gt["nu"], gt["density"], gt["yield_stress"]], dtype=torch.float32)
+        rgb_tensor = _np_to_torch_float32_share(arrays["rgb"])
+        if self.input_view_indices is not None:
+            invalid = [
+                index
+                for index in self.input_view_indices
+                if index < 0 or index >= int(rgb_tensor.shape[0])
+            ]
+            if invalid:
+                raise ValueError(
+                    f"input view indices {invalid} outside available range "
+                    f"[0,{int(rgb_tensor.shape[0]) - 1}]"
+                )
+            rgb_tensor = rgb_tensor[list(self.input_view_indices)].contiguous()
+        if self.input_degrade_size > 0:
+            rgb_tensor = _degrade_rgb_resolution(rgb_tensor, self.input_degrade_size)
         out = {
             "sample_id": d.name,
-            "rgb": _np_to_torch_float32_share(arrays["rgb"]),
+            "rgb": rgb_tensor,
             "stress": _np_to_torch_float32_share(arrays["stress"]),
             "flow": _np_to_torch_float32_share(arrays["flow"]),
             "force_mask": _np_to_torch_float32_share(arrays["force_mask"]),

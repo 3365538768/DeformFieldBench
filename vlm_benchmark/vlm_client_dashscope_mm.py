@@ -5,8 +5,6 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import numpy as np
-
 try:
     from vlm_benchmark.parse_utils import (
         extract_json_from_response,
@@ -72,10 +70,7 @@ class DashscopeMultiModalClient:
         if total_frames <= 0:
             cap.release()
             raise ValueError(f"视频帧数无效: {video_path}")
-        indices = {
-            int(round(x))
-            for x in np.linspace(0, total_frames - 1, min(target_frames, total_frames))
-        }
+        step = max(1, int(round(total_frames / float(target_frames))))
         tmp_dir = Path(tempfile.mkdtemp(prefix="dashscope_frames_"))
         out_paths: List[Path] = []
         frame_idx = 0
@@ -84,7 +79,7 @@ class DashscopeMultiModalClient:
                 ok, frame = cap.read()
                 if not ok:
                     break
-                if frame_idx in indices:
+                if frame_idx % step == 0:
                     out_path = tmp_dir / f"frame_{len(out_paths):03d}.jpg"
                     self._cv2.imwrite(str(out_path), frame)
                     out_paths.append(out_path)

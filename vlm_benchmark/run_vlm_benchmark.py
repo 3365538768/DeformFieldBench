@@ -13,10 +13,8 @@ import cv2
 import numpy as np
 
 try:
-    # 作为包运行: python -m vlm_benchmark.run_vlm_benchmark
     from vlm_benchmark.vlm_model_registry import create_vlm_client, VLM_REGISTRY  # type: ignore
 except ModuleNotFoundError:
-    # 作为脚本运行: python vlm_benchmark/run_vlm_benchmark.py
     from vlm_model_registry import create_vlm_client, VLM_REGISTRY  # type: ignore
 
 
@@ -57,7 +55,9 @@ def _ensure_phys_root_importable(physgaussian_root: Path) -> None:
         sys.path.insert(0, root)
 
 
-def _parse_tag_chain(vlm_tag: str, fallback_vlm_tags: Optional[List[str]] = None) -> List[str]:
+def _parse_tag_chain(
+    vlm_tag: str, fallback_vlm_tags: Optional[List[str]] = None
+) -> List[str]:
     chain: List[str] = []
     seen = set()
     for tag in [str(vlm_tag)] + list(fallback_vlm_tags or []):
@@ -65,11 +65,11 @@ def _parse_tag_chain(vlm_tag: str, fallback_vlm_tags: Optional[List[str]] = None
         if not key or key in seen:
             continue
         if key not in VLM_REGISTRY:
-            raise KeyError(f"未知的 VLM 标签: {key}，可选值: {list(VLM_REGISTRY.keys())}")
+            raise KeyError(f"unknown VLM tag: {key}; choices: {list(VLM_REGISTRY)}")
         chain.append(key)
         seen.add(key)
     if not chain:
-        raise ValueError("VLM 标签链为空")
+        raise ValueError("VLM tag chain is empty")
     return chain
 
 
@@ -79,7 +79,7 @@ def _should_rotate_model(exc: Exception) -> bool:
 
 
 def _collect_all_runs(auto_output_root: Path) -> List[Tuple[str, Path, Dict[str, str]]]:
-    """与 `my_model.dataset.iter_auto_output_runs` 一致：支持旧 `__` 目录名与数字目录 + gt_parameters.json。"""
+    """Collect samples in both legacy and current dataset layouts."""
     root = auto_output_root.resolve()
     pg_root = root.parent
     _ensure_phys_root_importable(pg_root)
@@ -140,7 +140,11 @@ def _collect_split_samples(
         if isinstance(params_obj, dict):
             params = {str(k): str(v) for k, v in params_obj.items()}
         material_obj = gt.get("params") or {}
-        if isinstance(material_obj, dict) and "material" in material_obj and "material" not in params:
+        if (
+            isinstance(material_obj, dict)
+            and "material" in material_obj
+            and "material" not in params
+        ):
             params["material"] = str(material_obj.get("material"))
         rows.append((action, sample_dir, params))
     return rows
@@ -162,9 +166,7 @@ def _object_name_for_sample(run_dir: Path) -> str:
 
 
 def _find_video_in_run_dir(run_dir: Path) -> Optional[Path]:
-    """
-    在单个仿真目录下查找视频文件。
-    """
+    """Return the first video found below a simulation output directory."""
     exts = (".mp4", ".avi", ".mov", ".mkv", ".webm")
     for root, _, files in os.walk(run_dir):
         for fname in sorted(files):
@@ -230,7 +232,9 @@ def _normalize_existing_pred_rows(rows: List[Dict[str, str]]) -> List[Dict[str, 
     return out
 
 
-def _bootstrap_output_root(output_root: Path, resume_from_output_root: Optional[Path]) -> None:
+def _bootstrap_output_root(
+    output_root: Path, resume_from_output_root: Optional[Path]
+) -> None:
     if resume_from_output_root is None:
         return
     src_root = resume_from_output_root.resolve()
@@ -239,7 +243,11 @@ def _bootstrap_output_root(output_root: Path, resume_from_output_root: Optional[
         return
 
     dst_root.mkdir(parents=True, exist_ok=True)
-    for fname in ("vlm_benchmark_gt.csv", "vlm_benchmark_pred.csv", "benchmark_meta.json"):
+    for fname in (
+        "vlm_benchmark_gt.csv",
+        "vlm_benchmark_pred.csv",
+        "benchmark_meta.json",
+    ):
         src = src_root / fname
         dst = dst_root / fname
         if src.is_file() and not dst.exists():
@@ -269,7 +277,9 @@ def _sorted_image_files(root: Path) -> List[Path]:
     return sorted(files, key=lambda p: p.name)
 
 
-def _list_arch4_video_groups(videos_dir: Path) -> List[Tuple[str, Path, Path, Path, Path]]:
+def _list_arch4_video_groups(
+    videos_dir: Path,
+) -> List[Tuple[str, Path, Path, Path, Path]]:
     if not videos_dir.is_dir():
         return []
     groups: Dict[str, Dict[str, Path]] = {}
@@ -300,7 +310,9 @@ def _list_tensor_stems(tensor_root: Path) -> List[str]:
     return sorted({p.stem for p in tensor_root.glob("*.pt") if p.is_file()})
 
 
-def _sample_pack_rgb_views(sample_dir: Path, *, max_views: int) -> List[Tuple[str, np.ndarray]]:
+def _sample_pack_rgb_views(
+    sample_dir: Path, *, max_views: int
+) -> List[Tuple[str, np.ndarray]]:
     from my_utils.sample_pack import _load_sample_pack_npz, _sample_pack_path
 
     pack_path = _sample_pack_path(sample_dir)
@@ -320,7 +332,9 @@ def _sample_pack_rgb_views(sample_dir: Path, *, max_views: int) -> List[Tuple[st
     return out
 
 
-def _lmdb_rgb_views(sample_dir: Path, *, max_views: int) -> List[Tuple[str, np.ndarray]]:
+def _lmdb_rgb_views(
+    sample_dir: Path, *, max_views: int
+) -> List[Tuple[str, np.ndarray]]:
     from my_utils.sample_pack import _read_lmdb_uint8_arrays
 
     env_path = sample_dir / "arch4_data.lmdb"
@@ -360,8 +374,11 @@ def _png_rgb_views(sample_dir: Path, *, max_views: int) -> List[Tuple[str, np.nd
     return out
 
 
-def _tensor_rgb_views(sample_dir: Path, *, max_views: int) -> List[Tuple[str, np.ndarray]]:
+def _tensor_rgb_views(
+    sample_dir: Path, *, max_views: int
+) -> List[Tuple[str, np.ndarray]]:
     import torch
+
     tensor_root = sample_dir / "arch4_tensors"
     if not tensor_root.is_dir():
         return []
@@ -376,7 +393,11 @@ def _tensor_rgb_views(sample_dir: Path, *, max_views: int) -> List[Tuple[str, np
             obj = torch.load(str(pt_path), map_location="cpu")
         if not isinstance(obj, dict) or "rgb" not in obj:
             continue
-        rgb = obj["rgb"] if isinstance(obj["rgb"], torch.Tensor) else torch.as_tensor(obj["rgb"])
+        rgb = (
+            obj["rgb"]
+            if isinstance(obj["rgb"], torch.Tensor)
+            else torch.as_tensor(obj["rgb"])
+        )
         if rgb.dim() != 4 or int(rgb.shape[0]) != 3:
             continue
         arr = rgb.detach().cpu().numpy()
@@ -391,7 +412,8 @@ def _existing_rgb_video(sample_dir: Path) -> Optional[Tuple[str, Path]]:
     if not video_root.is_dir():
         return None
     candidates = [
-        p for p in sorted(video_root.glob("*.mp4"))
+        p
+        for p in sorted(video_root.glob("*.mp4"))
         if p.is_file() and RGB_VIEW_MP4_RE.match(p.name)
     ]
     if not candidates:
@@ -415,7 +437,7 @@ def _resample_frames_thwc(frames_thwc_u8: np.ndarray, target_frames: int) -> np.
 def _read_video_frames(video_path: Path) -> np.ndarray:
     cap = cv2.VideoCapture(str(video_path))
     if not cap.isOpened():
-        raise ValueError(f"无法打开视频文件: {video_path}")
+        raise ValueError(f"cannot open video: {video_path}")
     frames: List[np.ndarray] = []
     try:
         while True:
@@ -426,7 +448,7 @@ def _read_video_frames(video_path: Path) -> np.ndarray:
     finally:
         cap.release()
     if not frames:
-        raise ValueError(f"无法从视频读取帧: {video_path}")
+        raise ValueError(f"video contains no readable frames: {video_path}")
     return np.stack(frames, axis=0)
 
 
@@ -460,7 +482,7 @@ def _write_rgb_video(
         (w, h),
     )
     if not writer.isOpened():
-        raise RuntimeError(f"无法创建视频文件: {out_path}")
+        raise RuntimeError(f"cannot create video file: {out_path}")
     try:
         for frame_rgb in frames:
             writer.write(cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2BGR))
@@ -493,12 +515,19 @@ def _prepare_sample_video(
         return fixed_path, view_name
 
     rgb_views: List[Tuple[str, np.ndarray]] = []
-    for loader in (_sample_pack_rgb_views, _lmdb_rgb_views, _png_rgb_views, _tensor_rgb_views):
+    for loader in (
+        _sample_pack_rgb_views,
+        _lmdb_rgb_views,
+        _png_rgb_views,
+        _tensor_rgb_views,
+    ):
         rgb_views = loader(sample_dir, max_views=max_views)
         if rgb_views:
             break
     if not rgb_views:
-        raise FileNotFoundError(f"样本缺少可用于 VLM 的 RGB 视频/帧缓存: {sample_dir}")
+        raise FileNotFoundError(
+            f"no RGB video or packed RGB frames found in sample: {sample_dir}"
+        )
 
     view_name, rgb_frames = rgb_views[0]
     temp_dir = output_root / "temp_videos"
@@ -535,7 +564,7 @@ def run_benchmark(
     max_videos: Optional[int] = None,
     random_sample: bool = False,
     debug_print: bool = True,
-    vlm_tag: str = "qwen2.5-vl",
+    vlm_tag: str = "qwen3.5-plus",
     fallback_vlm_tags: Optional[List[str]] = None,
     resume_from_output_root: Optional[Path] = None,
     split_json: Optional[Path] = None,
@@ -546,17 +575,18 @@ def run_benchmark(
     auto_output_root = physgaussian_root / "auto_output"
 
     if not auto_output_root.is_dir():
-        raise FileNotFoundError(f"未找到 auto_output 目录: {auto_output_root}")
+        raise FileNotFoundError(f"simulation output directory not found: {auto_output_root}")
 
     system_prompt = _load_prompt(script_dir / "prompts" / "system_prompt.txt")
-    user_prompt = _load_prompt(script_dir / "prompts" / "user_prompt_video_regression.txt")
+    user_prompt = _load_prompt(
+        script_dir / "prompts" / "user_prompt_video_regression.txt"
+    )
 
     tag_chain = _parse_tag_chain(vlm_tag, fallback_vlm_tags)
     active_tag_idx = 0
     active_tag = tag_chain[active_tag_idx]
     client = create_vlm_client(active_tag)
 
-    # 当前模型的输出目录：vlm_benchmark/output/<vlm_tag>/
     output_root.mkdir(parents=True, exist_ok=True)
     _bootstrap_output_root(output_root, resume_from_output_root)
     gt_csv = output_root / "vlm_benchmark_gt.csv"
@@ -566,7 +596,9 @@ def run_benchmark(
     reasoning_dir.mkdir(parents=True, exist_ok=True)
 
     existing_gt_rows = _dedupe_rows_by_sample_id(_read_csv_rows(gt_csv))
-    existing_pred_rows = _normalize_existing_pred_rows(_dedupe_rows_by_sample_id(_read_csv_rows(pred_csv)))
+    existing_pred_rows = _normalize_existing_pred_rows(
+        _dedupe_rows_by_sample_id(_read_csv_rows(pred_csv))
+    )
     completed_sample_ids = {
         str(row.get("sample_id", "")).strip()
         for row in existing_pred_rows
@@ -574,9 +606,10 @@ def run_benchmark(
     }
     existing_completed = len(completed_sample_ids)
 
-    # random_sample 模式下：将抽到的视频打包保存，便于后续对比/复现
     sampled_videos_dir = output_root / "sampled_videos" if random_sample else None
-    sampled_manifest_path = output_root / "sampled_videos_manifest.csv" if random_sample else None
+    sampled_manifest_path = (
+        output_root / "sampled_videos_manifest.csv" if random_sample else None
+    )
     sampled_manifest_f = None
     if sampled_videos_dir is not None and sampled_manifest_path is not None:
         sampled_videos_dir.mkdir(parents=True, exist_ok=True)
@@ -589,8 +622,15 @@ def run_benchmark(
     gt_f = open(gt_csv, "w", encoding="utf-8", newline="")
     pred_f = open(pred_csv, "w", encoding="utf-8", newline="")
 
-    # sample_id 作为第一列，方便对齐和跨模型比较
-    gt_fieldnames = ["sample_id", "action", "material_gt", "E_gt", "nu_gt", "density_gt", "yield_stress_gt"]
+    gt_fieldnames = [
+        "sample_id",
+        "action",
+        "material_gt",
+        "E_gt",
+        "nu_gt",
+        "density_gt",
+        "yield_stress_gt",
+    ]
     pred_fieldnames = [
         "sample_id",
         "action",
@@ -620,7 +660,6 @@ def run_benchmark(
     for row in existing_pred_rows:
         pred_writer.writerow({key: row.get(key, "") for key in pred_fieldnames})
 
-    # 收集所有候选样本
     if split_json is not None:
         all_runs = _collect_split_samples(
             physgaussian_root,
@@ -633,12 +672,11 @@ def run_benchmark(
     else:
         all_runs = _collect_all_runs(auto_output_root)
     if not all_runs:
-        print("未在 auto_output 下找到任何仿真目录。")
+        print(f"[WARN] no usable samples found under {auto_output_root}")
         gt_f.close()
         pred_f.close()
         return {"num_samples_used": 0, "chosen_sample_ids": []}
 
-    # 随机采样模式：打乱顺序
     if random_sample and split_json is None:
         rng = random.Random(42)
         rng.shuffle(all_runs)
@@ -652,7 +690,11 @@ def run_benchmark(
     ]
     try:
         for action, run_dir, params in all_runs:
-            if max_videos is not None and int(max_videos) > 0 and (existing_completed + num_processed) >= max_videos:
+            if (
+                max_videos is not None
+                and int(max_videos) > 0
+                and (existing_completed + num_processed) >= max_videos
+            ):
                 break
 
             gt_path = run_dir / "gt.json"
@@ -676,7 +718,7 @@ def run_benchmark(
                 sample_id = f"{object_name}_{num_processed + 1:04d}"
 
             if sample_id in completed_sample_ids:
-                print(f"[SKIP] 已有结果，跳过样本 {sample_id}")
+                print(f"[SKIP] already completed: {sample_id}")
                 continue
 
             if gt_path.is_file():
@@ -706,7 +748,6 @@ def run_benchmark(
             density_gt = _safe_float(params, "density")
             yield_stress_gt = _safe_float(params, "yield_stress")
 
-            # random_sample 模式：复制本次采样到的视频到 output/<vlm_tag>/sampled_videos/
             if sampled_videos_dir is not None and sampled_manifest_f is not None:
                 ext = video_path.suffix.lower() if video_path.suffix else ".mp4"
                 dst_name = f"{sample_id}{ext}"
@@ -714,7 +755,7 @@ def run_benchmark(
                 try:
                     shutil.copy2(video_path, dst_path)
                 except Exception as exc:
-                    print(f"[WARN] 复制采样视频失败: {video_path} -> {dst_path} ({exc})")
+                    print(f"[WARN] failed to copy sampled video {video_path}: {exc}")
                 dst_rel = dst_path.relative_to(output_root).as_posix()
                 sampled_manifest_f.write(
                     f"{sample_id},{action},{rel_video_path},{dst_rel}\n"
@@ -732,7 +773,6 @@ def run_benchmark(
                 }
             )
 
-            # 调用 VLM：若命中额度/限流错误，则切到下一个模型继续同一样本
             prediction: Optional[Dict[str, Any]] = None
             used_tag = active_tag
             while True:
@@ -746,25 +786,28 @@ def run_benchmark(
                     used_tag = active_tag
                     break
                 except Exception as exc:
-                    if _should_rotate_model(exc) and active_tag_idx + 1 < len(tag_chain):
+                    if _should_rotate_model(exc) and active_tag_idx + 1 < len(
+                        tag_chain
+                    ):
                         failed_tag = active_tag
                         active_tag_idx += 1
                         active_tag = tag_chain[active_tag_idx]
                         print(
-                            f"[WARN] VLM 模型 {failed_tag} 可能已到额度/限流，"
-                            f"切换到 {active_tag} 并重试样本 {sample_id}: {exc}"
+                            f"[WARN] VLM {failed_tag} is unavailable; "
+                            f"switching to {active_tag} for {sample_id}: {exc}"
                         )
                         client = create_vlm_client(active_tag)
                         continue
-                    print(f"[WARN] VLM 调用失败，跳过样本 {sample_id}: {exc}")
-                    with open(reasoning_dir / f"{sample_id}.txt", "w", encoding="utf-8") as rf:
+                    print(f"[WARN] VLM inference failed for {sample_id}: {exc}")
+                    with open(
+                        reasoning_dir / f"{sample_id}.txt", "w", encoding="utf-8"
+                    ) as rf:
                         rf.write(f"[ERROR][{active_tag}] {exc}\n")
                     prediction = None
                     break
             if prediction is None:
                 continue
 
-            # 将 raw model text 保存到 reasoning/<sample_id>.txt
             raw_text = ""
             try:
                 raw_text = str(prediction.get("__raw_text__", "") or "")
@@ -783,20 +826,20 @@ def run_benchmark(
             used_vlm_model = str(VLM_REGISTRY[used_tag].model)
 
             if debug_print:
-                print("\n================ VLM 调用结果 ================")
-                print(f"样本编号: {num_processed + 1}")
+                print("\n================ VLM prediction ================")
+                print(f"object: {object_name}")
                 print(f"vlm_tag: {vlm_tag}")
                 print(f"used_vlm_tag: {used_tag}")
                 print(f"used_vlm_model: {used_vlm_model}")
                 print(f"sample_id: {sample_id}")
-                print(f"视频路径: {rel_video_path}")
-                print(f"动作类型 (GT): {action}")
-                print(f"材质类型 (GT): {material_gt}")
+                print(f"video: {rel_video_path}")
+                print(f"action: {action}")
+                print(f"material_gt: {material_gt}")
                 print(
-                    f"GT 数值: E={E_gt:.3g}, nu={nu_gt:.3g}, "
+                    f"E_gt={E_gt:.3g}, nu_gt={nu_gt:.3g}, "
                     f"density={density_gt:.3g}, yield_stress={yield_stress_gt:.3g}"
                 )
-                print("原始 JSON 输出:")
+                print("prediction:")
                 try:
                     print(json.dumps(prediction, ensure_ascii=False, indent=2))
                 except TypeError:
@@ -806,7 +849,7 @@ def run_benchmark(
                     print("\n[RAW MODEL TEXT]")
                     print(str(raw_text))
                 print(
-                    "解析后数值: "
+                    "parsed: "
                     f"E_pred={E_pred:.3g}, nu_pred={nu_pred:.3g}, "
                     f"density_pred={density_pred:.3g}, "
                     f"yield_stress_pred={yield_stress_pred:.3g}, "
@@ -843,7 +886,7 @@ def run_benchmark(
             chosen_sample_ids.append(sample_id)
             used_vlm_tags.append(used_tag)
             num_processed += 1
-            print(f"[OK] 已处理视频 {num_processed}: {rel_video_path} [{used_tag}]")
+            print(f"[OK] processed {num_processed}: {sample_id} [{used_tag}]")
     finally:
         gt_f.close()
         pred_f.close()
@@ -853,7 +896,9 @@ def run_benchmark(
     meta = {
         "vlm_tag": vlm_tag,
         "fallback_vlm_tags": list(fallback_vlm_tags or []),
-        "resume_from_output_root": str(resume_from_output_root.resolve()) if resume_from_output_root is not None else "",
+        "resume_from_output_root": str(resume_from_output_root.resolve())
+        if resume_from_output_root is not None
+        else "",
         "vlm_tag_chain": tag_chain,
         "physgaussian_root": str(physgaussian_root),
         "source_mode": "split_json" if split_json is not None else "auto_output_walk",
@@ -870,83 +915,84 @@ def run_benchmark(
         "gt_csv": str(gt_csv),
         "pred_csv": str(pred_csv),
     }
-    meta_json.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"完成。共写入 {num_processed} 条样本。")
-    print(f"GT 文件:   {gt_csv}")
-    print(f"预测文件: {pred_csv}")
+    meta_json.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    print(f"ground truth CSV: {gt_csv}")
+    print(f"prediction CSV: {pred_csv}")
+    print(f"metadata JSON: {meta_json}")
     return meta
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="通用 VLM benchmark：对 PhysGaussian/auto_output 中的视频进行评测。"
+        description="Run video-based material and motion VLM evaluation."
     )
     parser.add_argument(
         "--physgaussian_root",
         type=str,
         default=str(Path(__file__).resolve().parents[1]),
-        help="PhysGaussian 根目录（包含 auto_output 和 vlm_benchmark）",
+        help="Code supplement root containing auto_output and vlm_benchmark.",
     )
     parser.add_argument(
         "--vlm_tag",
         type=str,
-        default="qwen2.5-vl",
+        default="qwen3.5-plus",
         choices=list(VLM_REGISTRY.keys()),
-        help="选择要使用的 VLM 标签（在 vlm_model_registry.py 中维护具体配置）",
+        help="VLM registry tag.",
     )
     parser.add_argument(
         "--output_tag",
         type=str,
         default="",
-        help="统一输出目录标签；为空时默认使用 --vlm_tag。",
+        help="Output folder tag; defaults to the VLM tag.",
     )
     parser.add_argument(
         "--resume_from_output_tag",
         type=str,
         default="",
-        help="若提供且输出目录为空，可从 vlm_benchmark/output/<该标签> 继承已有结果后续跑。",
+        help="Existing output tag to resume from.",
     )
     parser.add_argument(
         "--fallback_vlm_tags",
         type=str,
         default="",
-        help="逗号分隔的回退模型标签；当当前模型命中额度/限流错误时按顺序切换。",
+        help="Comma-separated fallback VLM tags.",
     )
     parser.add_argument(
         "--max_videos",
         type=int,
         default=None,
-        help="最多评测多少个视频（默认全部）",
+        help="Maximum number of videos; omit for all samples.",
     )
     parser.add_argument(
         "--random_sample",
         action="store_true",
-        help="是否以随机顺序从 bend/drop/press/shear/stretch 采样",
+        help="Shuffle samples before applying max_videos.",
     )
     parser.add_argument(
         "--split_json",
         type=str,
         default="",
-        help="若提供，则按 split json 里的 train/test id 选择样本，而不是遍历整个 auto_output。",
+        help="Optional train/test split JSON.",
     )
     parser.add_argument(
         "--eval_split",
         type=str,
         default="test",
         choices=("train", "test"),
-        help="配合 --split_json 使用，指定评测 split。",
+        help="Split to evaluate when split_json is provided.",
     )
     parser.add_argument(
         "--seed",
         type=int,
         default=0,
-        help="随机抽样时使用的随机种子。",
+        help="Random seed used for split sampling.",
     )
 
     args = parser.parse_args()
     phys_root = Path(args.physgaussian_root).resolve()
 
-    # 统一输出目录：vlm_benchmark/output/<output_tag or vlm_tag>/
     output_tag = str(args.output_tag).strip() or str(args.vlm_tag)
     output_root = phys_root / "vlm_benchmark" / "output" / output_tag
 
@@ -957,13 +1003,22 @@ def main() -> None:
         random_sample=args.random_sample,
         debug_print=True,
         vlm_tag=args.vlm_tag,
-        fallback_vlm_tags=[x.strip() for x in str(args.fallback_vlm_tags).split(",") if x.strip()],
+        fallback_vlm_tags=[
+            x.strip() for x in str(args.fallback_vlm_tags).split(",") if x.strip()
+        ],
         resume_from_output_root=(
-            phys_root / "vlm_benchmark" / "output" / str(args.resume_from_output_tag).strip()
+            phys_root
+            / "vlm_benchmark"
+            / "output"
+            / str(args.resume_from_output_tag).strip()
             if str(args.resume_from_output_tag).strip()
             else None
         ),
-        split_json=(Path(args.split_json).expanduser().resolve() if str(args.split_json).strip() else None),
+        split_json=(
+            Path(args.split_json).expanduser().resolve()
+            if str(args.split_json).strip()
+            else None
+        ),
         eval_split=args.eval_split,
         seed=args.seed,
     )

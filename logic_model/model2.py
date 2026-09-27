@@ -4,7 +4,7 @@ from contextlib import nullcontext
 import math
 import os
 from pathlib import Path
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, Optional, Sequence, Tuple, Union
 
 import torch
 import torch.nn as nn
@@ -558,6 +558,9 @@ class LogicPhysModel2(nn.Module):
         param_use_rgb_static: bool = True,
         param_use_rgb_residual: bool = True,
         param_use_masked_field_tokens: bool = True,
+        param_drop_fields: Optional[Sequence[str]] = None,
+        param_noise_fields: Optional[Sequence[str]] = None,
+        param_noise_seed: int = 20260726,
     ):
         super().__init__()
         self.num_views = int(num_views)
@@ -598,6 +601,25 @@ class LogicPhysModel2(nn.Module):
         self.param_use_rgb_static = bool(param_use_rgb_static)
         self.param_use_rgb_residual = bool(param_use_rgb_residual)
         self.param_use_masked_field_tokens = bool(param_use_masked_field_tokens)
+        drop_aliases = {"contact": "force"}
+        self.param_drop_fields = frozenset(
+            drop_aliases.get(str(field).strip().lower(), str(field).strip().lower())
+            for field in (param_drop_fields or ())
+        )
+        unknown_drop_fields = self.param_drop_fields.difference({"stress", "flow", "force"})
+        if unknown_drop_fields:
+            raise ValueError(f"unknown param_drop_fields: {sorted(unknown_drop_fields)}")
+        self.param_noise_fields = frozenset(
+            drop_aliases.get(str(field).strip().lower(), str(field).strip().lower())
+            for field in (param_noise_fields or ())
+        )
+        unknown_noise_fields = self.param_noise_fields.difference({"stress", "flow", "force"})
+        if unknown_noise_fields:
+            raise ValueError(f"unknown param_noise_fields: {sorted(unknown_noise_fields)}")
+        overlap_fields = self.param_drop_fields.intersection(self.param_noise_fields)
+        if overlap_fields:
+            raise ValueError(f"fields cannot be both dropped and noised: {sorted(overlap_fields)}")
+        self.param_noise_seed = int(param_noise_seed)
         self.img_size = int(img_size)
 
         enc_dim = int(dino_out_dim)
@@ -1206,6 +1228,26 @@ class LogicPhysModel2(nn.Module):
             mask = mask.unsqueeze(-1)
         return torch.where(mask, gt.to(device=pred.device, dtype=pred.dtype), pred)
 
+    @staticmethod
+    def _matched_gaussian_noise(source: torch.Tensor, seed: int) -> torch.Tensor:
+        """Replace structure while preserving each sample's marginal scale."""
+        reduce_dims = tuple(range(1, source.dim()))
+        detached = source.detach()
+        mean = detached.mean(dim=reduce_dims, keepdim=True)
+        std = detached.std(dim=reduce_dims, keepdim=True, unbiased=False).clamp_min(1e-3)
+        lower = detached.amin(dim=reduce_dims, keepdim=True)
+        upper = detached.amax(dim=reduce_dims, keepdim=True)
+        generator = torch.Generator(device=source.device)
+        generator.manual_seed(int(seed))
+        noise = torch.randn(
+            source.shape,
+            dtype=source.dtype,
+            device=source.device,
+            generator=generator,
+        )
+        noise = mean + std * noise
+        return torch.maximum(torch.minimum(noise, upper), lower)
+
     def forward(
         self,
         rgb: torch.Tensor,
@@ -1401,6 +1443,24 @@ class LogicPhysModel2(nn.Module):
                     stress_for_param = stress_param_source
                     flow_for_param = flow_param_source
                     force_for_param = force_pred
+                if "stress" in self.param_drop_fields:
+                    stress_for_param = torch.zeros_like(stress_for_param)
+                if "flow" in self.param_drop_fields:
+                    flow_for_param = torch.zeros_like(flow_for_param)
+                if "force" in self.param_drop_fields:
+                    force_for_param = torch.zeros_like(force_for_param)
+                if "stress" in self.param_noise_fields:
+                    stress_for_param = self._matched_gaussian_noise(
+                        stress_for_param, self.param_noise_seed + 101
+                    )
+                if "flow" in self.param_noise_fields:
+                    flow_for_param = self._matched_gaussian_noise(
+                        flow_for_param, self.param_noise_seed + 211
+                    )
+                if "force" in self.param_noise_fields:
+                    force_for_param = self._matched_gaussian_noise(
+                        force_for_param, self.param_noise_seed + 307
+                    )
                 stress_feat = self.stress_field_encoder(stress_for_param)
                 flow_feat = self.flow_field_encoder(flow_for_param)
                 force_feat = self.force_field_encoder(force_for_param)

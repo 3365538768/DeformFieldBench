@@ -30,23 +30,31 @@ pretrained/logic_plus_phys_01.pt
 
 ## Environment
 
-Python 3.10 is recommended. The internal training environment is `envs/train`, with the following core versions: `Python 3.10.20`, `torch 2.8.0+metax3.5.3.9`, `numpy 1.26.4`, and `opencv-python 4.9.0.80`. For CUDA GPUs, install a PyTorch build compatible with your local CUDA runtime. For MACA/Metax machines, configure the cu-bridge runtime.
+Python 3.10 is recommended. The reference training stack uses PyTorch 2.8 and torchvision 0.23. Create it with Conda:
 
 ```bash
-pip install -r requirements.txt
+conda env create -f environment.yml
+conda activate deformfieldbench
 source scripts/setup_env.sh
+python scripts/check_environment.py --profile train
 ```
 
-On the internal platform, you can activate the prepared environment directly:
+Alternatively, create a Python 3.10 virtual environment and run `pip install -r requirements-train.txt`. If the default PyTorch wheel is not compatible with your CUDA driver, first install the matching `torch==2.8.*` / `torchvision==0.23.*` wheel from the official PyTorch index, then install `requirements.txt`.
+
+The simulation profile additionally builds the two Gaussian-splatting CUDA extensions against the active PyTorch/CUDA toolchain. A working CUDA compiler (`nvcc`) is required:
 
 ```bash
-source scripts/activate_train_env.sh
+pip install -r requirements-simulation.txt
+python scripts/check_environment.py --profile simulation
 ```
 
-`requirements.txt` covers simulation and data I/O dependencies, including `taichi==1.5.0`, `warp_lang==0.10.1`, `scipy==1.15.2`, `Pillow`, `pymeshlab`, and `PyMCubes`. VLM benchmarks additionally require:
+The final Logic model loads DINOv2 through `torch.hub`. On first use it downloads the repository and `dinov2_vitg14_reg` checkpoint into `.torch/hub`; set `TORCH_HOME` if the cache should live elsewhere. For an offline run, populate that cache before launching training.
+
+VLM benchmarks additionally require:
 
 ```bash
 pip install -r requirements-vlm.txt
+python scripts/check_environment.py --profile vlm
 export DASHSCOPE_API_KEY=your_key
 export OPENAI_API_KEY=your_key
 export ARK_API_KEY=your_key
@@ -59,9 +67,30 @@ Generate a single sample in the same format as the final dataset:
 ```bash
 PLY_PATH=/path/to/object.ply \
 SIM_TYPE=press \
-CONFIG=configs/simulation/train_config_dataset_full.json \
 OUTPUT_PATH=outputs/simulation_sample \
 bash scripts/run_simulation_sample_pack.sh
+```
+
+The single-sample wrapper selects `simulation/config/<sim_type>_cube_jelly.json` by default. `CONFIG` may override it with an absolute path or a path relative to this repository. It writes three views, single-channel stress/force fields, replay metadata, and `sample_pack.npz`.
+
+To generate a dataset from a directory of Gaussian-splatting PLY files, use the batch runner:
+
+```bash
+MODEL_PATH=/path/to/ply_directory \
+MATERIAL_CONFIG=configs/simulation/material_space_example.json \
+TRAIN_CONFIG=configs/simulation/train_config_dataset_full.json \
+NUM_GPUS=1 \
+bash scripts/run_simulation_dataset.sh
+```
+
+Validate paths and expand the job list without loading CUDA or running simulations:
+
+```bash
+python simulation/auto_simulation_runner.py \
+  --model_path /path/to/ply_directory \
+  --material_space_config configs/simulation/material_space_example.json \
+  --train_config configs/simulation/train_config_dataset_full.json \
+  --validate_only
 ```
 
 `SIM_TYPE` can be `press`, `drop`, `shear`, `stretch`, or `bend`. The output directory will contain `sample_pack.npz` and `meta/` files with GT parameters, boundary conditions, force information, and run parameters. The model's final global material outputs are only `E`, `nu`, `rho`, and `sigma_y`; action labels, boundary conditions, external forces, and gravity are simulation/replay metadata, not final parameter outputs.
@@ -240,4 +269,3 @@ scripts/          Reproducible command-line entry points
 pretrained/       Checkpoint manifest and download script
 outputs/          Default local output directory
 ```
-

@@ -56,6 +56,11 @@ def decode_param_json(json_file):
     else:
         material_params["g"] = 9.8
 
+    if "init_velocity" in sim_params.keys():
+        material_params["init_velocity"] = sim_params["init_velocity"]
+    if "init_velocity_duration" in sim_params.keys():
+        material_params["init_velocity_duration"] = sim_params["init_velocity_duration"]
+
     if "density" in sim_params.keys():
         material_params["density"] = sim_params["density"]
     else:

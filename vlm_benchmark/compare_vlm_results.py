@@ -18,7 +18,7 @@ def main() -> None:
     parser.add_argument(
         "--vlm_tag",
         type=str,
-        default="qwen2.5-vl",
+        default="qwen3.5-plus",
         help="要评估的模型标签（与 vlm_model_registry.py 中一致）",
     )
     args = parser.parse_args()

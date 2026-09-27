@@ -239,13 +239,33 @@ def build_drop_boundary_conditions(
             "start_time": 0.0,
             "end_time": 1e3,
         },
-        {
-            "type": "particle_impulse",
-            "force": [0.0, 0.0, 1.0],
-            "num_dt": 2,
-            "start_time": 0.0,
-        },
     ]
+
+    init_velocity = material_params.get("init_velocity")
+    if init_velocity is not None:
+        # Apply a short forced translation so the whole object starts with INIT_VELOCITY.
+        # size is half-extent around grid center; covers the default grid_lim=2 domain.
+        duration = float(material_params.get("init_velocity_duration", 2.0e-4))
+        velocity = [float(init_velocity[0]), float(init_velocity[1]), float(init_velocity[2])]
+        bc_list.append(
+            {
+                "type": "enforce_particle_translation",
+                "point": [1.0, 1.0, 1.0],
+                "size": [1.1, 1.1, 1.1],
+                "velocity": velocity,
+                "start_time": 0.0,
+                "end_time": max(duration, 1.0e-6),
+            }
+        )
+    else:
+        bc_list.append(
+            {
+                "type": "particle_impulse",
+                "force": [0.0, 0.0, 1.0],
+                "num_dt": 2,
+                "start_time": 0.0,
+            }
+        )
 
     return bc_list
 

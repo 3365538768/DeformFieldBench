@@ -665,6 +665,46 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--seed", type=int, default=None, help="sample_mode=random 且 num_samples>0 时的随机种子；可来自 eval.seed")
     ap.add_argument("--batch_size", type=int, default=None, help="推理 batch；省略时读 eval.batch_size（默认 1）")
     ap.add_argument("--device", type=str, default=None, help="cuda / cuda:N / cpu；省略时读 eval.device")
+    ap.add_argument(
+        "--input_resolution",
+        type=int,
+        default=0,
+        help="模拟原始视频降采样到该方形分辨率后再送入模型；0=不降质",
+    )
+    ap.add_argument(
+        "--input_reference_resolution",
+        type=int,
+        default=512,
+        help="数据生成时的原始视频边长，用于映射到模型输入尺寸（默认 512）",
+    )
+    ap.add_argument(
+        "--input_view_indices",
+        type=int,
+        nargs=3,
+        default=None,
+        metavar=("VIEW0", "VIEW1", "VIEW2"),
+        help="仅在 eval 输入端重排/复制三个视角，例如 0 0 0 或 0 1 1",
+    )
+    ap.add_argument(
+        "--param_noise_fields",
+        nargs="+",
+        choices=("stress", "flow", "contact", "force"),
+        default=None,
+        help="仅在参数回归链中以同均值/方差高斯噪声替代指定预测物理场",
+    )
+    ap.add_argument(
+        "--param_drop_fields",
+        nargs="+",
+        choices=("stress", "flow", "contact", "force"),
+        default=None,
+        help="仅在参数回归链中将指定预测物理场置零",
+    )
+    ap.add_argument(
+        "--param_noise_seed",
+        type=int,
+        default=20260726,
+        help="物理场噪声替代的确定性随机种子",
+    )
     ap.add_argument("--out_dir", type=str, default=None, help="输出目录；省略时读 eval.out_dir")
     ap.add_argument("--pad_frac", type=float, default=None, help="散点图坐标轴外扩；默认 0.02 或 eval.pad_frac")
     ap.add_argument(
@@ -757,6 +797,34 @@ def main() -> None:
     max_views = int(_pick(cfg_model, "num_views", 4))
     num_frames_cfg = int(_pick(cfg_model, "num_frames", 0))
     img_size = int(_pick(cfg_model, "img_size", 0))
+    input_resolution = max(0, int(args.input_resolution))
+    input_reference_resolution = int(args.input_reference_resolution)
+    if input_resolution > 0 and input_reference_resolution <= 0:
+        raise ValueError("--input_reference_resolution 必须为正数")
+    if input_resolution > input_reference_resolution:
+        raise ValueError(
+            f"--input_resolution={input_resolution} 不能大于参考分辨率 "
+            f"{input_reference_resolution}"
+        )
+    input_degrade_size = (
+        max(1, int(round(img_size * input_resolution / input_reference_resolution)))
+        if input_resolution > 0
+        else 0
+    )
+    input_view_indices = (
+        None
+        if args.input_view_indices is None
+        else tuple(int(index) for index in args.input_view_indices)
+    )
+    if input_view_indices is not None:
+        invalid_view_indices = [
+            index for index in input_view_indices if index < 0 or index >= max_views
+        ]
+        if invalid_view_indices:
+            raise ValueError(
+                f"--input_view_indices 包含越界索引 {invalid_view_indices}; "
+                f"当前模型可用视角为 [0,{max_views - 1}]"
+            )
     dec_h = int(_pick(cfg_model, "dec_h", 112))
     dec_w = int(_pick(cfg_model, "dec_w", 112))
     purify_force_mask_on_read = bool(_pick(cfg_data, "purify_force_mask_on_read", False))
@@ -783,6 +851,8 @@ def main() -> None:
         force_mask_keep_three_channels=force_mask_keep_three_channels,
         force_mask_single_channel=force_mask_single_channel,
         force_mask_binary_threshold=force_mask_binary_threshold,
+        input_degrade_size=input_degrade_size,
+        input_view_indices=input_view_indices,
     )
     ds_test = None
     if test_id_list:
@@ -803,6 +873,8 @@ def main() -> None:
             force_mask_keep_three_channels=force_mask_keep_three_channels,
             force_mask_single_channel=force_mask_single_channel,
             force_mask_binary_threshold=force_mask_binary_threshold,
+            input_degrade_size=input_degrade_size,
+            input_view_indices=input_view_indices,
         )
 
     if eval_split == "test":
@@ -942,6 +1014,9 @@ def main() -> None:
                     _pick(cfg_model, "param_use_masked_field_tokens", True),
                 )
             ),
+            param_drop_fields=args.param_drop_fields or [],
+            param_noise_fields=args.param_noise_fields or [],
+            param_noise_seed=int(args.param_noise_seed),
         )
     else:
         model = LogicPhysModel(
@@ -1086,6 +1161,15 @@ def main() -> None:
         "distributed": bool(distributed),
         "world_size": int(world_size),
         "batch_size": int(args.batch_size),
+        "input_resolution": input_resolution,
+        "input_reference_resolution": input_reference_resolution,
+        "effective_model_degrade_size": input_degrade_size,
+        "input_view_indices": (
+            None if input_view_indices is None else list(input_view_indices)
+        ),
+        "param_noise_fields": list(args.param_noise_fields or []),
+        "param_drop_fields": list(args.param_drop_fields or []),
+        "param_noise_seed": int(args.param_noise_seed),
     }
     report = {
         "meta": meta,

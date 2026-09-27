@@ -44,7 +44,10 @@ from eval_abalation.field_export import (
     build_field_export_payload,
     export_field_tensors_pt,
 )
-from eval_abalation.metrics_field import aggregate_field_records, build_field_sample_record
+from eval_abalation.metrics_field import (
+    aggregate_field_records,
+    build_field_sample_record,
+)
 from eval_abalation.report_utils import write_csv, write_json, write_jsonl
 from eval_abalation.dataset_meta import load_sample_meta
 from logic_model.dataset import _coerce_force_mask_layout
@@ -84,7 +87,9 @@ def _normalize_scalar_grid(
     if arr.ndim == 2:
         arr = arr[None, :, :]
     if arr.ndim != 3:
-        raise ValueError(f"{field_name}.frames 维度错误，期望 3D，实际 {arr.shape}")
+        raise ValueError(
+            f"{field_name}.frames must be a 3D array; received shape {arr.shape}"
+        )
     x = torch.from_numpy(arr).float().unsqueeze(0).unsqueeze(0)
     if tuple(arr.shape) != (num_frames, grid_size, grid_size):
         x = F.interpolate(
@@ -108,7 +113,7 @@ def _extract_field_grids(
     for field_name in ("force_mask", "flow", "stress"):
         block = prediction.get(field_name)
         if not isinstance(block, dict):
-            raise ValueError(f"模型输出缺少对象字段: {field_name}")
+            raise ValueError(f"VLM output is missing object field: {field_name}")
         out[field_name] = _normalize_scalar_grid(
             block.get("frames"),
             field_name=field_name,
@@ -147,7 +152,9 @@ def _scalar_grid_to_bvcthw_rgb(
 ) -> torch.Tensor:
     x = torch.from_numpy(np.asarray(arr_txy, dtype=np.float32))
     x = x.unsqueeze(0).unsqueeze(0).unsqueeze(0).repeat(1, 1, 3, 1, 1, 1)
-    return _resize_bvcthw(x, target_t=target_t, target_h=target_h, target_w=target_w, mode="trilinear").clamp(0.0, 1.0)
+    return _resize_bvcthw(
+        x, target_t=target_t, target_h=target_h, target_w=target_w, mode="trilinear"
+    ).clamp(0.0, 1.0)
 
 
 def _scalar_grid_to_bvcthw_mask(
@@ -157,8 +164,15 @@ def _scalar_grid_to_bvcthw_mask(
     target_h: int,
     target_w: int,
 ) -> torch.Tensor:
-    x = torch.from_numpy(np.asarray(arr_txy, dtype=np.float32)).unsqueeze(0).unsqueeze(0).unsqueeze(0)
-    return _resize_bvcthw(x, target_t=target_t, target_h=target_h, target_w=target_w, mode="trilinear").clamp(0.0, 1.0)
+    x = (
+        torch.from_numpy(np.asarray(arr_txy, dtype=np.float32))
+        .unsqueeze(0)
+        .unsqueeze(0)
+        .unsqueeze(0)
+    )
+    return _resize_bvcthw(
+        x, target_t=target_t, target_h=target_h, target_w=target_w, mode="trilinear"
+    ).clamp(0.0, 1.0)
 
 
 def _load_gt_fields(
@@ -177,15 +191,43 @@ def _load_gt_fields(
         binary_threshold=0.5,
     ).astype(np.float32, copy=False)
     out = {
-        "stress": torch.from_numpy(np.asarray(arrays["stress"][:1], dtype=np.float32)).unsqueeze(0).contiguous(),
-        "flow": torch.from_numpy(np.asarray(arrays["flow"][:1], dtype=np.float32)).unsqueeze(0).contiguous(),
+        "stress": torch.from_numpy(np.asarray(arrays["stress"][:1], dtype=np.float32))
+        .unsqueeze(0)
+        .contiguous(),
+        "flow": torch.from_numpy(np.asarray(arrays["flow"][:1], dtype=np.float32))
+        .unsqueeze(0)
+        .contiguous(),
         "force_mask": torch.from_numpy(force_np).unsqueeze(0).contiguous(),
         "object_mask": torch.from_numpy(object_mask_np).unsqueeze(0).contiguous(),
     }
-    out["stress"] = _resize_bvcthw(out["stress"], target_t=num_frames, target_h=target_h, target_w=target_w, mode="trilinear")
-    out["flow"] = _resize_bvcthw(out["flow"], target_t=num_frames, target_h=target_h, target_w=target_w, mode="trilinear")
-    out["force_mask"] = _resize_bvcthw(out["force_mask"], target_t=num_frames, target_h=target_h, target_w=target_w, mode="nearest").clamp(0.0, 1.0)
-    out["object_mask"] = _resize_bvcthw(out["object_mask"], target_t=num_frames, target_h=target_h, target_w=target_w, mode="nearest").clamp(0.0, 1.0)
+    out["stress"] = _resize_bvcthw(
+        out["stress"],
+        target_t=num_frames,
+        target_h=target_h,
+        target_w=target_w,
+        mode="trilinear",
+    )
+    out["flow"] = _resize_bvcthw(
+        out["flow"],
+        target_t=num_frames,
+        target_h=target_h,
+        target_w=target_w,
+        mode="trilinear",
+    )
+    out["force_mask"] = _resize_bvcthw(
+        out["force_mask"],
+        target_t=num_frames,
+        target_h=target_h,
+        target_w=target_w,
+        mode="nearest",
+    ).clamp(0.0, 1.0)
+    out["object_mask"] = _resize_bvcthw(
+        out["object_mask"],
+        target_t=num_frames,
+        target_h=target_h,
+        target_w=target_w,
+        mode="nearest",
+    ).clamp(0.0, 1.0)
     return out
 
 
@@ -268,7 +310,9 @@ def _score_from_overall_rows(rows: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
     return out
 
 
-def _pred_frame_to_bgr(pred_bvcthw: torch.Tensor, *, view_idx: int, frame_idx: int, color_mode: str) -> np.ndarray:
+def _pred_frame_to_bgr(
+    pred_bvcthw: torch.Tensor, *, view_idx: int, frame_idx: int, color_mode: str
+) -> np.ndarray:
     c = int(pred_bvcthw.shape[2])
     cm = str(color_mode).strip().lower()
     if cm == "auto":
@@ -306,10 +350,14 @@ def _save_pred_video(
         (w, h),
     )
     if not writer.isOpened():
-        raise RuntimeError(f"无法创建视频写入器: {out_path}")
+        raise RuntimeError(f"cannot create video writer: {out_path}")
     try:
         for ti in range(t):
-            writer.write(_pred_frame_to_bgr(pred_bvcthw, view_idx=view_idx, frame_idx=ti, color_mode=color_mode))
+            writer.write(
+                _pred_frame_to_bgr(
+                    pred_bvcthw, view_idx=view_idx, frame_idx=ti, color_mode=color_mode
+                )
+            )
     finally:
         writer.release()
 
@@ -336,13 +384,20 @@ def _save_pred_contact_sheet(
     if t <= 0:
         return
     view_idx = max(0, min(int(view_idx), v - 1))
-    frames = [_pred_frame_to_bgr(pred_bvcthw, view_idx=view_idx, frame_idx=ti, color_mode=color_mode) for ti in range(t)]
+    frames = [
+        _pred_frame_to_bgr(
+            pred_bvcthw, view_idx=view_idx, frame_idx=ti, color_mode=color_mode
+        )
+        for ti in range(t)
+    ]
     cols = max(1, min(int(cols), len(frames)))
     rows = []
     for start in range(0, len(frames), cols):
         row = frames[start : start + cols]
         if len(row) < cols:
-            row.extend([np.zeros((h, w, 3), dtype=np.uint8) for _ in range(cols - len(row))])
+            row.extend(
+                [np.zeros((h, w, 3), dtype=np.uint8) for _ in range(cols - len(row))]
+            )
         rows.append(cv2.hconcat(row))
     sheet = rows[0] if len(rows) == 1 else cv2.vconcat(rows)
     cv2.imwrite(str(out_path), sheet)
@@ -367,12 +422,45 @@ def _export_vlm_prediction_visuals(
     flow_sheet = sample_dir / "flow_pred_sheet.png"
     force_sheet = sample_dir / "force_pred_sheet.png"
 
-    _save_pred_video(stress_pred.detach().cpu().float().contiguous(), stress_video, view_idx=view_idx, fps=fps, color_mode="rgb")
-    _save_pred_video(flow_pred.detach().cpu().float().contiguous(), flow_video, view_idx=view_idx, fps=fps, color_mode="rgb")
-    _save_pred_video(force_pred.detach().cpu().float().contiguous(), force_video, view_idx=view_idx, fps=fps, color_mode="jet")
-    _save_pred_contact_sheet(stress_pred.detach().cpu().float().contiguous(), stress_sheet, view_idx=view_idx, color_mode="rgb")
-    _save_pred_contact_sheet(flow_pred.detach().cpu().float().contiguous(), flow_sheet, view_idx=view_idx, color_mode="rgb")
-    _save_pred_contact_sheet(force_pred.detach().cpu().float().contiguous(), force_sheet, view_idx=view_idx, color_mode="jet")
+    _save_pred_video(
+        stress_pred.detach().cpu().float().contiguous(),
+        stress_video,
+        view_idx=view_idx,
+        fps=fps,
+        color_mode="rgb",
+    )
+    _save_pred_video(
+        flow_pred.detach().cpu().float().contiguous(),
+        flow_video,
+        view_idx=view_idx,
+        fps=fps,
+        color_mode="rgb",
+    )
+    _save_pred_video(
+        force_pred.detach().cpu().float().contiguous(),
+        force_video,
+        view_idx=view_idx,
+        fps=fps,
+        color_mode="jet",
+    )
+    _save_pred_contact_sheet(
+        stress_pred.detach().cpu().float().contiguous(),
+        stress_sheet,
+        view_idx=view_idx,
+        color_mode="rgb",
+    )
+    _save_pred_contact_sheet(
+        flow_pred.detach().cpu().float().contiguous(),
+        flow_sheet,
+        view_idx=view_idx,
+        color_mode="rgb",
+    )
+    _save_pred_contact_sheet(
+        force_pred.detach().cpu().float().contiguous(),
+        force_sheet,
+        view_idx=view_idx,
+        color_mode="jet",
+    )
     return {
         "sample_dir": str(sample_dir),
         "stress_pred_video": str(stress_video),
@@ -403,8 +491,12 @@ def run_field_benchmark(
     resume_from_output_root: Optional[Path],
 ) -> Dict[str, Any]:
     script_dir = physgaussian_root / "vlm_benchmark"
-    system_prompt = _load_prompt(script_dir / "prompts" / "system_prompt_field_grid.txt")
-    user_prompt_template = _load_prompt(script_dir / "prompts" / "user_prompt_video_field_grid.txt")
+    system_prompt = _load_prompt(
+        script_dir / "prompts" / "system_prompt_field_grid.txt"
+    )
+    user_prompt_template = _load_prompt(
+        script_dir / "prompts" / "user_prompt_video_field_grid.txt"
+    )
 
     tag_chain = _parse_tag_chain(vlm_tag, fallback_vlm_tags)
     active_tag_idx = 0
@@ -420,7 +512,14 @@ def run_field_benchmark(
     field_export_dir = output_root / "field_exports"
     field_metrics_dir = output_root / "field_metrics"
     pred_visual_dir = output_root / "pred_visuals"
-    for d in (reasoning_dir, predictions_dir, sample_metrics_dir, field_export_dir, field_metrics_dir, pred_visual_dir):
+    for d in (
+        reasoning_dir,
+        predictions_dir,
+        sample_metrics_dir,
+        field_export_dir,
+        field_metrics_dir,
+        pred_visual_dir,
+    ):
         d.mkdir(parents=True, exist_ok=True)
 
     completed_sample_ids = _list_completed_sample_ids(sample_metrics_dir)
@@ -448,7 +547,11 @@ def run_field_benchmark(
     num_processed = 0
 
     for action, run_dir, _params in all_runs:
-        if max_videos is not None and int(max_videos) > 0 and (existing_completed + num_processed) >= int(max_videos):
+        if (
+            max_videos is not None
+            and int(max_videos) > 0
+            and (existing_completed + num_processed) >= int(max_videos)
+        ):
             break
         sample_id = str(run_dir.name)
         if sample_id in completed_sample_ids:
@@ -488,8 +591,8 @@ def run_field_benchmark(
                     active_tag_idx += 1
                     active_tag = tag_chain[active_tag_idx]
                     print(
-                        f"[WARN] VLM 模型 {failed_tag} 可能已到额度/限流，"
-                        f"切换到 {active_tag} 并重试样本 {sample_id}: {exc}"
+                        f"[WARN] VLM {failed_tag} is unavailable; switching to "
+                        f"{active_tag} for {sample_id}: {exc}"
                     )
                     client = create_vlm_client(active_tag)
                     continue
@@ -497,7 +600,7 @@ def run_field_benchmark(
                     f"[ERROR][{active_tag}] {exc}\n",
                     encoding="utf-8",
                 )
-                print(f"[WARN] VLM 调用失败，跳过样本 {sample_id}: {exc}")
+                print(f"[WARN] VLM field prediction failed for {sample_id}: {exc}")
                 prediction = None
                 break
         if prediction is None:
@@ -571,7 +674,7 @@ def run_field_benchmark(
                 ),
             ]
         except Exception as exc:
-            print(f"[WARN] 解析或评估失败，跳过样本 {sample_id}: {exc}")
+            print(f"[WARN] field parsing or evaluation failed for {sample_id}: {exc}")
             (reasoning_dir / f"{sample_id}.txt").write_text(
                 raw_text + f"\n\n[PARSE_OR_EVAL_ERROR] {exc}\n",
                 encoding="utf-8",
@@ -589,17 +692,17 @@ def run_field_benchmark(
             fps=8,
         )
         pred_row = _sample_prediction_row(
-                sample_id=sample_id,
-                view_name=view_name,
-                action=sample_meta.action or action,
-                material=sample_meta.material_group,
-                object_name=sample_meta.object_name,
-                source_sample_dir=run_dir,
-                video_rel_path=video_rel_path,
-                used_vlm_tag=used_tag,
-                used_vlm_model=used_vlm_model,
-                prediction=prediction,
-            )
+            sample_id=sample_id,
+            view_name=view_name,
+            action=sample_meta.action or action,
+            material=sample_meta.material_group,
+            object_name=sample_meta.object_name,
+            source_sample_dir=run_dir,
+            video_rel_path=video_rel_path,
+            used_vlm_tag=used_tag,
+            used_vlm_model=used_vlm_model,
+            prediction=prediction,
+        )
         pred_row["pred_visuals"] = pred_visuals
         write_json(predictions_dir / f"{sample_id}.json", pred_row)
         write_json(
@@ -648,12 +751,14 @@ def run_field_benchmark(
         chosen_sample_ids.append(sample_id)
         used_vlm_tags.append(used_tag)
         num_processed += 1
-        print(f"[OK] 已处理样本 {num_processed}: {sample_id} [{used_tag}]")
+        print(f"[OK] processed field sample {num_processed}: {sample_id} [{used_tag}]")
 
     sample_records = _read_all_sample_metric_rows(sample_metrics_dir)
     overall_rows = aggregate_field_records(sample_records, group_fields=())
     by_action_rows = aggregate_field_records(sample_records, group_fields=("action",))
-    by_material_rows = aggregate_field_records(sample_records, group_fields=("material",))
+    by_material_rows = aggregate_field_records(
+        sample_records, group_fields=("material",)
+    )
 
     write_jsonl(field_metrics_dir / "sample_records.jsonl", sample_records)
     write_csv(field_metrics_dir / "overall.csv", overall_rows)
@@ -695,7 +800,9 @@ def run_field_benchmark(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="VLM dense field benchmark for force/flow/stress.")
+    parser = argparse.ArgumentParser(
+        description="VLM dense field benchmark for force/flow/stress."
+    )
     parser.add_argument(
         "--physgaussian_root",
         type=str,
@@ -713,7 +820,9 @@ def main() -> None:
     parser.add_argument("--max_videos", type=int, default=100)
     parser.add_argument("--random_sample", action="store_true")
     parser.add_argument("--split_json", type=str, default="")
-    parser.add_argument("--eval_split", type=str, default="test", choices=("train", "test"))
+    parser.add_argument(
+        "--eval_split", type=str, default="test", choices=("train", "test")
+    )
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--grid_size", type=int, default=8)
     parser.add_argument("--num_frames", type=int, default=64)
@@ -728,13 +837,17 @@ def main() -> None:
     split_json = (
         Path(args.split_json).expanduser().resolve()
         if str(args.split_json).strip()
-        else (phys_root / "auto_output" / "dataset_5000" / "train_test_split.cleaned.json")
+        else (
+            phys_root / "auto_output" / "dataset_5000" / "train_test_split.cleaned.json"
+        )
     )
     run_field_benchmark(
         physgaussian_root=phys_root,
         output_root=output_root,
         vlm_tag=args.vlm_tag,
-        fallback_vlm_tags=[x.strip() for x in str(args.fallback_vlm_tags).split(",") if x.strip()],
+        fallback_vlm_tags=[
+            x.strip() for x in str(args.fallback_vlm_tags).split(",") if x.strip()
+        ],
         max_videos=args.max_videos,
         random_sample=args.random_sample,
         split_json=split_json,
@@ -746,7 +859,10 @@ def main() -> None:
         target_h=args.target_h,
         target_w=args.target_w,
         resume_from_output_root=(
-            phys_root / "vlm_benchmark" / "output" / str(args.resume_from_output_tag).strip()
+            phys_root
+            / "vlm_benchmark"
+            / "output"
+            / str(args.resume_from_output_tag).strip()
             if str(args.resume_from_output_tag).strip()
             else None
         ),

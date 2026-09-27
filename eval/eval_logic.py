@@ -44,6 +44,13 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--sample_mode", type=str, choices=("random", "first"), default="first")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--device", type=str, default="cuda")
+    ap.add_argument(
+        "--param_drop_fields",
+        nargs="*",
+        choices=("stress", "flow", "contact", "force"),
+        default=None,
+        help="仅在参数回归链中将指定物理场置零",
+    )
     ap.add_argument("--run_visuals", action="store_true", help="额外调用 logic_model.eval_visual 生成散点图/视频")
     ap.add_argument("--save_field_videos", action="store_true", help="与 --run_visuals 联用")
     ap.add_argument("--max_field_video_samples", type=int, default=8)
@@ -142,6 +149,14 @@ def _build_eval_dataset(
         force_mask_single_channel=force_mask_single_channel,
         force_mask_binary_threshold=force_mask_binary_threshold,
     )
+    # Tiny smoke subsets may not contain all training actions, but released
+    # checkpoints use the fixed five-action classifier head.
+    if ds.num_actions < 5:
+        ds.action_to_id = {
+            name: index
+            for index, name in enumerate(("bend", "drop", "press", "shear", "stretch"))
+        }
+        ds.id_to_action = {value: key for key, value in ds.action_to_id.items()}
     return ds, ds, chosen_ids, meta_map
 
 
@@ -233,6 +248,9 @@ def _build_model_from_checkpoint(
                     _pick(cfg_model, "param_use_masked_field_tokens", True),
                 )
             ),
+            # This is an evaluation override, so the current config must take
+            # precedence over checkpoint metadata.
+            param_drop_fields=cfg_model.get("param_drop_fields", []),
         )
     else:
         model = LogicPhysModel(
@@ -401,6 +419,8 @@ def main() -> None:
         out_dir.mkdir(parents=True, exist_ok=True)
 
     cfg = _load_config(args.config)
+    if args.param_drop_fields is not None:
+        cfg.setdefault("model", {})["param_drop_fields"] = list(args.param_drop_fields)
     ds, eval_ds, chosen_ids, meta_map = _build_eval_dataset(cfg=cfg, args=args)
     eval_sampler: Optional[DistributedSampler] = None
     if distributed:

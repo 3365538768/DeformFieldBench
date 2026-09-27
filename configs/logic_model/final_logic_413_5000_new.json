@@ -104,7 +104,7 @@
     "debug_overfit": false,
     "use_param_groups": false,
     "torchhub_prewarm": true,
-    "torchhub_require_cache": true,
+    "torchhub_require_cache": false,
     "torchhub_log_dir": false,
     "use_amp": true,
     "prefetch_factor": 2,

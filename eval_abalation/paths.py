@@ -10,10 +10,14 @@ DATASET_ROOT = PHYS_ROOT / "auto_output" / "dataset_5000"
 DATASET_TRAIN_ROOT = DATASET_ROOT / "train"
 SPLIT_JSON = DATASET_ROOT / "train_test_split.cleaned.json"
 
-LOGIC_BASELINE_CONFIG = PHYS_ROOT / "logic_model" / "configs" / "final_logic_413_5000_new.json"
+LOGIC_BASELINE_CONFIG = (
+    PHYS_ROOT / "configs" / "logic_model" / "final_logic_413_5000_new.json"
+)
 LOGIC_BASELINE_OUTPUT = PHYS_ROOT / "logic_model" / "output" / "output_413_5000_new"
 LOGIC_BASELINE_CHECKPOINT_DIR = LOGIC_BASELINE_OUTPUT / "checkpoints"
-MY_MODEL_BASE_CONFIG = PHYS_ROOT / "my_model" / "configs.json"
+MY_MODEL_BASE_CONFIG = (
+    PHYS_ROOT / "configs" / "my_model" / "train_dataset_5000_param_only.json"
+)
 
 GENERATED_CONFIG_DIR = EVAL_ABLATION_ROOT / "generated_configs"
 OUTPUT_ROOT = EVAL_ABLATION_ROOT / "outputs"
@@ -29,7 +33,7 @@ MY_MODEL_COMPARE_DIR = COMPARE_DIR / "my_model"
 VLM_COMPARE_DIR = COMPARE_DIR / "vlm"
 FINAL_TABLE_DIR = OUTPUT_ROOT / "final_tables"
 
-USAGE_DOC = EVAL_ABLATION_ROOT / "使用说明.md"
+USAGE_DOC = PHYS_ROOT / "README.md"
 
 
 def ensure_parent(path: Path) -> Path:

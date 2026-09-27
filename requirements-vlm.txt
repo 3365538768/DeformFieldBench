@@ -1,4 +1,4 @@
-dashscope
-openai
-opencv-python-headless
-numpy
+-r requirements-train.txt
+dashscope==1.25.17
+openai==2.32.0
+volcengine-python-sdk[ark]==5.0.42

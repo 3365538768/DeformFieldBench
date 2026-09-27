@@ -22,7 +22,7 @@ class DashscopeImageGenerationClient:
         model: str,
         base_url: str,
         api_key_env: str,
-        max_frames: int = 64,
+        max_frames: int = 4,
         n: int = 1,
         size: str = "512*512",
         watermark: bool = False,
@@ -165,7 +165,9 @@ class DashscopeImageGenerationClient:
     @staticmethod
     def _download_image(image_url: str, output_path: Path) -> None:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        req = urllib.request.Request(image_url, headers={"User-Agent": "linrui-vlm-benchmark/1.0"})
+        req = urllib.request.Request(
+            image_url, headers={"User-Agent": "deformfieldbench-vlm/1.0"}
+        )
         with urllib.request.urlopen(req, timeout=300) as resp, output_path.open("wb") as f:
             while True:
                 chunk = resp.read(1024 * 1024)

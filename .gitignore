@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.so
+.torch/
+.venv/
+
+auto_output/
+output_checkpoints/
+outputs/
+logic_model/output/
+vlm_benchmark/output/
+
+pretrained/*.pt
+pretrained/*.pth
+*.egg-info/
+build/
+dist/
