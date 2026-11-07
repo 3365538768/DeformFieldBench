@@ -40,7 +40,8 @@ function renderOptimization(state){
   const audit=o.field_audit,local=o.local_cache;
   $('optimization-evidence').innerHTML+=(local?`<br>G1b 本地缓存：${integer(local.files_verified_sha256)} 个文件 SHA256 全部一致 · ${bytes(local.bytes)}；原 AFS 缓存保留。`:'')+(audit?`<br>G1 场预测审计：接触 IoU ${num(audit.contact_iou*100,2)}% · 召回 ${num(audit.contact_recall*100,2)}%；视觉流场 / 应力图相对训练常量改善 ${num(audit.flow.relative_improvement*100,1)}% / ${num(audit.stress.relative_improvement*100,1)}%。`:'');
   const observed=followup?.best_observed;
-  $('feedback').innerHTML=(feedback?`<strong>G1 反馈：</strong>${explanation} 单种子诊断。<br>`:'')+(followup?`<strong>G1b：</strong>${esc(followup.status)}${observed?' · 暂时最佳 '+esc(observed)+' / '+num(followup.results[observed].best_material_mae,4):''}。按验证集调参，完成后审查匹配对照与多种子；全量训练仍暂缓。<br>`:'')+o.events.slice(-4).reverse().map(e=>`${clock(e.time_unix)} · ${esc(e.message)}`).join('<br>');
+  const routes={collecting_evidence:'正在收集匹配对照结果',repair_fields_and_local_temporal_bridge:'当前配置未通过，下一步修复场预测并设计局部时序桥',repeat_independent_seeds:'候选通过诊断阈值，下一步做独立种子复验',add_matched_feature_control:'先补齐同设置的特征反馈控制',repair_failed_jobs:'先修复异常任务再验收'};
+  $('feedback').innerHTML=(feedback?`<strong>G1 反馈：</strong>${explanation} 单种子诊断。<br>`:'')+(followup?`<strong>G1b：</strong>${esc(stageName[followup.status]||followup.status)}${observed?' · 最低验证分 '+esc(observed)+' / '+num(followup.results[observed].best_material_mae,4):''}。${esc(routes[followup.route]||followup.route)}；按验证集调参，全量训练仍暂缓。<br>`:'')+o.events.slice(-4).reverse().map(e=>`${clock(e.time_unix)} · ${esc(e.message)}`).join('<br>');
 }
 
 async function sendControl(id,action){
