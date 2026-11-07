@@ -1,0 +1,81 @@
+"""Common SI fixture, mesh and consistent surface loads for engine calibration."""
+import hashlib
+import itertools
+import json
+from pathlib import Path
+import time
+import uuid
+
+import numpy as np
+
+
+def digest(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+
+
+def block_mesh(cells, dimensions):
+    shape = tuple(n + 1 for n in cells)
+    points = np.stack(np.meshgrid(*(np.linspace(0, d, n + 1) for n, d in zip(cells, dimensions)),
+                                 indexing='ij'), -1).reshape(-1, 3)
+    tets = []
+    for cell in itertools.product(*(range(n) for n in cells)):
+        for permutation in itertools.permutations(range(3)):
+            vertices = [np.array(cell)]
+            for axis in permutation:
+                vertex = vertices[-1].copy(); vertex[axis] += 1; vertices.append(vertex)
+            tet = [int(np.ravel_multi_index(tuple(v), shape)) for v in vertices]
+            if np.linalg.det((points[tet[1:]] - points[tet[0]]).T) < 0:
+                tet[1], tet[2] = tet[2], tet[1]
+            tets.append(tet)
+    return points, np.array(tets, dtype=np.int32)
+
+
+def tip_weights(points, tets, length):
+    """Linear FEM traction: each exterior tip triangle contributes area / 3."""
+    faces = {}
+    for tet in tets:
+        for face in itertools.combinations(tet, 3):
+            key = tuple(sorted(int(i) for i in face)); faces[key] = faces.get(key, 0) + 1
+    weights = np.zeros(len(points))
+    for face, count in faces.items():
+        xyz = points[list(face)]
+        if count == 1 and np.all(np.isclose(xyz[:, 0], length, rtol=0, atol=1e-12)):
+            area = np.linalg.norm(np.cross(xyz[1] - xyz[0], xyz[2] - xyz[0])) / 2
+            weights[list(face)] += area / 3
+    if weights.sum() <= 0:
+        raise ValueError('Missing exterior traction face')
+    return weights / weights.sum()
+
+
+def atomic(path, value):
+    path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name+'.'+uuid.uuid4().hex+'.tmp')
+    tmp.write_text(json.dumps(value, indent=2), encoding='utf-8'); tmp.replace(path)
+
+
+def wait_if_paused(output):
+    """Cooperative pause at case boundaries; no Torch dependency in engine envs."""
+    was_paused = False
+    while True:
+        paused = False
+        for path in (Path('docs/OPTIMIZATION_CONTROL.json'), Path(output) / 'control.json'):
+            if path.exists():
+                value = json.loads(path.read_text())
+                paused |= value.get('desired', value.get('action')) in ('paused', 'pause')
+        if not paused:
+            if was_paused:
+                atomic(Path(output) / 'runtime.json', {'phase': 'running', 'updated_unix': time.time()})
+            return
+        was_paused = True
+        atomic(Path(output) / 'runtime.json', {'phase': 'paused', 'updated_unix': time.time()})
+        time.sleep(2)
+
+
+def provenance(case):
+    return dict(protocol_sha256=digest({'load': 'constant tip traction', 'observable': 'settled displacement',
+                                       'strain_regime': 'small', 'temperature': 'unspecified isothermal'}),
+                fixture_geometry_sha256=digest({'dimensions_m': case['dimensions_m'], 'cells': case['cells']}),
+                length_scale_m=case['dimensions_m'][0],
+                load_history_sha256=digest({'force_n': case['force_n'], 'axis': case['axis'], 'history': 'constant'}),
+                boundary_sha256=digest({'clamped': 'x=0 all displacement components'}),
+                observable='settled full nodal displacement', units='m')

@@ -1,20 +1,25 @@
 {
-  "status": "prototype_tested",
+  "status": "controlled_pilot_complete",
   "tests_passed": 36,
-  "training_integration": "多引擎训练尚未集成；现有训练保持单参数域",
+  "training_integration": "双引擎受控场 324 案例 / 三种子 9 组已完成；尚未接入 RGB 视频训练器",
   "implemented": [
     "native-domain label guard in manifest loader",
     "shared response / domain-specific native head prototype",
     "train-only per-domain codec provenance",
     "checkpoint domain-schema verification",
-    "matched-response comparison guard"
+    "matched-response comparison guard",
+    "Warp 1.11.1 / UIPC 0.0.29 matched SI block calibration passed",
+    "resumable case generation and web pause/resume",
+    "three-seed native-only / shared-response / paired-alignment training loop",
+    "180 held-action native-parameter solver replays incl. classical inverse FEM",
+    "20 SI load/mesh visibility audits; weak original signal identified"
   ],
   "not_completed": [
-    "cross-engine calibrated mapping",
-    "multi-engine optimizer/training loop",
-    "learned engine-invariant representation",
-    "online fitting benchmark"
+    "verified general engine-invariant representation",
+    "RGB video / cross-engine integrated training",
+    "online fitting benchmark",
+    "mixed-material/contact/finite-strain calibration"
   ],
-  "dinov3": "User requested access; wait for user notification before gated download",
-  "documentation": "docs/CROSS_ENGINE_MATERIAL_ADAPTER_ZH.md"
+  "dinov3": "Authorized weights verified; matched G1f completed without unique predicted-field gain",
+  "documentation": "docs/G2_CROSS_ENGINE_PROTOCOL_ZH.md"
 }

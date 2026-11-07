@@ -270,6 +270,10 @@ def main():
             elif j['kind'] == 'cache_stage':
                 receipt = read(ROOT/j['status_file'], {})
                 j['state'] = 'finished' if receipt.get('status')=='complete' else 'failed'
+            elif j['kind'] == 'engine_pipeline':
+                receipt = read(ROOT/j['output']/'status.json', {})
+                j['state'] = 'finished' if receipt.get('status')=='complete' else 'failed'
+                j['stop_reason'] = receipt.get('reason')
             else:
                 j['state'] = 'finished' if code == 0 or code is None and (ROOT / f"runs/g0_benchmark/{j['id']}/summary.json").exists() else 'failed'
             j['exit_code'] = code; event(f"{j['id']}：{j['state']} {j.get('stop_reason') or ''}")
@@ -285,6 +289,10 @@ def main():
         anchored = [j for j in jobs if j['stage'] == 'G1e']
         strong = [j for j in jobs if j['stage'] == 'G1f']
         strong_result = strong_backbone_results(strong) if strong else None
+        engine_jobs = [j for j in jobs if j['stage'] in {'G2','G2r','G3v'}]
+        engine_progress = read('docs/G2_ENGINE_PROGRESS.json', {})
+        if strong_result and strong_result['status'] in {'complete','failed'} and (previous.get('strong_backbone') or {}).get('status') != strong_result['status']:
+            event('G1f 反馈：' + strong_result['route'])
         diagnostic = read('docs/G1_DIAGNOSTIC_RESULTS.json')
         if not diagnostic and all(j['state'] in {'finished', 'failed'} for j in diagnostics):
             diagnostic = diagnostic_results(jobs); event('G1 反馈：' + diagnostic['route'])
@@ -315,6 +323,7 @@ def main():
                 memory = [int(s.strip()) for s in subprocess.check_output(['nvidia-smi', '--query-gpu=memory.used', '--format=csv,noheader,nounits'], text=True).splitlines()]
                 eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else []) + (locals_ if followup and followup['status'] == 'complete' else []) + (forced if local_bridge and local_bridge['status'] == 'complete' else []) + (anchored if forced_bridge and forced_bridge['status'] == 'complete' else [])
                 eligible += strong if anchored_bridge and anchored_bridge['status'] == 'complete' else []
+                eligible += engine_jobs if strong_result and strong_result['status'] == 'complete' else []
                 for j in eligible:
                     control = read(ROOT / j['output'] / 'control.json', {})
                     if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused' or not dependencies_finished(j, jobs):
@@ -336,7 +345,10 @@ def main():
             {'id': 'G1', 'title': '场信息上界与因果诊断', 'state': 'failed' if cache_task['state'] == 'failed' or any(j['state'] == 'failed' for j in diagnostics) else 'complete' if diagnostic else 'running' if cache_task['state'] != 'queued' else 'queued',
              'completed': sum(j['state'] == 'finished' for j in diagnostics), 'total': 6,
              'detail': '512 train / 128 val，物体隔离，单种子；含两组特权真场诊断'},
-            {'id': 'G2', 'title': '引擎标定与新动作响应', 'state': 'planned', 'detail': '待 G1 判断后实施；尚无实际响应结果'},
+            {'id': 'G2', 'title': '双引擎标定与共享响应适配',
+             'state': engine_progress.get('status', 'queued' if engine_jobs else 'planned'),
+             'completed': engine_progress.get('completed', 0), 'total': engine_progress.get('total', 0),
+             'detail': engine_progress.get('detail', '同夹具 Warp FEM / libuipc：先标定再生成受控响应矩阵；不混合原生参数。')},
             {'id': 'G3', 'title': '度量场、真实数据与局部时序桥', 'state': 'planned', 'detail': '按上界诊断决定优先修数据或模型'},
             {'id': 'G4', 'title': '多种子与强方法对照', 'state': 'planned', 'detail': '冻结协议后进行，不能将诊断上界当作部署结果'}]
         if followups:
@@ -361,6 +373,16 @@ def main():
                 'state':'failed' if any(j['state']=='failed' for j in strong) else 'complete' if all(j['state']=='finished' for j in strong) else 'running',
                 'completed':sum(j['state']=='finished' for j in strong),'total':len(strong),
                 'detail':'授权权重与特征一致性校验 → 独立缓存 → DINOv3 RGB 基线 → 冻结同一基线的 D/G/O/S；保持早停与暂停/继续。'})
+        replay=read('docs/G2_ENGINE_REPLAY.json', {})
+        if any(j['stage']=='G2r' for j in jobs):
+            stages.insert(-2, {'id':'G2r','title':'预测参数回放与经典逆 FEM',
+                'state':replay.get('status','queued'),'completed':replay.get('completed',0),'total':replay.get('total',180),
+                'detail':replay.get('detail','相同完整 X/Y 位移观测；未见 Z 载荷的各引擎实际回放。')})
+        visibility=read('docs/G3_FORCE_VISIBILITY.json', {})
+        if any(j['stage']=='G3v' for j in jobs):
+            stages.insert(-1, {'id':'G3v','title':'视频可观测性与载荷/网格审计',
+                'state':visibility.get('status','queued'),'completed':visibility.get('completed',0),'total':visibility.get('total',20),
+                'detail':visibility.get('detail','按真实 SI 形变筛查理想相机像素运动，不把可视化放大当视频监督。')})
         for j in jobs:
             j['control'] = read(ROOT / j['output'] / 'control.json', {'desired': 'running'})
             j['runtime'] = read(ROOT / j['output'] / 'runtime.json', {})
@@ -372,6 +394,7 @@ def main():
                  'diagnostic': diagnostic, 'followup': followup, 'local_bridge': local_bridge,
                  'forced_bridge': forced_bridge, 'anchored_bridge': anchored_bridge, 'events': events,
                  'strong_backbone': strong_result, 'strong_cache': read('docs/G1F_CACHE_STATUS.json'),
+                 'engine_progress': engine_progress,
                  'stop_policy': plan['stop_policy']}
         atomic('docs/OPTIMIZATION_PROGRESS.json', state)
         previous = state

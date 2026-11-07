@@ -1,0 +1,53 @@
+{
+  "status": "complete",
+  "results": {
+    "B_rgb_only": {
+      "state": "finished",
+      "best_material_mae": 0.8054503357129951,
+      "initial_mae": null,
+      "best_trained_mae": 0.8054503357129951,
+      "best_epoch": 12,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_local_fields": {
+      "state": "finished",
+      "best_material_mae": 0.8025261577180869,
+      "initial_mae": 0.8054503357129951,
+      "best_trained_mae": 0.8025261577180869,
+      "best_epoch": 8,
+      "stop_reason": "validation_material_plateau"
+    },
+    "G_local_features": {
+      "state": "finished",
+      "best_material_mae": 0.8024597931095551,
+      "initial_mae": 0.8054503357129951,
+      "best_trained_mae": 0.8024597931095551,
+      "best_epoch": 7,
+      "stop_reason": "validation_material_plateau"
+    },
+    "O_local_oracle": {
+      "state": "finished",
+      "best_material_mae": 0.6903227797909748,
+      "initial_mae": 0.8054503357129951,
+      "best_trained_mae": 0.6903227797909748,
+      "best_epoch": 24,
+      "stop_reason": "epochs_complete"
+    },
+    "S_local_shuffled": {
+      "state": "finished",
+      "best_material_mae": 0.8019458471737846,
+      "initial_mae": 0.8054503357129951,
+      "best_trained_mae": 0.8019458471737846,
+      "best_epoch": 6,
+      "stop_reason": "validation_material_plateau"
+    }
+  },
+  "field_fit": null,
+  "original_rgb_mae": 0.8054503357129951,
+  "route": "review_field_fit_and_data_targets",
+  "passes_2_percent_routing_threshold": false,
+  "resume_full_pair": false,
+  "note": "Matched DINOv3 RGB warm start; same 512/128 split and seed 17. Test untouched. No automatic full-budget promotion.",
+  "updated_unix": 1794058041.4109914,
+  "backbone": "dinov3_vitl16"
+}

@@ -1,0 +1,18 @@
+{
+  "dimensions_m": [
+    0.04,
+    0.02,
+    0.02
+  ],
+  "cells": [
+    8,
+    4,
+    4
+  ],
+  "young_pa": 20000.0,
+  "poisson": 0.3,
+  "force_n": 0.0002,
+  "axis": 1,
+  "dt_seconds": 0.02,
+  "steps": 200
+}

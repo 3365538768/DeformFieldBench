@@ -1,0 +1,31 @@
+{
+  "samples": 128,
+  "constant_fit_split": "train",
+  "constant_fit_samples": 512,
+  "constant_channel_means": [
+    0.006551716476678848,
+    0.1093803197145462,
+    0.10095132142305374,
+    0.12578661739826202,
+    0.3190654218196869,
+    0.40931856632232666,
+    0.4042494595050812
+  ],
+  "contact_positive_fraction": 0.008178036229140094,
+  "contact_iou": 0.0617163539954532,
+  "contact_recall": 0.9951196603435911,
+  "contact_precision": 0.06173503958197092,
+  "manifest_sha256": "2d13b51c01b7808277a467ab566c120b9e495dae998249dd7e97734d76cf3f6b",
+  "checkpoint": "runs/g1f_D_local_fields_seed17/best_material.pt",
+  "note": "Validation-only diagnostic of visual encodings; constant fitted on train only. Not SI physics or test performance.",
+  "flow": {
+    "predicted_mae": 0.15666543033040284,
+    "train_constant_mae": 0.14070203543062387,
+    "relative_improvement": -0.11345532316517248
+  },
+  "stress": {
+    "predicted_mae": 0.18277343839117904,
+    "train_constant_mae": 0.197871624339639,
+    "relative_improvement": 0.0763029363045229
+  }
+}

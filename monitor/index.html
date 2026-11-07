@@ -7,6 +7,7 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
+  <script src="/simulation.js" defer></script>
 </head>
 <body>
   <main class="shell">
@@ -18,10 +19,34 @@
     <div id="notice" class="notice" role="status" aria-live="polite">通过本机 SSH 连接 A800，正在读取资源与实验状态。</div>
     <section class="overview" id="overview" aria-label="资源总览"><div class="stat skeleton">正在获取实时指标…</div></section>
 
+    <section class="section" id="simulation-preview" aria-label="新仿真数据可视化">
+      <div class="section-heading"><div><span class="eyebrow">SIMULATION DATA / ACTUAL SOLVER OUTPUT</span><h2>新仿真数据可视化</h2></div><button id="sim-refresh" type="button">刷新案例</button></div>
+      <div class="sim-toolbar panel">
+        <label>数据阶段 <select id="sim-source"><option value="G2">G2 · 双引擎匹配数据</option><option value="G3v">G3v · 可见形变载荷审计</option><option value="all">全部案例</option></select></label>
+        <label>引擎筛选 <select id="sim-engine"><option value="all">两种引擎</option value="uipc">libuipc · 实际轨迹</option><option value="warp">Warp FEM · 静态解</option></select></label>
+        <label class="sim-case-label">案例 <select id="sim-case" aria-label="选择仿真案例"></select></label>
+        <label><input id="sim-compare" type="checkbox" checked> 对照匹配引擎</label>
+        <label><input id="sim-rest" type="checkbox" checked> 原始轮廓</label>
+        <button id="sim-reset" type="button">重置视角</button>
+      </div>
+      <p id="sim-status" class="protocol" role="status" aria-live="polite">正在读取已生成的仿真案例…</p>
+      <div id="sim-views" class="sim-views">
+        <article class="panel sim-view"><div class="panel-heading"><h3 id="sim-title-a">仿真形变</h3><span id="sim-type-a" class="muted"></span></div><canvas id="sim-canvas-a" aria-label="仿真物体三维形变，可拖动旋转和滚轮缩放"></canvas><div id="sim-meta-a" class="chart-note"></div></article>
+        <article id="sim-pane-b" class="panel sim-view"><div class="panel-heading"><h3 id="sim-title-b">匹配引擎</h3><span id="sim-type-b" class="muted"></span></div><canvas id="sim-canvas-b" aria-label="相同夹具的另一引擎三维形变"></canvas><div id="sim-meta-b" class="chart-note"></div></article>
+      </div>
+      <div class="sim-toolbar panel sim-playback">
+        <button id="sim-play" type="button" disabled>播放实际轨迹</button>
+        <label class="sim-time-label">轨迹位置 <input id="sim-time" type="range" min="0" max="25" value="25" step="1" disabled></label><output id="sim-time-label">静态解</output>
+        <label>形变放大 <input id="sim-amplify" type="range" min="0" max="3" step="0.01" value="2.3"></label><output id="sim-amplify-label">200×</output>
+      </div>
+      <div class="sim-legend"><span>实际位移模长（m）</span><span>0</span><span class="sim-colorbar"></span><span id="sim-color-max">—</span><span>红点：固定边界 · 灰线：初始几何</span></div>
+      <p class="chart-note">拖动物体旋转，滚轮缩放。颜色和数值始终使用真实 SI 位移，形变放大仅影响显示。libuipc 播放保存的实际求解帧；Warp 仅展示静态解，不生成虚构运动。当前数据是已知载荷下的小形变长方体，尚未包含真实物体、接触或复合材料。</p>
+    </section>
+
     <section class="section" aria-label="优化阶段与控制">
       <div class="section-heading"><div><span class="eyebrow">OPTIMIZATION & CHECKPOINT CONTROL</span><h2>优化进度与实验控制</h2></div><div class="top-actions"><button id="pause-all" type="button" disabled>暂停全部优化实验</button><button id="resume-all" type="button" disabled>继续全部优化实验</button></div></div>
       <p id="control-status" class="protocol" role="status" aria-live="polite">正在读取优化队列…</p>
-      <p class="chart-note">暂停在当前轮检查点完成后生效，随后释放 GPU；继续会恢复权重、优化器与随机状态。预热监控场误差，联合阶段连续多轮无实质改善会自动早停。</p>
+      <p class="chart-note">训练在完整检查点暂停并释放 GPU；引擎任务在完整案例边界暂停、保留进程状态。继续会恢复对应任务。预热监控场误差，联合阶段连续多轮无实质改善会自动早停。</p>
       <div id="stages" class="stage-grid"></div>
       <div id="optimization-evidence" class="protocol"></div>
       <div id="queue" class="queue"></div>

@@ -80,7 +80,7 @@ DINOv3 的官方权重需要按 Meta 的许可/访问流程取得，再放入配
 
 ## 公平实验
 
-G1–G1e 已完成，预测场尚无独有收益。G1e 修复门值整体塌缩及常量捷径后，真场诊断 MAE 降至 0.67557；预测场 0.78649、等容量特征控制 0.77761。BCE+Dice 配对结果为 0.78008 / 0.77713，仍未通过验收。网页默认显示正在执行的 G1f DINOv3 骨干对照，包含独立缓存、真实数据与引擎校准进度，支持暂停/继续和停滞早停；不自动重启旧全量训练。见 [G1f 执行说明](docs/G1F_DINOV3_EXECUTION_ZH.md)、[G1e 完成反馈与数据升级](docs/G1E_FEEDBACK_AND_DATA_UPGRADE_ZH.md)、[跨引擎 adapter 方案及实现边界](docs/CROSS_ENGINE_MATERIAL_ADAPTER_ZH.md)。
+G1–G1e 已完成，预测场尚无独有收益。G1e 修复门值整体塌缩及常量捷径后，真场诊断 MAE 降至 0.67557；预测场 0.78649、等容量特征控制 0.77761。BCE+Dice 配对结果为 0.78008 / 0.77713，仍未通过验收。G1f DINOv3 匹配对照已完成：预测场 0.802526、等容量特征 0.802460、RGB 0.805450，未获得场桥独有收益。已转向 G2 双引擎 SI 响应矩阵与三种子适配控制，网页显示实际进度并支持暂停/继续，新增双引擎三维位移预览与实际求解轨迹播放。见 [G1f 反馈](docs/G1F_FEEDBACK_ZH.md) 和 [G2 协议](docs/G2_CROSS_ENGINE_PROTOCOL_ZH.md)。不自动重启旧全量训练。见 [G1f 执行说明](docs/G1F_DINOV3_EXECUTION_ZH.md)、[G1e 完成反馈与数据升级](docs/G1E_FEEDBACK_AND_DATA_UPGRADE_ZH.md)、[跨引擎 adapter 方案及实现边界](docs/CROSS_ENGINE_MATERIAL_ADAPTER_ZH.md)。
 
 `C_aux_no_feedback` 对 `D_field_bridge` 是首要对照；`E_prior_direct` 对 `F_prior_field` 是静态先验融合对照。生成器提供 3 seeds × 6 variants。后两组必须提供独立静态模型的预测和来源信息，缺失时拒绝训练。禁止把 GT 参数作为先验填充。
 
@@ -100,7 +100,7 @@ python scripts/bootstrap_object_ci.py runs/C/eval_test/predictions.jsonl runs/D/
 
 `fieldbridge.simulation.EngineAdapter` 规定 SI 位置、时间、接触力、能量和引擎版本。`scripts/calibrate_uipc.py`、`scripts/calibrate_uipc_beam.py` 运行实际 CUDA FEM，保留原生失败与显式系数修正后的校准结果；这尚不是完整数据生成后端。
 
-`fieldbridge.engine_domains` 提供引擎/版本/本构/系数/数值协议/单位域和专属参数头原型。现有单头训练遇到多个原生标签域会拒绝混合；共享响应、跨引擎映射及相对材质监督尚未集成训练。不同引擎的同名 GT 不默认等价。
+`fieldbridge.engine_domains` 提供引擎/版本/本构/系数/数值协议/单位域和专属参数头原型。现有单头训练遇到多个原生标签域会拒绝混合；G2 已接入独立的受控场训练器：共享场编码器、训练集共享响应辅助、匹配对齐和引擎原生系数头。两个实际引擎的标定已通过，324 个案例和 9 组三种子训练已完成，180 次未见载荷回放和 20 次视频可见性求解已完成；尚未接入 RGB 视频主训练器。不同引擎的同名 GT 不默认等价。
 
 ## 代码来源
 

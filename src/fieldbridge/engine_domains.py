@@ -2,7 +2,8 @@
 
 Equal parameter names do not establish physical equivalence. The current
 single-codec trainer rejects heterogeneous native domains; the adapter below is
-an independently tested building block, not an integrated multi-engine trainer.
+used by the independent G2 observed-field pilot. The RGB video trainer still
+requires one native parameter domain; no general engine invariance is assumed.
 """
 from dataclasses import asdict, dataclass
 import hashlib
@@ -68,7 +69,7 @@ def validate_single_parameter_domain(rows):
 
 
 class EngineConditionedHeads(nn.Module):
-    """Prototype: shared response embedding plus separate native parameter heads.
+    """Shared response embedding plus separate native parameter heads.
 
     Caller must provide train-only normalization per domain and explicit masked
     supervision. Engine ID selects a native head; it is NOT an input to the shared

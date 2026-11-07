@@ -1,0 +1,30 @@
+{
+  "tests_passed": 44,
+  "test_seconds": 24.43,
+  "existing_fork_warnings": 8,
+  "javascript_syntax": "passed",
+  "pause_resume_test": {
+    "interface": "localhost web control API",
+    "paused_case_count": 112,
+    "observed_phase": "paused",
+    "resumed_case_count": 140,
+    "pause_ok": true,
+    "resume_ok": true
+  },
+  "note": "Actual A800 tests and web API pause/resume; no test split used",
+  "preview_cases": 344,
+  "actual_uipc_preview_frames": 26,
+  "static_warp_preview_frames": 1,
+  "preview_arbitrary_path_rejected_http": 409,
+  "browser_console_errors": 0,
+  "preview_case_sources": {
+    "G2": 324,
+    "G3v": 20
+  },
+  "post_extension_regression": {
+    "passed": 10,
+    "seconds": 0.35
+  },
+  "g2_replays_completed": 180,
+  "g3_visibility_solves_completed": 20
+}

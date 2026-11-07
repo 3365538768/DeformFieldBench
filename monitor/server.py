@@ -6,10 +6,12 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
 import secrets
+import re
 from pathlib import Path
 import subprocess
 import threading
 import time
+from urllib.parse import parse_qs, urlsplit
 
 HERE = Path(__file__).resolve().parent
 
@@ -31,6 +33,34 @@ class Monitor:
         self.collecting = False
         self.previous = None
         self.control_token = secrets.token_urlsafe(32)
+        self.preview_cache = {}
+
+    def simulation(self, identifier):
+        if identifier and not re.fullmatch(r'(warp|uipc)_[0-9a-f]{20}',identifier):
+            raise ValueError('案例 ID 不合法')
+        with self.lock:
+            cached=self.preview_cache.get(identifier)
+            if cached and time.time()-cached[0] < (15 if not identifier else 3600):
+                return cached[1]
+        ssh = str(Path(os.environ.get('WINDIR', 'C:/Windows')) / 'System32/OpenSSH/ssh.exe') if os.name=='nt' else 'ssh'
+        # Send only the case ID as data. All paths are allowlisted on the server.
+        script=(HERE/'simulation_remote.py').read_text(encoding='utf-8')
+        payload=script+'\n'
+        payload=payload.replace("json.loads(sys.stdin.read())",repr({'case':identifier}))
+        result=subprocess.run([ssh,'-T','-o','BatchMode=yes','-o','ClearAllForwardings=yes',
+            '-o','ConnectTimeout=8',self.host,
+            '/mnt/afs_engine/linrui/rsi_real_test/.venv/bin/python -'],input=payload,
+            capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=40,
+            creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
+        lines=[line for line in result.stdout.splitlines() if line.startswith('{')]
+        if result.returncode or not lines:
+            raise ValueError('无法读取已登记的仿真案例，请检查 SSH 或案例文件')
+        value=json.loads(lines[-1])
+        with self.lock:
+            if len(self.preview_cache)>12:
+                self.preview_cache.pop(next(iter(self.preview_cache)))
+            self.preview_cache[identifier]=(time.time(),value)
+        return value
 
     def state(self):
         with self.lock:
@@ -147,7 +177,16 @@ def serve(host='a800', port=8765, interval=15):
                 self.send(json.dumps(monitor.state(), ensure_ascii=False, allow_nan=False).encode(), 'application/json; charset=utf-8')
             elif path == '/api/health':
                 self.send(b'{"ok":true,"service":"a800-monitor"}', 'application/json')
-            elif path in {'/', '/index.html', '/app.js', '/style.css'}:
+            elif path == '/api/simulation':
+                try:
+                    query=parse_qs(urlsplit(self.path).query)
+                    if set(query)-{'case'} or any(len(v)!=1 for v in query.values()):
+                        raise ValueError('只支持一个案例 ID')
+                    value=monitor.simulation(query.get('case',[''])[0])
+                    self.send(json.dumps(value,allow_nan=False).encode(),'application/json')
+                except (ValueError,subprocess.SubprocessError) as exc:
+                    self.send(json.dumps({'status':'error','error':str(exc)},ensure_ascii=False).encode(),'application/json; charset=utf-8',409)
+            elif path in {'/', '/index.html', '/app.js', '/simulation.js', '/style.css'}:
                 filename = 'index.html' if path == '/' else path.lstrip('/')
                 kind = {'html': 'text/html', 'js': 'text/javascript', 'css': 'text/css'}[filename.rsplit('.', 1)[-1]]
                 self.send((HERE / filename).read_bytes(), kind + '; charset=utf-8')
