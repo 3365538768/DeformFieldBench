@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import time
 
-from engine_fixture import atomic, digest, wait_if_paused
+from engine_fixture import atomic, digest, wait_if_paused, run_controlled_solver
 from irregular_geometry import SHAPES, make_solid, mesh_health
 from render_contact_preflight import render
 
@@ -37,9 +37,9 @@ def main():
                 cp=folder/'case.json';atomic(cp,case);rp=folder/'result.json'
                 if not rp.exists():
                     with (folder/'solver.log').open('w') as f:
-                        subprocess.run([str(ROOT/'.engine-envs/uipc/bin/python'),'scripts/solve_contact_preflight.py',
+                        run_controlled_solver([str(ROOT/'.engine-envs/uipc/bin/python'),'scripts/solve_contact_preflight.py',
                             '--case',str(cp),'--output',str(folder),'--control-output',str(output)],
-                            cwd=ROOT,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=900)
+                            cwd=ROOT,log=f,control_output=output,active_timeout_seconds=900)
                 row=json.loads(rp.read_text())
                 if row['case']!=case or row['source_sha256']!=hashlib.sha256((ROOT/'scripts/solve_contact_preflight.py').read_bytes()).hexdigest():
                     raise ValueError('Contact probe provenance mismatch')

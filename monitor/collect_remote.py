@@ -127,6 +127,10 @@ def collect():
     optimization['contact_preflight']={k:v for k,v in contact.items() if k not in {'rows','clips'}} if contact else None
     contact_audit=read_json(ROOT/'docs/G3_CONTACT_NUMERICAL_AUDIT.json')
     optimization['contact_numerical_audit']={k:v for k,v in contact_audit.items() if k!='cases'} if contact_audit else None
+    force_audit=read_json(ROOT/'docs/G3_CONTACT_FORCE_AUDIT.json')
+    optimization['contact_force_audit']=force_audit
+    optimization['contact_surface_audit']=read_json(ROOT/'docs/G3_CONTACT_SURFACE_AUDIT.json')
+    optimization['contact_force_refinement']=read_json(ROOT/'docs/G3_CONTACT_FORCE_REFINEMENT.json')
     efficiency=read_json(ROOT / 'docs/G3_INTERACTION_EFFICIENCY.json')
     optimization['interaction_efficiency']={k:v for k,v in efficiency.items() if k!='rows'} if efficiency else None
     optimization['data_realism_plan']=read_json(ROOT / 'docs/G3_DATA_V2_PLAN.json')

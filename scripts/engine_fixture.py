@@ -4,6 +4,7 @@ import itertools
 import json
 from pathlib import Path
 import time
+import subprocess
 import uuid
 
 import numpy as np
@@ -53,15 +54,41 @@ def atomic(path, value):
     tmp.write_text(json.dumps(value, indent=2), encoding='utf-8'); tmp.replace(path)
 
 
+def is_paused(output):
+    for path in (Path('docs/OPTIMIZATION_CONTROL.json'),Path(output)/'control.json'):
+        if path.exists():
+            value=json.loads(path.read_text())
+            if value.get('desired',value.get('action')) in ('paused','pause'):return True
+    return False
+
+
+def run_controlled_solver(command, log, control_output, active_timeout_seconds, cwd):
+    """Cooperative children pause themselves; wall time spent paused isn't a timeout."""
+    process=subprocess.Popen(command,cwd=cwd,stdout=log,stderr=subprocess.STDOUT,stdin=subprocess.DEVNULL)
+    previous=time.monotonic();active=0.
+    try:
+        while process.poll() is None:
+            time.sleep(.25)
+            current=time.monotonic()
+            if not is_paused(control_output):active+=current-previous
+            previous=current
+            if active>active_timeout_seconds:
+                raise subprocess.TimeoutExpired(command,active_timeout_seconds)
+        if process.returncode:
+            raise subprocess.CalledProcessError(process.returncode,command)
+    except BaseException:
+        if process.poll() is None:
+            process.terminate()
+            try:process.wait(timeout=5)
+            except subprocess.TimeoutExpired:process.kill();process.wait()
+        raise
+
+
 def wait_if_paused(output):
     """Cooperative pause at case boundaries; no Torch dependency in engine envs."""
     was_paused = False
     while True:
-        paused = False
-        for path in (Path('docs/OPTIMIZATION_CONTROL.json'), Path(output) / 'control.json'):
-            if path.exists():
-                value = json.loads(path.read_text())
-                paused |= value.get('desired', value.get('action')) in ('paused', 'pause')
+        paused = is_paused(output)
         if not paused:
             if was_paused:
                 atomic(Path(output) / 'runtime.json', {'phase': 'running', 'updated_unix': time.time()})

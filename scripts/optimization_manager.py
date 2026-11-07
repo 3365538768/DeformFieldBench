@@ -307,7 +307,7 @@ def main():
         anchored = [j for j in jobs if j['stage'] == 'G1e']
         strong = [j for j in jobs if j['stage'] == 'G1f']
         strong_result = strong_backbone_results(strong) if strong else None
-        engine_jobs = [j for j in jobs if j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t','G3p','G3q'}]
+        engine_jobs = [j for j in jobs if j['kind']=='engine_pipeline' or j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t','G3p','G3q','G3f','G3s'}]
         engine_progress = read('docs/G2_ENGINE_PROGRESS.json', {})
         if strong_result and strong_result['status'] in {'complete','failed'} and (previous.get('strong_backbone') or {}).get('status') != strong_result['status']:
             event('G1f 反馈：' + strong_result['route'])
@@ -410,7 +410,9 @@ def main():
                                        ('G3r','G3_RENDER_QUALITY.json','未放大视频与可见像素光流'),
                                        ('G3t','G3_INTERACTION_EFFICIENCY.json','有效动作采样、稳态早停与时间步'),
                                        ('G3p','G3_CONTACT_PREFLIGHT.json','不规则实体、粘接分区与三维工具接触预检'),
-                                       ('G3q','G3_CONTACT_NUMERICAL_AUDIT.json','接触网格、时间步与均质极限诊断')]:
+                                       ('G3q','G3_CONTACT_NUMERICAL_AUDIT.json','接触网格、时间步与均质极限诊断'),
+                                       ('G3f','G3_CONTACT_FORCE_AUDIT.json','接触反力单位、能量与可辨识性诊断'),
+                                       ('G3s','G3_CONTACT_SURFACE_AUDIT.json','完整保存帧的三角形/工具交叠与包含检查')]:
             if any(j['stage']==stage for j in jobs):
                 quality=read('docs/'+filename,{})
                 job=next(j for j in jobs if j['stage']==stage)
@@ -418,6 +420,11 @@ def main():
                     completed=quality.get('completed',0),total=quality.get('total',0),
                     detail=quality.get('detail','等待前置质量检查；保留暂停/继续，不自动启动全量训练。')))
         for j in jobs:
+            if j.get('progress_report'):
+                quality=read(ROOT/j['progress_report'],{})
+                stages.insert(-1,dict(id=j['stage'],title=j['name'],state=quality.get('status',j['state']),
+                    completed=quality.get('completed',0),total=quality.get('total',0),
+                    detail=quality.get('detail','有界诊断；未准入训练，不自动扩量。')))
             j['control'] = read(ROOT / j['output'] / 'control.json', {'desired': 'running'})
             j['runtime'] = read(ROOT / j['output'] / 'runtime.json', {})
         state = {'version': 2, 'manager_pid': os.getpid(), 'updated_unix': time.time(),

@@ -14,7 +14,7 @@ import time
 
 import numpy as np
 
-from engine_fixture import atomic, digest, wait_if_paused
+from engine_fixture import atomic, digest, wait_if_paused, run_controlled_solver
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -73,9 +73,9 @@ def main():
         atomic(folder/'case.json', case)
         if not (folder/'result.json').exists():
             with (folder/'solver.log').open('w') as log:
-                subprocess.run([str(ROOT/'.engine-envs/uipc/bin/python'), 'scripts/solve_contact_preflight.py',
+                run_controlled_solver([str(ROOT/'.engine-envs/uipc/bin/python'), 'scripts/solve_contact_preflight.py',
                     '--case', str(folder/'case.json'), '--output', str(folder), '--control-output', str(output)],
-                    stdout=log, stderr=subprocess.STDOUT, check=True, timeout=1800)
+                    cwd=ROOT,log=log,control_output=output,active_timeout_seconds=1800)
         row = json.loads((folder/'result.json').read_text())
         if row['case'] != case or not row['completed'] or row['min_jacobian'] <= 0:
             raise ValueError('Numerical case failed')
