@@ -1,0 +1,11 @@
+{
+  "scope": "CPU batch assembly only; 4 real cached samples in memory; alternating order; excludes IO/GPU/training",
+  "exact_all_keys": true,
+  "repeats": 6,
+  "median_seconds": {
+    "previous": 0.20446894835331475,
+    "fast": 0.11629435070208274
+  },
+  "updated_unix": 1794055605.9456286,
+  "speedup": 1.7582018999109719
+}

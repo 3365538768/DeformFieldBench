@@ -1,0 +1,20 @@
+{
+  "status": "complete",
+  "repository": "facebook/dinov3-vitl16-pretrain-lvd1689m",
+  "revision": "ea8dc2863c51be0a264bab82070e3e8836b02d51",
+  "upstream_commit": "6876159a11b4df116f30f667f8c9888617df0751",
+  "source_sha256": "dcb2e45127cccbf1601e5f42fef165eea275c8e5213197e8dcf3f48822718179",
+  "weights": "weights/dinov3_vitl16_pretrain_lvd1689m-1d9dfa11.pth",
+  "weights_sha256": "1d9dfa114d3205df0d9e9450786596f6929dffafe6d0931bcb690e6bad1831fc",
+  "strict_load": true,
+  "fp32_patch_max_delta": 5.125999450683594e-06,
+  "fp32_patch_mean_delta": 3.3598590221117774e-07,
+  "parity_images": 2,
+  "feature_shape": [
+    2,
+    196,
+    1024
+  ],
+  "elapsed_seconds": 37.283544301986694,
+  "updated_unix": 1794054826.2691975
+}

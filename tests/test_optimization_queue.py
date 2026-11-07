@@ -22,6 +22,31 @@ def test_append_does_not_reset_finished_or_paused_jobs():
     assert old == snapshot
 
 
+def test_new_backbone_cannot_reuse_old_cache_or_unfinished_baseline():
+    job = {'depends_on': ['v3_cache', 'v3_rgb']}
+    historical = [{'id':'v2_cache','state':'finished'}, {'id':'v2_rgb','state':'finished'}]
+    assert not manager.dependencies_finished(job, historical)
+    jobs = historical + [{'id':'v3_cache','state':'finished'}, {'id':'v3_rgb','state':'running'}]
+    assert not manager.dependencies_finished(job, jobs)
+    jobs[-1]['state']='failed'
+    assert not manager.dependencies_finished(job, jobs)
+    jobs[-1]['state']='finished'
+    assert manager.dependencies_finished(job, jobs)
+
+
+def test_strong_backbone_uses_its_own_rgb_not_historical_rgb(tmp_path, monkeypatch):
+    monkeypatch.setattr(manager, 'ROOT', tmp_path)
+    jobs=[]
+    for name, score in [('B_rgb_only',.65), ('D_local_fields',.69), ('G_local_features',.7)]:
+        output=tmp_path/name;output.mkdir()
+        (output/'timing.jsonl').write_text(json.dumps(dict(phase='joint_training',epoch=1,val_mae=score))+'\n')
+        jobs.append(dict(name=name,kind='train',stage='G1f',state='finished',output=name))
+    result=manager.strong_backbone_results(jobs)
+    assert result['original_rgb_mae']==.65
+    assert not result['passes_2_percent_routing_threshold']
+    assert not result['resume_full_pair']
+
+
 def test_full_gate_includes_strong_rgb_baseline(tmp_path, monkeypatch):
     monkeypatch.setattr(manager, 'ROOT', tmp_path)
     names = ['C_aux_no_feedback', 'D_field_bridge', 'G_feature_control', 'O_oracle_fields', 'B_rgb_only', 'S_shuffled_oracle']

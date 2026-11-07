@@ -163,6 +163,30 @@ def merge_jobs(previous, planned):
     return jobs
 
 
+def dependencies_finished(job, jobs):
+    states = {j['id']: j['state'] for j in jobs}
+    return all(states.get(identifier) == 'finished' for identifier in job.get('depends_on', []))
+
+
+def strong_backbone_results(jobs):
+    """Compare bridges against their own backbone's RGB estimator, never DINOv2."""
+    trained = [j for j in jobs if j['kind'] == 'train']
+    baseline = next((j for j in trained if j['name'] == 'B_rgb_only'), None)
+    if baseline is None: return None
+    timing = ROOT / baseline['output'] / 'timing.jsonl'
+    records = [json.loads(s) for s in timing.read_text().splitlines()] if timing.exists() else []
+    scores = [r['val_mae'] for r in records if r['phase'] == 'joint_training']
+    if not scores:
+        value = {'status':'running','results':{},'route':'prepare_cache_and_own_rgb_baseline',
+                 'resume_full_pair':False,'updated_unix':time.time()}
+        atomic(ROOT/'docs/G1F_RESULTS.json', value); return value
+    value = local_bridge_results(trained, {'results':{'B_rgb_only':{'best_material_mae':min(scores)}}}, 'G1f')
+    value['backbone'] = 'dinov3_vitl16'
+    value['note'] = 'Matched DINOv3 RGB warm start; same 512/128 split and seed 17. Test untouched. No automatic full-budget promotion.'
+    atomic(ROOT/'docs/G1F_RESULTS.json', value)
+    return value
+
+
 def local_bridge_results(jobs, original, stage='G1c'):
     results = {}
     for job in jobs:
@@ -241,8 +265,11 @@ def main():
                 j['state'] = 'finished' if status else 'paused' if runtime.get('phase') == 'paused' else 'failed'
                 j['stop_reason'] = status.get('reason') if status else runtime.get('phase')
             elif j['kind'] == 'cache':
-                cache = read('docs/G1_CACHE_STATUS.json', {})
+                cache = read(j.get('status_file', 'docs/G1_CACHE_STATUS.json'), {})
                 j['state'] = 'finished' if cache.get('status') == 'complete' else 'paused' if cache.get('status') == 'paused' else 'failed'
+            elif j['kind'] == 'cache_stage':
+                receipt = read(ROOT/j['status_file'], {})
+                j['state'] = 'finished' if receipt.get('status')=='complete' else 'failed'
             else:
                 j['state'] = 'finished' if code == 0 or code is None and (ROOT / f"runs/g0_benchmark/{j['id']}/summary.json").exists() else 'failed'
             j['exit_code'] = code; event(f"{j['id']}：{j['state']} {j.get('stop_reason') or ''}")
@@ -256,6 +283,8 @@ def main():
         locals_ = [j for j in jobs if j['stage'] == 'G1c']
         forced = [j for j in jobs if j['stage'] == 'G1d']
         anchored = [j for j in jobs if j['stage'] == 'G1e']
+        strong = [j for j in jobs if j['stage'] == 'G1f']
+        strong_result = strong_backbone_results(strong) if strong else None
         diagnostic = read('docs/G1_DIAGNOSTIC_RESULTS.json')
         if not diagnostic and all(j['state'] in {'finished', 'failed'} for j in diagnostics):
             diagnostic = diagnostic_results(jobs); event('G1 反馈：' + diagnostic['route'])
@@ -285,9 +314,10 @@ def main():
                 occupied = {d for j in jobs if j['state'] == 'running' for d in j['devices'].split(',')}
                 memory = [int(s.strip()) for s in subprocess.check_output(['nvidia-smi', '--query-gpu=memory.used', '--format=csv,noheader,nounits'], text=True).splitlines()]
                 eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else []) + (locals_ if followup and followup['status'] == 'complete' else []) + (forced if local_bridge and local_bridge['status'] == 'complete' else []) + (anchored if forced_bridge and forced_bridge['status'] == 'complete' else [])
+                eligible += strong if anchored_bridge and anchored_bridge['status'] == 'complete' else []
                 for j in eligible:
                     control = read(ROOT / j['output'] / 'control.json', {})
-                    if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused':
+                    if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused' or not dependencies_finished(j, jobs):
                         continue
                     free = [str(i) for i in range(4) if str(i) not in occupied and memory[i] < 1000]
                     if free:
@@ -326,6 +356,11 @@ def main():
             stages.insert(5, {'id':'G1e','title':'场桥门归一化与零场参照',
                 'state':anchored_bridge['status'],'completed':sum(j['state']=='finished' for j in anchored),'total':len(anchored),
                 'detail':'修复门值整体塌缩和常量修正；D/G/O/S 主对照，加 D/G 稀疏接触 BCE+Dice 配对消融。测试集不参与。'})
+        if strong:
+            stages.insert(6, {'id':'G1f','title':'DINOv3 ViT-L 骨干与匹配场桥',
+                'state':'failed' if any(j['state']=='failed' for j in strong) else 'complete' if all(j['state']=='finished' for j in strong) else 'running',
+                'completed':sum(j['state']=='finished' for j in strong),'total':len(strong),
+                'detail':'授权权重与特征一致性校验 → 独立缓存 → DINOv3 RGB 基线 → 冻结同一基线的 D/G/O/S；保持早停与暂停/继续。'})
         for j in jobs:
             j['control'] = read(ROOT / j['output'] / 'control.json', {'desired': 'running'})
             j['runtime'] = read(ROOT / j['output'] / 'runtime.json', {})
@@ -336,6 +371,7 @@ def main():
                  'field_audit': read('docs/G1_PREDICTED_FIELD_AUDIT.json'),
                  'diagnostic': diagnostic, 'followup': followup, 'local_bridge': local_bridge,
                  'forced_bridge': forced_bridge, 'anchored_bridge': anchored_bridge, 'events': events,
+                 'strong_backbone': strong_result, 'strong_cache': read('docs/G1F_CACHE_STATUS.json'),
                  'stop_policy': plan['stop_policy']}
         atomic('docs/OPTIMIZATION_PROGRESS.json', state)
         previous = state

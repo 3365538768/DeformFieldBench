@@ -76,11 +76,11 @@ python scripts/prepare_backbone.py --family dinov2 --variant vitg14 --download-d
 python scripts/prepare_backbone.py --family dinov3
 ```
 
-DINOv3 的官方权重需要按 Meta 的许可/访问流程取得，再放入配置指定的路径；项目不绕过访问要求，也不会缺权重时静默用随机初始化。DINOv2-S 在这里仅用于验证真实数据训练。正式对照保留 DINOv2-g，候选 DINOv3-L/300M 与 H+/840M，分别比较质量和成本，不声称模型更新必然带来收益。
+DINOv3 的官方权重需要按 Meta 的许可/访问流程取得，再放入配置指定的路径；项目不绕过访问要求，也不会缺权重时静默用随机初始化。已授权的 ViT-L/16 现可用 `pip install -e '.[dinov3]'` 和 `scripts/prepare_dinov3_hf.py` 下载固定 HF revision，校验 LFS SHA256、严格转换及双实现特征一致性；操作见 [G1f 执行说明](docs/G1F_DINOV3_EXECUTION_ZH.md)。DINOv2-S 用于前阶段诊断；更换骨干后会重训本骨干的 RGB 基线，不声称模型更新必然带来收益。
 
 ## 公平实验
 
-G1–G1e 已完成，预测场尚无独有收益。G1e 修复门值整体塌缩及常量捷径后，真场诊断 MAE 降至 0.67557；预测场 0.78649、等容量特征控制 0.77761。BCE+Dice 配对结果为 0.78008 / 0.77713，仍未通过验收。网页默认显示 G1e，包含真实数据与引擎校准进度，支持暂停/继续和停滞早停；不自动重启旧全量训练。见 [G1e 完成反馈与数据升级](docs/G1E_FEEDBACK_AND_DATA_UPGRADE_ZH.md)、[跨引擎 adapter 方案及实现边界](docs/CROSS_ENGINE_MATERIAL_ADAPTER_ZH.md)。
+G1–G1e 已完成，预测场尚无独有收益。G1e 修复门值整体塌缩及常量捷径后，真场诊断 MAE 降至 0.67557；预测场 0.78649、等容量特征控制 0.77761。BCE+Dice 配对结果为 0.78008 / 0.77713，仍未通过验收。网页默认显示正在执行的 G1f DINOv3 骨干对照，包含独立缓存、真实数据与引擎校准进度，支持暂停/继续和停滞早停；不自动重启旧全量训练。见 [G1f 执行说明](docs/G1F_DINOV3_EXECUTION_ZH.md)、[G1e 完成反馈与数据升级](docs/G1E_FEEDBACK_AND_DATA_UPGRADE_ZH.md)、[跨引擎 adapter 方案及实现边界](docs/CROSS_ENGINE_MATERIAL_ADAPTER_ZH.md)。
 
 `C_aux_no_feedback` 对 `D_field_bridge` 是首要对照；`E_prior_direct` 对 `F_prior_field` 是静态先验融合对照。生成器提供 3 seeds × 6 variants。后两组必须提供独立静态模型的预测和来源信息，缺失时拒绝训练。禁止把 GT 参数作为先验填充。
 

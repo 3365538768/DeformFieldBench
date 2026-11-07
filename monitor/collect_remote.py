@@ -105,12 +105,14 @@ def collect():
     optimization = read_json(ROOT / 'docs/OPTIMIZATION_PROGRESS.json', {})
     optimization['bridge_sensitivity'] = read_json(ROOT / 'docs/G1C_D_BRIDGE_SENSITIVITY_FP32.json')
     optimization['forced_bridge_sensitivity'] = read_json(ROOT / 'docs/G1D_D_BRIDGE_SENSITIVITY_FP32.json')
-    optimization['latest_verification'] = read_json(ROOT / 'docs/G1E_STARTUP.json') or read_json(ROOT / 'docs/G1D_STARTUP.json')
+    optimization['latest_verification'] = read_json(ROOT / 'docs/G1F_STARTUP.json') or read_json(ROOT / 'docs/G1E_STARTUP.json') or read_json(ROOT / 'docs/G1D_STARTUP.json')
     optimization['previous_bridge_health'] = read_json(ROOT / 'docs/G1E_PREVIOUS_BRIDGE_HEALTH.json')
     optimization['target_audit'] = read_json(ROOT / 'docs/G1E_TARGET_AUDIT.json')
     optimization['anchor_sensitivity'] = read_json(ROOT / 'docs/G1E_D_BRIDGE_SENSITIVITY_FP32.json')
     optimization['anchored_field_audit'] = read_json(ROOT / 'docs/G1E_D_FIELD_AUDIT.json')
     optimization['dice_field_audit'] = read_json(ROOT / 'docs/G1E_D_DICE_FIELD_AUDIT.json')
+    optimization['dinov3_preparation'] = read_json(ROOT / 'docs/DINOV3_PREPARATION.json')
+    optimization['strong_local_cache'] = read_json(ROOT / 'docs/G1F_LOCAL_CACHE.json')
     optimization['engine_calibration'] = read_json(ROOT / 'docs/UIPC_CALIBRATION.json')
     optimization['beam_native'] = read_json(ROOT / 'docs/UIPC_BEAM_CALIBRATION.json')
     optimization['beam_corrected'] = read_json(ROOT / 'docs/UIPC_BEAM_CORRECTED_CALIBRATION.json')
@@ -131,6 +133,8 @@ def collect():
     for receipt in sorted((ROOT / 'docs').glob('ACTIVE*JOBS.json')):
         group = read_json(receipt, {})
         for job in group.get('jobs', []):
+            if job.get('kind') in {'cache', 'cache_stage'}:
+                continue
             config_name = job.get('config')
             args = job.get('args', [])
             if not config_name and '--config' in args:

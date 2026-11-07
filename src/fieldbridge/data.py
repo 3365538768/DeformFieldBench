@@ -234,6 +234,9 @@ def collate(samples):
             tensors = []
             for s in samples:
                 x = s[k]
+                if x.shape[:2] == (v, t):
+                    tensors.append(x)
+                    continue
                 y = x.new_zeros((v, t, *x.shape[2:]))
                 y[:x.shape[0], :x.shape[1]] = x
                 tensors.append(y)
