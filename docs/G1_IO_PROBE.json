@@ -1,0 +1,17 @@
+{
+  "samples": 16,
+  "copy_and_verify_seconds": 2.281735472031869,
+  "source_seconds": [
+    0.7484546540072188,
+    0.6976819440023974,
+    0.7084725010208786
+  ],
+  "tmp_seconds": [
+    0.09356548101641238,
+    0.08846452692523599,
+    0.08312921493779868
+  ],
+  "bytes": 386395104,
+  "warm_read_ratio": 8.0085490268843,
+  "note": "Sequential warm-read probe, not training speedup. All 16 copied files SHA256 verified."
+}

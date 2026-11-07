@@ -1,0 +1,31 @@
+{
+  "comparison": "G1 B versus byte-identical local-cache G1b B, same seed/config except cache/output",
+  "epochs": 13,
+  "checks": {
+    "same_epoch_coverage": true,
+    "same_sample_ids": true,
+    "best_epoch_prediction_max_z_delta": 0.0,
+    "max_validation_mae_delta": 0.0
+  },
+  "train_seconds": {
+    "original_median": 24.738058642542455,
+    "local_cache_median": 13.825247388507705,
+    "ratio": 1.789339311432942
+  },
+  "data_wait_seconds": {
+    "original_median": 22.241473480127752,
+    "local_cache_median": 11.313277549343184,
+    "ratio": 1.9659619754859659
+  },
+  "validation_seconds": {
+    "original_median": 6.567725449975114,
+    "local_cache_median": 3.7002763224882074,
+    "ratio": 1.7749283776620024
+  },
+  "cycle_seconds": {
+    "original_median": 31.539169922994915,
+    "local_cache_median": 17.971359096991364,
+    "ratio": 1.7549685448261383
+  },
+  "note": "Observed matched-run wall time, epochs 2 onward; concurrent jobs/system conditions differ. Not a controlled hardware microbenchmark."
+}

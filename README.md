@@ -80,6 +80,8 @@ DINOv3 的官方权重需要按 Meta 的许可/访问流程取得，再放入配
 
 ## 公平实验
 
+当前 G1 已完成，预测场桥尚未优于 RGB；已启动 G1b 场损失权重、反馈梯度与稀疏接触损失诊断。实际结果、九组矩阵及本地缓存复现方式见 [G1 反馈与 G1b 方案](docs/G1_FEEDBACK_AND_G1B_PLAN_ZH.md)。网页默认显示 G1b，可切换查看 G1 与正式实验；G1b 不自动启动全量训练。
+
 `C_aux_no_feedback` 对 `D_field_bridge` 是首要对照；`E_prior_direct` 对 `F_prior_field` 是静态先验融合对照。生成器提供 3 seeds × 6 variants。后两组必须提供独立静态模型的预测和来源信息，缺失时拒绝训练。禁止把 GT 参数作为先验填充。
 
 评估示例：

@@ -190,7 +190,7 @@ libuipc 接触鲁棒性不等于模型已标定或完整可微；多材料示例
 ## 10. A800 排程、资源与记录
 
 - 开发先用 1 卡 profiling；正式 C/D 或 E/F 各占 4 卡可并行同预算实验，稳定后使用 8 卡训练单个更大模型。当前脚本通过 CUDA_VISIBLE_DEVICES/GPUS 控制，不默认常驻占满 GPU。
-- 环境和大型数据在 AFS；后续如果需要本地 IO cache，单独批准容量预算并建立可回收目录，不格式化裸 NVMe。
+- 环境和大型数据在 AFS；本地 IO cache 使用已核对空间的可回收目录，保留原始数据和完整校验回执。G1b 已按用户继续优化的授权迁移 14.4 GiB 缓存，见 `G1_FEEDBACK_AND_G1B_PLAN_ZH.md`。
 - 不预估未经测量的 epoch 小时数。先 profile 100 steps，记录 samples/s、peak memory、GPU utilization、data wait、通信与 backbone 耗时，再给完整 wall-clock 预算。
 - 检查点保存 optimizer、epoch/step、per-rank RNG、manifest hash、train 统计和 config。当前 exact resume 仅支持相同 world size 的 epoch 边界；中断于 epoch 中间的权重只能作显式初始化，不伪称精确恢复。
 - 每个实验新 output 目录，禁止静默覆盖 last.pt；结果保留逐样本记录和失败样本。

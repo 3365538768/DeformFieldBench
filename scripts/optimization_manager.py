@@ -96,7 +96,8 @@ def diagnostic_results(jobs):
     o = results['O_oracle_fields']['best_material_mae']
     g = results['G_feature_control']['best_material_mae']
     complete = all(v['best_material_mae'] is not None and v['state'] == 'finished' for v in results.values())
-    proceed = complete and o < c * .98 and d < c * .98 and d < g
+    b = results['B_rgb_only']['best_material_mae']
+    proceed = complete and o < b * .98 and d < min(b, c, g) * .98
     value = {'status': 'complete' if complete else 'incomplete', 'results': results,
              'resume_full_pair': bool(proceed), 'single_seed_diagnostic_only': True,
              'route': 'continue_full_pair' if proceed else 'revise_data_or_bridge_before_spending_full_budget',
@@ -105,13 +106,65 @@ def diagnostic_results(jobs):
     return value
 
 
+def followup_results(jobs, original):
+    results = {}
+    for job in jobs:
+        if job['stage'] != 'G1b':
+            continue
+        path = ROOT / job['output'] / 'timing.jsonl'
+        entries = [json.loads(s) for s in path.read_text().splitlines()] if path.exists() else []
+        joint = [v for v in entries if v['phase'] == 'joint_training']
+        best = min(joint, key=lambda v: v['val_mae']) if joint else None
+        results[job['name']] = {'state': job['state'], 'best_material_mae': best['val_mae'] if best else None,
+                               'best_epoch': best['epoch'] if best else None, 'stop_reason': job.get('stop_reason')}
+    terminal = bool(results) and all(v['state'] in {'finished', 'failed'} for v in results.values())
+    complete = terminal and all(v['state'] == 'finished' and v['best_material_mae'] is not None for v in results.values())
+    baseline = original['results']['B_rgb_only']['best_material_mae']
+    observed = {k: v['best_material_mae'] for k, v in results.items() if v['best_material_mae'] is not None}
+    best_name = min(observed, key=observed.get) if observed else None
+    rgb = min(baseline, observed.get('B_rgb_repeat', baseline))
+    comparisons = {}
+    for suffix in ['weight01', 'weight001', 'weight01_detached', 'weight01_balanced']:
+        bridge, control = 'D_' + suffix, 'C_' + suffix.replace('_detached', '')
+        feature = 'G_weight01' if suffix in {'weight01', 'weight01_detached'} else None
+        if bridge not in observed or control not in observed:
+            continue
+        best_control = min(rgb, observed[control], observed.get(feature, float('inf')))
+        comparisons[bridge] = {'matching_aux_control': control, 'matching_feature_control': feature,
+            'gain_over_rgb': 1 - observed[bridge] / rgb,
+            'gain_over_aux_control': 1 - observed[bridge] / observed[control],
+            'passes_2_percent_routing_threshold': observed[bridge] < best_control * .98,
+            'feature_control_available': feature in observed}
+    candidates = [v for v in comparisons.values() if v['passes_2_percent_routing_threshold']]
+    next_route = ('repeat_independent_seeds' if any(v['feature_control_available'] for v in candidates)
+                  else 'add_matched_feature_control' if candidates else 'repair_fields_and_local_temporal_bridge')
+    value = {'status': 'complete' if complete else 'failed' if terminal else 'running', 'results': results,
+             'original_rgb_mae': baseline, 'best_observed': best_name,
+             'best_gain_over_original_rgb': 1 - observed[best_name] / baseline if best_name else None,
+             'comparisons': comparisons,
+             'route': next_route if complete else 'repair_failed_jobs' if terminal else 'collecting_evidence',
+             'resume_full_pair': False, 'validation_tuning_only': True,
+             'note': 'No automatic full-budget promotion: matched controls and independent seeds must be reviewed. Test split untouched.',
+             'updated_unix': time.time()}
+    atomic(ROOT / 'docs/G1B_RESULTS.json', value)
+    return value
+
+
+def merge_jobs(previous, planned):
+    """Append new authorized jobs without resetting finished runs or their controls."""
+    jobs = copy.deepcopy(previous)
+    known = {job['id'] for job in jobs}
+    jobs.extend(copy.deepcopy(job) for job in planned if job['id'] not in known)
+    return jobs
+
+
 def main():
     os.chdir(ROOT)
     lock = (ROOT / 'docs/.optimization_manager.lock').open('a')
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     plan = read('docs/OPTIMIZATION_PLAN.json')
     previous = read('docs/OPTIMIZATION_PROGRESS.json', {})
-    jobs = previous.get('jobs', copy.deepcopy(plan['jobs']))
+    jobs = merge_jobs(previous.get('jobs', []), plan['jobs'])
     tasks = previous.get('tasks', copy.deepcopy(plan['tasks']))
     for job in jobs:
         job.setdefault('source_config', next(j['config'] for j in plan['jobs'] if j['id'] == job['id']))
@@ -151,9 +204,13 @@ def main():
             bench = benchmark_result(); event('G0 验证验收：' + bench['status'])
         cache_task = next(j for j in tasks if j['kind'] == 'cache')
         diagnostics = [j for j in jobs if j['stage'] == 'G1']
+        followups = [j for j in jobs if j['stage'] == 'G1b']
         diagnostic = read('docs/G1_DIAGNOSTIC_RESULTS.json')
         if not diagnostic and all(j['state'] in {'finished', 'failed'} for j in diagnostics):
             diagnostic = diagnostic_results(jobs); event('G1 反馈：' + diagnostic['route'])
+        followup = followup_results(followups, diagnostic) if followups and diagnostic else None
+        if followup and followup['status'] in {'complete', 'failed'} and (previous.get('followup') or {}).get('status') != followup['status']:
+            event('G1b 反馈：' + followup['route'])
         if not paused and test_passed and drain.get('status') == 'drained':
             busy_tasks = any(j['state'] == 'running' for j in tasks)
             if not busy_tasks and not any(j['state'] == 'failed' for j in tasks):
@@ -167,7 +224,8 @@ def main():
             if bench and bench['status'] == 'passed' and cache_task['state'] == 'finished':
                 occupied = {d for j in jobs if j['state'] == 'running' for d in j['devices'].split(',')}
                 memory = [int(s.strip()) for s in subprocess.check_output(['nvidia-smi', '--query-gpu=memory.used', '--format=csv,noheader,nounits'], text=True).splitlines()]
-                for j in diagnostics:
+                eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else [])
+                for j in eligible:
                     control = read(ROOT / j['output'] / 'control.json', {})
                     if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused':
                         continue
@@ -191,15 +249,23 @@ def main():
             {'id': 'G2', 'title': '引擎标定与新动作响应', 'state': 'planned', 'detail': '待 G1 判断后实施；尚无实际响应结果'},
             {'id': 'G3', 'title': '度量场、真实数据与局部时序桥', 'state': 'planned', 'detail': '按上界诊断决定优先修数据或模型'},
             {'id': 'G4', 'title': '多种子与强方法对照', 'state': 'planned', 'detail': '冻结协议后进行，不能将诊断上界当作部署结果'}]
+        if followups:
+            stages.insert(2, {'id': 'G1b', 'title': '负迁移与反馈梯度排查',
+                'state': 'failed' if followup and followup['status'] == 'failed' else 'complete' if followup and followup['status'] == 'complete' else 'running' if any(j['state'] == 'running' for j in followups) else 'queued',
+                'completed': sum(j['state'] == 'finished' for j in followups), 'total': len(followups),
+                'detail': '固定数据/初始化：场权重 0.1、0.01，等容量控制、反馈梯度截断及接触平衡损失；含 RGB 复跑。完成后先审查再做多种子。'})
         for j in jobs:
             j['control'] = read(ROOT / j['output'] / 'control.json', {'desired': 'running'})
             j['runtime'] = read(ROOT / j['output'] / 'runtime.json', {})
         state = {'version': 2, 'manager_pid': os.getpid(), 'updated_unix': time.time(),
                  'desired': 'paused' if paused else 'running', 'stages': stages, 'jobs': jobs, 'tasks': tasks,
                  'drain': drain, 'cpu_tests_passed': test_passed, 'benchmark': bench,
-                 'cache': read('docs/G1_CACHE_STATUS.json'), 'diagnostic': diagnostic, 'events': events,
+                 'cache': read('docs/G1_CACHE_STATUS.json'), 'local_cache': read('docs/G1B_LOCAL_CACHE.json'),
+                 'field_audit': read('docs/G1_PREDICTED_FIELD_AUDIT.json'),
+                 'diagnostic': diagnostic, 'followup': followup, 'events': events,
                  'stop_policy': plan['stop_policy']}
         atomic('docs/OPTIMIZATION_PROGRESS.json', state)
+        previous = state
         atomic('docs/ACTIVE_OPTIMIZATION_JOBS.json', {'purpose': 'v2 controlled diagnostic and continuation queue',
                'jobs': [j for j in jobs if 'pid' in j]})
         time.sleep(2)

@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "source": "/mnt/afs_engine/linrui/rsi_real_test/data/prepared/g1_dinos16",
+  "destination": "/tmp/linrui_fieldbridge/g1_dinos16",
+  "link": "/mnt/afs_engine/linrui/rsi_real_test/data/prepared/g1_dinos16_local",
+  "files_verified_sha256": 640,
+  "bytes": 15455804160,
+  "seconds": 23.834448865032755,
+  "index_sha256": "6360c30c818be79a6216ed49ee345bf69237fa44272e056e154a8a9420b49ce4",
+  "file_hashes_digest": "806142f6f625a4c488e78e2ce7fb77d17faeeabcf110c9a3a4f71b2f3a5bdcf3",
+  "note": "Byte-identical cache relocation only. Re-run after node-local cache eviction; original AFS cache preserved."
+}

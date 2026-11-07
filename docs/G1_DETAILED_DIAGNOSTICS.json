@@ -1,0 +1,130 @@
+{
+  "split": "val",
+  "test_used": false,
+  "single_seed": 17,
+  "per_law": {
+    "C_aux_no_feedback": {
+      "0": {
+        "samples": 40,
+        "standardized_mae": 0.7531215665726146
+      },
+      "1": {
+        "samples": 46,
+        "standardized_mae": 0.9895494315651772
+      },
+      "2": {
+        "samples": 42,
+        "standardized_mae": 0.6948457181690231
+      }
+    },
+    "D_field_bridge": {
+      "0": {
+        "samples": 40,
+        "standardized_mae": 0.8135510291147512
+      },
+      "1": {
+        "samples": 46,
+        "standardized_mae": 0.9238859421330625
+      },
+      "2": {
+        "samples": 42,
+        "standardized_mae": 0.7101230193225164
+      }
+    },
+    "G_feature_control": {
+      "0": {
+        "samples": 40,
+        "standardized_mae": 0.8176460880029481
+      },
+      "1": {
+        "samples": 46,
+        "standardized_mae": 0.9102272544582577
+      },
+      "2": {
+        "samples": 42,
+        "standardized_mae": 0.7312133578021848
+      }
+    },
+    "O_oracle_fields": {
+      "0": {
+        "samples": 40,
+        "standardized_mae": 0.7319470676768105
+      },
+      "1": {
+        "samples": 46,
+        "standardized_mae": 0.7156181262360642
+      },
+      "2": {
+        "samples": 42,
+        "standardized_mae": 0.7609896338175214
+      }
+    },
+    "B_rgb_only": {
+      "0": {
+        "samples": 40,
+        "standardized_mae": 0.8203268747020047
+      },
+      "1": {
+        "samples": 46,
+        "standardized_mae": 0.8353670723128902
+      },
+      "2": {
+        "samples": 42,
+        "standardized_mae": 0.7288297058216163
+      }
+    },
+    "S_shuffled_oracle": {
+      "0": {
+        "samples": 40,
+        "standardized_mae": 0.8256321462977212
+      },
+      "1": {
+        "samples": 46,
+        "standardized_mae": 0.9061551931233186
+      },
+      "2": {
+        "samples": 42,
+        "standardized_mae": 0.7451546533062817
+      }
+    }
+  },
+  "paired_object_bootstrap": {
+    "B_rgb_only__D_field_bridge": {
+      "objects": 10,
+      "mean_object_delta_B_minus_A": 0.027361535545079196,
+      "paired_bootstrap_95_ci": [
+        -0.005738882954325642,
+        0.060416770285907376
+      ],
+      "draws": 2000,
+      "seed": 17,
+      "negative_favors": "B",
+      "score": "object-macro standardized MAE"
+    },
+    "B_rgb_only__O_oracle_fields": {
+      "objects": 10,
+      "mean_object_delta_B_minus_A": -0.05970670234721258,
+      "paired_bootstrap_95_ci": [
+        -0.11096038649732676,
+        -0.007275742329331882
+      ],
+      "draws": 2000,
+      "seed": 17,
+      "negative_favors": "B",
+      "score": "object-macro standardized MAE"
+    },
+    "C_aux_no_feedback__D_field_bridge": {
+      "objects": 10,
+      "mean_object_delta_B_minus_A": -0.002419922626071292,
+      "paired_bootstrap_95_ci": [
+        -0.016425575428785616,
+        0.013237366139438444
+      ],
+      "draws": 2000,
+      "seed": 17,
+      "negative_favors": "B",
+      "score": "object-macro standardized MAE"
+    }
+  },
+  "note": "Best-epoch validation diagnostics, not independent test inference. Bootstrap is object-macro and is not the pooled MAE used by training."
+}

@@ -1,0 +1,40 @@
+{
+  "status": "complete",
+  "results": {
+    "C_aux_no_feedback": {
+      "state": "finished",
+      "best_material_mae": 0.8372145206651239,
+      "best_epoch": 9
+    },
+    "D_field_bridge": {
+      "state": "finished",
+      "best_material_mae": 0.8304572960020714,
+      "best_epoch": 9
+    },
+    "G_feature_control": {
+      "state": "finished",
+      "best_material_mae": 0.8319354150319732,
+      "best_epoch": 9
+    },
+    "O_oracle_fields": {
+      "state": "finished",
+      "best_material_mae": 0.7334699469992111,
+      "best_epoch": 9
+    },
+    "B_rgb_only": {
+      "state": "finished",
+      "best_material_mae": 0.7999518818682233,
+      "best_epoch": 9
+    },
+    "S_shuffled_oracle": {
+      "state": "finished",
+      "best_material_mae": 0.8365067428069969,
+      "best_epoch": 9
+    }
+  },
+  "resume_full_pair": false,
+  "single_seed_diagnostic_only": true,
+  "route": "revise_data_or_bridge_before_spending_full_budget",
+  "note": "Routing gate only; no significance or online-fitting claim.",
+  "updated_unix": 1794043726.624073
+}

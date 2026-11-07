@@ -202,7 +202,7 @@ def collect():
             if alive and steps_epoch and step >= steps_epoch and elapsed and step:
                 eta = max(0, (epochs * steps_epoch - step) * elapsed / step)
             jobs.append({'id': out.name, 'name': job.get('name', out.name), 'status': status, 'phase': phase,
-                'devices': devices, 'pid': pid, 'purpose': cfg['train'].get('purpose', 'research'),
+                'devices': devices, 'pid': pid, 'purpose': cfg['train'].get('purpose', 'research'), 'stage': job.get('stage'),
                 'backbone': cfg['model'].get('hub_name', cfg['model'].get('backbone')),
                 'feedback': cfg['model'].get('feedback'), 'contact_loss': cfg['train'].get('contact_loss', 'bce'),
                 'seed': cfg['train'].get('seed'), 'frames': cfg['data'].get('frames'),
