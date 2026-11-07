@@ -10,7 +10,7 @@ import shutil
 import subprocess
 import time
 
-ROOT = Path('/mnt/afs_engine/linrui/rsi_real_test')
+ROOT = Path(os.environ.get('FIELDBRIDGE_ROOT', '/mnt/afs_engine/linrui/rsi_real_test'))
 
 
 def read_json(path, default=None):
@@ -77,7 +77,7 @@ def collect():
     memory = {'total': mem['MemTotal'], 'available': mem['MemAvailable'],
               'used': mem['MemTotal'] - mem['MemAvailable'], 'cached': mem.get('Cached', 0)}
     disks = []
-    for mount in ('/', '/mnt/afs_engine'):
+    for mount in ('/', str(ROOT)):
         d = shutil.disk_usage(mount)
         disks.append({'mount': mount, 'total': d.total, 'used': d.used, 'free': d.free})
     network = {}
@@ -262,7 +262,8 @@ def collect():
     jobs.sort(key=lambda j: (j['purpose'] != 'research', j['status'] != 'running', j['id']))
     audit = read_json(ROOT / 'docs/full_dataset_audit.json', {})
     return {'server_unix': now, 'server_time_utc': datetime.fromtimestamp(now, timezone.utc).isoformat(),
-        'host': 'a800', 'project': str(ROOT), 'uptime_seconds': float(Path('/proc/uptime').read_text().split()[0]),
+        'host': 'a800', 'project': str(ROOT), 'migration': read_json(ROOT.parent/'migration/status.json', {}),
+        'uptime_seconds': float(Path('/proc/uptime').read_text().split()[0]),
         'cpu': cpu, 'memory': memory, 'disks': disks, 'network': network, 'gpus': gpus,
         'gpu_error': gpu_error, 'gpu_processes': processes, 'experiments': jobs, 'optimization': optimization,
         'data': {'phase': read_json(ROOT / 'docs/P0_PHASE_STATUS.json', {}),

@@ -8,6 +8,7 @@ import json
 import os
 import secrets
 import re
+import shlex
 from pathlib import Path
 import subprocess
 import threading
@@ -22,8 +23,11 @@ def utc_now():
 
 
 class Monitor:
-    def __init__(self, host='a800', interval=15):
+    def __init__(self, host='a800', interval=15, remote_root='/mnt/afs_engine/linrui/rsi_real_test'):
         self.host, self.interval = host, interval
+        if not remote_root.startswith('/') or '\n' in remote_root:
+            raise ValueError('remote root must be an absolute Linux path')
+        self.remote_root = remote_root.rstrip('/')
         self.lock = threading.Lock()
         self.wake = threading.Event()
         self.snapshot = None
@@ -35,6 +39,9 @@ class Monitor:
         self.previous = None
         self.control_token = secrets.token_urlsafe(32)
         self.preview_cache = {}
+
+    def command(self, command):
+        return 'cd '+shlex.quote(self.remote_root)+' && FIELDBRIDGE_ROOT='+shlex.quote(self.remote_root)+' '+command
 
     def simulation(self, identifier):
         if identifier and not re.fullmatch(r'(warp|uipc)_[0-9a-f]{20}',identifier):
@@ -50,7 +57,7 @@ class Monitor:
         payload=payload.replace("json.loads(sys.stdin.read())",repr({'case':identifier}))
         result=subprocess.run([ssh,'-T','-o','BatchMode=yes','-o','ClearAllForwardings=yes',
             '-o','ConnectTimeout=8',self.host,
-            '/mnt/afs_engine/linrui/rsi_real_test/.venv/bin/python -'],input=payload,
+            self.command('.venv/bin/python -')],input=payload,
             capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=40,
             creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
         lines=[line for line in result.stdout.splitlines() if line.startswith('{')]
@@ -74,7 +81,7 @@ class Monitor:
         payload=(HERE/'render_remote.py').read_text(encoding='utf-8').replace(
             'json.loads(sys.stdin.read())',repr({'clip':identifier,'asset':asset}))
         result=subprocess.run([ssh,'-T','-o','BatchMode=yes','-o','ClearAllForwardings=yes','-o','ConnectTimeout=8',self.host,
-            '/mnt/afs_engine/linrui/rsi_real_test/.venv/bin/python -'],input=payload,capture_output=True,
+            self.command('.venv/bin/python -')],input=payload,capture_output=True,
             text=True,encoding='utf-8',errors='replace',timeout=40,
             creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
         lines=[line for line in result.stdout.splitlines() if line.startswith('{')]
@@ -110,7 +117,7 @@ class Monitor:
         ssh = str(Path(os.environ.get('WINDIR', 'C:/Windows')) / 'System32/OpenSSH/ssh.exe') if os.name == 'nt' else 'ssh'
         result = subprocess.run([ssh, '-T', '-o', 'BatchMode=yes', '-o', 'ClearAllForwardings=yes',
             '-o', 'ConnectTimeout=8', self.host,
-            'cd /mnt/afs_engine/linrui/rsi_real_test && .venv/bin/python scripts/control_jobs.py'],
+            self.command('.venv/bin/python scripts/control_jobs.py')],
             input=json.dumps(request), capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=25,
             creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
         lines = [s for s in result.stdout.splitlines() if s.startswith('{')]
@@ -131,7 +138,7 @@ class Monitor:
                 args = [ssh, '-T', '-o', 'BatchMode=yes', '-o', 'ClearAllForwardings=yes',
                         '-o', 'ConnectTimeout=8', '-o', 'ConnectionAttempts=1', '-o', 'ServerAliveInterval=5',
                         '-o', 'ServerAliveCountMax=2', self.host,
-                        'cd /mnt/afs_engine/linrui/rsi_real_test && python3 -']
+                        self.command('python3 -')]
                 result = subprocess.run(args, input=(HERE / 'collect_remote.py').read_text(encoding='utf-8'),
                     capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=35,
                     creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
@@ -170,8 +177,8 @@ class Monitor:
             self.wake.wait(self.interval)
 
 
-def serve(host='a800', port=8765, interval=15):
-    monitor = Monitor(host, interval)
+def serve(host='a800', port=8765, interval=15, remote_root='/mnt/afs_engine/linrui/rsi_real_test'):
+    monitor = Monitor(host, interval, remote_root)
 
     class Handler(BaseHTTPRequestHandler):
         def valid_host(self):
@@ -243,7 +250,7 @@ def serve(host='a800', port=8765, interval=15):
     server = ThreadingHTTPServer(('127.0.0.1', port), Handler)
     threading.Thread(target=monitor.run, daemon=True, name='ssh-collector').start()
     (HERE / 'runtime.json').write_text(json.dumps({'pid': os.getpid(), 'url': f'http://127.0.0.1:{port}',
-        'started_utc': utc_now(), 'interval_seconds': interval}, indent=2), encoding='utf-8')
+        'started_utc': utc_now(), 'interval_seconds': interval, 'ssh_host': host, 'remote_root': remote_root}, indent=2), encoding='utf-8')
     print(f'A800 monitor: http://127.0.0.1:{port} (SSH read every {interval}s)', flush=True)
     server.serve_forever()
 
@@ -253,7 +260,8 @@ if __name__ == '__main__':
     p.add_argument('--host', default='a800')
     p.add_argument('--port', type=int, default=8765)
     p.add_argument('--interval', type=int, default=15)
+    p.add_argument('--remote-root', default='/mnt/afs_engine/linrui/rsi_real_test')
     a = p.parse_args()
     if not 5 <= a.interval <= 300:
         p.error('interval must be 5–300 seconds')
-    serve(a.host, a.port, a.interval)
+    serve(a.host, a.port, a.interval, a.remote_root)

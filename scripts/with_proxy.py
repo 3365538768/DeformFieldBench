@@ -14,7 +14,7 @@ from urllib.parse import urlsplit
 def main():
     if len(sys.argv) < 2:
         raise SystemExit('Usage: python scripts/with_proxy.py COMMAND [ARG ...]')
-    path = Path.home() / '.config/fieldbridge/proxy.json'
+    path = Path(os.environ.get('FIELDBRIDGE_PROXY_CONFIG', Path.home() / '.config/fieldbridge/proxy.json'))
     if path.stat().st_mode & 0o077:
         raise SystemExit('Proxy config must have private permissions (chmod 600)')
     proxy = json.loads(path.read_text())['proxy_url']

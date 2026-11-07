@@ -1,11 +1,12 @@
 """Read only registered, completed render artifacts; never accept user paths."""
 import base64
 import json
+import os
 from pathlib import Path
 import re
 import sys
 
-ROOT=Path('/mnt/afs_engine/linrui/rsi_real_test')
+ROOT=Path(os.environ.get('FIELDBRIDGE_ROOT','/mnt/afs_engine/linrui/rsi_real_test'))
 
 
 def load_render(request,root=ROOT):

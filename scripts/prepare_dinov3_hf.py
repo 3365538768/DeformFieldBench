@@ -6,6 +6,7 @@ No access request, license acceptance, or random-weight fallback is performed.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import time
@@ -79,7 +80,8 @@ def prepare(status):
                 and weights.is_file() and digest(weights)==previous.get('weights_sha256')):
             print(json.dumps(previous,indent=2)); return
     started = time.time(); directory = Path('weights/dinov3_hf'); directory.mkdir(parents=True, exist_ok=True)
-    token = (Path.home()/'.cache/huggingface/token').read_text().strip()
+    hf_home=Path(os.environ.get('HF_HOME',Path.home()/'.cache/huggingface'))
+    token = Path(os.environ.get('HF_TOKEN_PATH',hf_home/'token')).read_text().strip()
     def request(url, headers=None):
         return urllib.request.urlopen(urllib.request.Request(url, headers={'Authorization':'Bearer '+token, **(headers or {})}), timeout=120)
     api = json.load(request('https://huggingface.co/api/models/'+REPO+'/revision/'+REVISION+'?blobs=true'))
