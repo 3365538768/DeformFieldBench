@@ -1,0 +1,44 @@
+{
+  "model": {
+    "backbone": "dinov2",
+    "repo": "external/dinov2",
+    "weights": "weights/dinov2_vitg14_reg4_pretrain.pth",
+    "hub_name": "dinov2_vitg14_reg",
+    "width": 512,
+    "heads": 8,
+    "layers": 2,
+    "field_size": 112,
+    "field_mode": "legacy_visual",
+    "feedback": "fields",
+    "use_prior": false,
+    "freeze_backbone": true,
+    "frame_chunk": 8
+  },
+  "data": {
+    "manifest": "data/manifests/deformfield_v1.jsonl",
+    "stats": "data/manifests/deformfield_v1.stats.json",
+    "frames": 16,
+    "max_views": 3,
+    "image_size": 224,
+    "view_dropout": 0.0
+  },
+  "train": {
+    "output": "runs/full_giant16_D_field_bridge_seed17",
+    "seed": 17,
+    "epochs": 80,
+    "field_epochs": 10,
+    "batch_size": 1,
+    "accumulation": 2,
+    "workers": 3,
+    "lr": 0.0003,
+    "backbone_lr": 3e-06,
+    "weight_decay": 0.05,
+    "bf16": true,
+    "field_weight": 1.0,
+    "parameter_weight": 1.0,
+    "nll_weight": 0.05,
+    "law_weight": 0.1,
+    "contact_loss": "bce",
+    "purpose": "research"
+  }
+}

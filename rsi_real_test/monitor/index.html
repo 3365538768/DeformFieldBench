@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A800 · 实验观测台</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-icon">A</span><div><div class="eyebrow">FIELD BRIDGE / RESEARCH COMPUTE</div><h1>A800 实验观测台</h1></div></div>
+      <div class="top-actions"><span id="connection" class="badge neutral">正在连接</span><button id="refresh" type="button">刷新页面数据 ↻</button></div>
+    </header>
+    <div class="context-row"><span>8 × A800 80GB <span class="divider">/</span> <span id="project">rsi_real_test</span></span><span id="updated">等待首次采集…</span></div>
+    <div id="notice" class="notice" role="status" aria-live="polite">通过本机 SSH 连接 A800，正在读取资源与实验状态。</div>
+    <section class="overview" id="overview" aria-label="资源总览"><div class="stat skeleton">正在获取实时指标…</div></section>
+
+    <section class="section" aria-label="优化阶段与控制">
+      <div class="section-heading"><div><span class="eyebrow">OPTIMIZATION & CHECKPOINT CONTROL</span><h2>优化进度与实验控制</h2></div><div class="top-actions"><button id="pause-all" type="button" disabled>暂停全部优化实验</button><button id="resume-all" type="button" disabled>继续全部优化实验</button></div></div>
+      <p id="control-status" class="protocol" role="status" aria-live="polite">正在读取优化队列…</p>
+      <p class="chart-note">暂停在当前轮检查点完成后生效，随后释放 GPU；继续会恢复权重、优化器与随机状态。预热监控场误差，联合阶段连续多轮无实质改善会自动早停。</p>
+      <div id="stages" class="stage-grid"></div>
+      <div id="optimization-evidence" class="protocol"></div>
+      <div id="queue" class="queue"></div>
+      <div id="feedback" class="protocol"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading"><div><span class="eyebrow">LIVE TELEMETRY</span><h2>GPU 资源</h2></div><span class="muted">15 秒采集 · 折线展示本页面服务运行期间的历史</span></div>
+      <div id="gpus" class="gpu-grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading"><div><span class="eyebrow">CONTROLLED EXPERIMENTS</span><h2>实验进度</h2></div><label class="filter">显示 <select id="experiment-filter"><option value="research">正式实验</option><option value="diagnostic">G1 诊断实验</option><option value="all">全部实验（含工程试跑）</option></select></label></div>
+      <div id="experiments" class="experiments"><div class="empty">正在读取训练记录…</div></div>
+      <div id="protocol" class="protocol"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading"><div><span class="eyebrow">LEARNING CURVES</span><h2>训练与验证</h2></div><label class="filter">训练曲线 <select id="run-select" aria-label="选择训练曲线实验"></select></label></div>
+      <div class="charts">
+        <article class="panel"><div class="panel-heading"><h3>验证误差对比</h3><span class="muted">标准化 MAE · 越低越好</span></div><div id="val-chart" class="chart"></div><div id="val-legend" class="legend"></div><p class="chart-note">场预热期参数误差仅作诊断，以各组实际联合阶段为准；真场输入属于特权诊断，不能当作部署结果。测试集未用于此曲线。</p></article>
+        <article class="panel"><div class="panel-heading"><h3>训练损失</h3><span class="muted" id="train-scope">最近采样记录</span></div><div id="train-chart" class="chart"></div><div class="legend"><span class="legend-item blue">总损失</span><span class="legend-item orange">参数损失</span><span class="legend-item teal">接触损失</span></div><p class="chart-note">参数损失在场预热阶段仅作诊断，不计入优化目标；曲线显示采样点的 10 点移动平均。</p></article>
+      </div>
+    </section>
+
+    <section class="section bottom-grid">
+      <article class="panel"><div class="panel-heading"><h3>主机与存储</h3><span class="muted">缓存内存计入可用内存</span></div><div id="host-details"></div></article>
+      <article class="panel"><div class="panel-heading"><h3>数据与验收</h3><span class="muted">来源：项目实际状态文件</span></div><div id="data-details"></div></article>
+    </section>
+    <section class="section"><div class="section-heading"><div><span class="eyebrow">RECENT OUTPUT</span><h2>最近日志</h2></div><span class="muted">每组最近 16 行 · 只读</span></div><div id="logs"></div></section>
+    <footer><span>连接方式：本机 → SSH a800 · 全部指标来自真实采集</span><span id="footer-time">自动刷新中</span></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "model": {
+    "backbone": "dinov2",
+    "width": 64,
+    "heads": 4,
+    "layers": 1,
+    "field_size": 28,
+    "feedback": "fields",
+    "freeze_backbone": true,
+    "repo": "external/dinov2",
+    "weights": "weights/dinov2_vits14_reg4_pretrain.pth",
+    "hub_name": "dinov2_vits14_reg",
+    "frame_chunk": 4
+  },
+  "data": {
+    "manifest": "data/manifests/real_subset_yieldmask_v2.jsonl",
+    "stats": "data/manifests/real_subset_yieldmask_v2.stats.json",
+    "frames": 4,
+    "max_views": 3,
+    "image_size": 224
+  },
+  "train": {
+    "output": "runs/real_pretrained_smoke",
+    "epochs": 2,
+    "batch_size": 1,
+    "workers": 0,
+    "max_steps": 3
+  }
+}

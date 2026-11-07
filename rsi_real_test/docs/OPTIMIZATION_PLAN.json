@@ -1,0 +1,241 @@
+{
+  "version": 2,
+  "jobs": [
+    {
+      "id": "g1_C_aux_no_feedback_seed17",
+      "name": "C_aux_no_feedback",
+      "stage": "G1",
+      "kind": "train",
+      "config": "configs/g1_C_aux_no_feedback_seed17.json",
+      "devices": "",
+      "split_counts": {
+        "train": 512,
+        "val": 128,
+        "test": 0
+      },
+      "log": "runs/phase_logs/g1_C_aux_no_feedback_seed17.log",
+      "output": "runs/g1_C_aux_no_feedback_seed17",
+      "state": "queued",
+      "desired": "running"
+    },
+    {
+      "id": "g1_D_field_bridge_seed17",
+      "name": "D_field_bridge",
+      "stage": "G1",
+      "kind": "train",
+      "config": "configs/g1_D_field_bridge_seed17.json",
+      "devices": "",
+      "split_counts": {
+        "train": 512,
+        "val": 128,
+        "test": 0
+      },
+      "log": "runs/phase_logs/g1_D_field_bridge_seed17.log",
+      "output": "runs/g1_D_field_bridge_seed17",
+      "state": "queued",
+      "desired": "running"
+    },
+    {
+      "id": "g1_G_feature_control_seed17",
+      "name": "G_feature_control",
+      "stage": "G1",
+      "kind": "train",
+      "config": "configs/g1_G_feature_control_seed17.json",
+      "devices": "",
+      "split_counts": {
+        "train": 512,
+        "val": 128,
+        "test": 0
+      },
+      "log": "runs/phase_logs/g1_G_feature_control_seed17.log",
+      "output": "runs/g1_G_feature_control_seed17",
+      "state": "queued",
+      "desired": "running"
+    },
+    {
+      "id": "g1_O_oracle_fields_seed17",
+      "name": "O_oracle_fields",
+      "stage": "G1",
+      "kind": "train",
+      "config": "configs/g1_O_oracle_fields_seed17.json",
+      "devices": "",
+      "split_counts": {
+        "train": 512,
+        "val": 128,
+        "test": 0
+      },
+      "log": "runs/phase_logs/g1_O_oracle_fields_seed17.log",
+      "output": "runs/g1_O_oracle_fields_seed17",
+      "state": "queued",
+      "desired": "running"
+    },
+    {
+      "id": "g1_B_rgb_only_seed17",
+      "name": "B_rgb_only",
+      "stage": "G1",
+      "kind": "train",
+      "config": "configs/g1_B_rgb_only_seed17.json",
+      "devices": "",
+      "split_counts": {
+        "train": 512,
+        "val": 128,
+        "test": 0
+      },
+      "log": "runs/phase_logs/g1_B_rgb_only_seed17.log",
+      "output": "runs/g1_B_rgb_only_seed17",
+      "state": "queued",
+      "desired": "running"
+    },
+    {
+      "id": "g1_S_shuffled_oracle_seed17",
+      "name": "S_shuffled_oracle",
+      "stage": "G1",
+      "kind": "train",
+      "config": "configs/g1_S_shuffled_oracle_seed17.json",
+      "devices": "",
+      "split_counts": {
+        "train": 512,
+        "val": 128,
+        "test": 0
+      },
+      "log": "runs/phase_logs/g1_S_shuffled_oracle_seed17.log",
+      "output": "runs/g1_S_shuffled_oracle_seed17",
+      "state": "queued",
+      "desired": "running"
+    },
+    {
+      "id": "full_giant16_v2_C_aux_no_feedback_seed17",
+      "name": "C_aux_no_feedback_v2",
+      "stage": "FULL",
+      "kind": "train",
+      "config": "configs/full_giant16_v2_C_aux_no_feedback_seed17.json",
+      "devices": "0,1,2,3",
+      "split_counts": {
+        "train": 4021,
+        "val": 399,
+        "test": 494
+      },
+      "log": "runs/phase_logs/full_v2_C.log",
+      "output": "runs/full_giant16_v2_C_aux_no_feedback_seed17",
+      "state": "held_for_g1",
+      "desired": "running"
+    },
+    {
+      "id": "full_giant16_v2_D_field_bridge_seed17",
+      "name": "D_field_bridge_v2",
+      "stage": "FULL",
+      "kind": "train",
+      "config": "configs/full_giant16_v2_D_field_bridge_seed17.json",
+      "devices": "4,5,6,7",
+      "split_counts": {
+        "train": 4021,
+        "val": 399,
+        "test": 494
+      },
+      "log": "runs/phase_logs/full_v2_D.log",
+      "output": "runs/full_giant16_v2_D_field_bridge_seed17",
+      "state": "held_for_g1",
+      "desired": "running"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "gold_fp32",
+      "stage": "G0",
+      "kind": "benchmark",
+      "devices": "0",
+      "state": "queued",
+      "args": [
+        "scripts/benchmark_validation.py",
+        "--config",
+        "configs/full_giant16_C_aux_no_feedback_seed17.json",
+        "--checkpoint",
+        "runs/full_giant16_C_aux_no_feedback_seed17/last.pt",
+        "--output",
+        "runs/g0_benchmark/gold_fp32",
+        "--limit",
+        "64",
+        "--batch",
+        "1",
+        "--workers",
+        "0"
+      ],
+      "log": "runs/phase_logs/g0_gold_fp32.log"
+    },
+    {
+      "id": "distributed_fp32",
+      "stage": "G0",
+      "kind": "benchmark",
+      "devices": "0,1,2,3",
+      "state": "queued",
+      "args": [
+        "scripts/benchmark_validation.py",
+        "--config",
+        "configs/full_giant16_C_aux_no_feedback_seed17.json",
+        "--checkpoint",
+        "runs/full_giant16_C_aux_no_feedback_seed17/last.pt",
+        "--output",
+        "runs/g0_benchmark/distributed_fp32",
+        "--limit",
+        "64",
+        "--batch",
+        "2",
+        "--workers",
+        "2"
+      ],
+      "log": "runs/phase_logs/g0_distributed_fp32.log"
+    },
+    {
+      "id": "distributed_bf16",
+      "stage": "G0",
+      "kind": "benchmark",
+      "devices": "0,1,2,3",
+      "state": "queued",
+      "args": [
+        "scripts/benchmark_validation.py",
+        "--config",
+        "configs/full_giant16_C_aux_no_feedback_seed17.json",
+        "--checkpoint",
+        "runs/full_giant16_C_aux_no_feedback_seed17/last.pt",
+        "--output",
+        "runs/g0_benchmark/distributed_bf16",
+        "--limit",
+        "64",
+        "--batch",
+        "2",
+        "--workers",
+        "2",
+        "--bf16"
+      ],
+      "log": "runs/phase_logs/g0_distributed_bf16.log"
+    },
+    {
+      "id": "g1_cache",
+      "stage": "G1",
+      "kind": "cache",
+      "devices": "0",
+      "state": "queued",
+      "args": [
+        "scripts/prepare_feature_cache.py",
+        "--config",
+        "configs/g1_C_aux_no_feedback_seed17.json"
+      ],
+      "log": "runs/phase_logs/g1_cache.log"
+    }
+  ],
+  "feedback_nodes": [
+    "G0 \u6570\u503c/\u8986\u76d6/\u8017\u65f6\u9a8c\u6536",
+    "G1 \u771f\u573a\u4e0a\u754c\u4e0e\u7b49\u5bb9\u91cf\u8bca\u65ad",
+    "G2 \u5f15\u64ce\u6807\u5b9a\u4e0e\u65b0\u52a8\u4f5c\u54cd\u5e94",
+    "G3 \u65b0\u6570\u636e\u548c\u5c40\u90e8\u65f6\u5e8f\u6865",
+    "G4 \u4e09\u79cd\u5b50\u5f3a\u57fa\u7ebf"
+  ],
+  "automatic_full_gate": "oracle and predicted bridge each improve C by at least 2%; provisional routing, not significance",
+  "stop_policy": {
+    "relative_delta": 0.002,
+    "joint_patience_full": 5,
+    "joint_patience_diagnostic": 4,
+    "min_joint_epochs": 6,
+    "field_plateau_ends_warmup": true
+  }
+}

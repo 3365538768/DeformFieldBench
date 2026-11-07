@@ -1,0 +1,27 @@
+{
+  "model": {
+    "backbone": "tiny",
+    "width": 64,
+    "heads": 4,
+    "layers": 1,
+    "field_size": 16,
+    "feedback": "fields",
+    "freeze_backbone": false
+  },
+  "data": {
+    "manifest": "data/fixture/manifest.jsonl",
+    "stats": "data/fixture/stats.json",
+    "frames": 4,
+    "max_views": 3,
+    "image_size": 32
+  },
+  "train": {
+    "output": "runs/acceptance_resume",
+    "epochs": 2,
+    "batch_size": 2,
+    "workers": 0,
+    "max_steps": 4,
+    "purpose": "smoke",
+    "resume": "runs/software_smoke/last.pt"
+  }
+}

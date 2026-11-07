@@ -1,0 +1,25 @@
+{
+  "model": {
+    "backbone": "tiny",
+    "width": 64,
+    "heads": 4,
+    "layers": 1,
+    "field_size": 16,
+    "feedback": "fields",
+    "freeze_backbone": false
+  },
+  "data": {
+    "manifest": "data/fixture/manifest.jsonl",
+    "stats": "data/fixture/stats.json",
+    "frames": 4,
+    "max_views": 3,
+    "image_size": 32
+  },
+  "train": {
+    "output": "runs/ddp8_software_smoke",
+    "epochs": 2,
+    "batch_size": 1,
+    "workers": 0,
+    "max_steps": 2
+  }
+}

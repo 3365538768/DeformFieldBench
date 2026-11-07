@@ -2,6 +2,10 @@
 
 ![DeformFieldBench dataset overview](./dataset.png)
 
+## FieldBridge research extension
+
+The [FieldBridge project](rsi_real_test/README.md) adds an independent open-backbone material inference framework, controlled physical-field feedback experiments, distributed validation, plateau early stopping, and a local A800 dashboard with checkpoint-based pause/resume. See the [G0/G1 execution and validation report](rsi_real_test/docs/G0_G1_IMPLEMENTATION_AND_CONTROL_ZH.md) for measured validation speedups and the six diagnostic controls. This extension is ongoing research; improved material inference and agreement with online simulation fitting have not yet been established.
+
 ## Data and Checkpoints
 
 - Dataset: [Physical Field Material Parameter 5000 on Kaggle](https://www.kaggle.com/datasets/anonymous336/physical-field-material-parameter-5000)

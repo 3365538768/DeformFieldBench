@@ -1,0 +1,43 @@
+{
+  "model": {
+    "backbone": "dinov3",
+    "repo": "external/dinov3",
+    "weights": "weights/dinov3_vitl16_pretrain.pth",
+    "hub_name": "dinov3_vitl16",
+    "width": 512,
+    "heads": 8,
+    "layers": 2,
+    "field_size": 112,
+    "field_mode": "legacy_visual",
+    "feedback": "fields",
+    "use_prior": false,
+    "freeze_backbone": true,
+    "train_last_blocks": 0,
+    "frame_chunk": 8
+  },
+  "data": {
+    "manifest": "data/manifests/deformfield_v1.jsonl",
+    "stats": "data/manifests/deformfield_v1.stats.json",
+    "frames": 16,
+    "max_views": 3,
+    "image_size": 224,
+    "view_dropout": 0.0
+  },
+  "train": {
+    "output": "runs/D_field_bridge_seed43",
+    "seed": 43,
+    "epochs": 80,
+    "field_epochs": 10,
+    "batch_size": 1,
+    "accumulation": 2,
+    "workers": 2,
+    "lr": 0.0003,
+    "backbone_lr": 3e-06,
+    "weight_decay": 0.05,
+    "bf16": true,
+    "field_weight": 1.0,
+    "parameter_weight": 1.0,
+    "nll_weight": 0.05,
+    "law_weight": 0.1
+  }
+}
