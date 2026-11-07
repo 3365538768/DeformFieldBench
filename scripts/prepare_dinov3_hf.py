@@ -15,6 +15,7 @@ import urllib.request
 REPO = 'facebook/dinov3-vitl16-pretrain-lvd1689m'
 REVISION = 'ea8dc2863c51be0a264bab82070e3e8836b02d51'
 UPSTREAM = '6876159a11b4df116f30f667f8c9888617df0751'
+PARITY_PROTOCOL = 'fp32_no_tf32_math_sdpa_v1'
 
 
 def atomic(path, value):
@@ -77,6 +78,7 @@ def prepare(status):
         weights=Path(previous.get('weights','__missing__'))
         if (previous.get('status')=='complete' and previous.get('revision')==REVISION
                 and previous.get('upstream_commit')==UPSTREAM and previous.get('strict_load')
+                and previous.get('parity_protocol')==PARITY_PROTOCOL
                 and weights.is_file() and digest(weights)==previous.get('weights_sha256')):
             print(json.dumps(previous,indent=2)); return
     started = time.time(); directory = Path('weights/dinov3_hf'); directory.mkdir(parents=True, exist_ok=True)
@@ -102,7 +104,13 @@ def prepare(status):
         if name=='model.safetensors' and (offset!=size or digest(temp)!=expected): raise ValueError('HF LFS SHA256 mismatch')
         temp.replace(path)
     atomic(status, dict(status='converting',repository=REPO,revision=REVISION,updated_unix=time.time()))
+    # Weight-conversion parity must not depend on CUDA's fused attention choice.
+    os.environ.setdefault('NVIDIA_TF32_OVERRIDE', '0')
     import torch
+    from torch.nn.attention import sdpa_kernel, SDPBackend
+    torch.set_float32_matmul_precision('highest')
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
     from safetensors.torch import load_file
     from transformers import AutoModel
     original = torch.hub.load('external/dinov3','dinov3_vitl16',source='local',pretrained=False).eval()
@@ -110,7 +118,7 @@ def prepare(status):
     hf = AutoModel.from_pretrained(directory,local_files_only=True).eval()
     original = original.cuda(); hf = hf.cuda()
     torch.manual_seed(17); x=torch.randn(2,3,224,224,device='cuda')
-    with torch.inference_mode():
+    with torch.inference_mode(), sdpa_kernel(SDPBackend.MATH):
         a=original.forward_features(x)['x_norm_patchtokens']; b=hf(x).last_hidden_state[:,5:]
     maximum=float((a-b).abs().max()); mean=float((a-b).abs().mean())
     torch.testing.assert_close(a,b,atol=2e-4,rtol=2e-4)
@@ -119,6 +127,7 @@ def prepare(status):
     temporary.replace(target)
     atomic(status,dict(status='complete',repository=REPO,revision=REVISION,upstream_commit=UPSTREAM,
         source_sha256=expected,weights=str(target),weights_sha256=checksum,strict_load=True,
+        parity_protocol=PARITY_PROTOCOL,
         fp32_patch_max_delta=maximum,fp32_patch_mean_delta=mean,parity_images=2,
         feature_shape=list(a.shape),elapsed_seconds=time.time()-started,updated_unix=time.time()))
     print(json.dumps(json.loads(status.read_text()),indent=2))

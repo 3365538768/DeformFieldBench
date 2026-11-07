@@ -116,7 +116,7 @@ function render(state){
   $('footer-time').textContent=state.collecting?'正在采集新快照…':`采集间隔 ${state.interval_seconds} 秒 · 窗口数据每 5 秒同步`;
   renderOptimization(state);if(!s)return;
   $('project').textContent=s.project;
-  if(s.migration?.status){const m=s.migration;$('optimization-evidence').innerHTML+=`<br><strong>新盘迁移：</strong>${esc(m.status)} · ${esc(m.stage||'')} · 已完成 ${integer((m.completed||[]).length)} 个批次；原盘保留，MLE 保持暂停。`;}
+  if(s.migration?.status){const m=s.migration,d=m.dataset_download||{},a=m.acceptance||{};const progress=d.total?` ${num(100*d.bytes/d.total,1)}%`:'';$('optimization-evidence').innerHTML+=`<br><strong>新盘迁移：</strong>${esc(m.status)} · ${esc(m.stage||'')} · 已复制 ${integer((m.completed||[]).filter(x=>x.status==='copied').length)} 个批次；原盘保留，MLE 在旧 4090/5090 运行，新盘仅保存复制时快照。<br>原始数据下载：${esc(d.status||'等待')}${progress} · 权重：${esc(m.weights_download?.status||'等待')} · 新机验收：${esc(a.status||'等待')} ${esc(a.stage||'')}`;}
   const gpu=s.gpus,utils=gpu.map(g=>g.utilization).filter(v=>v!=null),avg=utils.length?utils.reduce((a,b)=>a+b,0)/utils.length:null;
   const used=gpu.reduce((a,g)=>a+(g.memory_used_mib||0),0),total=gpu.reduce((a,g)=>a+(g.memory_total_mib||0),0);
   const active=s.experiments.filter(j=>j.status==='running'&&j.purpose==='research');

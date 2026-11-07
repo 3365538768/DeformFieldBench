@@ -146,7 +146,9 @@ def run(config_path):
     source_hash = hashlib.sha256()
     for f in sorted(Path(__file__).parent.glob('*.py')):
         source_hash.update(f.name.encode()); source_hash.update(f.read_bytes())
+    from .paths import path_map
     provenance = {'engine_version': 2, 'config': cfg.dump(), 'manifest_sha256': manifest_hash,
+                  'runtime_path_map': path_map(),
                   'source_sha256': source_hash.hexdigest(), 'backbone_checkpoint_sha256': backbone_sha,
                   'stats': base_dataset.codec.stats, 'world_size': world, 'torch': torch.__version__,
                   'parameters': sum(p.numel() for p in raw_model.parameters()),

@@ -13,6 +13,7 @@ import torch
 from torch.utils.data import Dataset
 import torch.nn.functional as F
 from .engine_domains import validate_single_parameter_domain
+from .paths import path_map, relocate_path
 
 PARAMETERS = ("E", "nu", "rho", "sigma_y")
 LAWS = {"jelly": 0, "metal": 1, "plasticine": 2}
@@ -21,6 +22,7 @@ LAWS = {"jelly": 0, "metal": 1, "plasticine": 2}
 def read_manifest(path):
     path = Path(path).resolve()
     rows = [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
+    mappings = path_map()
     seen, groups = set(), {}
     for r in rows:
         for k in ("sample_id", "object_id", "split", "source", "pack", "parameters"):
@@ -33,7 +35,7 @@ def read_manifest(path):
             raise ValueError("Unknown split")
         group = r.get("asset_group") or f"{r['source']}:{r['object_id']}"
         groups.setdefault(group, set()).add(r["split"])
-        r["pack"] = str((path.parent / r["pack"]).resolve())
+        r["pack"] = relocate_path(str((path.parent / r["pack"]).resolve()), mappings)
     leaks = {k: sorted(v) for k, v in groups.items() if len(v) > 1}
     if leaks:
         raise ValueError(f"Object leakage across splits: {leaks}")

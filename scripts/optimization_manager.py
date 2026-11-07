@@ -338,6 +338,8 @@ def main():
                     control = read(ROOT / j['output'] / 'control.json', {})
                     if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused' or not dependencies_finished(j, jobs):
                         continue
+                    if j.get('resources', {}).get('device') == 'cpu':
+                        j['devices']=''; launch(j, children); event('开始 CPU 任务 ' + j['id']); continue
                     free = [str(i) for i in range(4) if str(i) not in occupied and memory[i] < 1000]
                     if free:
                         j['devices'] = free[0]; occupied.add(free[0]); launch(j, children); event('开始 ' + j['id'])

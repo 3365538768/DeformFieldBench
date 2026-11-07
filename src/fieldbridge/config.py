@@ -1,6 +1,7 @@
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 import json
+from .paths import path_map, relocate_path
 
 
 @dataclass
@@ -126,5 +127,12 @@ def load_config(path):
     raw = json.loads(Path(path).read_text())
     if set(raw) - {"model", "data", "train"}:
         raise ValueError("Unknown config section")
+    mappings = path_map()
+    for section, fields in {'model': ('repo', 'weights'),
+                            'data': ('manifest', 'stats', 'prepared_dir'),
+                            'train': ('output', 'resume', 'initialize', 'initialize_rgb_baseline')}.items():
+        for key in fields:
+            if key in raw.get(section, {}):
+                raw[section][key] = relocate_path(raw[section][key], mappings)
     return Config(ModelConfig(**raw.get("model", {})), DataConfig(**raw.get("data", {})),
                   TrainConfig(**raw.get("train", {}))).validate()

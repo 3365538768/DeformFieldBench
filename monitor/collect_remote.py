@@ -262,7 +262,11 @@ def collect():
     jobs.sort(key=lambda j: (j['purpose'] != 'research', j['status'] != 'running', j['id']))
     audit = read_json(ROOT / 'docs/full_dataset_audit.json', {})
     return {'server_unix': now, 'server_time_utc': datetime.fromtimestamp(now, timezone.utc).isoformat(),
-        'host': 'a800', 'project': str(ROOT), 'migration': read_json(ROOT.parent/'migration/status.json', {}),
+        'host': os.environ.get('FIELDBRIDGE_HOST', 'a800'), 'project': str(ROOT),
+        'migration': {**read_json(ROOT.parent/'migration/status.json', {}),
+            'dataset_download': read_json(ROOT/'data/archives/dataset.download.json', {}),
+            'weights_download': read_json(ROOT.parent/'migration/weights_download.json', {}),
+            'acceptance': read_json(ROOT.parent/'migration/acceptance.json', {})},
         'uptime_seconds': float(Path('/proc/uptime').read_text().split()[0]),
         'cpu': cpu, 'memory': memory, 'disks': disks, 'network': network, 'gpus': gpus,
         'gpu_error': gpu_error, 'gpu_processes': processes, 'experiments': jobs, 'optimization': optimization,

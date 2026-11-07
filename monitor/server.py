@@ -41,7 +41,7 @@ class Monitor:
         self.preview_cache = {}
 
     def command(self, command):
-        return 'cd '+shlex.quote(self.remote_root)+' && FIELDBRIDGE_ROOT='+shlex.quote(self.remote_root)+' '+command
+        return 'cd '+shlex.quote(self.remote_root)+' && FIELDBRIDGE_ROOT='+shlex.quote(self.remote_root)+' FIELDBRIDGE_HOST='+shlex.quote(self.host)+' '+command
 
     def simulation(self, identifier):
         if identifier and not re.fullmatch(r'(warp|uipc)_[0-9a-f]{20}',identifier):
@@ -149,7 +149,7 @@ class Monitor:
                 if not lines:
                     raise ValueError('SSH returned no JSON snapshot')
                 snap = json.loads(lines[-1])
-                if snap.get('host') != 'a800' or not isinstance(snap.get('experiments'), list):
+                if snap.get('host') != self.host or snap.get('project') != self.remote_root or not isinstance(snap.get('experiments'), list):
                     raise ValueError('Unexpected snapshot format')
                 rates = {'rx_bps': None, 'tx_bps': None}
                 if self.previous:
