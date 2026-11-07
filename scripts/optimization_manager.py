@@ -307,7 +307,7 @@ def main():
         anchored = [j for j in jobs if j['stage'] == 'G1e']
         strong = [j for j in jobs if j['stage'] == 'G1f']
         strong_result = strong_backbone_results(strong) if strong else None
-        engine_jobs = [j for j in jobs if j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t','G3p'}]
+        engine_jobs = [j for j in jobs if j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t','G3p','G3q'}]
         engine_progress = read('docs/G2_ENGINE_PROGRESS.json', {})
         if strong_result and strong_result['status'] in {'complete','failed'} and (previous.get('strong_backbone') or {}).get('status') != strong_result['status']:
             event('G1f 反馈：' + strong_result['route'])
@@ -409,7 +409,8 @@ def main():
         for stage, filename, title in [('G3c','G3_MESH_CONVERGENCE.json','细网格收敛与数据准入'),
                                        ('G3r','G3_RENDER_QUALITY.json','未放大视频与可见像素光流'),
                                        ('G3t','G3_INTERACTION_EFFICIENCY.json','有效动作采样、稳态早停与时间步'),
-                                       ('G3p','G3_CONTACT_PREFLIGHT.json','不规则实体、粘接分区与三维工具接触预检')]:
+                                       ('G3p','G3_CONTACT_PREFLIGHT.json','不规则实体、粘接分区与三维工具接触预检'),
+                                       ('G3q','G3_CONTACT_NUMERICAL_AUDIT.json','接触网格、时间步与均质极限诊断')]:
             if any(j['stage']==stage for j in jobs):
                 quality=read('docs/'+filename,{})
                 job=next(j for j in jobs if j['stage']==stage)

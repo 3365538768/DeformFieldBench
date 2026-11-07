@@ -37,6 +37,21 @@ G3r 在新机复用经过源文件/轨迹 SHA、图像解码与 flow 数值检�
 
 原始 41,425,509,436 字节数据 ZIP 在新机重新分块下载，完成后必须核对既有官方 SHA256，并检查外层与 NPZ 内层 CRC/数组模式。派生数据、几何、数值轨迹、训练检查点和历史结果继续复制；复制与校验分别登记，不能把 rsync 退出成功当作完整迁移验收。
 
+2026-11-08：新机已完成官方 ZIP SHA256，以及全部外层/NPZ 内层 CRC、五类数组、标签和时间戳审计，零失败。实际发布清单为 **4,914 条、108 个物体**，不是名义 5,000 条；原始清单和 SHA 均保留，4,914 个路径通过显式映射全部解析。DINOv3 严格一致性和两种引擎 GPU 预检通过，运行就绪；这不代表仍在复制的历史检查点、派生缓存和其他 linrui/MLE 快照已经全部迁移验收。
+
+四个旧 FULL 检查点各含约 4.55GB 的重复冻结 DINOv2-G 骨干。旧机对全部 568 个骨干张量逐个核对形状、dtype 和数值，并核对 RGB 归一化缓冲；与新机重下的官方权重完全一致。每个训练状态导出约 131MB，保留训练所得参数、优化器、随机状态及原始元数据，旁置原文件/骨干/导出 SHA256。原始文件仍在旧机保留；导出存于 `data/migration_export/runs/`，不得直接当 legacy 完整检查点续训。
+
+恢复工具只接受本项目可信导出：
+
+```bash
+.venv/bin/python scripts/restore_migration_checkpoint.py \
+  --export data/migration_export/runs/full_giant16_D_field_bridge_seed17/last.pt \
+  --backbone weights/dinov2_vitg14_reg4_pretrain.pth \
+  --output runs/restored_full_giant16_D/last.pt
+```
+
+工具先验证两份 SHA 和内嵌/旁置收据一致性，恢复原模型 key 顺序并保留优化器/RNG；拒绝覆盖已有文件。张量内容可恢复，重新序列化后的文件不声称与旧文件字节相同。旧 FULL 仍暂停，不由迁移动作自动恢复。
+
 DINOv2-S/G 在新机重新下载，完成 ZIP CRC 检查并与原部署 SHA256 比对。DINOv3 的 HF 权重在“不搬大权重”指令前已复制完成；新机仍须核对官方 LFS SHA、严格加载及 HF/原生特征一致性后才可用于训练。
 
 新机默认 fused attention 的 HF/原生差约 1.55e-3，未通过原门槛。改为相同 FP32 math SDPA、禁用 TF32 后，最大差为 4.7311e-6，平均差为 3.4165e-7，原门槛不变；转换后的文件 SHA 与原部署完全一致。脚本已固定并记录 `fp32_no_tf32_math_sdpa_v1` 协议，用于权重转换验收，不将此值当作训练性能改善。
