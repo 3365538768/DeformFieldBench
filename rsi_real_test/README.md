@@ -1,5 +1,9 @@
 # FieldBridge / RSI Real Test
 
+**这里是 DeformFieldBench 当前新增的重构项目。** 仓库根目录中的旧论文训练代码继续保留；本轮模型、训练、数据、评估和网页控制统一在此目录。使用本项目时先 `cd rsi_real_test`；下文配置和脚本路径均相对此目录。A800 的部署目录见下一段。
+
+核心入口：[模型](src/fieldbridge/model.py)、[训练与早停](src/fieldbridge/train.py)、[验证](src/fieldbridge/evaluation.py)、[实验队列](scripts/optimization_manager.py)、[Web 监控](monitor/README.md)、[G0/G1 配置](configs/)。
+
 目标：静态材料先验 + 动态物理场推断可用于指定仿真器的材料参数，以未见受力和真实交互验证。项目位于 A800 的 `/mnt/afs_engine/linrui/rsi_real_test`。
 
 详细路线见 [docs/OPTIMIZATION_PLAN_ZH.md](docs/OPTIMIZATION_PLAN_ZH.md)，当前验收记录见 [G0/G1 执行说明](docs/G0_G1_IMPLEMENTATION_AND_CONTROL_ZH.md)。运行时状态和日志保存在部署目录，不随 Git 发布。

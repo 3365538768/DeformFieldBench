@@ -1,10 +1,25 @@
 # DeformFieldBench
 
+## 当前重构版本：FieldBridge（2026-11-07）
+
+**本轮整合的训练、模型、实验控制和监控代码位于 [`rsi_real_test/`](rsi_real_test/)，请从这里进入。** 原论文的 `logic_model/`、`my_model/`、`simulation/` 等目录仍保留，当前 A800 新实验使用下表中的 FieldBridge 入口。
+
+| 内容 | 当前代码 / 说明 |
+|---|---|
+| 新项目说明与运行方式 | [rsi_real_test/README.md](rsi_real_test/README.md) |
+| 开源骨干、场预测与材质参数模型 | [src/fieldbridge/model.py](rsi_real_test/src/fieldbridge/model.py) |
+| 训练、检查点续训、停滞早停 | [src/fieldbridge/train.py](rsi_real_test/src/fieldbridge/train.py) |
+| 数据读取与缓存、分布式验证 | [data.py](rsi_real_test/src/fieldbridge/data.py) / [evaluation.py](rsi_real_test/src/fieldbridge/evaluation.py) |
+| G0/G1 实验队列与暂停继续 | [optimization_manager.py](rsi_real_test/scripts/optimization_manager.py) / [control_jobs.py](rsi_real_test/scripts/control_jobs.py) |
+| 六组 G1 对照配置 | [configs/](rsi_real_test/configs/)（`g1_*_seed17.json`） |
+| A800 Web 监控与操作说明 | [monitor/](rsi_real_test/monitor/) |
+| 优化方案、实测结果与验收边界 | [G0/G1 执行说明](rsi_real_test/docs/G0_G1_IMPLEMENTATION_AND_CONTROL_ZH.md) / [研究诊断与优化方案](rsi_real_test/docs/RESEARCH_DIAGNOSIS_AND_OPTIMIZATION_2026-11-07_ZH.md) |
+
+新框架统一在 `rsi_real_test` 工作目录运行，安装后入口为 `python -m fieldbridge.train --config ...`。它不是原论文权重的兼容重现；新仿真后端、真实视频完整推理链路与相对在线拟合的效果验证仍待完成。数据、模型权重和实时运行日志不包含在 Git 中。
+
+The [FieldBridge research extension](rsi_real_test/README.md) contains the current refactored training framework, controlled physical-field feedback experiments, distributed validation, plateau early stopping, and a local A800 dashboard with checkpoint-based pause/resume. Improved material inference and agreement with online simulation fitting have not yet been established.
+
 ![DeformFieldBench dataset overview](./dataset.png)
-
-## FieldBridge research extension
-
-The [FieldBridge project](rsi_real_test/README.md) adds an independent open-backbone material inference framework, controlled physical-field feedback experiments, distributed validation, plateau early stopping, and a local A800 dashboard with checkpoint-based pause/resume. See the [G0/G1 execution and validation report](rsi_real_test/docs/G0_G1_IMPLEMENTATION_AND_CONTROL_ZH.md) for measured validation speedups and the six diagnostic controls. This extension is ongoing research; improved material inference and agreement with online simulation fitting have not yet been established.
 
 ## Data and Checkpoints
 
