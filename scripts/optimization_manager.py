@@ -168,6 +168,14 @@ def dependencies_finished(job, jobs):
     return all(states.get(identifier) == 'finished' for identifier in job.get('depends_on', []))
 
 
+def available_gpu_devices(job, used, totals, occupied):
+    """Shared GPUs are opt-in per job, with an explicit free-memory requirement."""
+    minimum = job.get('resources', {}).get('minimum_free_mib')
+    candidates = range(len(used)) if minimum is not None else range(min(4, len(used)))
+    return [str(i) for i in candidates if str(i) not in occupied and
+            (totals[i]-used[i] >= minimum if minimum is not None else used[i] < 1000)]
+
+
 def strong_backbone_results(jobs):
     """Compare bridges against their own backbone's RGB estimator, never DINOv2."""
     trained = [j for j in jobs if j['kind'] == 'train']
@@ -299,7 +307,7 @@ def main():
         anchored = [j for j in jobs if j['stage'] == 'G1e']
         strong = [j for j in jobs if j['stage'] == 'G1f']
         strong_result = strong_backbone_results(strong) if strong else None
-        engine_jobs = [j for j in jobs if j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t'}]
+        engine_jobs = [j for j in jobs if j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t','G3p'}]
         engine_progress = read('docs/G2_ENGINE_PROGRESS.json', {})
         if strong_result and strong_result['status'] in {'complete','failed'} and (previous.get('strong_backbone') or {}).get('status') != strong_result['status']:
             event('G1f 反馈：' + strong_result['route'])
@@ -331,6 +339,7 @@ def main():
             if bench and bench['status'] == 'passed' and cache_task['state'] == 'finished':
                 occupied = {d for j in jobs if j['state'] == 'running' for d in j['devices'].split(',')}
                 memory = [int(s.strip()) for s in subprocess.check_output(['nvidia-smi', '--query-gpu=memory.used', '--format=csv,noheader,nounits'], text=True).splitlines()]
+                totals = [int(s.strip()) for s in subprocess.check_output(['nvidia-smi', '--query-gpu=memory.total', '--format=csv,noheader,nounits'], text=True).splitlines()]
                 eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else []) + (locals_ if followup and followup['status'] == 'complete' else []) + (forced if local_bridge and local_bridge['status'] == 'complete' else []) + (anchored if forced_bridge and forced_bridge['status'] == 'complete' else [])
                 eligible += strong if anchored_bridge and anchored_bridge['status'] == 'complete' else []
                 eligible += engine_jobs if strong_result and strong_result['status'] == 'complete' else []
@@ -338,9 +347,11 @@ def main():
                     control = read(ROOT / j['output'] / 'control.json', {})
                     if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused' or not dependencies_finished(j, jobs):
                         continue
+                    if j.get('readiness_file') and not read(ROOT/j['readiness_file'], {}).get('runtime_ready'):
+                        continue
                     if j.get('resources', {}).get('device') == 'cpu':
                         j['devices']=''; launch(j, children); event('开始 CPU 任务 ' + j['id']); continue
-                    free = [str(i) for i in range(4) if str(i) not in occupied and memory[i] < 1000]
+                    free = available_gpu_devices(j, memory, totals, occupied)
                     if free:
                         j['devices'] = free[0]; occupied.add(free[0]); launch(j, children); event('开始 ' + j['id'])
                 for j in [j for j in jobs if j['stage'] == 'FULL']:
@@ -397,7 +408,8 @@ def main():
                 'detail':visibility.get('detail','按真实 SI 形变筛查理想相机像素运动，不把可视化放大当视频监督。')})
         for stage, filename, title in [('G3c','G3_MESH_CONVERGENCE.json','细网格收敛与数据准入'),
                                        ('G3r','G3_RENDER_QUALITY.json','未放大视频与可见像素光流'),
-                                       ('G3t','G3_INTERACTION_EFFICIENCY.json','有效动作采样、稳态早停与时间步')]:
+                                       ('G3t','G3_INTERACTION_EFFICIENCY.json','有效动作采样、稳态早停与时间步'),
+                                       ('G3p','G3_CONTACT_PREFLIGHT.json','不规则实体、粘接分区与三维工具接触预检')]:
             if any(j['stage']==stage for j in jobs):
                 quality=read('docs/'+filename,{})
                 job=next(j for j in jobs if j['stage']==stage)

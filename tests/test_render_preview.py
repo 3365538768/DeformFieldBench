@@ -24,3 +24,17 @@ def test_registered_render_images_only(tmp_path):
     row['path']='outside'
     (docs/'G3_RENDER_QUALITY.json').write_text(json.dumps(dict(clips=[row])))
     with pytest.raises(ValueError,match='path'):preview.load_render(dict(clip=identifier,asset='final.png'),tmp_path)
+
+
+def test_contact_artifacts_require_contact_registration_and_own_root(tmp_path):
+    identifier='clip_'+'c'*20;folder=tmp_path/'data/rendered/g3_contact_preflight'/identifier
+    folder.mkdir(parents=True);(folder/'final.png').write_bytes(b'contact')
+    docs=tmp_path/'docs';docs.mkdir()
+    row=dict(id=identifier,path=str(folder.relative_to(tmp_path)),physical_tool_contact=True)
+    report=docs/'G3_CONTACT_PREFLIGHT.json';report.write_text(json.dumps(dict(status='running',clips=[row])))
+    catalog=preview.load_render(dict(clip='',asset=''),tmp_path)
+    assert catalog['status']=='running' and catalog['clips']==[row]
+    assert base64.b64decode(preview.load_render(dict(clip=identifier,asset='final.png'),tmp_path)['content_base64'])==b'contact'
+    row['physical_tool_contact']=False;report.write_text(json.dumps(dict(clips=[row])))
+    with pytest.raises(ValueError,match='path'):
+        preview.load_render(dict(clip=identifier,asset='final.png'),tmp_path)

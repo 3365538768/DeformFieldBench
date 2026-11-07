@@ -58,6 +58,18 @@ FEM 先承担可校准的弹性、接触与分区任务。旧 Warp MPM 路线可
 
 ## 后续顺序与反馈节点
 
+### A800-2 首轮实现和准入边界
+
+`irregular_geometry.py` 实现 tapered、waisted、curved、twisted 四种有尺度的程序实体，以及 homogeneous、left_right、core_shell 单元分区。共享节点表达完全粘接，颜色不编码刚度。网格测试检查正体积、外边界闭合和分区共享界面；这些程序几何不冒充 GS 重建。
+
+`solve_contact_preflight.py` 使用真实 UIPC ABD 压头和 FEM 实体接触，参照官方 [SoftTransformConstraint 样例](https://github.com/spiriMirror/libuipc-samples/tree/main/examples/12_soft_transform_constraint) 和 [ABD/FEM 接触样例](https://github.com/spiriMirror/libuipc-samples/tree/main/examples/90_abd_fem_cube_stack)。保留实际工具位置、加载卸载时间戳和逐单元系数。三维工具与物体一起深度测试渲染遮挡，不能把它与既有图像遮罩混淆。
+
+一个 8×4×4 开发预检完成：峰值位移约 1.916 mm，最小 J 约 0.9776，固定端误差 0，工具最大跟踪误差约 1.78e-8 m。原相机下 visible motion P95 约 4.48 px；调整实际相机至 256 px、7 cm FOV 后约 4.93 px，峰值物体可见比例约 83.1%。这些数字只验证管线运行，不是网格/时间步收敛或训练数据质量结论。
+
+`run_contact_preflight.py` 在新机数据/权重/路径验收后执行四几何 × 均质/芯壳的八次有界预检，保存源指纹和网页视频。GPU 共享只对明确声明空闲显存要求的任务生效；默认旧训练任务仍保持原资源门槛，不能自动启动旧 FULL。
+
+预检报告始终标记 `admitted_for_training=false`。压头是位移驱动，不能把目标位移当已知载荷，也不能将相同静态压缩形状当作绝对 E 的标签证据。原型尚未导出经过单位与力平衡验证的反力；需要继续做接触力、穿透完整检查、能量、均质极限以及连续两级网格和时间步减半验收。顶点未落入工具内部只能作为有限诊断，不能代替边/面穿透证明。
+
 1. 有效动作采样、稳态提前结束、加载卸载及时间步审计：以真实步数节省、场误差和动态收敛反馈，不只看播放速度。
 2. 四类不规则/GS 几何与一个三维工具接触闭环：反馈几何验收、真实接触轨迹及遮挡可视化；不通过则修几何/接触，不开大训练。
 3. 粘接双材质、可见性标注与 64 次物理小样本：反馈局部参数可辨识性和划分审计。

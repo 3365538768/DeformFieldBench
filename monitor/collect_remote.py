@@ -123,6 +123,8 @@ def collect():
     optimization['mesh_quality']={k:v for k,v in mesh.items() if k!='rows'} if mesh else None
     rendered=read_json(ROOT / 'docs/G3_RENDER_QUALITY.json')
     optimization['render_quality']={k:v for k,v in rendered.items() if k!='clips'} if rendered else None
+    contact=read_json(ROOT/'docs/G3_CONTACT_PREFLIGHT.json')
+    optimization['contact_preflight']={k:v for k,v in contact.items() if k not in {'rows','clips'}} if contact else None
     efficiency=read_json(ROOT / 'docs/G3_INTERACTION_EFFICIENCY.json')
     optimization['interaction_efficiency']={k:v for k,v in efficiency.items() if k!='rows'} if efficiency else None
     optimization['data_realism_plan']=read_json(ROOT / 'docs/G3_DATA_V2_PLAN.json')

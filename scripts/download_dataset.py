@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import time
+import threading
 import urllib.request
 
 URL = "https://huggingface.co/datasets/HandsomeHusky/DeformFieldBench/resolve/main/dataset.zip"
@@ -111,41 +112,53 @@ def download_parallel(output, proxy="", workers=8):
                     written = os.pwrite(fd, block, i * chunk_size)
                     if written != len(block):raise IOError("Short prefix write")
                     done.write_text(json.dumps({"bytes": len(block), "sha256": hashlib.sha256(block).hexdigest()}))
+    cancelled = threading.Event()
     def fetch(i):
         start, end = i*chunk_size, min((i+1)*chunk_size, EXPECTED_SIZE)-1
         done = chunks / f"{i:05d}.json"
         if done.exists():return i, end-start+1
         error = None
         for attempt in range(4):
+            if cancelled.is_set():raise RuntimeError('Download cancelled after another chunk failed')
             try:
                 handler = urllib.request.ProxyHandler({"https":proxy,"http":proxy}) if proxy else urllib.request.ProxyHandler({})
                 opener = urllib.request.build_opener(handler)
-                url = URL + f"?download=true&fieldbridge_chunk={start}-{end}"
+                # Cached HF redirects may carry an expired CDN signature.
+                url = URL + f"?download=true&fieldbridge_chunk={start}-{end}&request_nonce={time.time_ns()}"
                 request = urllib.request.Request(url,headers={"Range":f"bytes={start}-{end}","User-Agent":"FieldBridge/0.1"})
                 offset, digest = start, hashlib.sha256()
-                with opener.open(request,timeout=90) as r:
+                deadline = time.monotonic()+180
+                with opener.open(request,timeout=30) as r:
                     if r.status!=206 or r.headers.get("Content-Range")!=f"bytes {start}-{end}/{EXPECTED_SIZE}":
                         raise ValueError("Chunk range mismatch")
                     while offset<=end:
+                        if cancelled.is_set():raise RuntimeError('Download cancelled')
+                        if time.monotonic()>deadline:raise TimeoutError('Chunk deadline exceeded')
                         block=r.read(min(4*1024**2,end-offset+1))
                         if not block:raise IOError("Truncated chunk")
                         if os.pwrite(fd,block,offset)!=len(block):raise IOError("Short pwrite")
                         offset+=len(block);digest.update(block)
-                done.write_text(json.dumps({"bytes":end-start+1,"sha256":digest.hexdigest()}))
+                temp=done.with_suffix('.tmp')
+                temp.write_text(json.dumps({"bytes":end-start+1,"sha256":digest.hexdigest()}));temp.replace(done)
                 return i,end-start+1
             except Exception as e:
                 error=e
-        raise RuntimeError(f"Chunk {i} failed: {error}")
+        raise RuntimeError(f"Chunk {i} failed: {type(error).__name__}")
     try:
         completed_bytes=0
         with ThreadPoolExecutor(max_workers=workers) as pool:
             futures=[pool.submit(fetch,i) for i in range(count)]
-            for future in as_completed(futures):
-                _, size=future.result();completed_bytes+=size
-                status={"status":"downloading_chunks","bytes":completed_bytes,"total":EXPECTED_SIZE,
-                        "complete_chunks":len(list(chunks.glob('*.json'))),"total_chunks":count,
-                        "workers":workers,"elapsed_seconds":round(time.time()-started,2)}
-                receipt.write_text(json.dumps(status,indent=2));print(json.dumps(status),flush=True)
+            try:
+                for future in as_completed(futures):
+                    _, size=future.result();completed_bytes+=size
+                    status={"status":"downloading_chunks","bytes":completed_bytes,"total":EXPECTED_SIZE,
+                            "complete_chunks":len(list(chunks.glob('*.json'))),"total_chunks":count,
+                            "workers":workers,"elapsed_seconds":round(time.time()-started,2)}
+                    receipt.write_text(json.dumps(status,indent=2));print(json.dumps(status),flush=True)
+            except BaseException:
+                cancelled.set()
+                for future in futures:future.cancel()
+                raise
         os.fsync(fd)
     finally:
         os.close(fd)

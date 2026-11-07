@@ -12,6 +12,15 @@ manager = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(manager)
 
 
+def test_shared_gpu_jobs_respect_memory_reserve_and_owned_jobs():
+    used = [24900, 24900, 78000, 0, 24900]
+    totals = [81920]*5
+    assert manager.available_gpu_devices({}, used, totals, set()) == ['3']
+    shared = {'resources': {'minimum_free_mib': 16384}}
+    assert manager.available_gpu_devices(shared, used, totals, {'0'}) == ['1', '3', '4']
+    assert manager.available_gpu_devices(shared, [80000]*5, totals, set()) == []
+
+
 def test_append_does_not_reset_finished_or_paused_jobs():
     old = [{'id': 'a', 'state': 'finished', 'pid': 23}, {'id': 'b', 'state': 'paused'}]
     planned = [{'id': 'a', 'state': 'queued'}, {'id': 'b', 'state': 'queued'}, {'id': 'c', 'state': 'queued'}]
