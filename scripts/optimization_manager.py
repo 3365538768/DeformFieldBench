@@ -59,6 +59,8 @@ def launch(job, children):
         process = subprocess.Popen(args, cwd=ROOT, env=env, stdin=subprocess.DEVNULL,
                                    stdout=f, stderr=subprocess.STDOUT, start_new_session=True)
     children[job['id']] = process
+    job.pop('stop_reason', None)
+    job.pop('exit_code', None)
     job.update(pid=process.pid, state='running', launched_unix=time.time(), args_launched=args)
 
 
@@ -194,6 +196,12 @@ def local_bridge_results(jobs, original, stage='G1c'):
              'passes_2_percent_routing_threshold':bool(passed), 'resume_full_pair':False,
              'note':'Common frozen RGB warm start; validation tuning only. Epoch 0 selects the unchanged RGB estimator. Test untouched.',
              'updated_unix':time.time()}
+    if stage == 'G1e':
+        dd=results.get('D_dice',{}).get('best_material_mae')
+        gg=results.get('G_dice',{}).get('best_material_mae')
+        value['dice_matched_pair']={'D':dd,'G':gg,
+            'passes_2_percent':bool(dd is not None and gg is not None and dd < min(rgb,gg)*.98),
+            'scope':'Predeclared secondary contact-loss ablation; primary routing still uses balanced D/G.'}
     atomic(ROOT / f'docs/{stage.upper()}_RESULTS.json',value)
     return value
 
@@ -247,6 +255,7 @@ def main():
         followups = [j for j in jobs if j['stage'] == 'G1b']
         locals_ = [j for j in jobs if j['stage'] == 'G1c']
         forced = [j for j in jobs if j['stage'] == 'G1d']
+        anchored = [j for j in jobs if j['stage'] == 'G1e']
         diagnostic = read('docs/G1_DIAGNOSTIC_RESULTS.json')
         if not diagnostic and all(j['state'] in {'finished', 'failed'} for j in diagnostics):
             diagnostic = diagnostic_results(jobs); event('G1 反馈：' + diagnostic['route'])
@@ -259,6 +268,9 @@ def main():
         forced_bridge = local_bridge_results(forced, diagnostic, 'G1d') if forced and diagnostic else None
         if forced_bridge and forced_bridge['status'] in {'complete','failed'} and (previous.get('forced_bridge') or {}).get('status') != forced_bridge['status']:
             event('G1d 反馈：' + forced_bridge['route'])
+        anchored_bridge = local_bridge_results(anchored, diagnostic, 'G1e') if anchored and diagnostic else None
+        if anchored_bridge and anchored_bridge['status'] in {'complete','failed'} and (previous.get('anchored_bridge') or {}).get('status') != anchored_bridge['status']:
+            event('G1e 反馈：' + anchored_bridge['route'])
         if not paused and test_passed and drain.get('status') == 'drained':
             busy_tasks = any(j['state'] == 'running' for j in tasks)
             if not busy_tasks and not any(j['state'] == 'failed' for j in tasks):
@@ -272,7 +284,7 @@ def main():
             if bench and bench['status'] == 'passed' and cache_task['state'] == 'finished':
                 occupied = {d for j in jobs if j['state'] == 'running' for d in j['devices'].split(',')}
                 memory = [int(s.strip()) for s in subprocess.check_output(['nvidia-smi', '--query-gpu=memory.used', '--format=csv,noheader,nounits'], text=True).splitlines()]
-                eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else []) + (locals_ if followup and followup['status'] == 'complete' else []) + (forced if local_bridge and local_bridge['status'] == 'complete' else [])
+                eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else []) + (locals_ if followup and followup['status'] == 'complete' else []) + (forced if local_bridge and local_bridge['status'] == 'complete' else []) + (anchored if forced_bridge and forced_bridge['status'] == 'complete' else [])
                 for j in eligible:
                     control = read(ROOT / j['output'] / 'control.json', {})
                     if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused':
@@ -310,6 +322,10 @@ def main():
             stages.insert(4, {'id':'G1d','title':'移除修正头的直接 RGB 通路',
                 'state':forced_bridge['status'],'completed':sum(j['state']=='finished' for j in forced),'total':len(forced),
                 'detail':'仅改变修正头的直接 RGB 输入；预测场、同容量特征、真场与置乱真场匹配对照。基线仍冻结，测试集不参与。'})
+        if anchored:
+            stages.insert(5, {'id':'G1e','title':'场桥门归一化与零场参照',
+                'state':anchored_bridge['status'],'completed':sum(j['state']=='finished' for j in anchored),'total':len(anchored),
+                'detail':'修复门值整体塌缩和常量修正；D/G/O/S 主对照，加 D/G 稀疏接触 BCE+Dice 配对消融。测试集不参与。'})
         for j in jobs:
             j['control'] = read(ROOT / j['output'] / 'control.json', {'desired': 'running'})
             j['runtime'] = read(ROOT / j['output'] / 'runtime.json', {})
@@ -319,7 +335,7 @@ def main():
                  'cache': read('docs/G1_CACHE_STATUS.json'), 'local_cache': read('docs/G1B_LOCAL_CACHE.json'),
                  'field_audit': read('docs/G1_PREDICTED_FIELD_AUDIT.json'),
                  'diagnostic': diagnostic, 'followup': followup, 'local_bridge': local_bridge,
-                 'forced_bridge': forced_bridge, 'events': events,
+                 'forced_bridge': forced_bridge, 'anchored_bridge': anchored_bridge, 'events': events,
                  'stop_policy': plan['stop_policy']}
         atomic('docs/OPTIMIZATION_PROGRESS.json', state)
         previous = state

@@ -1,0 +1,18 @@
+{
+  "samples": 128,
+  "split": "val",
+  "precision": "fp32",
+  "checkpoint": "runs/g1d_D_local_fields_seed17/best_material.pt",
+  "pooling": "legacy",
+  "gate_mean": 2.041267725871876e-05,
+  "gate_quantiles": {
+    "min": 1.797115692170337e-05,
+    "p10": 1.8285983969690278e-05,
+    "p50": 1.958826214831788e-05,
+    "p90": 2.3877477360656485e-05,
+    "max": 2.5382683816133067e-05
+  },
+  "fraction_gate_below_1e4": 1.0,
+  "field_encoder_activation_rms": 0.11718828231096268,
+  "note": "Sigmoid gates are learned weights, NOT calibrated uncertainty. Legacy divides by frame count; normalized_anchor normalizes gate mass."
+}

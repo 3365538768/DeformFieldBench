@@ -1,0 +1,66 @@
+{
+  "status": "complete",
+  "results": {
+    "D_local_fields": {
+      "state": "finished",
+      "best_material_mae": 0.7864853779639139,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7864853779639139,
+      "best_epoch": 8,
+      "stop_reason": "validation_material_plateau"
+    },
+    "G_local_features": {
+      "state": "finished",
+      "best_material_mae": 0.7776142801011934,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7776142801011934,
+      "best_epoch": 15,
+      "stop_reason": "validation_material_plateau"
+    },
+    "O_local_oracle": {
+      "state": "finished",
+      "best_material_mae": 0.6755665556598065,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.6755665556598065,
+      "best_epoch": 24,
+      "stop_reason": "epochs_complete"
+    },
+    "S_local_shuffled": {
+      "state": "finished",
+      "best_material_mae": 0.7868116354575208,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7868116354575208,
+      "best_epoch": 6,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_dice": {
+      "state": "finished",
+      "best_material_mae": 0.7800838464789829,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7800838464789829,
+      "best_epoch": 9,
+      "stop_reason": "validation_material_plateau"
+    },
+    "G_dice": {
+      "state": "finished",
+      "best_material_mae": 0.7771307722302587,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7771307722302587,
+      "best_epoch": 18,
+      "stop_reason": "validation_material_plateau"
+    }
+  },
+  "field_fit": null,
+  "original_rgb_mae": 0.7999518818682233,
+  "route": "review_field_fit_and_data_targets",
+  "passes_2_percent_routing_threshold": false,
+  "resume_full_pair": false,
+  "note": "Common frozen RGB warm start; validation tuning only. Epoch 0 selects the unchanged RGB estimator. Test untouched.",
+  "updated_unix": 1794052326.7889204,
+  "dice_matched_pair": {
+    "D": 0.7800838464789829,
+    "G": 0.7771307722302587,
+    "passes_2_percent": false,
+    "scope": "Predeclared secondary contact-loss ablation; primary routing still uses balanced D/G."
+  }
+}

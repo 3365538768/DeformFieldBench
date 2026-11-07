@@ -33,7 +33,7 @@ def run(config, checkpoint, output, fp32=False):
     if cfg.model.feedback == 'oracle_shuffled':ds = ShuffledOracleDataset(ds)
     device = torch.device(cfg.train.device); model = build_model(cfg.model).to(device).eval()
     load_weights(model, ckpt, backbone)
-    names = ['original', 'zero_bridge', 'reverse_time_bridge']
+    names = ['original', 'zero_bridge', 'reverse_time_bridge', 'batch_roll_bridge']
     metrics = {name:dict(error=0.,change=0.,max_change=0.,count=0.) for name in names}
     ids=[]
     for batch in DataLoader(ds,batch_size=cfg.train.val_batch_size,collate_fn=collate,num_workers=cfg.train.val_workers):
@@ -44,6 +44,7 @@ def run(config, checkpoint, output, fp32=False):
             def intervention(module, inputs):
                 x=inputs[0]
                 if name=='zero_bridge':return (torch.zeros_like(x),)
+                if name=='batch_roll_bridge':return (x.reshape(*shape,*x.shape[1:]).roll(1,0).reshape_as(x),)
                 return (x.reshape(*shape,*x.shape[1:]).flip(2).reshape_as(x),)
             handle=model.field_encoder[0].register_forward_pre_hook(intervention) if name!='original' else None
             try:

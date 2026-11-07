@@ -1,0 +1,10 @@
+{
+  "stage": "G1e",
+  "manager_pid": 2619571,
+  "started_unix": 1794051355.9260578,
+  "tests_passed": 36,
+  "comparison": "D/G/O/S normalized sigmoid gate + zero-field anchor; secondary D/G BCE+Dice; same RGB seed17 and 512/128 data",
+  "previous_gate_mean": 2.041267725871876e-05,
+  "test_samples_used": 0,
+  "latest_verification_scope": "Full suite including native-domain isolation and adapter prototype"
+}

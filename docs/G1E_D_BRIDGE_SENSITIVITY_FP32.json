@@ -1,0 +1,35 @@
+{
+  "samples": 128,
+  "split": "val",
+  "checkpoint": "runs/g1e_D_local_fields_seed17/best_material.pt",
+  "checkpoint_epoch": 8,
+  "precision": "fp32",
+  "feedback": "fields",
+  "metrics": {
+    "original": {
+      "count": 430.0,
+      "standardized_mae": 0.7864494368087414,
+      "mean_prediction_change_z": 0.0,
+      "max_prediction_change_z": 0.0
+    },
+    "zero_bridge": {
+      "count": 430.0,
+      "standardized_mae": 0.7999306944913642,
+      "mean_prediction_change_z": 0.14978381811186325,
+      "max_prediction_change_z": 0.38074424862861633
+    },
+    "reverse_time_bridge": {
+      "count": 430.0,
+      "standardized_mae": 0.78673207704411,
+      "mean_prediction_change_z": 0.0017926012707311053,
+      "max_prediction_change_z": 0.02261793613433838
+    },
+    "batch_roll_bridge": {
+      "count": 430.0,
+      "standardized_mae": 0.791094065821448,
+      "mean_prediction_change_z": 0.07116315926230231,
+      "max_prediction_change_z": 0.3696080446243286
+    }
+  },
+  "note": "Same RGB/checkpoint, intervention only before field encoder. OOD dependency diagnostic; not a physical causal claim or independent test result."
+}

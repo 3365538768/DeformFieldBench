@@ -1,4 +1,6 @@
 .venv/
+.engine-envs/
+*.progress.json
 __pycache__/
 .pytest_cache/
 *.egg-info/

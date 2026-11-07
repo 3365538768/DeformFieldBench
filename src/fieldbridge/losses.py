@@ -29,6 +29,22 @@ def balanced_contact_bce(logits, target, mask):
     return (class_means * present).sum() / present.sum().clamp_min(1)
 
 
+def contact_bce_dice(logits, target, mask):
+    """Native-prevalence BCE plus per-observation Dice; padded masks excluded.
+
+    Per-frame Dice is globally averaged with the same DDP count correction as
+    other losses. Empty targets use BCE only, avoiding unstable empty Dice.
+    """
+    logits, target, mask = logits.float(), target.float(), mask.float()
+    bce = masked_mean(F.binary_cross_entropy_with_logits(logits, target, reduction='none'), mask)
+    prediction = logits.sigmoid()
+    intersection = (prediction * target * mask).sum((-3, -2, -1))
+    support = (target * mask).sum((-3, -2, -1))
+    denominator = ((prediction + target) * mask).sum((-3, -2, -1))
+    dice = 1 - (2*intersection + 1e-6) / (denominator + 1e-6)
+    return bce + masked_mean(dice, support > 0)
+
+
 def compute_loss(output, batch, cfg, field_only=False):
     mu, lv = output["mean"].float(), output["logvar"].float()
     y, m = batch["target"], batch["target_mask"]
@@ -41,6 +57,8 @@ def compute_loss(output, batch, cfg, field_only=False):
     contact_target, contact_mask = fields[..., :1, :, :], fm[..., :1, :, :]
     if cfg.train.contact_loss == "balanced_bce":
         contact = balanced_contact_bce(output["contact_logits"], contact_target, contact_mask)
+    elif cfg.train.contact_loss == "bce_dice":
+        contact = contact_bce_dice(output["contact_logits"], contact_target, contact_mask)
     else:
         contact = masked_mean(F.binary_cross_entropy_with_logits(output["contact_logits"].float(), contact_target, reduction="none"), contact_mask)
     flow_c = 3 if cfg.model.field_mode == "legacy_visual" else 2

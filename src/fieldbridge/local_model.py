@@ -103,6 +103,33 @@ class LocalResidualModel(MaterialFieldModel):
             bridge = control + fields*0. if self.cfg.feedback == 'features' else fields + control*0.
         if self.cfg.detach_feedback:
             bridge = bridge.detach()
+        embedding = self._bridge_embedding(bridge, encoded, position, valid, weights)
+        if self.cfg.bridge_pooling == 'normalized_anchor':
+            reference = self._bridge_embedding(torch.zeros_like(bridge), encoded, position, valid, weights)
+            embedding = embedding - reference
+        # G1d isolates the explicit direct-RGB shortcut in the residual head.
+        residual_rgb = pooled if self.cfg.residual_rgb_input else torch.zeros_like(pooled)
+        joint = torch.cat((residual_rgb, embedding), -1)
+        residual = self.residual_head(joint)
+        delta_law = self.residual_law(joint)
+        if self.cfg.bridge_pooling == 'normalized_anchor':
+            # Cancel learned intercepts too: a zero bridge must reproduce RGB,
+            # including after optimizer updates. Do not detach either reference.
+            residual = residual - self.residual_head(torch.zeros_like(joint))
+            delta_law = delta_law - self.residual_law(torch.zeros_like(joint))
+        delta, delta_lv = residual.chunk(2, -1)
+        delta = delta + control.mean()*0.  # Keep the matched control connected under DDP/detach.
+        if self.cfg.feedback == 'none':
+            delta, delta_lv, delta_law = delta*0., delta_lv*0., delta_law*0.
+        size = (self.cfg.field_size, self.cfg.field_size)
+        return {'mean': base_mu + delta, 'logvar': (base_lv+delta_lv).clamp(-6, 4),
+                'law_logits': base_law + delta_law,
+                'fields': F.interpolate(fields, size, mode='bilinear', align_corners=False).reshape(b, v, t, -1, *size),
+                'contact_logits': F.interpolate(low[:, :1], size, mode='bilinear', align_corners=False).reshape(b, v, t, 1, *size)}
+
+    def _bridge_embedding(self, bridge, encoded, position, valid, weights):
+        b, v, t = valid.shape
+        d = self.cfg.width
         # Preserve a 4x4 spatial grid; RGB context queries its local field tokens.
         spatial = F.adaptive_avg_pool2d(self.field_encoder[:-1](bridge), (4, 4))
         coords = torch.linspace(-1, 1, 4, device=spatial.device)
@@ -119,21 +146,15 @@ class LocalResidualModel(MaterialFieldModel):
         # Fully padded views need one harmless key to avoid all-masked attention NaNs.
         safe = mask.clone(); safe[~safe.any(1), 0] = True
         sequences = self.bridge_temporal(sequences, src_key_padding_mask=~safe).reshape(b, v*t, d)
-        confidence = self.confidence(sequences).sigmoid() * weights
-        embedding = (sequences * confidence).sum(1) / weights.sum(1).clamp_min(1)
-        # G1d isolates the explicit direct-RGB shortcut in the residual head.
-        residual_rgb = pooled if self.cfg.residual_rgb_input else torch.zeros_like(pooled)
-        joint = torch.cat((residual_rgb, embedding), -1)
-        delta, delta_lv = self.residual_head(joint).chunk(2, -1)
-        delta = delta + control.mean()*0.  # Keep the matched control connected under DDP/detach.
-        delta_law = self.residual_law(joint)
-        if self.cfg.feedback == 'none':
-            delta, delta_lv, delta_law = delta*0., delta_lv*0., delta_law*0.
-        size = (self.cfg.field_size, self.cfg.field_size)
-        return {'mean': base_mu + delta, 'logvar': (base_lv+delta_lv).clamp(-6, 4),
-                'law_logits': base_law + delta_law,
-                'fields': F.interpolate(fields, size, mode='bilinear', align_corners=False).reshape(b, v, t, -1, *size),
-                'contact_logits': F.interpolate(low[:, :1], size, mode='bilinear', align_corners=False).reshape(b, v, t, 1, *size)}
+        logits = self.confidence(sequences)
+        if self.cfg.bridge_pooling == 'normalized_anchor':
+            # log(sigmoid) + masked softmax is a stable normalized sigmoid gate.
+            # A shared tiny gate cannot suppress the entire bridge anymore.
+            log_weight = F.logsigmoid(logits.float()).masked_fill(~valid.reshape(b, v*t, 1), -torch.inf)
+            confidence = log_weight.softmax(1)
+            return (sequences.float() * confidence).sum(1).to(sequences.dtype)
+        confidence = logits.sigmoid() * weights
+        return (sequences * confidence).sum(1) / weights.sum(1).clamp_min(1)
 
 
 def build_model(cfg):
@@ -142,7 +163,8 @@ def build_model(cfg):
 
 def initialize_rgb_baseline(model, checkpoint, backbone_sha, manifest_sha, stats):
     old = ModelConfig(**checkpoint['config']['model'])
-    comparable = replace(model.cfg, architecture='legacy', feedback='none', detach_feedback=False, residual_rgb_input=True)
+    comparable = replace(model.cfg, architecture='legacy', feedback='none', detach_feedback=False,
+                         residual_rgb_input=True, bridge_pooling='legacy')
     if old.architecture != 'legacy' or old.feedback != 'none' or old.use_prior:
         raise ValueError('Initialization requires a legacy RGB-only estimator without priors')
     if asdict(old) != asdict(comparable):

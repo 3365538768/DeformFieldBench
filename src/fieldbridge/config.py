@@ -22,6 +22,7 @@ class ModelConfig:
     detach_feedback: bool = False
     architecture: str = "legacy"
     residual_rgb_input: bool = True
+    bridge_pooling: str = "legacy"  # normalized_anchor cancels zero-field shortcuts
 
 
 @dataclass
@@ -48,7 +49,7 @@ class TrainConfig:
     weight_decay: float = 0.05
     field_epochs: int = 0
     field_weight: float = 1.0
-    contact_loss: str = "bce"  # bce / balanced_bce; explicit for reproducible pilot comparisons
+    contact_loss: str = "bce"  # bce / balanced_bce / bce_dice; fixed in each comparison
     parameter_weight: float = 1.0
     nll_weight: float = 0.05
     law_weight: float = 0.1
@@ -83,6 +84,10 @@ class Config:
             raise ValueError("Unknown model architecture")
         if m.architecture == 'local_residual' and (m.width % 4 or not m.freeze_backbone or m.train_last_blocks):
             raise ValueError('Local residual requires width divisible by four and a frozen backbone')
+        if m.bridge_pooling not in {'legacy', 'normalized_anchor'}:
+            raise ValueError('Unknown bridge pooling')
+        if m.bridge_pooling != 'legacy' and (m.architecture != 'local_residual' or m.residual_rgb_input):
+            raise ValueError('Anchored pooling requires local residual without direct RGB input')
         if m.feedback not in {"none", "fields", "features", "oracle", "oracle_shuffled"}:
             raise ValueError("Unknown feedback mode")
         if m.field_mode not in {"legacy_visual", "metric"}:
@@ -109,7 +114,7 @@ class Config:
             raise ValueError("Invalid validation/logging/early-stop schedule")
         if not 0 <= t.early_stop_relative_delta < 1:
             raise ValueError("Invalid early-stop improvement threshold")
-        if t.contact_loss not in {"bce", "balanced_bce"}:
+        if t.contact_loss not in {"bce", "balanced_bce", "bce_dice"}:
             raise ValueError("Unknown contact loss")
         return self
 

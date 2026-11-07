@@ -1,0 +1,822 @@
+{
+  "status": "passed",
+  "engine": "libuipc",
+  "package": "pyuipc",
+  "version": "0.0.29",
+  "cases": [
+    {
+      "young_pa": 10000.0,
+      "poisson": 0.35,
+      "density_kg_m3": 1000.0,
+      "dt_seconds": 0.002,
+      "frames": 20,
+      "pulse_seconds": 0.004,
+      "force_n": 1.0,
+      "rest_volume_m3": 0.00016666666666666672,
+      "mass_kg": 0.1666666666666667,
+      "relative_momentum_error": 4.898484865134567e-13,
+      "post_pulse_momentum_drift": 4.509489845904535e-13,
+      "min_jacobian": 0.9960609488217579,
+      "peak_shape_displacement_m": 0.0009612527302816598,
+      "final_positions_m": [
+        [
+          0.0011533210660211325,
+          -9.465146651028099e-05,
+          -9.465146651028116e-05
+        ],
+        [
+          0.10141627290700515,
+          0.0005887889037126694,
+          0.0005887889037126696
+        ],
+        [
+          0.0005872030134861686,
+          0.09975222180366167,
+          -0.0002463592408642346
+        ],
+        [
+          0.0005872030134861681,
+          -0.00024635924086423457,
+          0.09975222180366167
+        ]
+      ],
+      "completed": true,
+      "wall_seconds": 0.7937954230001196,
+      "scene_config": {
+        "cfl": {
+          "enable": 0
+        },
+        "collision_detection": {
+          "method": "info_stackless_bvh"
+        },
+        "contact": {
+          "adaptive": {
+            "init_kappa": 1000000000.0,
+            "kappa_eval_scale": 1e-16,
+            "max_kappa": 100000000000.0,
+            "min_kappa": 100000000.0
+          },
+          "al-ipc": {
+            "alpha_lower_bound": 1e-06,
+            "decay_factor": 0.3,
+            "mu_scale_abd": 100000.0,
+            "mu_scale_diag_norm": 0.1,
+            "mu_scale_fem": 50000000.0,
+            "mu_scale_mode": "per_vertex",
+            "toi_threshold": 0.1
+          },
+          "constitution": "ipc",
+          "d_hat": 0.01,
+          "d_hat_relative": 0.0,
+          "enable": false,
+          "eps_velocity": 0.01,
+          "eps_velocity_relative": 0.0,
+          "friction": {
+            "enable": 1
+          }
+        },
+        "diff_sim": {
+          "enable": 0
+        },
+        "dt": 0.002,
+        "extras": {
+          "debug": {
+            "dump_linear_pcg": 0,
+            "dump_linear_system": 0,
+            "dump_mas_matrices": 0,
+            "dump_surface": 0
+          },
+          "strict_mode": {
+            "enable": 0
+          }
+        },
+        "gravity": [
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "integrator": {
+          "type": "bdf1"
+        },
+        "line_search": {
+          "max_iter": 8,
+          "report_energy": 0
+        },
+        "linear_system": {
+          "check_interval": 5,
+          "fem_preconditioner": "diag",
+          "solver": "fused_pcg",
+          "tol_rate": 1e-08,
+          "use_cuda_graph": 1
+        },
+        "newton": {
+          "ccd_tol": 1.0,
+          "max_iter": 1024,
+          "min_iter": 0,
+          "semi_implicit": {
+            "K_min": 6,
+            "beta_tol": 0.001,
+            "enable": false
+          },
+          "transrate_tol": 0.1,
+          "use_adaptive_tol": 0,
+          "velocity_tol": 1e-07,
+          "velocity_tol_relative": 0.0
+        },
+        "sanity_check": {
+          "enable": 1,
+          "mode": "normal"
+        }
+      },
+      "passed": true
+    },
+    {
+      "young_pa": 10000.0,
+      "poisson": 0.35,
+      "density_kg_m3": 1000.0,
+      "dt_seconds": 0.001,
+      "frames": 40,
+      "pulse_seconds": 0.004,
+      "force_n": 1.0,
+      "rest_volume_m3": 0.00016666666666666672,
+      "mass_kg": 0.1666666666666667,
+      "relative_momentum_error": 4.920431800191803e-12,
+      "post_pulse_momentum_drift": 4.13281999249915e-12,
+      "min_jacobian": 0.9954643626263585,
+      "peak_shape_displacement_m": 0.0009597960839410345,
+      "final_positions_m": [
+        [
+          0.0011172814336984306,
+          -6.401427390483852e-05,
+          -6.401427390483852e-05
+        ],
+        [
+          0.10141376210719892,
+          0.0005836701127758198,
+          0.0005836701127758198
+        ],
+        [
+          0.0005824782295497837,
+          0.09973752569426445,
+          -0.00025718153314293783
+        ],
+        [
+          0.0005824782295497837,
+          -0.00025718153314293783,
+          0.09973752569426445
+        ]
+      ],
+      "completed": true,
+      "wall_seconds": 0.21816812606994063,
+      "scene_config": {
+        "cfl": {
+          "enable": 0
+        },
+        "collision_detection": {
+          "method": "info_stackless_bvh"
+        },
+        "contact": {
+          "adaptive": {
+            "init_kappa": 1000000000.0,
+            "kappa_eval_scale": 1e-16,
+            "max_kappa": 100000000000.0,
+            "min_kappa": 100000000.0
+          },
+          "al-ipc": {
+            "alpha_lower_bound": 1e-06,
+            "decay_factor": 0.3,
+            "mu_scale_abd": 100000.0,
+            "mu_scale_diag_norm": 0.1,
+            "mu_scale_fem": 50000000.0,
+            "mu_scale_mode": "per_vertex",
+            "toi_threshold": 0.1
+          },
+          "constitution": "ipc",
+          "d_hat": 0.01,
+          "d_hat_relative": 0.0,
+          "enable": false,
+          "eps_velocity": 0.01,
+          "eps_velocity_relative": 0.0,
+          "friction": {
+            "enable": 1
+          }
+        },
+        "diff_sim": {
+          "enable": 0
+        },
+        "dt": 0.001,
+        "extras": {
+          "debug": {
+            "dump_linear_pcg": 0,
+            "dump_linear_system": 0,
+            "dump_mas_matrices": 0,
+            "dump_surface": 0
+          },
+          "strict_mode": {
+            "enable": 0
+          }
+        },
+        "gravity": [
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "integrator": {
+          "type": "bdf1"
+        },
+        "line_search": {
+          "max_iter": 8,
+          "report_energy": 0
+        },
+        "linear_system": {
+          "check_interval": 5,
+          "fem_preconditioner": "diag",
+          "solver": "fused_pcg",
+          "tol_rate": 1e-08,
+          "use_cuda_graph": 1
+        },
+        "newton": {
+          "ccd_tol": 1.0,
+          "max_iter": 1024,
+          "min_iter": 0,
+          "semi_implicit": {
+            "K_min": 6,
+            "beta_tol": 0.001,
+            "enable": false
+          },
+          "transrate_tol": 0.1,
+          "use_adaptive_tol": 0,
+          "velocity_tol": 1e-07,
+          "velocity_tol_relative": 0.0
+        },
+        "sanity_check": {
+          "enable": 1,
+          "mode": "normal"
+        }
+      },
+      "passed": true
+    },
+    {
+      "young_pa": 100000.0,
+      "poisson": 0.35,
+      "density_kg_m3": 1000.0,
+      "dt_seconds": 0.002,
+      "frames": 20,
+      "pulse_seconds": 0.004,
+      "force_n": 1.0,
+      "rest_volume_m3": 0.00016666666666666672,
+      "mass_kg": 0.1666666666666667,
+      "relative_momentum_error": 9.92605250314992e-13,
+      "post_pulse_momentum_drift": 2.630249719719534e-13,
+      "min_jacobian": 0.9992808411315556,
+      "peak_shape_displacement_m": 0.0008807221548882847,
+      "final_positions_m": [
+        [
+          0.0013078271788362116,
+          -0.00018336524880679884,
+          -0.00018336524880679884
+        ],
+        [
+          0.10131032668929138,
+          0.0005637158166106477,
+          0.0005637158166106477
+        ],
+        [
+          0.0005629230659361625,
+          0.09981044089029502,
+          -0.00019079145810099127
+        ],
+        [
+          0.0005629230659361625,
+          -0.00019079145810099127,
+          0.09981044089029502
+        ]
+      ],
+      "completed": true,
+      "wall_seconds": 0.16983140900265425,
+      "scene_config": {
+        "cfl": {
+          "enable": 0
+        },
+        "collision_detection": {
+          "method": "info_stackless_bvh"
+        },
+        "contact": {
+          "adaptive": {
+            "init_kappa": 1000000000.0,
+            "kappa_eval_scale": 1e-16,
+            "max_kappa": 100000000000.0,
+            "min_kappa": 100000000.0
+          },
+          "al-ipc": {
+            "alpha_lower_bound": 1e-06,
+            "decay_factor": 0.3,
+            "mu_scale_abd": 100000.0,
+            "mu_scale_diag_norm": 0.1,
+            "mu_scale_fem": 50000000.0,
+            "mu_scale_mode": "per_vertex",
+            "toi_threshold": 0.1
+          },
+          "constitution": "ipc",
+          "d_hat": 0.01,
+          "d_hat_relative": 0.0,
+          "enable": false,
+          "eps_velocity": 0.01,
+          "eps_velocity_relative": 0.0,
+          "friction": {
+            "enable": 1
+          }
+        },
+        "diff_sim": {
+          "enable": 0
+        },
+        "dt": 0.002,
+        "extras": {
+          "debug": {
+            "dump_linear_pcg": 0,
+            "dump_linear_system": 0,
+            "dump_mas_matrices": 0,
+            "dump_surface": 0
+          },
+          "strict_mode": {
+            "enable": 0
+          }
+        },
+        "gravity": [
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "integrator": {
+          "type": "bdf1"
+        },
+        "line_search": {
+          "max_iter": 8,
+          "report_energy": 0
+        },
+        "linear_system": {
+          "check_interval": 5,
+          "fem_preconditioner": "diag",
+          "solver": "fused_pcg",
+          "tol_rate": 1e-08,
+          "use_cuda_graph": 1
+        },
+        "newton": {
+          "ccd_tol": 1.0,
+          "max_iter": 1024,
+          "min_iter": 0,
+          "semi_implicit": {
+            "K_min": 6,
+            "beta_tol": 0.001,
+            "enable": false
+          },
+          "transrate_tol": 0.1,
+          "use_adaptive_tol": 0,
+          "velocity_tol": 1e-07,
+          "velocity_tol_relative": 0.0
+        },
+        "sanity_check": {
+          "enable": 1,
+          "mode": "normal"
+        }
+      },
+      "passed": true
+    },
+    {
+      "young_pa": 100000.0,
+      "poisson": 0.35,
+      "density_kg_m3": 1000.0,
+      "dt_seconds": 0.001,
+      "frames": 40,
+      "pulse_seconds": 0.004,
+      "force_n": 1.0,
+      "rest_volume_m3": 0.00016666666666666672,
+      "mass_kg": 0.1666666666666667,
+      "relative_momentum_error": 1.0397402783638071e-11,
+      "post_pulse_momentum_drift": 1.0344580693713693e-11,
+      "min_jacobian": 0.9990912979500692,
+      "peak_shape_displacement_m": 0.0008749504775693208,
+      "final_positions_m": [
+        [
+          0.001280351127523642,
+          -0.00017690965556435977,
+          -0.00017690965556435977
+        ],
+        [
+          0.10129822516886418,
+          0.0005592378121988687,
+          0.0005592378121988687
+        ],
+        [
+          0.0005587118518005567,
+          0.09980794326192878,
+          -0.000190271418562109
+        ],
+        [
+          0.0005587118518005568,
+          -0.000190271418562109,
+          0.09980794326192878
+        ]
+      ],
+      "completed": true,
+      "wall_seconds": 0.21841070300433785,
+      "scene_config": {
+        "cfl": {
+          "enable": 0
+        },
+        "collision_detection": {
+          "method": "info_stackless_bvh"
+        },
+        "contact": {
+          "adaptive": {
+            "init_kappa": 1000000000.0,
+            "kappa_eval_scale": 1e-16,
+            "max_kappa": 100000000000.0,
+            "min_kappa": 100000000.0
+          },
+          "al-ipc": {
+            "alpha_lower_bound": 1e-06,
+            "decay_factor": 0.3,
+            "mu_scale_abd": 100000.0,
+            "mu_scale_diag_norm": 0.1,
+            "mu_scale_fem": 50000000.0,
+            "mu_scale_mode": "per_vertex",
+            "toi_threshold": 0.1
+          },
+          "constitution": "ipc",
+          "d_hat": 0.01,
+          "d_hat_relative": 0.0,
+          "enable": false,
+          "eps_velocity": 0.01,
+          "eps_velocity_relative": 0.0,
+          "friction": {
+            "enable": 1
+          }
+        },
+        "diff_sim": {
+          "enable": 0
+        },
+        "dt": 0.001,
+        "extras": {
+          "debug": {
+            "dump_linear_pcg": 0,
+            "dump_linear_system": 0,
+            "dump_mas_matrices": 0,
+            "dump_surface": 0
+          },
+          "strict_mode": {
+            "enable": 0
+          }
+        },
+        "gravity": [
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "integrator": {
+          "type": "bdf1"
+        },
+        "line_search": {
+          "max_iter": 8,
+          "report_energy": 0
+        },
+        "linear_system": {
+          "check_interval": 5,
+          "fem_preconditioner": "diag",
+          "solver": "fused_pcg",
+          "tol_rate": 1e-08,
+          "use_cuda_graph": 1
+        },
+        "newton": {
+          "ccd_tol": 1.0,
+          "max_iter": 1024,
+          "min_iter": 0,
+          "semi_implicit": {
+            "K_min": 6,
+            "beta_tol": 0.001,
+            "enable": false
+          },
+          "transrate_tol": 0.1,
+          "use_adaptive_tol": 0,
+          "velocity_tol": 1e-07,
+          "velocity_tol_relative": 0.0
+        },
+        "sanity_check": {
+          "enable": 1,
+          "mode": "normal"
+        }
+      },
+      "passed": true
+    },
+    {
+      "young_pa": 10000.0,
+      "poisson": 0.35,
+      "density_kg_m3": 500.0,
+      "dt_seconds": 0.002,
+      "frames": 20,
+      "pulse_seconds": 0.004,
+      "force_n": 1.0,
+      "rest_volume_m3": 0.00016666666666666672,
+      "mass_kg": 0.08333333333333336,
+      "relative_momentum_error": 1.1901068098153297e-11,
+      "post_pulse_momentum_drift": 1.2191683323028748e-11,
+      "min_jacobian": 0.995010920376791,
+      "peak_shape_displacement_m": 0.001890817251015117,
+      "final_positions_m": [
+        [
+          0.0023996986577704744,
+          -0.0002867003313244257,
+          -0.00028670033132442566
+        ],
+        [
+          0.10267730307749486,
+          0.0012096852545411979,
+          0.0012096852545411979
+        ],
+        [
+          0.0012054991323339499,
+          0.0994787449924909,
+          -0.0004017299156894851
+        ],
+        [
+          0.0012054991323339499,
+          -0.0004017299156894851,
+          0.0994787449924909
+        ]
+      ],
+      "completed": true,
+      "wall_seconds": 0.16415664204396307,
+      "scene_config": {
+        "cfl": {
+          "enable": 0
+        },
+        "collision_detection": {
+          "method": "info_stackless_bvh"
+        },
+        "contact": {
+          "adaptive": {
+            "init_kappa": 1000000000.0,
+            "kappa_eval_scale": 1e-16,
+            "max_kappa": 100000000000.0,
+            "min_kappa": 100000000.0
+          },
+          "al-ipc": {
+            "alpha_lower_bound": 1e-06,
+            "decay_factor": 0.3,
+            "mu_scale_abd": 100000.0,
+            "mu_scale_diag_norm": 0.1,
+            "mu_scale_fem": 50000000.0,
+            "mu_scale_mode": "per_vertex",
+            "toi_threshold": 0.1
+          },
+          "constitution": "ipc",
+          "d_hat": 0.01,
+          "d_hat_relative": 0.0,
+          "enable": false,
+          "eps_velocity": 0.01,
+          "eps_velocity_relative": 0.0,
+          "friction": {
+            "enable": 1
+          }
+        },
+        "diff_sim": {
+          "enable": 0
+        },
+        "dt": 0.002,
+        "extras": {
+          "debug": {
+            "dump_linear_pcg": 0,
+            "dump_linear_system": 0,
+            "dump_mas_matrices": 0,
+            "dump_surface": 0
+          },
+          "strict_mode": {
+            "enable": 0
+          }
+        },
+        "gravity": [
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "integrator": {
+          "type": "bdf1"
+        },
+        "line_search": {
+          "max_iter": 8,
+          "report_energy": 0
+        },
+        "linear_system": {
+          "check_interval": 5,
+          "fem_preconditioner": "diag",
+          "solver": "fused_pcg",
+          "tol_rate": 1e-08,
+          "use_cuda_graph": 1
+        },
+        "newton": {
+          "ccd_tol": 1.0,
+          "max_iter": 1024,
+          "min_iter": 0,
+          "semi_implicit": {
+            "K_min": 6,
+            "beta_tol": 0.001,
+            "enable": false
+          },
+          "transrate_tol": 0.1,
+          "use_adaptive_tol": 0,
+          "velocity_tol": 1e-07,
+          "velocity_tol_relative": 0.0
+        },
+        "sanity_check": {
+          "enable": 1,
+          "mode": "normal"
+        }
+      },
+      "passed": true
+    },
+    {
+      "young_pa": 10000.0,
+      "poisson": 0.35,
+      "density_kg_m3": 500.0,
+      "dt_seconds": 0.001,
+      "frames": 40,
+      "pulse_seconds": 0.004,
+      "force_n": 1.0,
+      "rest_volume_m3": 0.00016666666666666672,
+      "mass_kg": 0.08333333333333336,
+      "relative_momentum_error": 3.0116116867503588e-12,
+      "post_pulse_momentum_drift": 2.6981293418991496e-12,
+      "min_jacobian": 0.9940648768091123,
+      "peak_shape_displacement_m": 0.0019171993853172925,
+      "final_positions_m": [
+        [
+          0.00227419810704533,
+          -0.00024978073200478546,
+          -0.00024978073200478546
+        ],
+        [
+          0.10268140951800857,
+          0.0012208771556458825,
+          0.0012208771556458825
+        ],
+        [
+          0.0012181961874668313,
+          0.09943915374945456,
+          -0.000410250173089581
+        ],
+        [
+          0.0012181961874668313,
+          -0.000410250173089581,
+          0.09943915374945456
+        ]
+      ],
+      "completed": true,
+      "wall_seconds": 0.21424554090481251,
+      "scene_config": {
+        "cfl": {
+          "enable": 0
+        },
+        "collision_detection": {
+          "method": "info_stackless_bvh"
+        },
+        "contact": {
+          "adaptive": {
+            "init_kappa": 1000000000.0,
+            "kappa_eval_scale": 1e-16,
+            "max_kappa": 100000000000.0,
+            "min_kappa": 100000000.0
+          },
+          "al-ipc": {
+            "alpha_lower_bound": 1e-06,
+            "decay_factor": 0.3,
+            "mu_scale_abd": 100000.0,
+            "mu_scale_diag_norm": 0.1,
+            "mu_scale_fem": 50000000.0,
+            "mu_scale_mode": "per_vertex",
+            "toi_threshold": 0.1
+          },
+          "constitution": "ipc",
+          "d_hat": 0.01,
+          "d_hat_relative": 0.0,
+          "enable": false,
+          "eps_velocity": 0.01,
+          "eps_velocity_relative": 0.0,
+          "friction": {
+            "enable": 1
+          }
+        },
+        "diff_sim": {
+          "enable": 0
+        },
+        "dt": 0.001,
+        "extras": {
+          "debug": {
+            "dump_linear_pcg": 0,
+            "dump_linear_system": 0,
+            "dump_mas_matrices": 0,
+            "dump_surface": 0
+          },
+          "strict_mode": {
+            "enable": 0
+          }
+        },
+        "gravity": [
+          [
+            0.0
+          ],
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "integrator": {
+          "type": "bdf1"
+        },
+        "line_search": {
+          "max_iter": 8,
+          "report_energy": 0
+        },
+        "linear_system": {
+          "check_interval": 5,
+          "fem_preconditioner": "diag",
+          "solver": "fused_pcg",
+          "tol_rate": 1e-08,
+          "use_cuda_graph": 1
+        },
+        "newton": {
+          "ccd_tol": 1.0,
+          "max_iter": 1024,
+          "min_iter": 0,
+          "semi_implicit": {
+            "K_min": 6,
+            "beta_tol": 0.001,
+            "enable": false
+          },
+          "transrate_tol": 0.1,
+          "use_adaptive_tol": 0,
+          "velocity_tol": 1e-07,
+          "velocity_tol_relative": 0.0
+        },
+        "sanity_check": {
+          "enable": 1,
+          "mode": "normal"
+        }
+      },
+      "passed": true
+    }
+  ],
+  "dt_convergence": [
+    {
+      "young_pa": 10000.0,
+      "density_kg_m3": 1000.0,
+      "max_final_position_difference_m": 5.6357166708782523e-05,
+      "relative_to_size": 0.0005635716670878252
+    },
+    {
+      "young_pa": 100000.0,
+      "density_kg_m3": 1000.0,
+      "max_final_position_difference_m": 2.8953113199699464e-05,
+      "relative_to_size": 0.0002895311319969946
+    },
+    {
+      "young_pa": 10000.0,
+      "density_kg_m3": 500.0,
+      "max_final_position_difference_m": 0.0001359282967603145,
+      "relative_to_size": 0.0013592829676031448
+    }
+  ],
+  "scope": "Single free tetrahedron: SI impulse/mass, force clearing, finite positive volume, dt sensitivity. Does NOT certify contact, stress labels, complex mesh, mixed materials or real-video fitting.",
+  "reference": "https://github.com/spiriMirror/libuipc/blob/main/python/tests/sim_case/test_finite_element_external_force.py"
+}

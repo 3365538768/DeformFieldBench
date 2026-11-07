@@ -1,0 +1,154 @@
+{
+  "status": "complete",
+  "engine": "libuipc",
+  "version": "0.0.29",
+  "cases": {
+    "native_n20": {
+      "young_pa": 1000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        20,
+        4,
+        4
+      ],
+      "vertices": 525,
+      "tetrahedra": 1920,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 0.0001106972352913545,
+      "euler_bernoulli_deflection_m": 0.00019999999999999998,
+      "relative_analytic_error": 0.44651382354322744,
+      "last20_deflection_range_over_analytic": 1.2903412869170582e-07,
+      "final_max_speed_m_s": 1.2136048834064655e-10,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.9999348732010699,
+      "completed": true,
+      "wall_seconds": 4.156166551983915
+    },
+    "snk1_physical_n80": {
+      "young_pa": 1000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        80,
+        16,
+        16
+      ],
+      "vertices": 23409,
+      "tetrahedra": 122880,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 0.0001938892865606023,
+      "euler_bernoulli_deflection_m": 0.00019999999999999998,
+      "relative_analytic_error": 0.03055356719698843,
+      "last20_deflection_range_over_analytic": 0.00016590317441082567,
+      "final_max_speed_m_s": 2.0736762109328077e-08,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.9998761682242803,
+      "completed": true,
+      "wall_seconds": 56.83856911689509,
+      "native_energy_coefficients_pa": {
+        "mu": 512820.5128205128,
+        "lambda": 897435.8974358974
+      },
+      "used_energy_coefficients_pa": {
+        "mu": 384615.3846153846,
+        "lambda": 961538.4615384615
+      }
+    },
+    "snk1_physical_n20": {
+      "young_pa": 1000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        20,
+        4,
+        4
+      ],
+      "vertices": 525,
+      "tetrahedra": 1920,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 0.00013507998404195746,
+      "euler_bernoulli_deflection_m": 0.00019999999999999998,
+      "relative_analytic_error": 0.32460007979021266,
+      "last20_deflection_range_over_analytic": 2.1659504945885713e-06,
+      "final_max_speed_m_s": 4.996943461665256e-10,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.9999314767259211,
+      "completed": true,
+      "wall_seconds": 5.513162745977752,
+      "native_energy_coefficients_pa": {
+        "mu": 512820.5128205128,
+        "lambda": 897435.8974358974
+      },
+      "used_energy_coefficients_pa": {
+        "mu": 384615.3846153846,
+        "lambda": 961538.4615384615
+      }
+    },
+    "native_n80": {
+      "young_pa": 1000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        80,
+        16,
+        16
+      ],
+      "vertices": 23409,
+      "tetrahedra": 122880,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 0.00015654542606337443,
+      "euler_bernoulli_deflection_m": 0.00019999999999999998,
+      "relative_analytic_error": 0.21727286968312776,
+      "last20_deflection_range_over_analytic": 1.74384843708525e-05,
+      "final_max_speed_m_s": 3.635390520199584e-09,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.9998939332718206,
+      "completed": true,
+      "wall_seconds": 48.611941011971794,
+      "native_energy_coefficients_pa": {
+        "mu": 512820.5128205128,
+        "lambda": 897435.8974358974
+      },
+      "used_energy_coefficients_pa": {
+        "mu": 512820.5128205128,
+        "lambda": 897435.8974358974
+      }
+    }
+  },
+  "note": "Fixed E=1e6 Pa, nu=.3, force=.001 N, same beam and exact clamp. Factorial isolates mapping versus mesh; no global cross-engine conversion claimed.",
+  "mapping_deflection_ratio_at_n20": 1.2202652007200332,
+  "mapping_deflection_ratio_at_n80": 1.2385496749174256
+}

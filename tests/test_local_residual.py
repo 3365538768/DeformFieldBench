@@ -42,8 +42,10 @@ def test_zero_residual_reproduces_frozen_rgb_and_can_learn():
     for k,v in frozen.items():torch.testing.assert_close(model.state_dict()[k],v,rtol=0,atol=0)
 
 
-def test_local_bridge_padding_views_and_gt_isolation():
+@pytest.mark.parametrize('pooling',['legacy','normalized_anchor'])
+def test_local_bridge_padding_views_and_gt_isolation(pooling):
     _,model,inputs,_ = setup();model.eval()
+    model.cfg=replace(model.cfg,bridge_pooling=pooling,residual_rgb_input=pooling=='legacy')
     with torch.no_grad():model.residual_head[-1].weight.normal_(0,.05)
     baseline=model(**inputs)['mean'].detach()
     reversed_views={k:x.flip(1) if k in {'rgb','valid','times'} else x for k,x in inputs.items()}
@@ -126,3 +128,47 @@ def test_direct_rgb_shortcut_can_be_removed_without_changing_baseline():
     assert torch.count_nonzero(captured[0][:,:model.cfg.width])==0
     assert torch.count_nonzero(captured[0][:,model.cfg.width:])>0
     torch.testing.assert_close(prediction,expected,rtol=0,atol=0)
+
+
+def test_anchor_zero_bridge_stays_rgb_after_learning_and_keeps_field_gradients():
+    legacy,model,inputs,_=setup()
+    model.cfg=replace(model.cfg,residual_rgb_input=False,bridge_pooling='normalized_anchor')
+    model.train()
+    optimizer=torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],lr=.01)
+    for _ in range(3):
+        optimizer.zero_grad();model(**inputs)['mean'].sum().backward();optimizer.step()
+    assert any(p.grad is not None and p.grad.abs().sum()>0 for p in model.contact_flow.parameters())
+    model.eval()
+    # Nonzero learned biases cannot change the zero-field reference prediction.
+    with torch.no_grad():model.residual_head[-1].bias.fill_(.7);model.residual_law.bias.fill_(.8)
+    handle=model.field_encoder[0].register_forward_pre_hook(lambda _,values:(torch.zeros_like(values[0]),))
+    with torch.no_grad():
+        actual=model(**inputs);expected=legacy(**inputs)
+    handle.remove()
+    for name in ['mean','logvar','law_logits']:
+        torch.testing.assert_close(actual[name],expected[name],rtol=0,atol=0)
+
+
+def test_normalized_gate_cannot_suppress_embedding_with_shared_negative_bias():
+    _,model,inputs,_=setup();model.eval()
+    model.cfg=replace(model.cfg,residual_rgb_input=False,bridge_pooling='normalized_anchor')
+    with torch.no_grad():
+        model.residual_head[-1].weight.normal_(0,.1)
+        model.confidence.weight.zero_();model.confidence.bias.fill_(-2)
+        expected=model(**inputs)['mean']
+        model.confidence.bias.fill_(-100)
+        actual=model(**inputs)['mean']
+    torch.testing.assert_close(actual,expected,rtol=1e-5,atol=1e-6)
+
+
+@pytest.mark.parametrize('positive',[False,True])
+def test_contact_dice_ignores_padding_and_backpropagates_finite_gradients(positive):
+    from fieldbridge.losses import contact_bce_dice
+    logits=torch.zeros(1,1,2,1,4,4,requires_grad=True)
+    target=torch.zeros_like(logits);mask=torch.ones_like(logits);mask[:,:,1]=0
+    if positive:target[0,0,0,0,1,1]=1
+    loss=contact_bce_dice(logits,target,mask);loss.backward()
+    assert torch.isfinite(loss) and torch.isfinite(logits.grad).all()
+    assert logits.grad[:,:,:1].abs().sum()>0 and logits.grad[:,:,1:].abs().sum()==0
+    changed=target.clone();changed[:,:,1]=1
+    torch.testing.assert_close(contact_bce_dice(logits,changed,mask),loss)

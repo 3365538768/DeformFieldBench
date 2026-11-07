@@ -1,0 +1,265 @@
+{
+  "manifest_sha256": "2d13b51c01b7808277a467ab566c120b9e495dae998249dd7e97734d76cf3f6b",
+  "splits": {
+    "train": {
+      "samples": 512,
+      "objects": 88,
+      "contact_positive_fraction": 0.006551716603389403,
+      "samples_without_contact": 121,
+      "channel_mean": [
+        0.006551717408001423,
+        0.10296612977981567,
+        0.09410804510116577,
+        0.11705270409584045,
+        0.31110113859176636,
+        0.39690157771110535,
+        0.3936827778816223
+      ],
+      "channel_supported_std": [
+        0.056452807039022446,
+        0.16958245635032654,
+        0.1547974944114685,
+        0.17299136519432068,
+        0.1773030310869217,
+        0.21544979512691498,
+        0.1868150681257248
+      ],
+      "channel_temporal_abs_delta": [
+        0.0018614062573760748,
+        0.051764361560344696,
+        0.04822120815515518,
+        0.05767427384853363,
+        0.04633479565382004,
+        0.06380312144756317,
+        0.05350840091705322
+      ],
+      "same_object_different_parameter_pairs": 1376,
+      "pairs_with_distinct_field_descriptors": 1376,
+      "law_counts": {
+        "0": 164,
+        "2": 174,
+        "1": 174
+      }
+    },
+    "val": {
+      "samples": 128,
+      "objects": 10,
+      "contact_positive_fraction": 0.008178036229140094,
+      "samples_without_contact": 30,
+      "channel_mean": [
+        0.008178035728633404,
+        0.08903466165065765,
+        0.09482485055923462,
+        0.10799508541822433,
+        0.3200763463973999,
+        0.3879668712615967,
+        0.3470984697341919
+      ],
+      "channel_supported_std": [
+        0.06491191685199738,
+        0.1570068597793579,
+        0.15488021075725555,
+        0.1609995812177658,
+        0.17696624994277954,
+        0.20879016816616058,
+        0.17623946070671082
+      ],
+      "channel_temporal_abs_delta": [
+        0.0021286183036863804,
+        0.04701957851648331,
+        0.04857875034213066,
+        0.05352160334587097,
+        0.048845063894987106,
+        0.06425070017576218,
+        0.052130334079265594
+      ],
+      "same_object_different_parameter_pairs": 802,
+      "pairs_with_distinct_field_descriptors": 802,
+      "law_counts": {
+        "1": 46,
+        "2": 42,
+        "0": 40
+      }
+    }
+  },
+  "probes": {
+    "privileged_true_fields": {
+      "standardized_mae": 0.7073651802328643,
+      "parameters": {
+        "E": {
+          "n": 128,
+          "mae": 0.5850861648324661,
+          "train_mean_mae": 0.8697652816772461
+        },
+        "nu": {
+          "n": 128,
+          "mae": 0.6551522412803179,
+          "train_mean_mae": 0.8491901755332947
+        },
+        "rho": {
+          "n": 128,
+          "mae": 0.8629982483013666,
+          "train_mean_mae": 0.8533296585083008
+        },
+        "sigma_y": {
+          "n": 46,
+          "mae": 0.7598420811982691,
+          "train_mean_mae": 0.9296948909759521
+        }
+      },
+      "dimensions": 49,
+      "lambda": 1.0,
+      "law_centered": false,
+      "fit": "train only; fixed lambda; no hyperparameter selection"
+    },
+    "val_fields_permuted": {
+      "standardized_mae": 0.9945404462598798,
+      "parameters": {
+        "E": {
+          "n": 128,
+          "mae": 1.0333580379933047,
+          "train_mean_mae": 0.8697652816772461
+        },
+        "nu": {
+          "n": 128,
+          "mae": 1.0334961623089765,
+          "train_mean_mae": 0.8491901755332947
+        },
+        "rho": {
+          "n": 128,
+          "mae": 0.904515463004733,
+          "train_mean_mae": 0.8533296585083008
+        },
+        "sigma_y": {
+          "n": 46,
+          "mae": 1.0286320649663159,
+          "train_mean_mae": 0.9296948909759521
+        }
+      },
+      "dimensions": 49,
+      "lambda": 1.0,
+      "law_centered": false,
+      "fit": "train only; fixed lambda; no hyperparameter selection"
+    },
+    "val_fields_permuted_within_object_law": {
+      "standardized_mae": 0.7413156970510639,
+      "parameters": {
+        "E": {
+          "n": 128,
+          "mae": 0.6259232206482634,
+          "train_mean_mae": 0.8697652816772461
+        },
+        "nu": {
+          "n": 128,
+          "mae": 0.6197567010455831,
+          "train_mean_mae": 0.8491901755332947
+        },
+        "rho": {
+          "n": 128,
+          "mae": 0.9017970233822503,
+          "train_mean_mae": 0.8533296585083008
+        },
+        "sigma_y": {
+          "n": 46,
+          "mae": 0.9541021904829801,
+          "train_mean_mae": 0.9296948909759521
+        }
+      },
+      "dimensions": 49,
+      "lambda": 1.0,
+      "law_centered": false,
+      "fit": "train only; fixed lambda; no hyperparameter selection"
+    },
+    "privileged_true_fields_law_centered": {
+      "standardized_mae": 0.546731697820276,
+      "parameters": {
+        "E": {
+          "n": 128,
+          "mae": 0.27355824961415665,
+          "train_mean_mae": 0.2772262692451477
+        },
+        "nu": {
+          "n": 128,
+          "mae": 0.44694398173223693,
+          "train_mean_mae": 0.4519975185394287
+        },
+        "rho": {
+          "n": 128,
+          "mae": 0.8749253806827858,
+          "train_mean_mae": 0.8521782159805298
+        },
+        "sigma_y": {
+          "n": 46,
+          "mae": 0.671302080934428,
+          "train_mean_mae": 0.9296948909759521
+        }
+      },
+      "dimensions": 49,
+      "lambda": 1.0,
+      "law_centered": true,
+      "fit": "train only; fixed lambda; no hyperparameter selection"
+    },
+    "val_fields_permuted_within_object_law_centered": {
+      "standardized_mae": 0.5942568859709214,
+      "parameters": {
+        "E": {
+          "n": 128,
+          "mae": 0.2905243256770464,
+          "train_mean_mae": 0.2772262692451477
+        },
+        "nu": {
+          "n": 128,
+          "mae": 0.4459563090101321,
+          "train_mean_mae": 0.4519975185394287
+        },
+        "rho": {
+          "n": 128,
+          "mae": 0.912061997115091,
+          "train_mean_mae": 0.8521782159805298
+        },
+        "sigma_y": {
+          "n": 46,
+          "mae": 0.9677609586262116,
+          "train_mean_mae": 0.9296948909759521
+        }
+      },
+      "dimensions": 49,
+      "lambda": 1.0,
+      "law_centered": true,
+      "fit": "train only; fixed lambda; no hyperparameter selection"
+    },
+    "frozen_rgb_features": {
+      "standardized_mae": 2.2170007588494642,
+      "parameters": {
+        "E": {
+          "n": 128,
+          "mae": 2.5021180058987857,
+          "train_mean_mae": 0.8697652816772461
+        },
+        "nu": {
+          "n": 128,
+          "mae": 2.618018549975002,
+          "train_mean_mae": 0.8491901755332947
+        },
+        "rho": {
+          "n": 128,
+          "mae": 2.0021373663433817,
+          "train_mean_mae": 0.8533296585083008
+        },
+        "sigma_y": {
+          "n": 46,
+          "mae": 0.9056361795972141,
+          "train_mean_mae": 0.9296948909759521
+        }
+      },
+      "dimensions": 768,
+      "lambda": 1.0,
+      "law_centered": false,
+      "fit": "train only; fixed lambda; no hyperparameter selection"
+    }
+  },
+  "within_object_law_permutation_changed_samples": 127,
+  "exact_field_duplicate_groups": 0,
+  "cross_split_exact_duplicates": 0,
+  "note": "Exploratory train-fit/val-only ridge probes with unequal descriptor capacity, NOT a method comparison, physical identifiability proof, matched actions or independent test. Same object does not imply identical appearance/load."
+}

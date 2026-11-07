@@ -12,6 +12,7 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 import torch.nn.functional as F
+from .engine_domains import validate_single_parameter_domain
 
 PARAMETERS = ("E", "nu", "rho", "sigma_y")
 LAWS = {"jelly": 0, "metal": 1, "plasticine": 2}
@@ -38,6 +39,7 @@ def read_manifest(path):
         raise ValueError(f"Object leakage across splits: {leaks}")
     if not rows:
         raise ValueError("Empty manifest")
+    validate_single_parameter_domain(rows)
     return rows
 
 

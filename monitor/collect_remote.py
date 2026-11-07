@@ -105,7 +105,23 @@ def collect():
     optimization = read_json(ROOT / 'docs/OPTIMIZATION_PROGRESS.json', {})
     optimization['bridge_sensitivity'] = read_json(ROOT / 'docs/G1C_D_BRIDGE_SENSITIVITY_FP32.json')
     optimization['forced_bridge_sensitivity'] = read_json(ROOT / 'docs/G1D_D_BRIDGE_SENSITIVITY_FP32.json')
-    optimization['latest_verification'] = read_json(ROOT / 'docs/G1D_STARTUP.json')
+    optimization['latest_verification'] = read_json(ROOT / 'docs/G1E_STARTUP.json') or read_json(ROOT / 'docs/G1D_STARTUP.json')
+    optimization['previous_bridge_health'] = read_json(ROOT / 'docs/G1E_PREVIOUS_BRIDGE_HEALTH.json')
+    optimization['target_audit'] = read_json(ROOT / 'docs/G1E_TARGET_AUDIT.json')
+    optimization['anchor_sensitivity'] = read_json(ROOT / 'docs/G1E_D_BRIDGE_SENSITIVITY_FP32.json')
+    optimization['anchored_field_audit'] = read_json(ROOT / 'docs/G1E_D_FIELD_AUDIT.json')
+    optimization['dice_field_audit'] = read_json(ROOT / 'docs/G1E_D_DICE_FIELD_AUDIT.json')
+    optimization['engine_calibration'] = read_json(ROOT / 'docs/UIPC_CALIBRATION.json')
+    optimization['beam_native'] = read_json(ROOT / 'docs/UIPC_BEAM_CALIBRATION.json')
+    optimization['beam_corrected'] = read_json(ROOT / 'docs/UIPC_BEAM_CORRECTED_CALIBRATION.json')
+    optimization['source_pilots'] = read_json(ROOT / 'docs/DATA_SOURCE_PILOTS.json')
+    optimization['video_audit'] = read_json(ROOT / 'docs/EXTERNAL_VIDEO_AUDIT.json')
+    optimization['engine_adapter'] = read_json(ROOT / 'docs/ENGINE_DOMAIN_ADAPTER_STATUS.json')
+    for stage in optimization.get('stages', []):
+        if stage['id'] == 'G2' and optimization['engine_calibration']:
+            stage.update(state='running', detail='libuipc CUDA 实测：力脉冲校准 6 场景通过；原生梁校准失败，物理系数修正与细网格后通过。复杂接触、混合材料及渲染仍待实现。')
+        if stage['id'] == 'G3' and optimization['video_audit']:
+            stage.update(state='running', detail='真实视频小样本已校验；跨引擎参数隔离与专属头原型已实现，尚未集成多引擎训练。当前仍不混合各引擎 GT。')
     for task in optimization.get('tasks', []):
         if task.get('kind') == 'benchmark':
             task['progress'] = [read_json(p, {}) for p in (ROOT / 'runs/g0_benchmark' / task['id']).glob('progress_rank*.json')]

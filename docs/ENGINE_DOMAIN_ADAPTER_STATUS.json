@@ -1,0 +1,20 @@
+{
+  "status": "prototype_tested",
+  "tests_passed": 36,
+  "training_integration": "多引擎训练尚未集成；现有训练保持单参数域",
+  "implemented": [
+    "native-domain label guard in manifest loader",
+    "shared response / domain-specific native head prototype",
+    "train-only per-domain codec provenance",
+    "checkpoint domain-schema verification",
+    "matched-response comparison guard"
+  ],
+  "not_completed": [
+    "cross-engine calibrated mapping",
+    "multi-engine optimizer/training loop",
+    "learned engine-invariant representation",
+    "online fitting benchmark"
+  ],
+  "dinov3": "User requested access; wait for user notification before gated download",
+  "documentation": "docs/CROSS_ENGINE_MATERIAL_ADAPTER_ZH.md"
+}

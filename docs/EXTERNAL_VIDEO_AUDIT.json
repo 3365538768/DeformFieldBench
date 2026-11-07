@@ -1,0 +1,124 @@
+{
+  "status": "passed",
+  "opencv_version": "5.0.0",
+  "videos": [
+    {
+      "sample_id": "deform360:brics-odroid-001_cam0_1766067991367625",
+      "source": "https://huggingface.co/datasets/brownu/deform360",
+      "source_revision": "5ea8c5d3fc7b4a7b4f9f921f2ceb1de24610f6a4",
+      "object_id": "001-rope",
+      "video": "data/external_pilots/deform360/raw/001-rope/brics-odroid-001_cam0/brics-odroid-001_cam0_1766067991367625.mp4",
+      "timestamp_file": "data/external_pilots/deform360/raw/001-rope/brics-odroid-001_cam0/brics-odroid-001_cam0_1766067991367625.txt",
+      "decoded_frames": 258,
+      "width": 1280,
+      "height": 720,
+      "container_fps": 30.0,
+      "capture_duration_seconds": 8.563758,
+      "capture_dt_median_seconds": 0.03210299999999977,
+      "capture_dt_range_seconds": [
+        0.03122299999999978,
+        0.036595000000000155
+      ],
+      "video_sha256": "58dbff8e83d1b45f09b3904649177127c4f8ad93151fa5e61e116fa607f19c56",
+      "split": "unassigned",
+      "material_parameters": {},
+      "supervision_role": "real_video_motion_pretraining_candidate",
+      "note": "No continuous material-parameter labels or SI stress/contact imported; not part of existing training/test manifest."
+    },
+    {
+      "sample_id": "deform360:brics-odroid-001_cam0_1769463716718331",
+      "source": "https://huggingface.co/datasets/brownu/deform360",
+      "source_revision": "5ea8c5d3fc7b4a7b4f9f921f2ceb1de24610f6a4",
+      "object_id": "004-rubber-band",
+      "video": "data/external_pilots/deform360/raw/004-rubber-band/brics-odroid-001_cam0/brics-odroid-001_cam0_1769463716718331.mp4",
+      "timestamp_file": "data/external_pilots/deform360/raw/004-rubber-band/brics-odroid-001_cam0/brics-odroid-001_cam0_1769463716718331.txt",
+      "decoded_frames": 342,
+      "width": 1280,
+      "height": 720,
+      "container_fps": 30.0,
+      "capture_duration_seconds": 11.364148,
+      "capture_dt_median_seconds": 0.03202199999999955,
+      "capture_dt_range_seconds": [
+        0.029673999999999978,
+        0.036656000000000244
+      ],
+      "video_sha256": "455c3e348dba06f312b491d64dd68ae5190a7ed50fe948b4c42add1493c01666",
+      "split": "unassigned",
+      "material_parameters": {},
+      "supervision_role": "real_video_motion_pretraining_candidate",
+      "note": "No continuous material-parameter labels or SI stress/contact imported; not part of existing training/test manifest."
+    },
+    {
+      "sample_id": "deform360:brics-odroid-001_cam0_1766008304850644",
+      "source": "https://huggingface.co/datasets/brownu/deform360",
+      "source_revision": "5ea8c5d3fc7b4a7b4f9f921f2ceb1de24610f6a4",
+      "object_id": "008-pink-cloth",
+      "video": "data/external_pilots/deform360/raw/008-pink-cloth/brics-odroid-001_cam0/brics-odroid-001_cam0_1766008304850644.mp4",
+      "timestamp_file": "data/external_pilots/deform360/raw/008-pink-cloth/brics-odroid-001_cam0/brics-odroid-001_cam0_1766008304850644.txt",
+      "decoded_frames": 357,
+      "width": 1280,
+      "height": 720,
+      "container_fps": 30.0,
+      "capture_duration_seconds": 11.864353999999999,
+      "capture_dt_median_seconds": 0.03204550000000017,
+      "capture_dt_range_seconds": [
+        0.02704799999999996,
+        0.04095599999999999
+      ],
+      "video_sha256": "ee6bfb467a56f38fce5597489074a1be321c1c955564735d987e9009ba5ced91",
+      "split": "unassigned",
+      "material_parameters": {},
+      "supervision_role": "real_video_motion_pretraining_candidate",
+      "note": "No continuous material-parameter labels or SI stress/contact imported; not part of existing training/test manifest."
+    },
+    {
+      "sample_id": "deform360:brics-odroid-001_cam0_1766161369112580",
+      "source": "https://huggingface.co/datasets/brownu/deform360",
+      "source_revision": "5ea8c5d3fc7b4a7b4f9f921f2ceb1de24610f6a4",
+      "object_id": "046-sponge",
+      "video": "data/external_pilots/deform360/raw/046-sponge/brics-odroid-001_cam0/brics-odroid-001_cam0_1766161369112580.mp4",
+      "timestamp_file": "data/external_pilots/deform360/raw/046-sponge/brics-odroid-001_cam0/brics-odroid-001_cam0_1766161369112580.txt",
+      "decoded_frames": 430,
+      "width": 1280,
+      "height": 720,
+      "container_fps": 30.0,
+      "capture_duration_seconds": 14.296135,
+      "capture_dt_median_seconds": 0.032096999999999376,
+      "capture_dt_range_seconds": [
+        0.030769000000001157,
+        0.03664099999999948
+      ],
+      "video_sha256": "97de5de1da02809862549b84a51a74c0ffca4bfe74af36315a1a7c8a01fc0c3a",
+      "split": "unassigned",
+      "material_parameters": {},
+      "supervision_role": "real_video_motion_pretraining_candidate",
+      "note": "No continuous material-parameter labels or SI stress/contact imported; not part of existing training/test manifest."
+    },
+    {
+      "sample_id": "deform360:brics-odroid-001_cam0_1769128933475143",
+      "source": "https://huggingface.co/datasets/brownu/deform360",
+      "source_revision": "5ea8c5d3fc7b4a7b4f9f921f2ceb1de24610f6a4",
+      "object_id": "105-clay-cloth",
+      "video": "data/external_pilots/deform360/raw/105-clay-cloth/brics-odroid-001_cam0/brics-odroid-001_cam0_1769128933475143.mp4",
+      "timestamp_file": "data/external_pilots/deform360/raw/105-clay-cloth/brics-odroid-001_cam0/brics-odroid-001_cam0_1769128933475143.txt",
+      "decoded_frames": 266,
+      "width": 1280,
+      "height": 720,
+      "container_fps": 30.0,
+      "capture_duration_seconds": 8.832174,
+      "capture_dt_median_seconds": 0.03202700000000003,
+      "capture_dt_range_seconds": [
+        0.031353000000000186,
+        0.036150000000000126
+      ],
+      "video_sha256": "951d0f3c94d9a1bc5b16c304370442dc7e9462e118ae07f012f777557c1d375e",
+      "split": "unassigned",
+      "material_parameters": {},
+      "supervision_role": "real_video_motion_pretraining_candidate",
+      "note": "No continuous material-parameter labels or SI stress/contact imported; not part of existing training/test manifest."
+    }
+  ],
+  "failures": [],
+  "used_for_training": false,
+  "scope": "Complete decode and timestamp/hash consistency for the selected deterministic videos only, not domain benchmark validation."
+}
