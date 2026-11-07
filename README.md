@@ -1,290 +1,103 @@
-# DeformFieldBench
+# DeformFieldBench / FieldBridge
 
-## 当前重构版本：FieldBridge（2026-11-07）
+**仓库根目录即当前 FieldBridge 项目。** 模型、训练、数据、评估和网页控制统一使用这套代码，原论文旧实现已从当前分支移除，可从 Git 历史提交 `131c0b063d81b5413691e43ea78fe3ba64e53e9c` 查看。克隆后进入 `DeformFieldBench`，无需再进入 `rsi_real_test` 子目录；下文配置和脚本路径均相对仓库根目录。A800 的部署目录仍为下一段所示位置。
 
-**本轮整合的训练、模型、实验控制和监控代码位于 [`rsi_real_test/`](rsi_real_test/)，请从这里进入。** 原论文的 `logic_model/`、`my_model/`、`simulation/` 等目录仍保留，当前 A800 新实验使用下表中的 FieldBridge 入口。
+核心入口：[模型](src/fieldbridge/model.py)、[训练与早停](src/fieldbridge/train.py)、[验证](src/fieldbridge/evaluation.py)、[实验队列](scripts/optimization_manager.py)、[Web 监控](monitor/README.md)、[G0/G1 配置](configs/)。
 
-| 内容 | 当前代码 / 说明 |
-|---|---|
-| 新项目说明与运行方式 | [rsi_real_test/README.md](rsi_real_test/README.md) |
-| 开源骨干、场预测与材质参数模型 | [src/fieldbridge/model.py](rsi_real_test/src/fieldbridge/model.py) |
-| 训练、检查点续训、停滞早停 | [src/fieldbridge/train.py](rsi_real_test/src/fieldbridge/train.py) |
-| 数据读取与缓存、分布式验证 | [data.py](rsi_real_test/src/fieldbridge/data.py) / [evaluation.py](rsi_real_test/src/fieldbridge/evaluation.py) |
-| G0/G1 实验队列与暂停继续 | [optimization_manager.py](rsi_real_test/scripts/optimization_manager.py) / [control_jobs.py](rsi_real_test/scripts/control_jobs.py) |
-| 六组 G1 对照配置 | [configs/](rsi_real_test/configs/)（`g1_*_seed17.json`） |
-| A800 Web 监控与操作说明 | [monitor/](rsi_real_test/monitor/) |
-| 优化方案、实测结果与验收边界 | [G0/G1 执行说明](rsi_real_test/docs/G0_G1_IMPLEMENTATION_AND_CONTROL_ZH.md) / [研究诊断与优化方案](rsi_real_test/docs/RESEARCH_DIAGNOSIS_AND_OPTIMIZATION_2026-11-07_ZH.md) |
+目标：静态材料先验 + 动态物理场推断可用于指定仿真器的材料参数，以未见受力和真实交互验证。项目位于 A800 的 `/mnt/afs_engine/linrui/rsi_real_test`。
 
-新框架统一在 `rsi_real_test` 工作目录运行，安装后入口为 `python -m fieldbridge.train --config ...`。它不是原论文权重的兼容重现；新仿真后端、真实视频完整推理链路与相对在线拟合的效果验证仍待完成。数据、模型权重和实时运行日志不包含在 Git 中。
+详细路线见 [docs/OPTIMIZATION_PLAN_ZH.md](docs/OPTIMIZATION_PLAN_ZH.md)，当前验收记录见 [G0/G1 执行说明](docs/G0_G1_IMPLEMENTATION_AND_CONTROL_ZH.md)。运行时状态和日志保存在部署目录，不随 Git 发布。
 
-The [FieldBridge research extension](rsi_real_test/README.md) contains the current refactored training framework, controlled physical-field feedback experiments, distributed validation, plateau early stopping, and a local A800 dashboard with checkpoint-based pause/resume. Improved material inference and agreement with online simulation fitting have not yet been established.
+根目录迁移与独立运行验证见 [迁移说明](docs/ROOT_MIGRATION_2026-11-07_ZH.md)：不含旧代码的导出目录已通过 14 项测试及 CPU 训练→检查点评估全流程。
 
-![DeformFieldBench dataset overview](./dataset.png)
+## 已实现范围
 
-## Data and Checkpoints
+- 独立模块化实现，不依赖原论文的 Python 模块或仿真代码目录。
+- 原版 `sample_pack.npz` 读取、可变视角/帧数补齐与 mask、按物体隔离 split、仅训练集归一化、缺失/不适用 yield mask。
+- 本地权重 DINOv2/DINOv3 适配器、跨时间和视角 attention、顺序 contact/flow→stress 解码、field feedback 与等容量控制、先验参数融合接口。
+- BF16、梯度累积、单卡/torchrun DDP、无重复样本的分布式验证、分阶段选模、紧凑检查点和 epoch 边界恢复；所有样本均进入指标，不按方法剔除尾部。
+- G0/G1 顺序执行队列、共享冻结 RGB 特征缓存、联合验证停滞早停、网页阶段反馈及单独/全局暂停继续。操作与实测证据见 [G0/G1 执行说明](docs/G0_G1_IMPLEMENTATION_AND_CONTROL_ZH.md) 和 [观测台说明](monitor/README.md)。
+- 单独的原始度量场模式；不将旧 RGB flow/stress 可视化误称为物理单位场。
 
-- Dataset: [Physical Field Material Parameter 5000 on Kaggle](https://www.kaggle.com/datasets/anonymous336/physical-field-material-parameter-5000)
-- Checkpoints: [HandsomeHusky/DeformFieldBench on Hugging Face](https://huggingface.co/HandsomeHusky/DeformFieldBench/tree/main)
+这是一套新架构的研究起点，不是原论文权重兼容重现，也不是已经证明有效的模型。VoMP 推理、手机视频重建、可微重放、FEM/MPM 标定与复合材料生成尚未实现；已经提供先验和仿真结果接口，具体状态不得混淆。`tiny` 和少步小模型只用于软件检查，不可作为论文结果。
 
-Download checkpoints:
+## 环境与最短运行
 
-```bash
-bash pretrained/download_models.sh
-```
+推荐 Python 3.12；项目支持 Python 3.10+。A800 已验证环境为 PyTorch 2.8.0+cu128 / torchvision 0.23.0。先按设备安装匹配的 PyTorch/torchvision，再安装本项目；CPU 软件检查不需要 CUDA、数据集、预训练权重或原仓库源码。
 
-Training and evaluation expect the following default layout:
-
-```text
-auto_output/dataset_5000/train/<sample_id>/sample_pack.npz
-auto_output/dataset_5000/train_test_split.cleaned.json
-pretrained/logic_baseline_epoch_0320.pt
-pretrained/supervised_baseline_last.pt
-pretrained/logic_abl_no_boundary.pt
-pretrained/logic_abl_no_field_aux.pt
-pretrained/logic_abl_no_multistage.pt
-pretrained/logic_plus_phys_01.pt
-```
-
-`sample_pack.npz` is the unified data interface. Each sample contains three-view RGB deformation videos, force masks, projected flow fields, stress fields, object masks, and the four final material parameters used in the paper: Young's modulus `E`, Poisson's ratio `nu`, density `rho`, and yield stress `sigma_y`.
-
-## Environment
-
-Python 3.10 is recommended. The reference training stack uses PyTorch 2.8 and torchvision 0.23. Create it with Conda:
+从全新克隆运行 CPU 最小例子：
 
 ```bash
-conda env create -f environment.yml
-conda activate deformfieldbench
-source scripts/setup_env.sh
-python scripts/check_environment.py --profile train
+git clone https://github.com/3365538768/DeformFieldBench.git
+cd DeformFieldBench
+python3 -m venv .venv
+source .venv/bin/activate
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+pip install -e '.[dev]'
+python scripts/make_fixture.py --output data/fixture
+python -m fieldbridge.cli fit-stats data/fixture/manifest.jsonl data/fixture/stats.json
+python -m fieldbridge.train --config configs/smoke_cpu.json
+python -m fieldbridge.cli evaluate --config configs/smoke_cpu.json \
+  --checkpoint runs/software_smoke_cpu/best_material.pt --split val \
+  --output runs/software_smoke_cpu/eval_val
+python -m pytest -q
 ```
 
-Alternatively, create a Python 3.10 virtual environment and run `pip install -r requirements-train.txt`. If the default PyTorch wheel is not compatible with your CUDA driver, first install the matching `torch==2.8.*` / `torchvision==0.23.*` wheel from the official PyTorch index, then install `requirements.txt`.
+Windows 使用 `python -m venv .venv` 和 `.venv\Scripts\Activate.ps1`，线程设置可用 `$env:OMP_NUM_THREADS='1'; $env:MKL_NUM_THREADS='1'`。重复训练请使用新的 output 路径或显式恢复，已有检查点不会被静默覆盖。该例子是软件验证，不是物理仿真或材质预测效果证明。
 
-The simulation profile additionally builds the two Gaussian-splatting CUDA extensions against the active PyTorch/CUDA toolchain. A working CUDA compiler (`nvcc`) is required:
+真实 GPU 训练须另行准备数据清单、训练集统计和官方权重，随后在根目录运行：
 
 ```bash
-pip install -r requirements-simulation.txt
-python scripts/check_environment.py --profile simulation
+python -m fieldbridge.train --config configs/g1_D_field_bridge_seed17.json
+# 多卡配置：
+GPUS=8 bash scripts/train_a800.sh configs/smoke_ddp8.json
 ```
 
-The final Logic model loads DINOv2 through `torch.hub`. On first use it downloads the repository and `dinov2_vitg14_reg` checkpoint into `.torch/hub`; set `TORCH_HOME` if the cache should live elsewhere. For an offline run, populate that cache before launching training.
+G1 配置使用共享特征缓存：首次运行前执行 `python scripts/prepare_feature_cache.py --config configs/g1_C_aux_no_feedback_seed17.json`。它需要既有 G1 数据清单；当前 A800 的 G0/G1 迁移队列还需要对应检查点与运行回执。历史队列快照位于 `docs/examples/OPTIMIZATION_PLAN_A800_2026-11-07.json`，不会作为全新克隆的活动任务。独立训练入口不要求这些历史回执。
 
-VLM benchmarks additionally require:
+真实数据：HF 的 dataset repo 和 model repo 同名，但内容不同。数据 ZIP 来自 `https://huggingface.co/datasets/HandsomeHusky/DeformFieldBench`；不带 `/datasets/` 的地址提供旧权重。
 
 ```bash
-pip install -r requirements-vlm.txt
-python scripts/check_environment.py --profile vlm
-export DASHSCOPE_API_KEY=your_key
-export OPENAI_API_KEY=your_key
-export ARK_API_KEY=your_key
+python scripts/import_deformfield.py --root data/real_subset \
+  --output data/manifests/new_manifest.jsonl
+python -m fieldbridge.cli audit data/manifests/new_manifest.jsonl
+python -m fieldbridge.cli fit-stats data/manifests/new_manifest.jsonl data/manifests/new_manifest.stats.json
+python scripts/generate_experiments.py --base configs/p0_dinov2_giant.json --output configs/experiments_p0
 ```
 
-## Simulation and Config
+新 split 默认按物体固定 seed 分配 80/10/10 左右。已有发布协议时应使用 `--original-split data/metadata/train_test_split.cleaned.json`：逐一校验 4,914 个原始 ID，保留 494 条原测试样本，仅从原训练物体中划出 val；声明在原划分内却缺少 pack 时立即报错。数据清单路径和统计路径必须同步改入配置。
 
-Generate a single sample in the same format as the final dataset:
+完整数据审计入口为 `scripts/audit_full_dataset.py`，核对官方 SHA256、所提取成员 CRC、五个完整数组的内部 CRC/形状/类型，以及标签和真实采样时间。`scripts/run_p0_pipeline.py` 是等待本次下载完成后执行审计和索引的一次性任务，不运行模型测试集评估。阶段目标见 [目标与阶段验收](docs/TARGET_AND_STAGE_GATES_ZH.md)。
+
+## 主干权重
 
 ```bash
-PLY_PATH=/path/to/object.ply \
-SIM_TYPE=press \
-OUTPUT_PATH=outputs/simulation_sample \
-bash scripts/run_simulation_sample_pack.sh
+python scripts/prepare_backbone.py --family dinov2 --variant vitg14 --download-dinov2
+python scripts/prepare_backbone.py --family dinov3
 ```
 
-The single-sample wrapper selects `simulation/config/<sim_type>_cube_jelly.json` by default. `CONFIG` may override it with an absolute path or a path relative to this repository. It writes three views, single-channel stress/force fields, replay metadata, and `sample_pack.npz`.
+DINOv3 的官方权重需要按 Meta 的许可/访问流程取得，再放入配置指定的路径；项目不绕过访问要求，也不会缺权重时静默用随机初始化。DINOv2-S 在这里仅用于验证真实数据训练。正式对照保留 DINOv2-g，候选 DINOv3-L/300M 与 H+/840M，分别比较质量和成本，不声称模型更新必然带来收益。
 
-To generate a dataset from a directory of Gaussian-splatting PLY files, use the batch runner:
+## 公平实验
+
+`C_aux_no_feedback` 对 `D_field_bridge` 是首要对照；`E_prior_direct` 对 `F_prior_field` 是静态先验融合对照。生成器提供 3 seeds × 6 variants。后两组必须提供独立静态模型的预测和来源信息，缺失时拒绝训练。禁止把 GT 参数作为先验填充。
+
+评估示例：
 
 ```bash
-MODEL_PATH=/path/to/ply_directory \
-MATERIAL_CONFIG=configs/simulation/material_space_example.json \
-TRAIN_CONFIG=configs/simulation/train_config_dataset_full.json \
-NUM_GPUS=1 \
-bash scripts/run_simulation_dataset.sh
+python -m fieldbridge.cli evaluate --config CONFIG.json --checkpoint runs/RUN/best_material.pt \
+  --split val --output runs/RUN/eval_val
+python scripts/bootstrap_object_ci.py runs/C/eval_test/predictions.jsonl runs/D/eval_test/predictions.jsonl
 ```
 
-Validate paths and expand the job list without loading CUDA or running simulations:
+`--split test` 留到协议、模型和超参冻结后使用。输出 standardized MAE 是 train-standardized ln1p/linear 指标，不是原论文 SPE；不把不同指标直接并排排名。预测方差是待校准估计，不能默认解释为可信后验。
 
-```bash
-python simulation/auto_simulation_runner.py \
-  --model_path /path/to/ply_directory \
-  --material_space_config configs/simulation/material_space_example.json \
-  --train_config configs/simulation/train_config_dataset_full.json \
-  --validate_only
-```
+## 静态先验与仿真接口
 
-`SIM_TYPE` can be `press`, `drop`, `shear`, `stretch`, or `bend`. The output directory will contain `sample_pack.npz` and `meta/` files with GT parameters, boundary conditions, force information, and run parameters. The model's final global material outputs are only `E`, `nu`, `rho`, and `sigma_y`; action labels, boundary conditions, external forces, and gravity are simulation/replay metadata, not final parameter outputs.
+`scripts/join_static_priors.py` 接收独立模型 JSONL，要求 sample_id、parameters、model、checkpoint_sha256、input_sha256、training_data_protocol。VoMP 的几何、单位、部件聚合和缓存需另做适配。
 
-For the final dataset format, the important config fields are:
+`fieldbridge.simulation.EngineAdapter` 规定 SI 位置、时间、接触力、能量和引擎版本；目前未附任何“假仿真”实现。待标定通过后再连接真实 PhysGaussian/libuipc 后端。
 
-- `seed`, `num_simulations`, `sim_types`: control the number of generated jobs, random seed, and action type set.
-- `output_root`, `dataset_name`, `dataset_split`: control the dataset path. The named dataset layout is `auto_output/<dataset_name>/<dataset_split>/<sample_id>/`.
-- `base_config_by_sim_type`: maps each action type to its base simulation template, for example `press` to `simulation/config/press_cube_jelly.json`.
-- `num_views`, `num_render_views`, `random_render_views`: control multi-view rendering and random view sampling.
-- `render_outputs_per_sim_second`, `num_render_timesteps`: control temporal sampling. `render_outputs_per_sim_second` takes priority when it is greater than zero.
-- `render_export_max_side`, `render_export_scale`, `camera_distance_scale`: control export resolution and camera distance.
-- `render_img`, `output_view_stress_gaussian`, `output_view_flow_gaussian`, `output_view_force_mask`, `output_view_object_mask`: control the RGB, stress, flow, force-mask, and object-mask arrays required by the final sample pack.
-- `stress_gaussian_single_channel`, `force_mask_single_channel`: use single-channel field and mask outputs consistent with the training input convention.
-- `pack_sample_pack`, `pack_sample_pack_include_object_mask`, `sample_pack_name`: must be enabled to write `sample_pack.npz`.
-- `output_bc_info`, `output_force_info`, `output_initial_force_mask_arrow`: write boundary and force metadata reused by parameter ambiguity replay.
+## 代码来源
 
-## Arch4 Training
-
-Arch4 is the supervised parameter-regression baseline. The entry point is `my_model.train`, and the default config is `configs/my_model/train_dataset_5000_param_only.json`. This config reads `auto_output/dataset_5000/train` and `train_test_split.cleaned.json`, uses 3 views, 64 frames, and 224 resolution, disables field supervision, and only regresses the final material parameters `E`, `nu`, `rho`, and `sigma_y`.
-
-```bash
-NUM_GPUS=8 bash scripts/train_my_model_param_only.sh
-```
-
-To train Arch4 with field supervision, do not use `train_my_model_param_only.sh`, because that script always passes `--disable_aux_losses`. Instead, copy the config and enable the auxiliary field heads and field losses:
-
-```bash
-cp configs/my_model/train_dataset_5000_param_only.json \
-  configs/my_model/train_dataset_5000_with_fields.json
-```
-
-Set the following fields in the new config:
-
-```json
-{
-  "model": {
-    "use_aux_field_heads": true,
-    "dec_h": 112,
-    "dec_w": 112
-  },
-  "train": {
-    "disable_aux_losses": false,
-    "lambda_stress": 1.0,
-    "lambda_flow": 1.0,
-    "lambda_force": 1.0,
-    "checkpoint": {
-      "save_dir": "output_checkpoints/my_model_dataset_5000_with_fields"
-    }
-  }
-}
-```
-
-Then launch training directly:
-
-```bash
-source scripts/setup_env.sh
-NUM_GPUS=8
-python -m torch.distributed.run --nproc_per_node="$NUM_GPUS" -m my_model.train \
-  --config configs/my_model/train_dataset_5000_with_fields.json
-```
-
-The total loss is the parameter regression loss plus three auxiliary field reconstruction losses for stress, flow, and force. The final parameter outputs remain `E`, `nu`, `rho`, and `sigma_y`; field supervision is only used as an auxiliary training signal.
-
-Key training settings:
-
-- `train.epochs=400`, `batch_size=1`, `lr=3e-4`.
-- The default checkpoint is saved to `output_checkpoints/my_model_dataset_5000_param_only/last.pt`.
-
-## Logic Model Training and Ablation
-
-The final model entry point is `logic_model.train`, with config `configs/logic_model/final_logic_413_5000_new.json`. The model uses `logic_v2_dino`, reads `sample_pack.npz`, predicts dense physical fields from three-view RGB deformation videos, and regresses the final material parameters `E`, `nu`, `rho`, and `sigma_y`.
-
-```bash
-NUM_GPUS=8 bash scripts/train_logic.sh
-```
-
-Final model config:
-
-- `arch=logic_v2_dino`: uses a frozen DINOv2 frame encoder.
-- `num_views=3`, `num_frames=64`, `img_size=224`: matches the final dataset input.
-- `temporal_adapter_type=transformer`: models temporal deformation cues for each view.
-- `fusion_dim=512`, `fusion_heads=8`: fuses multi-view representations.
-- `field_head_mode=shared_temporal`: uses a shared dense-field decoder.
-- `field_use_patch_tokens=true`, `field_use_multiscale_spatial=true`: uses DINO patch tokens and multi-scale RGB conditions for local field prediction.
-- `field_use_shared_task_phys=true`, `field_use_geometry_residual=true`, `field_sequential_stress=true`: correspond to the physics bottleneck, geometry residual, and sequential stress refinement in the paper.
-- The final parameter head predicts `[log(1+E), nu, log(1+rho), log(1+sigma_y)]`; large-range physical quantities are trained in log space.
-
-Key training settings:
-
-- `train.epochs=320`, `batch_size=1`, `lr=1e-5`, `use_amp=true`.
-- `lambda_stress=1`, `lambda_flow=1`, `lambda_force=2` control auxiliary field supervision.
-- `stage_flow_force_epochs=100`, `stage_stress_epochs=80`, `stage_joint_epochs=100` control the multi-stage training schedule.
-- `lambda_stress_edge=0.05`, `lambda_flow_edge=0.2` control boundary-enhanced losses.
-- `use_phys_loss=false`, `lambda_phys=0.0` are the default final-model settings.
-
-For ablation experiments, copy the final config to a new JSON file and only modify the ablation-specific fields. Keep the data, model, and other training settings unchanged:
-
-```bash
-cp configs/logic_model/final_logic_413_5000_new.json \
-  configs/logic_model/logic_abl_no_field_aux.json
-# Edit configs/logic_model/logic_abl_no_field_aux.json using the rules below.
-CONFIG=configs/logic_model/logic_abl_no_field_aux.json \
-NUM_GPUS=8 \
-bash scripts/train_logic_ablation.sh
-```
-
-Ablation rules:
-
-- `logic_abl_no_field_aux`: set `lambda_stress/lambda_flow/lambda_force` to `0` to remove auxiliary field supervision.
-- `logic_abl_no_multistage`: set all stage epoch counts to `0` to remove the multi-stage schedule.
-- `logic_abl_no_boundary`: set `lambda_stress_edge/lambda_flow_edge` to `0` to remove boundary enhancement.
-- `logic_plus_phys_0001/001/01`: set `use_phys_loss=true` and `lambda_phys` to `0.001/0.01/0.1`; the released checkpoints include `logic_plus_phys_01`.
-
-## Unified Evaluation and Metrics
-
-All models use the same evaluation entry point, `scripts/eval_param_metrics.sh`. `MODEL=my_model` calls `eval_abalation.eval_my_model`, and `MODEL=logic` calls `eval_abalation.eval_logic`.
-
-```bash
-MODEL=logic \
-CHECKPOINT=pretrained/logic_baseline_epoch_0320.pt \
-OUT_DIR=outputs/param_eval/logic \
-bash scripts/eval_param_metrics.sh
-```
-
-```bash
-MODEL=my_model \
-WEIGHTS=pretrained/supervised_baseline_last.pt \
-OUT_DIR=outputs/param_eval/my_model \
-bash scripts/eval_param_metrics.sh
-```
-
-Common arguments:
-
-- `EVAL_SPLIT=test`: evaluation split.
-- `NUM_SAMPLES=0`: evaluate all samples; values greater than 0 enable sampling.
-- `OUT_DIR`: output directory.
-
-Outputs include `summary.json`, `score.json`, `param_metrics/`, and `field_metrics/`. `param_metrics` only reports the final material parameters used in the paper: `E`, `nu`, `rho`, and `sigma_y`. Metrics include `MAE`, `RMSE`, `MAPE`, `median AE`, `P90 AE`, `bias`, `Pearson/Spearman`, `R2`, calibration slope/intercept, and range-normalized composite error. Field metrics correspond to stress, motion flow, and contact/force regions in the paper, including `MSE`, `SSIM`, region IoU/recall, flow coverage/velocity/EPE/motion quality, force main recall/centroid distance/area error, and stress hotspot recall/weighted MAE/rank correlation.
-
-## Parameter Ambiguity Replay
-
-This evaluation first predicts material parameters, writes the predicted parameters back into the simulation config, replays each sample with `modified_simulation.py`, and compares replayed RGB against GT RGB using `SSIM` and `PSNR`. It directly reuses `param_metrics/sample_records.jsonl` exported by parameter evaluation.
-
-```bash
-DATASET_ROOT=auto_output/dataset_5000/train \
-RECORDS=outputs/param_eval/logic/param_metrics/sample_records.jsonl \
-OUT_DIR=outputs/param_ambiguity/logic \
-REPLAY_NUM_SAMPLES=0 \
-REPLAY_NUM_GPUS=1 \
-bash scripts/eval_param_ambiguity.sh
-```
-
-Outputs:
-
-```text
-outputs/param_ambiguity/logic/replay_selection.json
-outputs/param_ambiguity/logic/replay_metrics.jsonl
-outputs/param_ambiguity/logic/replay_metrics.csv
-outputs/param_ambiguity/logic/replay_summary.json
-outputs/param_ambiguity/logic/replay_samples/<sample_id>/
-```
-
-`REPLAY_NUM_SAMPLES=0` replays all records. `REPLAY_SAMPLE_MODE=random` enables random sampling, and `REPLAY_SEED` controls randomness.
-
-## Repository Layout
-
-```text
-configs/          Training, simulation, and evaluation configs
-simulation/       Sample-pack simulation code
-my_model/         Arch4 supervised parameter-regression baseline
-logic_model/      Logic Model and training code
-eval_abalation/   Parameter, field, and ambiguity evaluation
-vlm_benchmark/    VLM benchmark entry points
-scripts/          Reproducible command-line entry points
-pretrained/       Checkpoint manifest and download script
-outputs/          Default local output directory
-```
+原项目参考：`https://github.com/3365538768/DeformFieldBench`，提交 `131c0b063d81b5413691e43ea78fe3ba64e53e9c`。本项目依据公开接口与论文重写训练模块，不直接复制上游训练实现。原项目顶层未检出许可证，第三方代码和权重分别保留其许可，暂不为它们重新声明授权。DINOv3 使用 DINOv3 License，不能简单称为 Apache/MIT。

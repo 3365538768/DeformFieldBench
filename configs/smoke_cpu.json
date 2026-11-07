@@ -1,0 +1,15 @@
+{
+  "model": {
+    "backbone": "tiny", "width": 32, "heads": 4, "layers": 1,
+    "field_size": 16, "feedback": "fields", "freeze_backbone": false
+  },
+  "data": {
+    "manifest": "data/fixture/manifest.jsonl", "stats": "data/fixture/stats.json",
+    "frames": 4, "max_views": 3, "image_size": 32
+  },
+  "train": {
+    "output": "runs/software_smoke_cpu", "device": "cpu", "epochs": 2,
+    "field_epochs": 0, "batch_size": 2, "workers": 0, "val_workers": 0,
+    "bf16": false, "val_bf16": false, "purpose": "smoke"
+  }
+}

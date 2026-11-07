@@ -1,7 +1,0 @@
--r requirements.txt
-
-# Reference CUDA environment used by the released training code. If your
-# driver requires another CUDA wheel, install the matching torch/torchvision
-# pair first and then install requirements.txt instead of this file.
-torch==2.8.0
-torchvision==0.23.0
