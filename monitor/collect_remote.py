@@ -105,7 +105,7 @@ def collect():
     optimization = read_json(ROOT / 'docs/OPTIMIZATION_PROGRESS.json', {})
     optimization['bridge_sensitivity'] = read_json(ROOT / 'docs/G1C_D_BRIDGE_SENSITIVITY_FP32.json')
     optimization['forced_bridge_sensitivity'] = read_json(ROOT / 'docs/G1D_D_BRIDGE_SENSITIVITY_FP32.json')
-    optimization['latest_verification'] = read_json(ROOT / 'docs/G2_STARTUP.json') or read_json(ROOT / 'docs/G1F_STARTUP.json') or read_json(ROOT / 'docs/G1E_STARTUP.json') or read_json(ROOT / 'docs/G1D_STARTUP.json')
+    optimization['latest_verification'] = read_json(ROOT / 'docs/G3_STARTUP.json') or read_json(ROOT / 'docs/G2_STARTUP.json') or read_json(ROOT / 'docs/G1F_STARTUP.json') or read_json(ROOT / 'docs/G1E_STARTUP.json') or read_json(ROOT / 'docs/G1D_STARTUP.json')
     optimization['previous_bridge_health'] = read_json(ROOT / 'docs/G1E_PREVIOUS_BRIDGE_HEALTH.json')
     optimization['target_audit'] = read_json(ROOT / 'docs/G1E_TARGET_AUDIT.json')
     optimization['anchor_sensitivity'] = read_json(ROOT / 'docs/G1E_D_BRIDGE_SENSITIVITY_FP32.json')
@@ -119,6 +119,13 @@ def collect():
     optimization['cross_engine_results'] = read_json(ROOT / 'docs/G2_ADAPTER_RESULTS.json')
     optimization['engine_replay'] = read_json(ROOT / 'docs/G2_ENGINE_REPLAY.json')
     optimization['visibility_audit'] = read_json(ROOT / 'docs/G3_FORCE_VISIBILITY.json')
+    mesh=read_json(ROOT / 'docs/G3_MESH_CONVERGENCE.json')
+    optimization['mesh_quality']={k:v for k,v in mesh.items() if k!='rows'} if mesh else None
+    rendered=read_json(ROOT / 'docs/G3_RENDER_QUALITY.json')
+    optimization['render_quality']={k:v for k,v in rendered.items() if k!='clips'} if rendered else None
+    efficiency=read_json(ROOT / 'docs/G3_INTERACTION_EFFICIENCY.json')
+    optimization['interaction_efficiency']={k:v for k,v in efficiency.items() if k!='rows'} if efficiency else None
+    optimization['data_realism_plan']=read_json(ROOT / 'docs/G3_DATA_V2_PLAN.json')
     optimization['cross_engine_training'] = read_json(ROOT / 'runs/g2_cross_engine_pilot/adapter/progress.json')
     optimization['engine_calibration'] = read_json(ROOT / 'docs/UIPC_CALIBRATION.json')
     optimization['beam_native'] = read_json(ROOT / 'docs/UIPC_BEAM_CALIBRATION.json')
@@ -130,7 +137,7 @@ def collect():
         if stage['id'] == 'G2' and optimization['engine_calibration'] and not optimization.get('engine_progress'):
             stage.update(state='running', detail='libuipc CUDA 实测：力脉冲校准 6 场景通过；原生梁校准失败，物理系数修正与细网格后通过。复杂接触、混合材料及渲染仍待实现。')
         if stage['id'] == 'G3' and optimization['video_audit']:
-            stage.update(state='running', detail='真实视频小样本已校验；G2 正在做独立受控场适配。RGB 视频与多引擎训练尚未整合，当前不混合原生 GT。')
+            stage.update(state='running', detail='已有真实视频来源审计；受控双引擎场适配已完成，当前验证收敛网格及未放大渲染。视频模型训练与多引擎视频尚未整合。')
     for task in optimization.get('tasks', []):
         if task.get('kind') == 'benchmark':
             task['progress'] = [read_json(p, {}) for p in (ROOT / 'runs/g0_benchmark' / task['id']).glob('progress_rank*.json')]

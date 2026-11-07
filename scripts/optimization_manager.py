@@ -245,6 +245,16 @@ def main():
         events.append({'time_unix': time.time(), 'message': message}); del events[:-40]
     event('实验队列已启动；暂停在检查点生效，停滞自动早停。')
     while True:
+        # New diagnostic stages can be appended while a solver is running.
+        # Existing job state/control remains authoritative; never requeue history.
+        latest_plan=read('docs/OPTIMIZATION_PLAN.json')
+        known={j['id'] for j in jobs}
+        additions=[j for j in latest_plan['jobs'] if j['id'] not in known]
+        if additions:
+            jobs=merge_jobs(jobs,additions)
+            for j in jobs:
+                j.setdefault('source_config',j.get('config'))
+            event('已接入新阶段：'+', '.join(j['id'] for j in additions))
         global_control = read('docs/OPTIMIZATION_CONTROL.json', {})
         paused = global_control.get('desired') == 'paused'
         drain = read('docs/G0_DRAIN_STATUS.json', {})
@@ -289,7 +299,7 @@ def main():
         anchored = [j for j in jobs if j['stage'] == 'G1e']
         strong = [j for j in jobs if j['stage'] == 'G1f']
         strong_result = strong_backbone_results(strong) if strong else None
-        engine_jobs = [j for j in jobs if j['stage'] in {'G2','G2r','G3v'}]
+        engine_jobs = [j for j in jobs if j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t'}]
         engine_progress = read('docs/G2_ENGINE_PROGRESS.json', {})
         if strong_result and strong_result['status'] in {'complete','failed'} and (previous.get('strong_backbone') or {}).get('status') != strong_result['status']:
             event('G1f 反馈：' + strong_result['route'])
@@ -383,6 +393,15 @@ def main():
             stages.insert(-1, {'id':'G3v','title':'视频可观测性与载荷/网格审计',
                 'state':visibility.get('status','queued'),'completed':visibility.get('completed',0),'total':visibility.get('total',20),
                 'detail':visibility.get('detail','按真实 SI 形变筛查理想相机像素运动，不把可视化放大当视频监督。')})
+        for stage, filename, title in [('G3c','G3_MESH_CONVERGENCE.json','细网格收敛与数据准入'),
+                                       ('G3r','G3_RENDER_QUALITY.json','未放大视频与可见像素光流'),
+                                       ('G3t','G3_INTERACTION_EFFICIENCY.json','有效动作采样、稳态早停与时间步')]:
+            if any(j['stage']==stage for j in jobs):
+                quality=read('docs/'+filename,{})
+                job=next(j for j in jobs if j['stage']==stage)
+                stages.insert(-1,dict(id=stage,title=title,state=quality.get('status',job['state']),
+                    completed=quality.get('completed',0),total=quality.get('total',0),
+                    detail=quality.get('detail','等待前置质量检查；保留暂停/继续，不自动启动全量训练。')))
         for j in jobs:
             j['control'] = read(ROOT / j['output'] / 'control.json', {'desired': 'running'})
             j['runtime'] = read(ROOT / j['output'] / 'runtime.json', {})

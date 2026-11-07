@@ -5,6 +5,10 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+import sys
+
+sys.path.insert(0,str(Path(__file__).parents[1]/'scripts'))
+from engine_fixture import block_mesh
 
 spec=importlib.util.spec_from_file_location('simulation_preview',Path(__file__).parents[1]/'monitor/simulation_remote.py')
 preview=importlib.util.module_from_spec(spec);spec.loader.exec_module(preview)
@@ -48,3 +52,22 @@ def test_warp_preview_does_not_fabricate_a_dynamic_trajectory(tmp_path):
     result=preview.load_preview({'case':identifier},tmp_path)
     assert result['kind']=='static_solution' and result['frame_times_s']==[None]
     assert len(result['displacement_frames_m'])==1
+
+
+def test_preview_removes_only_interior_vertices_without_approximating_surface(tmp_path):
+    identifier='uipc_'+'c'*20;relative='data/calibration/g3_convergence/'+identifier
+    folder=tmp_path/relative;folder.mkdir(parents=True)
+    rest,tets=block_mesh([3,3,3],[1.,1.,1.]);displacement=rest*.002
+    np.savez(folder/'field.npz',rest_positions_m=rest,displacement_m=displacement,tetrahedra=tets)
+    manifest=tmp_path/'data/manifests/g2_engine_response.json';manifest.parent.mkdir(parents=True)
+    manifest.write_text(json.dumps({'rows':[]}))
+    docs=tmp_path/'docs';docs.mkdir()
+    row=dict(id=identifier,path=relative,engine='uipc',fixture='audit',split='calibration',material_pair='p',axis=1,
+        case={},engine_version='0.0.29',response_provenance={})
+    (docs/'G3_MESH_CONVERGENCE.json').write_text(json.dumps({'rows':[row]}))
+    result=preview.load_preview({'case':identifier},tmp_path)
+    assert result['volume_vertices']==64 and result['preview_vertices']==56
+    surface=np.asarray(result['rest_positions_m'])
+    assert np.all(np.any((surface==0)|(surface==1),axis=1))
+    np.testing.assert_allclose(np.asarray(result['displacement_frames_m'])[0],surface*.002)
+    assert np.asarray(result['surface_triangles']).max()<56

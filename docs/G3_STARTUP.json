@@ -1,0 +1,13 @@
+{
+  "tests_passed": 54,
+  "test_seconds": 30.23,
+  "existing_fork_warnings": 8,
+  "tests": {"passed": 54, "warnings": 8, "seconds": 30.23, "scope": "A800 complete tests suite"},
+  "javascript_syntax": "app.js, simulation.js, rendered.js passed",
+  "mesh_audit": {"completed": 15, "total": 15, "accepted_groups": 5},
+  "interaction_audit": {"completed": 10, "total": 10, "soft_transient_gate": "failed", "hard_transient_gate": "passed"},
+  "rendering": {"completed_at_safe_pause": 16, "total": 32, "state": "paused", "occlusion": "paired image-space augmentation; physical contact not implemented"},
+  "pause": {"desired": "paused", "runtime_phase": "paused", "old_gpu_allocated_memory_mib": 0, "automatic_resume": false},
+  "preview_checks": {"registered_artifacts_only": true, "invalid_path_http_status": 409, "fine_volume_nodes": 30625, "fine_preview_surface_nodes": 5762, "actual_image_loaded": true, "animation_pause_verified": true},
+  "scope": "Calibration/data pipeline work, not a new model accuracy claim. New server and storage checked separately without migration."
+}

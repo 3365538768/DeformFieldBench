@@ -73,9 +73,10 @@ def wait_if_paused(output):
 
 def provenance(case):
     return dict(protocol_sha256=digest({'load': 'constant tip traction', 'observable': 'settled displacement',
-                                       'strain_regime': 'small', 'temperature': 'unspecified isothermal'}),
+                                       'strain_regime': 'measured per result; not imposed', 'temperature': 'unspecified isothermal'}),
                 fixture_geometry_sha256=digest({'dimensions_m': case['dimensions_m'], 'cells': case['cells']}),
                 length_scale_m=case['dimensions_m'][0],
-                load_history_sha256=digest({'force_n': case['force_n'], 'axis': case['axis'], 'history': 'constant'}),
+                load_history_sha256=digest({'force_n': case['force_n'], 'axis': case['axis'],
+                    'history':case.get('force_history','constant'),'time_unit':'s'}),
                 boundary_sha256=digest({'clamped': 'x=0 all displacement components'}),
                 observable='settled full nodal displacement', units='m')

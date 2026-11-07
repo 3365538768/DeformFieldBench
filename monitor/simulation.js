@@ -64,14 +64,14 @@
       const max=Math.max(...data.map(v=>v.max_displacement_m));scale=Math.max(1,Math.min(1000,Math.max(...row.case.dimensions_m)*.12/Math.max(max,1e-12)));el('sim-amplify').value=Math.log10(scale);
       data.forEach((v,i)=>{const suffix=i?'b':'a';el('sim-title-'+suffix).textContent=v.engine==='uipc'?'libuipc / SNK1':'NVIDIA Warp FEM / 线性弹性';el('sim-type-'+suffix).textContent=`${v.version} · ${v.kind==='static_solution'?'静态解':'实际求解轨迹'}`;});
       const dynamic=data.some(v=>v.kind==='actual_solver_trajectory');el('sim-play').disabled=!dynamic;el('sim-time').disabled=!dynamic;
-      const c=row.case;el('sim-status').textContent=(data.some(v=>v.pair_validation==='pending')?'生成中：此案例数值检查通过，跨引擎配对验收尚未完成。 ':'')+`${catalog.length} 个已生成案例 · ${row.source||'G2'} · 夹具 ${row.fixture} / ${row.split==='train'?'训练':row.split==='val'?'验证':'标定审计'} · 尺寸 ${c.dimensions_m.map(v=>(v*1000).toFixed(0)).join(' × ')} mm · E ${(c.young_pa/1000).toFixed(0)} kPa / ν ${c.poisson} · ${axes[c.axis]} 向力 ${fmt(c.force_n,1)} N · 网格 ${c.cells.join(' × ')}。${views[1]?'两侧共享相同几何、载荷和色标。':''}${data[0].source==='G3v'?'理想 XY 投影运动 '+data[0].ideal_max_motion_px.toFixed(2)+' px（224px / 80mm）；单引擎载荷审计，不代表跨引擎等价。':''}`;
+      const c=row.case;el('sim-status').textContent=(data.some(v=>v.pair_validation==='pending')?'生成中：此案例数值检查通过，跨引擎配对验收尚未完成。 ':'')+`${catalog.length} 个已生成案例 · ${row.source||'G2'} · 夹具 ${row.fixture} / ${row.split==='train'?'训练':row.split==='val'?'验证':'标定审计'} · 尺寸 ${c.dimensions_m.map(v=>(v*1000).toFixed(0)).join(' × ')} mm · E ${(c.young_pa/1000).toFixed(0)} kPa / ν ${c.poisson} · ${axes[c.axis]} 向力 ${fmt(c.force_n,1)} N · 网格 ${c.cells.join(' × ')}。${views[1]?'两侧共享相同几何、载荷和色标。':''}${['G3v','G3c'].includes(data[0].source)?'理想 XY 投影运动 '+data[0].ideal_max_motion_px.toFixed(2)+' px（224px / 80mm）；单引擎质量审计，不代表跨引擎等价。':''}${data[0].volume_vertices?' '+data[0].volume_vertices+' 个体网格节点，仅传输 '+data[0].preview_vertices+' 个精确表面节点。':''}`;
       render();
     }catch(e){if(token===request){el('sim-status').textContent='预览读取失败：'+e.message;}}
   }
   function filter(){
     const engine=el('sim-engine').value,previous=el('sim-case').value;
     const source=el('sim-source').value;const rows=catalog.filter(r=>(engine==='all'||r.engine===engine)&&(source==='all'||r.source===source));
-    el('sim-case').replaceChildren(...rows.map(r=>{const o=document.createElement('option');o.value=r.id;const c=r.case;o.textContent=`${r.source} · ${r.engine} · 夹具${r.fixture} · ${axes[c.axis]}力 ${c.force_n}N · E=${c.young_pa/1000}kPa / ν=${c.poisson} · ${r.split}`;return o;}));
+    el('sim-case').replaceChildren(...rows.map(r=>{const o=document.createElement('option');o.value=r.id;const c=r.case;o.textContent=`${r.source} · ${r.engine} · 夹具${r.fixture} · ${axes[c.axis]}力 ${c.force_n}N · E=${c.young_pa/1000}kPa / ν=${c.poisson} · 网格${c.cells.join('×')} · ${r.split}`;return o;}));
     if(rows.some(r=>r.id===previous))el('sim-case').value=previous;
     else {const defaultRow=rows.find(r=>r.engine==='uipc'&&r.axis===1&&r.case.young_pa===12000);if(defaultRow)el('sim-case').value=defaultRow.id;}
     loadCase();

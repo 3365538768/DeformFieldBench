@@ -1,0 +1,14 @@
+{
+  "status": "planned",
+  "scope": "Current blocks are calibration fixtures. Irregular GS solids, physical tool contact and mixed materials are not implemented yet.",
+  "geometry_assets_present": 108,
+  "simulation_ready_gs_assets_validated": 0,
+  "pilot_physics_solves_planned": 64,
+  "pilot_rendered_clips_maximum": 576,
+  "milestones": [
+    {"title": "有效动作与时间步", "state": "auditing", "gate": "稳态早停对照；加载卸载时间步减半误差；裁去重复静帧而不改时间戳"},
+    {"title": "不规则几何与真实接触", "state": "planned", "gate": "108 个 GS 中先选可重建封闭实体；尺度、体网格、接触/摩擦验收"},
+    {"title": "多材质与遮挡", "state": "planned", "gate": "单元级材料分区和粘接界面；三维工具可见性；二维遮挡仅作增强"},
+    {"title": "视频场桥和引擎适配", "state": "planned", "gate": "相同输入与预算、三种子、几何隔离、新动作回放；未知力输出不确定性"}
+  ]
+}

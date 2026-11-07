@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
   <script src="/simulation.js" defer></script>
+  <script src="/rendered.js" defer></script>
 </head>
 <body>
   <main class="shell">
@@ -22,8 +23,8 @@
     <section class="section" id="simulation-preview" aria-label="新仿真数据可视化">
       <div class="section-heading"><div><span class="eyebrow">SIMULATION DATA / ACTUAL SOLVER OUTPUT</span><h2>新仿真数据可视化</h2></div><button id="sim-refresh" type="button">刷新案例</button></div>
       <div class="sim-toolbar panel">
-        <label>数据阶段 <select id="sim-source"><option value="G2">G2 · 双引擎匹配数据</option><option value="G3v">G3v · 可见形变载荷审计</option><option value="all">全部案例</option></select></label>
-        <label>引擎筛选 <select id="sim-engine"><option value="all">两种引擎</option value="uipc">libuipc · 实际轨迹</option><option value="warp">Warp FEM · 静态解</option></select></label>
+        <label>数据阶段 <select id="sim-source"><option value="G2">G2 · 双引擎匹配数据</option><option value="G3v">G3v · 可见形变载荷审计</option><option value="G3c">G3c · 细网格收敛审计</option><option value="G3t">G3t · 加载卸载与效率审计</option><option value="all">全部案例</option></select></label>
+        <label>引擎筛选 <select id="sim-engine"><option value="all">两种引擎</option><option value="uipc">libuipc · 实际轨迹</option><option value="warp">Warp FEM · 静态解</option></select></label>
         <label class="sim-case-label">案例 <select id="sim-case" aria-label="选择仿真案例"></select></label>
         <label><input id="sim-compare" type="checkbox" checked> 对照匹配引擎</label>
         <label><input id="sim-rest" type="checkbox" checked> 原始轮廓</label>
@@ -41,6 +42,14 @@
       </div>
       <div class="sim-legend"><span>实际位移模长（m）</span><span>0</span><span class="sim-colorbar"></span><span id="sim-color-max">—</span><span>红点：固定边界 · 灰线：初始几何</span></div>
       <p class="chart-note">拖动物体旋转，滚轮缩放。颜色和数值始终使用真实 SI 位移，形变放大仅影响显示。libuipc 播放保存的实际求解帧；Warp 仅展示静态解，不生成虚构运动。当前数据是已知载荷下的小形变长方体，尚未包含真实物体、接触或复合材料。</p>
+    </section>
+
+    <section class="section" id="rendered-preview" aria-label="实际尺寸视频与光流质检">
+      <div class="section-heading"><div><span class="eyebrow">VIDEO DATA / PHYSICAL SCALE 1×</span><h2>实际尺寸视频与光流质检</h2></div><button id="render-refresh" type="button">刷新视频</button></div>
+      <div class="sim-toolbar panel"><label class="sim-case-label">视频案例 <select id="render-case" aria-label="选择未放大渲染视频"></select></label><button id="render-play" type="button" disabled>暂停动画</button></div>
+      <p id="render-status" class="protocol" role="status">等待通过网格收敛的数据；渲染期间逐个显示已完成视频。</p>
+      <div id="render-images" class="render-grid" hidden><article class="panel"><h3>未放大 RGB · 224 × 224</h3><img id="render-video" alt="实际 SI 形变轨迹，表面纹理随物体运动" width="224" height="224"></article><article class="panel"><h3>初始 / 峰值 / 可见像素位移</h3><img id="render-contact" alt="初始与峰值 RGB，以及带遮挡筛选的对应位移质检" width="672" height="248"></article></div>
+      <p class="chart-note">此处形变固定为 1×，纹理与 E、ν 独立，时间来自实际求解轨迹。光流是已知网格对应关系的监督数据，尚非视觉模型的预测结果。当前使用简化纹理、正交相机和背景；尚未达到真实物体及复杂接触数据的覆盖范围。</p>
     </section>
 
     <section class="section" aria-label="优化阶段与控制">

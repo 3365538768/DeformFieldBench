@@ -1,5 +1,6 @@
 """Local-only A800 dashboard. Python standard library; SSH uses existing config."""
 import argparse
+import base64
 from collections import deque
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -60,6 +61,28 @@ class Monitor:
             if len(self.preview_cache)>12:
                 self.preview_cache.pop(next(iter(self.preview_cache)))
             self.preview_cache[identifier]=(time.time(),value)
+        return value
+
+    def rendered(self, identifier, asset):
+        if (identifier or asset) and (not re.fullmatch(r'clip_[0-9a-f]{20}',identifier) or asset not in {'preview.gif','contact_sheet.png','final.png'}):
+            raise ValueError('渲染案例或图像名称不合法')
+        key='render:'+identifier+':'+asset
+        with self.lock:
+            cached=self.preview_cache.get(key)
+            if cached and time.time()-cached[0]<(3600 if identifier else 15):return cached[1]
+        ssh=str(Path(os.environ.get('WINDIR','C:/Windows'))/'System32/OpenSSH/ssh.exe') if os.name=='nt' else 'ssh'
+        payload=(HERE/'render_remote.py').read_text(encoding='utf-8').replace(
+            'json.loads(sys.stdin.read())',repr({'clip':identifier,'asset':asset}))
+        result=subprocess.run([ssh,'-T','-o','BatchMode=yes','-o','ClearAllForwardings=yes','-o','ConnectTimeout=8',self.host,
+            '/mnt/afs_engine/linrui/rsi_real_test/.venv/bin/python -'],input=payload,capture_output=True,
+            text=True,encoding='utf-8',errors='replace',timeout=40,
+            creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
+        lines=[line for line in result.stdout.splitlines() if line.startswith('{')]
+        if result.returncode or not lines:raise ValueError('无法读取已登记的渲染图像')
+        value=json.loads(lines[-1])
+        with self.lock:
+            if len(self.preview_cache)>12:self.preview_cache.pop(next(iter(self.preview_cache)))
+            self.preview_cache[key]=(time.time(),value)
         return value
 
     def state(self):
@@ -186,7 +209,16 @@ def serve(host='a800', port=8765, interval=15):
                     self.send(json.dumps(value,allow_nan=False).encode(),'application/json')
                 except (ValueError,subprocess.SubprocessError) as exc:
                     self.send(json.dumps({'status':'error','error':str(exc)},ensure_ascii=False).encode(),'application/json; charset=utf-8',409)
-            elif path in {'/', '/index.html', '/app.js', '/simulation.js', '/style.css'}:
+            elif path == '/api/render':
+                try:
+                    query=parse_qs(urlsplit(self.path).query)
+                    if set(query)-{'clip','asset'} or any(len(v)!=1 for v in query.values()):raise ValueError('仅支持已登记的渲染案例与图像')
+                    value=monitor.rendered(query.get('clip',[''])[0],query.get('asset',[''])[0])
+                    if 'content_base64' in value:self.send(base64.b64decode(value['content_base64'],validate=True),value['mime'])
+                    else:self.send(json.dumps(value,allow_nan=False).encode(),'application/json')
+                except (ValueError,subprocess.SubprocessError) as exc:
+                    self.send(json.dumps({'status':'error','error':str(exc)},ensure_ascii=False).encode(),'application/json; charset=utf-8',409)
+            elif path in {'/', '/index.html', '/app.js', '/simulation.js', '/rendered.js', '/style.css'}:
                 filename = 'index.html' if path == '/' else path.lstrip('/')
                 kind = {'html': 'text/html', 'js': 'text/javascript', 'css': 'text/css'}[filename.rsplit('.', 1)[-1]]
                 self.send((HERE / filename).read_bytes(), kind + '; charset=utf-8')

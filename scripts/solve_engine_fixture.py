@@ -11,6 +11,7 @@ import time
 
 import numpy as np
 from engine_fixture import atomic, block_mesh, provenance, tip_weights
+from interaction_protocol import force_scale, should_stop
 
 
 def warp_solve(case, rest, tets):
@@ -81,26 +82,35 @@ def uipc_solve(case, rest, tets, workspace):
     cfg['newton']['semi_implicit']['enable'] = False; cfg['linear_system']['tol_rate'] = 1e-9
     engine = Engine('cuda', str(workspace)); world = World(engine); scene = Scene(cfg)
     obj = scene.objects().create('fixture'); obj.geometries().create(mesh)
+    load_scale=[1.]
     def animate(info):
         geom = info.geo_slots()[0].geometry()
-        view(geom.vertices().find('external_force'))[:] = nodal_force.reshape(-1, 3, 1)
+        view(geom.vertices().find('external_force'))[:] = (nodal_force*load_scale[0]).reshape(-1, 3, 1)
         view(geom.vertices().find('external_force/is_constrained'))[:] = (weights > 0).reshape(-1, 1)
     scene.animator().insert(obj, animate); world.init(scene)
     accessor = world.features().find(FiniteElementStateAccessorFeature)
-    trace = []; completed = True
-    for _ in range(case.get('steps', 200)):
+    trace = []; completed = True; load_history=[]; stop_reason='maximum_steps'
+    for step in range(case.get('steps', 200)):
+        time_seconds=(step+1)*cfg['dt']
+        load_scale[0]=force_scale(time_seconds,case.get('force_history'))
         world.advance(); world.retrieve()
         state = accessor.create_geometry(); state.vertices().create(builtin.position, np.zeros(3))
         state.vertices().create(builtin.velocity, np.zeros(3)); accessor.copy_to(state)
         x = np.array(view(state.vertices().find(builtin.position))).reshape(-1, 3)
         speed = float(np.linalg.norm(np.array(view(state.vertices().find(builtin.velocity))).reshape(-1, 3), axis=1).max())
         trace.append((x - rest).copy()); completed &= bool(engine.frame_stats()['completed'])
+        load_history.append(load_scale[0]*case['force_n'])
+        if not completed:stop_reason='engine_step_failed';break
+        if should_stop(trace,speed,time_seconds,case):stop_reason='settled_after_final_load_event';break
     # Keep actual dynamics for later replay checks; Warp has no video trajectory.
-    np.savez_compressed(workspace / 'trajectory.npz', displacement_m=np.array(trace), dt_seconds=cfg['dt'])
+    np.savez_compressed(workspace / 'trajectory.npz', displacement_m=np.array(trace), dt_seconds=cfg['dt'],force_n=np.array(load_history))
     return x, {'native_coefficients_pa': {'mu': mu, 'lambda_snk1': lam + mu},
         'assembled_resultant_n': nodal_force.sum(axis=0).tolist(), 'completed': completed,
         'final_max_speed_m_s': speed,
         'last20_displacement_change_m': float(np.ptp(np.stack(trace[-20:]), axis=0).max()),
+        'simulated_steps':len(trace),'maximum_steps':case.get('steps',200),'stop_reason':stop_reason,
+        'stopped_early':len(trace)<case.get('steps',200),'integrator':'bdf1','mass_density_kg_m3':1000.,
+        'physical_damping_model':None,'numerical_dissipation_note':'Implicit BDF1 damping is not a measured material damping coefficient.',
         'engine_version': importlib.metadata.version('pyuipc')}
 
 

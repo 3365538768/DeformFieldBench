@@ -1,0 +1,1025 @@
+{
+  "status": "complete",
+  "completed": 10,
+  "total": 10,
+  "rows": [
+    {
+      "id": "uipc_8d9635afc1a8d639dcae",
+      "path": "data/calibration/g3_interaction/uipc_8d9635afc1a8d639dcae",
+      "mode": "steady_stop",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "ed6a5abcca7e92474e67e4957b339c428f18e689c54076840b36560010c3e05f",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 49,
+        "selected_frames": 17,
+        "source_duration_s": 0.96,
+        "retained_duration_s": 0.48,
+        "dropped_static_tail_frames": 24,
+        "source_active_transition_fraction": 0.4375,
+        "selected_active_transition_fraction": 1.0,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.05000000000000021,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 9.822665941292132e-07,
+      "last20_displacement_change_m": 1.043805056996465e-05,
+      "simulated_steps": 48,
+      "maximum_steps": 200,
+      "stop_reason": "settled_after_final_load_event",
+      "stopped_early": true,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200,
+        "stop_criteria": {
+          "minimum_steps": 40,
+          "window": 20,
+          "maximum_speed_m_s": 1e-06,
+          "relative_displacement_tolerance": 0.001
+        }
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "9aef055c1ef0cc404952dbec9cdfa25f564f382e9aef77b62cb2af31d7cb5381",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.8688255562915845,
+      "max_displacement_gradient": 0.3970936565593786,
+      "tip_displacement_m": [
+        -0.000662608255711376,
+        0.0074327991034672716,
+        -3.5575021304172406e-05
+      ],
+      "wall_seconds": 26.34347826987505,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    },
+    {
+      "id": "uipc_024b50f8d5ee30bf5083",
+      "path": "data/calibration/g3_interaction/uipc_024b50f8d5ee30bf5083",
+      "mode": "fixed_200",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "ddabc11e96473a4432a70a39085598f81788b2013e5b7912286097fd78885961",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 201,
+        "selected_frames": 17,
+        "source_duration_s": 4.0,
+        "retained_duration_s": 0.48,
+        "dropped_static_tail_frames": 176,
+        "source_active_transition_fraction": 0.105,
+        "selected_active_transition_fraction": 1.0,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.05000000000000021,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "simulated_steps": 200,
+      "maximum_steps": 200,
+      "stop_reason": "maximum_steps",
+      "stopped_early": false,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "9aef055c1ef0cc404952dbec9cdfa25f564f382e9aef77b62cb2af31d7cb5381",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.8688239327396091,
+      "max_displacement_gradient": 0.3970969230616309,
+      "tip_displacement_m": [
+        -0.0006626226051417182,
+        0.007432877727185251,
+        -3.5579809585728933e-05
+      ],
+      "wall_seconds": 31.308734412072226,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    },
+    {
+      "id": "uipc_fddae12bfef7eb2dc9f1",
+      "path": "data/calibration/g3_interaction/uipc_fddae12bfef7eb2dc9f1",
+      "mode": "release_dt01",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "61874d86254d168a2c11b2fc40c681628e7ad3b12c197ace5efa1cb29de83820",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 176,
+        "selected_frames": 17,
+        "source_duration_s": 1.75,
+        "retained_duration_s": 0.89,
+        "dropped_static_tail_frames": 86,
+        "source_active_transition_fraction": 0.45714285714285713,
+        "selected_active_transition_fraction": 1.0,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.05000000000000021,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 5.78238795710439e-07,
+      "last20_displacement_change_m": 7.46196638853891e-07,
+      "simulated_steps": 175,
+      "maximum_steps": 200,
+      "stop_reason": "settled_after_final_load_event",
+      "stopped_early": true,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.01,
+        "steps": 200,
+        "stop_criteria": {
+          "minimum_steps": 40,
+          "window": 20,
+          "maximum_speed_m_s": 1e-06,
+          "relative_displacement_tolerance": 0.001
+        },
+        "force_history": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.15,
+            1.0
+          ],
+          [
+            0.3,
+            1.0
+          ],
+          [
+            0.5,
+            0.0
+          ],
+          [
+            0.6,
+            0.0
+          ]
+        ]
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "9c4b4fd5dbb4634dcb0ea8c7fc7e8c4b2a0edfece848843053dc5b14a68fd4be",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9999973898428929,
+      "max_displacement_gradient": 6.32354237688595e-06,
+      "tip_displacement_m": [
+        -4.8212042937205544e-11,
+        -1.4415965521574245e-07,
+        5.6310499559811e-09
+      ],
+      "wall_seconds": 34.157696600072086,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    },
+    {
+      "id": "uipc_496b12da23341b77d730",
+      "path": "data/calibration/g3_interaction/uipc_496b12da23341b77d730",
+      "mode": "release_dt005",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "924ba211397cdc5dc5fab419e0ed91ae1596a415170ca7169394f01c76590fe0",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 401,
+        "selected_frames": 17,
+        "source_duration_s": 2.0,
+        "retained_duration_s": 1.12,
+        "dropped_static_tail_frames": 176,
+        "source_active_transition_fraction": 0.4825,
+        "selected_active_transition_fraction": 1.0,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.05000000000000021,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 0.00016909663656762065,
+      "last20_displacement_change_m": 8.700815567763004e-06,
+      "simulated_steps": 400,
+      "maximum_steps": 400,
+      "stop_reason": "maximum_steps",
+      "stopped_early": false,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.005,
+        "steps": 400,
+        "stop_criteria": {
+          "minimum_steps": 40,
+          "window": 20,
+          "maximum_speed_m_s": 1e-06,
+          "relative_displacement_tolerance": 0.001
+        },
+        "force_history": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.15,
+            1.0
+          ],
+          [
+            0.3,
+            1.0
+          ],
+          [
+            0.5,
+            0.0
+          ],
+          [
+            0.6,
+            0.0
+          ]
+        ]
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "9c4b4fd5dbb4634dcb0ea8c7fc7e8c4b2a0edfece848843053dc5b14a68fd4be",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9999746794608331,
+      "max_displacement_gradient": 4.7275393413438386e-05,
+      "tip_displacement_m": [
+        1.058136630842289e-10,
+        8.539317937256648e-07,
+        -5.77659072043966e-07
+      ],
+      "wall_seconds": 63.81360124819912,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    },
+    {
+      "id": "uipc_e485b8916ca1da9ae8df",
+      "path": "data/calibration/g3_interaction/uipc_e485b8916ca1da9ae8df",
+      "mode": "fixed_200",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "e71cb8b35501f9be6f56a43ae04b9b003fb0b928fd6711cea3fb71568f13c61e",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 201,
+        "selected_frames": 11,
+        "source_duration_s": 4.0,
+        "retained_duration_s": 0.2,
+        "dropped_static_tail_frames": 190,
+        "source_active_transition_fraction": 0.04,
+        "selected_active_transition_fraction": 0.8,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.0799999999999998,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "simulated_steps": 200,
+      "maximum_steps": 200,
+      "stop_reason": "maximum_steps",
+      "stopped_early": false,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.08,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "a0198bdaa749dae9674c091b3635cd87b587241b32f8143972007e7d0b75e3a3",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9479357423099658,
+      "max_displacement_gradient": 0.1616139047313003,
+      "tip_displacement_m": [
+        -0.00010857624903568987,
+        0.003023754409911083,
+        -1.4642582080765954e-05
+      ],
+      "wall_seconds": 13.851086213020608,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    },
+    {
+      "id": "uipc_8b0e37a44b9e9c94a44e",
+      "path": "data/calibration/g3_interaction/uipc_8b0e37a44b9e9c94a44e",
+      "mode": "steady_stop",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "1972e1b45846765a1cf7259243b5b6bfde443eb201d9c82fe554c2abded053b2",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 41,
+        "selected_frames": 11,
+        "source_duration_s": 0.8,
+        "retained_duration_s": 0.2,
+        "dropped_static_tail_frames": 30,
+        "source_active_transition_fraction": 0.2,
+        "selected_active_transition_fraction": 0.8,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.0799999999999998,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 4.727991944216734e-12,
+      "last20_displacement_change_m": 5.219221263508267e-09,
+      "simulated_steps": 40,
+      "maximum_steps": 200,
+      "stop_reason": "settled_after_final_load_event",
+      "stopped_early": true,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.08,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200,
+        "stop_criteria": {
+          "minimum_steps": 40,
+          "window": 20,
+          "maximum_speed_m_s": 1e-06,
+          "relative_displacement_tolerance": 0.001
+        }
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "a0198bdaa749dae9674c091b3635cd87b587241b32f8143972007e7d0b75e3a3",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9479357423098053,
+      "max_displacement_gradient": 0.1616139047315657,
+      "tip_displacement_m": [
+        -0.0001085762490361549,
+        0.003023754409917902,
+        -1.4642582078605667e-05
+      ],
+      "wall_seconds": 9.513447209028527,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    },
+    {
+      "id": "uipc_fddf50585cd0b1662e12",
+      "path": "data/calibration/g3_interaction/uipc_fddf50585cd0b1662e12",
+      "mode": "release_dt01",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "a15bdce5ccdbc68aa161f327a176e7197b17798099ed697bdb88540b1bd86ddc",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 91,
+        "selected_frames": 17,
+        "source_duration_s": 0.9,
+        "retained_duration_s": 0.58,
+        "dropped_static_tail_frames": 32,
+        "source_active_transition_fraction": 0.5444444444444444,
+        "selected_active_transition_fraction": 1.0,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.0799999999999998,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 6.381965285518147e-07,
+      "last20_displacement_change_m": 1.7402590082454816e-06,
+      "simulated_steps": 90,
+      "maximum_steps": 200,
+      "stop_reason": "settled_after_final_load_event",
+      "stopped_early": true,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.08,
+        "axis": 1,
+        "dt_seconds": 0.01,
+        "steps": 200,
+        "stop_criteria": {
+          "minimum_steps": 40,
+          "window": 20,
+          "maximum_speed_m_s": 1e-06,
+          "relative_displacement_tolerance": 0.001
+        },
+        "force_history": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.15,
+            1.0
+          ],
+          [
+            0.3,
+            1.0
+          ],
+          [
+            0.5,
+            0.0
+          ],
+          [
+            0.6,
+            0.0
+          ]
+        ]
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "04fa0e469fdd3589a8efbacba93b2cfb89b6e97c4619c1e2d81d836c4ed92895",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9999997332937646,
+      "max_displacement_gradient": 6.589012653957111e-07,
+      "tip_displacement_m": [
+        -5.119377117319549e-12,
+        -1.5048546781226063e-08,
+        2.654674168499003e-10
+      ],
+      "wall_seconds": 12.798154659802094,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    },
+    {
+      "id": "uipc_27b2ee843d716e0e6546",
+      "path": "data/calibration/g3_interaction/uipc_27b2ee843d716e0e6546",
+      "mode": "release_dt005",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "47bc077ec7eac6cd47340439334c3f79a1c1ac182c3ac7a56301a6a6a9997293",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 208,
+        "selected_frames": 17,
+        "source_duration_s": 1.035,
+        "retained_duration_s": 0.6,
+        "dropped_static_tail_frames": 87,
+        "source_active_transition_fraction": 0.47342995169082125,
+        "selected_active_transition_fraction": 0.9375,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.0799999999999998,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 8.95881525627401e-07,
+      "last20_displacement_change_m": 6.031099635192549e-07,
+      "simulated_steps": 207,
+      "maximum_steps": 400,
+      "stop_reason": "settled_after_final_load_event",
+      "stopped_early": true,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.08,
+        "axis": 1,
+        "dt_seconds": 0.005,
+        "steps": 400,
+        "stop_criteria": {
+          "minimum_steps": 40,
+          "window": 20,
+          "maximum_speed_m_s": 1e-06,
+          "relative_displacement_tolerance": 0.001
+        },
+        "force_history": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.15,
+            1.0
+          ],
+          [
+            0.3,
+            1.0
+          ],
+          [
+            0.5,
+            0.0
+          ],
+          [
+            0.6,
+            0.0
+          ]
+        ]
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "04fa0e469fdd3589a8efbacba93b2cfb89b6e97c4619c1e2d81d836c4ed92895",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9999978606281996,
+      "max_displacement_gradient": 5.211439077672689e-06,
+      "tip_displacement_m": [
+        -3.996694508187289e-11,
+        -1.1887370096644162e-07,
+        3.918572405288475e-09
+      ],
+      "wall_seconds": 22.994121686089784,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    },
+    {
+      "id": "uipc_ae576e75be83bbcf1299",
+      "path": "data/calibration/g3_interaction/uipc_ae576e75be83bbcf1299",
+      "mode": "release_dt0025",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "cb7e835a5dbcc1169dc4845f63686be298f9d5e13cd0383fa5a296e333477215",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 657,
+        "selected_frames": 17,
+        "source_duration_s": 1.6400000000000001,
+        "retained_duration_s": 0.6325000000000001,
+        "dropped_static_tail_frames": 403,
+        "source_active_transition_fraction": 0.2759146341463415,
+        "selected_active_transition_fraction": 0.875,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.0799999999999998,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 9.9848233478818e-07,
+      "last20_displacement_change_m": 1.375025952266018e-07,
+      "simulated_steps": 656,
+      "maximum_steps": 800,
+      "stop_reason": "settled_after_final_load_event",
+      "stopped_early": true,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.08,
+        "axis": 1,
+        "dt_seconds": 0.0025,
+        "steps": 800,
+        "stop_criteria": {
+          "minimum_steps": 40,
+          "window": 20,
+          "maximum_speed_m_s": 1e-06,
+          "relative_displacement_tolerance": 0.001
+        },
+        "force_history": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.15,
+            1.0
+          ],
+          [
+            0.3,
+            1.0
+          ],
+          [
+            0.5,
+            0.0
+          ],
+          [
+            0.6,
+            0.0
+          ]
+        ]
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "04fa0e469fdd3589a8efbacba93b2cfb89b6e97c4619c1e2d81d836c4ed92895",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9999988872358678,
+      "max_displacement_gradient": 2.5304231552774996e-06,
+      "tip_displacement_m": [
+        1.8773459805853774e-11,
+        5.758540994190261e-08,
+        -3.2273716474301143e-09
+      ],
+      "wall_seconds": 104.82464287499897,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    },
+    {
+      "id": "uipc_55d65405177de5f57677",
+      "path": "data/calibration/g3_interaction/uipc_55d65405177de5f57677",
+      "mode": "release_dt0025",
+      "fixture": "\u4ea4\u4e92\u6548\u7387",
+      "split": "calibration",
+      "source": "G3t",
+      "material_pair": "0c8fa82327908b70a7e7867bf062cc4a811120510ba0f0810425e801d0bd1b14",
+      "axis": 1,
+      "sampling": {
+        "source_frames": 801,
+        "selected_frames": 17,
+        "source_duration_s": 2.0,
+        "retained_duration_s": 1.52,
+        "dropped_static_tail_frames": 192,
+        "source_active_transition_fraction": 0.58125,
+        "selected_active_transition_fraction": 1.0,
+        "motion_threshold_px": 0.05,
+        "selection": "actual frame indices by projected-motion arc length; timestamps unchanged"
+      },
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.05000000000000021,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 0.0031924182257542116,
+      "last20_displacement_change_m": 0.00010346275716611452,
+      "simulated_steps": 800,
+      "maximum_steps": 800,
+      "stop_reason": "maximum_steps",
+      "stopped_early": false,
+      "integrator": "bdf1",
+      "mass_density_kg_m3": 1000.0,
+      "physical_damping_model": null,
+      "numerical_dissipation_note": "Implicit BDF1 damping is not a measured material damping coefficient.",
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.0025,
+        "steps": 800,
+        "stop_criteria": {
+          "minimum_steps": 40,
+          "window": 20,
+          "maximum_speed_m_s": 1e-06,
+          "relative_displacement_tolerance": 0.001
+        },
+        "force_history": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.15,
+            1.0
+          ],
+          [
+            0.3,
+            1.0
+          ],
+          [
+            0.5,
+            0.0
+          ],
+          [
+            0.6,
+            0.0
+          ]
+        ]
+      },
+      "response_provenance": {
+        "protocol_sha256": "abec092242cc2ce851e0262208c528bed7a87b6d7508950203480931089ac8e2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "9c4b4fd5dbb4634dcb0ea8c7fc7e8c4b2a0edfece848843053dc5b14a68fd4be",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9996381116466281,
+      "max_displacement_gradient": 0.0008386009662682066,
+      "tip_displacement_m": [
+        -3.2719845690288527e-09,
+        -1.5173807693499623e-05,
+        -1.0918474305881493e-05
+      ],
+      "wall_seconds": 125.14138494012877,
+      "solver_source_sha256": "d92c2bf77df6d2e9316ee51c0f5eb3ab21a9a21544b784753b16ce4886f60f9e"
+    }
+  ],
+  "groups": [
+    {
+      "young_pa": 12000.0,
+      "healthy": true,
+      "steady_relative_field_error": 1.1302587100018706e-05,
+      "steady_steps": 48,
+      "reference_steps": 200,
+      "steady_step_saving_fraction": 0.76,
+      "measured_wall_speedup": 1.1884814181077663,
+      "transient_dt_halving_relative_l2": 0.04989512461384858,
+      "transient_dt_tolerance": 0.05,
+      "transient_finer_dt_halving_relative_l2": 0.06848090827463255,
+      "selected_dynamic_case_id": "uipc_496b12da23341b77d730",
+      "reference_dynamic_case_id": "uipc_55d65405177de5f57677",
+      "eligible_for_transient_supervision": false,
+      "note": "Wall speed includes startup/I/O and concurrent GPU contention; step savings are the direct workload comparison."
+    },
+    {
+      "young_pa": 48000.0,
+      "healthy": true,
+      "steady_relative_field_error": 2.5202214482032364e-12,
+      "steady_steps": 40,
+      "reference_steps": 200,
+      "steady_step_saving_fraction": 0.8,
+      "measured_wall_speedup": 1.455948186675755,
+      "transient_dt_halving_relative_l2": 0.01626339769588384,
+      "transient_dt_tolerance": 0.05,
+      "transient_finer_dt_halving_relative_l2": 0.024077816922830286,
+      "selected_dynamic_case_id": "uipc_27b2ee843d716e0e6546",
+      "reference_dynamic_case_id": "uipc_ae576e75be83bbcf1299",
+      "eligible_for_transient_supervision": true,
+      "note": "Wall speed includes startup/I/O and concurrent GPU contention; step savings are the direct workload comparison."
+    }
+  ],
+  "scope": "Known tip traction, not simulated tool contact. BDF1 numerical dissipation is not material damping. Compare trajectories at shared physical times before using transient supervision.",
+  "updated_unix": 1794062608.5418417,
+  "wall_seconds": 132.65479230880737,
+  "detail": "\u7a33\u6001\u63d0\u524d\u7ed3\u675f\u4e0e\u52a0\u8f7d\u2014\u5378\u8f7d\u65f6\u95f4\u6b65\u5ba1\u8ba1 10/10\uff1b\u4e0d\u8df3\u8fc7\u672a\u6765\u52a8\u4f5c\u3002"
+}

@@ -19,10 +19,10 @@ from engine_fixture import atomic, digest, wait_if_paused
 
 ROOT = Path(__file__).resolve().parents[1]
 SOLVER_SOURCE_SHA = hashlib.sha256(b''.join((ROOT/'scripts'/name).read_bytes() for name in
-    ('engine_fixture.py','solve_engine_fixture.py','warp_fixture_forms.py'))).hexdigest()
+    ('engine_fixture.py','solve_engine_fixture.py','warp_fixture_forms.py','interaction_protocol.py'))).hexdigest()
 
 
-def solve(engine, case, base):
+def solve(engine, case, base, timeout=180):
     identifier = engine + '_' + digest({'case':case,'solver_source_sha256':SOLVER_SOURCE_SHA})[:20]
     output = base / identifier; receipt = output / 'result.json'
     if receipt.exists():
@@ -34,7 +34,7 @@ def solve(engine, case, base):
     with (output / 'solver.log').open('w') as log:
         subprocess.run([str(ROOT / '.engine-envs' / engine / 'bin/python'), 'scripts/solve_engine_fixture.py',
                         '--engine', engine, '--case', str(output / 'case.json'), '--output', str(output)],
-                       stdout=log, stderr=subprocess.STDOUT, check=True, timeout=180)
+                       stdout=log, stderr=subprocess.STDOUT, check=True, timeout=timeout)
     result = json.loads(receipt.read_text()); result['solver_source_sha256'] = SOLVER_SOURCE_SHA
     atomic(receipt, result)
     return identifier, result

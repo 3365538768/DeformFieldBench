@@ -1,0 +1,12 @@
+{
+  "mesh_levels": [24, 32, 48],
+  "field_relative_l2_tolerance": 0.03,
+  "tip_relative_l2_tolerance": 0.03,
+  "required_successive_refinements": 2,
+  "minimum_motion_px": 2.0,
+  "maximum_motion_px": 30.0,
+  "image_size": 224,
+  "field_of_view_m": 0.08,
+  "workers": 2,
+  "solver_timeout_seconds": 900
+}
