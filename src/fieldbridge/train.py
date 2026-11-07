@@ -19,7 +19,7 @@ from .config import load_config, ModelConfig
 from .data import MaterialDataset, ShuffledOracleDataset, collate
 from .evaluation import evaluate, move_batch
 from .losses import compute_loss
-from .model import MaterialFieldModel
+from .local_model import build_model, initialize_rgb_baseline
 from .runtime import atomic_json, paused, sha256, Plateau, checkpoint_weights, load_weights, forward_batch
 
 
@@ -95,7 +95,7 @@ def run(config_path):
     loader = DataLoader(train, batch_size=cfg.train.batch_size, sampler=sampler, shuffle=sampler is None,
                         num_workers=cfg.train.workers, collate_fn=collate, pin_memory=device.type == 'cuda',
                         generator=generator, **({'prefetch_factor': 2} if cfg.train.workers else {}))
-    raw_model = MaterialFieldModel(cfg.model).to(device)
+    raw_model = build_model(cfg.model).to(device)
     backbone_sha = broadcast(sha256(cfg.model.weights) if rank == 0 and cfg.model.weights else None, world)
     base_dataset = train.dataset if isinstance(train, ShuffledOracleDataset) else train
     if base_dataset.prepared:
@@ -117,6 +117,12 @@ def run(config_path):
     trackers = {'field': Plateau(cfg.train.field_plateau_patience, cfg.train.early_stop_relative_delta),
                 'material': Plateau(cfg.train.early_stop_patience, cfg.train.early_stop_relative_delta)}
     manifest_hash = sha256(cfg.data.manifest)
+    baseline_init_sha = sha256(cfg.train.initialize_rgb_baseline) if cfg.train.initialize_rgb_baseline else None
+    if cfg.model.architecture == 'local_residual' and not (cfg.train.initialize_rgb_baseline or cfg.train.resume or cfg.train.initialize) and cfg.train.purpose != 'smoke':
+        raise ValueError('Local residual research requires explicit trained baseline initialization')
+    if cfg.train.initialize_rgb_baseline:
+        baseline = torch.load(cfg.train.initialize_rgb_baseline, map_location='cpu', weights_only=False)
+        initialize_rgb_baseline(raw_model, baseline, backbone_sha, manifest_hash, base_dataset.codec.stats)
     if cfg.train.initialize:
         load_weights(raw_model, torch.load(cfg.train.initialize, map_location='cpu', weights_only=False), backbone_sha)
     if cfg.train.resume:
@@ -128,6 +134,7 @@ def run(config_path):
         if checkpoint['stats'] != base_dataset.codec.stats:
             raise ValueError('Resume codec mismatch')
         load_weights(raw_model, checkpoint, backbone_sha); optimizer.load_state_dict(checkpoint['optimizer'])
+        baseline_init_sha = checkpoint.get('baseline_checkpoint_sha256')
         pending = checkpoint.get('validation_pending', False)
         start_epoch, step = checkpoint['epoch'] + (0 if pending else 1), checkpoint['step']
         best_material, best_field = checkpoint.get('best_material'), checkpoint.get('best_field')
@@ -145,11 +152,31 @@ def run(config_path):
                   'parameters': sum(p.numel() for p in raw_model.parameters()),
                   'trainable_parameters': sum(p.numel() for p in raw_model.parameters() if p.requires_grad),
                   'purpose': cfg.train.purpose, 'time_unix': time.time(), 'resume_from': cfg.train.resume,
+                  'baseline_checkpoint_sha256': baseline_init_sha,
                   'privileged_diagnostic': cfg.model.feedback.startswith('oracle')}
     if rank == 0:
         if not (out / 'run.json').exists():
             atomic_json(out / 'run.json', provenance)
         atomic_json(out / f'session_{time.time_ns()}.json', provenance)
+    if cfg.model.architecture == 'local_residual' and not cfg.train.resume:
+        initial = evaluate(raw_model, val, device, out / 'val_initial', cfg.train.val_batch_size,
+                           cfg.train.val_workers, cfg.train.val_bf16, distributed=world > 1)
+        best_material = initial['standardized_mae']
+        trackers['material'].state['best'] = best_material
+        states, loader_states = gather(rng_state(), world), gather(generator.get_state(), world)
+        if rank == 0:
+            atomic_json(out / 'initial_evaluation.json', initial)
+            weights, compact = checkpoint_weights(raw_model, cfg.train.compact_checkpoint)
+            checkpoint = {'model': weights, 'compact_model': compact, 'optimizer': optimizer.state_dict(),
+                          'config': cfg.dump(), 'manifest_sha256': manifest_hash, 'stats': base_dataset.codec.stats,
+                          'source_sha256': source_hash.hexdigest(), 'backbone_checkpoint_sha256': backbone_sha,
+                          'baseline_checkpoint_sha256': baseline_init_sha,
+                          'epoch': -1, 'epoch_complete': True, 'step': 0, 'validation_pending': False,
+                          'best': best_material, 'best_material': best_material, 'best_field': None,
+                          'field_end_epoch': field_end, 'world_size': world, 'rng_states': states,
+                          'loader_states': loader_states, 'plateau': {k:v.state for k,v in trackers.items()}}
+            atomic_save(checkpoint, out / 'best_material.pt')
+            atomic_save(checkpoint, out / 'last.pt')
     amp = cfg.train.bf16 and device.type == 'cuda'
     reason = 'epochs_complete'
     for epoch in range(start_epoch, cfg.train.epochs):
@@ -212,6 +239,7 @@ def run(config_path):
                 checkpoint = {'model': weights, 'compact_model': compact, 'optimizer': optimizer.state_dict(),
                               'config': cfg.dump(), 'manifest_sha256': manifest_hash, 'stats': base_dataset.codec.stats,
                               'source_sha256': source_hash.hexdigest(), 'backbone_checkpoint_sha256': backbone_sha,
+                              'baseline_checkpoint_sha256': baseline_init_sha,
                               'epoch': epoch, 'epoch_complete': complete, 'step': step,
                               'validation_pending': validation_pending, 'best': best_material,
                               'best_material': best_material, 'best_field': best_field, 'field_end_epoch': field_end,

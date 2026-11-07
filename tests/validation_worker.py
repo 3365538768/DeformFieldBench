@@ -6,12 +6,12 @@ import torch
 import torch.distributed as dist
 from fieldbridge.config import load_config
 from fieldbridge.data import MaterialDataset
-from fieldbridge.model import MaterialFieldModel
+from fieldbridge.local_model import build_model
 from fieldbridge.evaluation import evaluate
 
 torch.set_num_threads(1); dist.init_process_group('gloo')
 cfg = load_config(sys.argv[1]); ds = MaterialDataset(cfg.data, 'val', cfg.model.field_size, cfg.model.field_mode)
-torch.manual_seed(9); model = MaterialFieldModel(cfg.model)
+torch.manual_seed(9); model = build_model(cfg.model)
 for n in [5, 1]:
     subset = copy.copy(ds); subset.rows = ds.rows[:n]
     path = Path(sys.argv[2]) / str(n)

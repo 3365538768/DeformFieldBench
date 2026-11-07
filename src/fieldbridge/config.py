@@ -20,6 +20,8 @@ class ModelConfig:
     train_last_blocks: int = 0
     frame_chunk: int = 8
     detach_feedback: bool = False
+    architecture: str = "legacy"
+    residual_rgb_input: bool = True
 
 
 @dataclass
@@ -56,6 +58,7 @@ class TrainConfig:
     max_steps: int = 0
     resume: str = ""
     initialize: str = ""
+    initialize_rgb_baseline: str = ""
     purpose: str = "research"  # smoke / pilot / research
     val_batch_size: int = 2
     val_workers: int = 2
@@ -76,6 +79,10 @@ class Config:
 
     def validate(self):
         m, d, t = self.model, self.data, self.train
+        if m.architecture not in {"legacy", "local_residual"}:
+            raise ValueError("Unknown model architecture")
+        if m.architecture == 'local_residual' and (m.width % 4 or not m.freeze_backbone or m.train_last_blocks):
+            raise ValueError('Local residual requires width divisible by four and a frozen backbone')
         if m.feedback not in {"none", "fields", "features", "oracle", "oracle_shuffled"}:
             raise ValueError("Unknown feedback mode")
         if m.field_mode not in {"legacy_visual", "metric"}:
@@ -90,8 +97,10 @@ class Config:
             raise ValueError("Invalid dropout")
         if m.backbone != "tiny" and (not m.repo or not m.weights):
             raise ValueError("Pretrained runs require an explicit local repository and checkpoint")
-        if t.resume and t.initialize:
-            raise ValueError("resume and initialize are mutually exclusive")
+        if sum(bool(x) for x in (t.resume, t.initialize, t.initialize_rgb_baseline)) > 1:
+            raise ValueError("resume and initialization options are mutually exclusive")
+        if t.initialize_rgb_baseline and m.architecture != "local_residual":
+            raise ValueError("RGB baseline initialization requires local_residual architecture")
         if t.purpose not in {"smoke", "pilot", "research", "diagnostic"} or t.epochs < 1 or min(t.workers, t.val_workers) < 0:
             raise ValueError("Invalid training purpose or schedule")
         if m.feedback.startswith("oracle") and t.purpose != "diagnostic":

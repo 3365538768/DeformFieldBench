@@ -43,10 +43,13 @@ def launch(job, children):
         last = ROOT / job['output'] / 'last.pt'
         if last.exists():
             cfg['train']['resume'] = str(last.relative_to(ROOT))
+            cfg['train']['initialize'] = ''
+            cfg['train']['initialize_rgb_baseline'] = ''
         effective = f"configs/runtime/{job['id']}.json"; atomic(ROOT / effective, cfg)
         job['config'] = effective
+        entry = [job['entrypoint']] if job.get('entrypoint') == 'scripts/overfit_fields.py' else ['-m', 'fieldbridge.train']
         args = [sys.executable, '-m', 'torch.distributed.run', '--standalone', f'--nproc_per_node={count}',
-                '-m', 'fieldbridge.train', '--config', effective]
+                *entry, '--config', effective]
     elif count > 1:
         args = [sys.executable, '-m', 'torch.distributed.run', '--standalone', f'--nproc_per_node={count}', *job['args']]
     else:
@@ -158,6 +161,43 @@ def merge_jobs(previous, planned):
     return jobs
 
 
+def local_bridge_results(jobs, original, stage='G1c'):
+    results = {}
+    for job in jobs:
+        if job['stage'] != stage or job.get('role') == 'field_fit':
+            continue
+        path = ROOT / job['output'] / 'timing.jsonl'
+        entries = [json.loads(s) for s in path.read_text().splitlines()] if path.exists() else []
+        joint = [v for v in entries if v['phase'] == 'joint_training']
+        best = min(joint, key=lambda v: v['val_mae']) if joint else None
+        initial = read(ROOT / job['output'] / 'initial_evaluation.json', {})
+        initial_mae = initial.get('standardized_mae')
+        selected = min([v for v in (initial_mae, best['val_mae'] if best else None) if v is not None], default=None)
+        results[job['name']] = {'state': job['state'], 'best_material_mae': selected,
+                               'initial_mae': initial_mae, 'best_trained_mae': best['val_mae'] if best else None,
+                               'best_epoch': best['epoch'] if best and (initial_mae is None or best['val_mae'] < initial_mae) else 0,
+                               'stop_reason': job.get('stop_reason')}
+    members = [j for j in jobs if j['stage'] == stage]
+    complete = bool(members) and all(j['state'] == 'finished' for j in members)
+    failed = any(j['state'] == 'failed' for j in members)
+    rgb = original['results']['B_rgb_only']['best_material_mae']
+    d = results.get('D_local_fields', {}).get('best_material_mae')
+    g = results.get('G_local_features', {}).get('best_material_mae')
+    c = results.get('C_frozen_rgb', {}).get('best_material_mae', rgb)
+    fit = next((j for j in members if j.get('role') == 'field_fit'), None)
+    fit_result = read(ROOT / fit['output'] / 'status.json') if fit else None
+    fit_progress = read(ROOT / fit['output'] / 'fit_progress.json') if fit else None
+    passed = all(v is not None for v in (d,g,c)) and d < min(rgb,g,c)*.98
+    value = {'status':'failed' if failed else 'complete' if complete else 'running', 'results':results,
+             'field_fit':fit_result or fit_progress, 'original_rgb_mae':rgb,
+             'route': 'repeat_independent_seeds' if complete and passed else 'review_field_fit_and_data_targets' if complete else 'collecting_evidence',
+             'passes_2_percent_routing_threshold':bool(passed), 'resume_full_pair':False,
+             'note':'Common frozen RGB warm start; validation tuning only. Epoch 0 selects the unchanged RGB estimator. Test untouched.',
+             'updated_unix':time.time()}
+    atomic(ROOT / f'docs/{stage.upper()}_RESULTS.json',value)
+    return value
+
+
 def main():
     os.chdir(ROOT)
     lock = (ROOT / 'docs/.optimization_manager.lock').open('a')
@@ -205,12 +245,20 @@ def main():
         cache_task = next(j for j in tasks if j['kind'] == 'cache')
         diagnostics = [j for j in jobs if j['stage'] == 'G1']
         followups = [j for j in jobs if j['stage'] == 'G1b']
+        locals_ = [j for j in jobs if j['stage'] == 'G1c']
+        forced = [j for j in jobs if j['stage'] == 'G1d']
         diagnostic = read('docs/G1_DIAGNOSTIC_RESULTS.json')
         if not diagnostic and all(j['state'] in {'finished', 'failed'} for j in diagnostics):
             diagnostic = diagnostic_results(jobs); event('G1 反馈：' + diagnostic['route'])
         followup = followup_results(followups, diagnostic) if followups and diagnostic else None
         if followup and followup['status'] in {'complete', 'failed'} and (previous.get('followup') or {}).get('status') != followup['status']:
             event('G1b 反馈：' + followup['route'])
+        local_bridge = local_bridge_results(locals_, diagnostic) if locals_ and diagnostic else None
+        if local_bridge and local_bridge['status'] in {'complete','failed'} and (previous.get('local_bridge') or {}).get('status') != local_bridge['status']:
+            event('G1c 反馈：' + local_bridge['route'])
+        forced_bridge = local_bridge_results(forced, diagnostic, 'G1d') if forced and diagnostic else None
+        if forced_bridge and forced_bridge['status'] in {'complete','failed'} and (previous.get('forced_bridge') or {}).get('status') != forced_bridge['status']:
+            event('G1d 反馈：' + forced_bridge['route'])
         if not paused and test_passed and drain.get('status') == 'drained':
             busy_tasks = any(j['state'] == 'running' for j in tasks)
             if not busy_tasks and not any(j['state'] == 'failed' for j in tasks):
@@ -224,7 +272,7 @@ def main():
             if bench and bench['status'] == 'passed' and cache_task['state'] == 'finished':
                 occupied = {d for j in jobs if j['state'] == 'running' for d in j['devices'].split(',')}
                 memory = [int(s.strip()) for s in subprocess.check_output(['nvidia-smi', '--query-gpu=memory.used', '--format=csv,noheader,nounits'], text=True).splitlines()]
-                eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else [])
+                eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else []) + (locals_ if followup and followup['status'] == 'complete' else []) + (forced if local_bridge and local_bridge['status'] == 'complete' else [])
                 for j in eligible:
                     control = read(ROOT / j['output'] / 'control.json', {})
                     if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused':
@@ -254,6 +302,14 @@ def main():
                 'state': 'failed' if followup and followup['status'] == 'failed' else 'complete' if followup and followup['status'] == 'complete' else 'running' if any(j['state'] == 'running' for j in followups) else 'queued',
                 'completed': sum(j['state'] == 'finished' for j in followups), 'total': len(followups),
                 'detail': '固定数据/初始化：场权重 0.1、0.01，等容量控制、反馈梯度截断及接触平衡损失；含 RGB 复跑。完成后先审查再做多种子。'})
+        if locals_:
+            stages.insert(3, {'id':'G1c', 'title':'局部时序修正与场可拟合性',
+                'state':local_bridge['status'], 'completed':sum(j['state']=='finished' for j in locals_), 'total':len(locals_),
+                'detail':'冻结同一 RGB 基线，局部场/等容量特征修正、梯度截断、真场/置乱诊断；64 个训练样本只检验场可拟合性。'})
+        if forced:
+            stages.insert(4, {'id':'G1d','title':'移除修正头的直接 RGB 通路',
+                'state':forced_bridge['status'],'completed':sum(j['state']=='finished' for j in forced),'total':len(forced),
+                'detail':'仅改变修正头的直接 RGB 输入；预测场、同容量特征、真场与置乱真场匹配对照。基线仍冻结，测试集不参与。'})
         for j in jobs:
             j['control'] = read(ROOT / j['output'] / 'control.json', {'desired': 'running'})
             j['runtime'] = read(ROOT / j['output'] / 'runtime.json', {})
@@ -262,7 +318,8 @@ def main():
                  'drain': drain, 'cpu_tests_passed': test_passed, 'benchmark': bench,
                  'cache': read('docs/G1_CACHE_STATUS.json'), 'local_cache': read('docs/G1B_LOCAL_CACHE.json'),
                  'field_audit': read('docs/G1_PREDICTED_FIELD_AUDIT.json'),
-                 'diagnostic': diagnostic, 'followup': followup, 'events': events,
+                 'diagnostic': diagnostic, 'followup': followup, 'local_bridge': local_bridge,
+                 'forced_bridge': forced_bridge, 'events': events,
                  'stop_policy': plan['stop_policy']}
         atomic('docs/OPTIMIZATION_PROGRESS.json', state)
         previous = state

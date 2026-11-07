@@ -1,0 +1,44 @@
+{
+  "status": "complete",
+  "results": {
+    "D_local_fields": {
+      "state": "finished",
+      "best_material_mae": 0.7984234771458432,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7984234771458432,
+      "best_epoch": 7,
+      "stop_reason": "validation_material_plateau"
+    },
+    "G_local_features": {
+      "state": "finished",
+      "best_material_mae": 0.7982700933599411,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7982700933599411,
+      "best_epoch": 7,
+      "stop_reason": "validation_material_plateau"
+    },
+    "O_local_oracle": {
+      "state": "finished",
+      "best_material_mae": 0.7984155993524202,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7984155993524202,
+      "best_epoch": 7,
+      "stop_reason": "validation_material_plateau"
+    },
+    "S_local_shuffled": {
+      "state": "finished",
+      "best_material_mae": 0.7984152444968606,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7984152444968606,
+      "best_epoch": 7,
+      "stop_reason": "validation_material_plateau"
+    }
+  },
+  "field_fit": null,
+  "original_rgb_mae": 0.7999518818682233,
+  "route": "review_field_fit_and_data_targets",
+  "passes_2_percent_routing_threshold": false,
+  "resume_full_pair": false,
+  "note": "Common frozen RGB warm start; validation tuning only. Epoch 0 selects the unchanged RGB estimator. Test untouched.",
+  "updated_unix": 1794050632.526808
+}

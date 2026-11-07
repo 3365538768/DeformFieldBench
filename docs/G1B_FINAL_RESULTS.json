@@ -1,0 +1,101 @@
+{
+  "status": "complete",
+  "results": {
+    "B_rgb_repeat": {
+      "state": "finished",
+      "best_material_mae": 0.7999518818682233,
+      "best_epoch": 9,
+      "stop_reason": "validation_material_plateau"
+    },
+    "C_weight01": {
+      "state": "finished",
+      "best_material_mae": 0.825403463438175,
+      "best_epoch": 15,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_weight01": {
+      "state": "finished",
+      "best_material_mae": 0.8366793273715303,
+      "best_epoch": 11,
+      "stop_reason": "validation_material_plateau"
+    },
+    "G_weight01": {
+      "state": "finished",
+      "best_material_mae": 0.833325052569447,
+      "best_epoch": 12,
+      "stop_reason": "validation_material_plateau"
+    },
+    "C_weight001": {
+      "state": "finished",
+      "best_material_mae": 0.8351488138576103,
+      "best_epoch": 11,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_weight001": {
+      "state": "finished",
+      "best_material_mae": 0.8414619457112019,
+      "best_epoch": 11,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_weight01_detached": {
+      "state": "finished",
+      "best_material_mae": 0.8305077305415559,
+      "best_epoch": 9,
+      "stop_reason": "validation_material_plateau"
+    },
+    "C_weight01_balanced": {
+      "state": "finished",
+      "best_material_mae": 0.8430958491127375,
+      "best_epoch": 9,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_weight01_balanced": {
+      "state": "finished",
+      "best_material_mae": 0.829796471884799,
+      "best_epoch": 11,
+      "stop_reason": "validation_material_plateau"
+    }
+  },
+  "original_rgb_mae": 0.7999518818682233,
+  "best_observed": "B_rgb_repeat",
+  "best_gain_over_original_rgb": 0.0,
+  "comparisons": {
+    "D_weight01": {
+      "matching_aux_control": "C_weight01",
+      "matching_feature_control": "G_weight01",
+      "gain_over_rgb": -0.04591206838282935,
+      "gain_over_aux_control": -0.013661032976995724,
+      "passes_2_percent_routing_threshold": false,
+      "feature_control_available": true
+    },
+    "D_weight001": {
+      "matching_aux_control": "C_weight001",
+      "matching_feature_control": null,
+      "gain_over_rgb": -0.05189070090820369,
+      "gain_over_aux_control": -0.007559289732366192,
+      "passes_2_percent_routing_threshold": false,
+      "feature_control_available": false
+    },
+    "D_weight01_detached": {
+      "matching_aux_control": "C_weight01",
+      "matching_feature_control": "G_weight01",
+      "gain_over_rgb": -0.038197108308529515,
+      "gain_over_aux_control": -0.006183966180756562,
+      "passes_2_percent_routing_threshold": false,
+      "feature_control_available": true
+    },
+    "D_weight01_balanced": {
+      "matching_aux_control": "C_weight01_balanced",
+      "matching_feature_control": null,
+      "gain_over_rgb": -0.03730798150868275,
+      "gain_over_aux_control": 0.01577445463873961,
+      "passes_2_percent_routing_threshold": false,
+      "feature_control_available": false
+    }
+  },
+  "route": "repair_fields_and_local_temporal_bridge",
+  "resume_full_pair": false,
+  "validation_tuning_only": true,
+  "note": "No automatic full-budget promotion: matched controls and independent seeds must be reviewed. Test split untouched.",
+  "updated_unix": 1794049707.6443691
+}

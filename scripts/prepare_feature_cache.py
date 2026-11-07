@@ -7,7 +7,8 @@ import time
 import torch
 from fieldbridge.config import load_config
 from fieldbridge.data import MaterialDataset, collate, model_inputs
-from fieldbridge.model import FrameEncoder, MaterialFieldModel
+from fieldbridge.model import FrameEncoder
+from fieldbridge.local_model import build_model
 from fieldbridge.runtime import atomic_json, sha256, paused
 from fieldbridge.train import atomic_save
 
@@ -57,7 +58,7 @@ def main():
     # Compare normal RGB inference and cached RGB-only features on real train/val samples.
     # Ground-truth fields remain targets and never enter these model inputs.
     torch.manual_seed(19)
-    model = MaterialFieldModel(cfg.model).cuda().eval(); model.frame_encoder = encoder
+    model = build_model(cfg.model).cuda().eval(); model.frame_encoder = encoder
     cfg.data.prepared_dir = str(directory)
     maximum = 0.
     for ds in datasets:

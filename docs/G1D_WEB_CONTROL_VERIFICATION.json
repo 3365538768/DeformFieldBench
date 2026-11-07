@@ -1,0 +1,33 @@
+{
+  "paused_observed_unix": 1794050397.6680403,
+  "job": "g1d_D_local_fields_seed17",
+  "state": "paused",
+  "old_pid": 2547507,
+  "old_pid_exists": false,
+  "runtime": {
+    "phase": "paused",
+    "step": 320,
+    "epoch": 5,
+    "updated_unix": 1794050356.7651436,
+    "pause_requested": true,
+    "field_end_epoch": 2,
+    "checkpoint": "runs/g1d_D_local_fields_seed17/last.pt"
+  },
+  "checkpoint_bytes": 28953529,
+  "resume_observed_unix": 1794050438.9309103,
+  "resume": {
+    "state": "running",
+    "pid": 2559264,
+    "runtime": {
+      "phase": "joint_training",
+      "step": 360,
+      "epoch": 6,
+      "updated_unix": 1794050435.740728,
+      "pause_requested": false,
+      "field_end_epoch": 2
+    },
+    "stop_reason": "paused"
+  },
+  "step_advanced": true,
+  "new_pid": true
+}

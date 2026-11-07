@@ -1,0 +1,79 @@
+{
+  "status": "complete",
+  "results": {
+    "C_frozen_rgb": {
+      "state": "finished",
+      "best_material_mae": 0.7999518818682233,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7999518818682233,
+      "best_epoch": 0,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_local_fields": {
+      "state": "finished",
+      "best_material_mae": 0.7936089871629942,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7936089871629942,
+      "best_epoch": 3,
+      "stop_reason": "validation_material_plateau"
+    },
+    "G_local_features": {
+      "state": "finished",
+      "best_material_mae": 0.7936284465547434,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7936284465547434,
+      "best_epoch": 3,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_local_detached": {
+      "state": "finished",
+      "best_material_mae": 0.7935958308931224,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7935958308931224,
+      "best_epoch": 3,
+      "stop_reason": "validation_material_plateau"
+    },
+    "O_local_oracle": {
+      "state": "finished",
+      "best_material_mae": 0.7935712837597875,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7935712837597875,
+      "best_epoch": 3,
+      "stop_reason": "validation_material_plateau"
+    },
+    "S_local_shuffled": {
+      "state": "finished",
+      "best_material_mae": 0.7935757194542824,
+      "initial_mae": 0.7999518818682233,
+      "best_trained_mae": 0.7935757194542824,
+      "best_epoch": 3,
+      "stop_reason": "validation_material_plateau"
+    }
+  },
+  "field_fit": {
+    "status": "training_finished",
+    "reason": "training_field_plateau",
+    "samples": 64,
+    "initial": {
+      "train_encoded_field_mae": 0.4805342495645896,
+      "train_contact_iou": 0.007241272737411274,
+      "train_contact_recall": 0.9727070097496626
+    },
+    "final": {
+      "train_encoded_field_mae": 0.13671194299505923,
+      "train_contact_iou": 0.0480761439218237,
+      "train_contact_recall": 0.9985595366256766
+    },
+    "best_train_field_mae": 0.11302104550454921,
+    "relative_field_improvement": 0.7648012694059639,
+    "scope": "training-only fit diagnostic, NOT generalization or SI physics",
+    "steps": 112,
+    "updated_unix": 1794049669.0578887
+  },
+  "original_rgb_mae": 0.7999518818682233,
+  "route": "review_field_fit_and_data_targets",
+  "passes_2_percent_routing_threshold": false,
+  "resume_full_pair": false,
+  "note": "Common frozen RGB warm start; validation tuning only. Epoch 0 selects the unchanged RGB estimator. Test untouched.",
+  "updated_unix": 1794050362.4886658
+}

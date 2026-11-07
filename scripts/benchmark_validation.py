@@ -8,7 +8,7 @@ import torch.distributed as dist
 from fieldbridge.config import load_config
 from fieldbridge.data import MaterialDataset
 from fieldbridge.evaluation import evaluate
-from fieldbridge.model import MaterialFieldModel
+from fieldbridge.local_model import build_model
 from fieldbridge.runtime import atomic_json, load_weights, sha256
 
 p = argparse.ArgumentParser()
@@ -24,7 +24,7 @@ if world > 1:
     dist.init_process_group('nccl', device_id=device)
 cfg = load_config(a.config); ds = MaterialDataset(cfg.data, 'val', cfg.model.field_size, cfg.model.field_mode)
 ds.rows = sorted(ds.rows, key=lambda r: r['sample_id'])[:a.limit]
-model = MaterialFieldModel(cfg.model).to(device)
+model = build_model(cfg.model).to(device)
 ckpt = torch.load(a.checkpoint, map_location='cpu', weights_only=False)
 load_weights(model, ckpt, sha256(cfg.model.weights) if ckpt.get('compact_model') else None)
 del ckpt

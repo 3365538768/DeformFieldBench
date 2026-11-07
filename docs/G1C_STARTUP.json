@@ -1,0 +1,12 @@
+{
+  "stage": "G1c",
+  "manager_pid": 2505432,
+  "started_unix": 1794049599.7648346,
+  "jobs": 7,
+  "trainable_controls": 6,
+  "field_fit_scope": "64 training samples only",
+  "full_budget_runs_held": true,
+  "preflight": "actual 2-GPU forward/backward, 128 validation samples exactly covered, compact checkpoint passed",
+  "tests": "27 passed full suite; zero residual parity, frozen RGB weights, GT rejection, padded frames/views, epoch-zero resume and routing",
+  "legacy_encoder_unchanged_sha256": "191d23faba09a0faff69dfd3daffa2e6750d243315b0a9c536074954e6db9083"
+}

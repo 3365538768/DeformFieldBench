@@ -9,14 +9,14 @@ from fieldbridge.config import load_config
 from fieldbridge.data import MaterialDataset, collate, model_inputs
 from fieldbridge.evaluation import move_batch
 from fieldbridge.losses import compute_loss
-from fieldbridge.model import MaterialFieldModel
+from fieldbridge.local_model import build_model
 
 
 def run(config, output):
     cfg=load_config(config)
     ds=MaterialDataset(cfg.data,"train",cfg.model.field_size,cfg.model.field_mode)
     torch.manual_seed(17)
-    model=MaterialFieldModel(cfg.model).cuda().train()
+    model=build_model(cfg.model).cuda().train()
     parameters=[p for p in model.parameters() if p.requires_grad]
     optimizer=torch.optim.AdamW(parameters,lr=cfg.train.lr)
     steps=[]

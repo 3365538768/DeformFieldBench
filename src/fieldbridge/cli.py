@@ -6,7 +6,7 @@ import torch
 from .config import load_config, ModelConfig
 from .data import read_manifest, fit_stats, MaterialDataset, ShuffledOracleDataset
 from .evaluation import evaluate
-from .model import MaterialFieldModel
+from .local_model import build_model
 from .runtime import load_weights, sha256
 
 
@@ -44,7 +44,7 @@ def main():
                 raise ValueError('Prepared feature backbone/implementation mismatch')
         if cfg.model.feedback == 'oracle_shuffled':
             dataset = ShuffledOracleDataset(dataset)
-        model = MaterialFieldModel(cfg.model).to(device)
+        model = build_model(cfg.model).to(device)
         load_weights(model, ckpt, backbone_sha)
         print(json.dumps(evaluate(model, dataset, device, args.output,
                          cfg.train.val_batch_size, cfg.train.val_workers, cfg.train.val_bf16), indent=2))

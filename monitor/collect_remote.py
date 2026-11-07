@@ -103,6 +103,9 @@ def collect():
         processes = []
     jobs = []
     optimization = read_json(ROOT / 'docs/OPTIMIZATION_PROGRESS.json', {})
+    optimization['bridge_sensitivity'] = read_json(ROOT / 'docs/G1C_D_BRIDGE_SENSITIVITY_FP32.json')
+    optimization['forced_bridge_sensitivity'] = read_json(ROOT / 'docs/G1D_D_BRIDGE_SENSITIVITY_FP32.json')
+    optimization['latest_verification'] = read_json(ROOT / 'docs/G1D_STARTUP.json')
     for task in optimization.get('tasks', []):
         if task.get('kind') == 'benchmark':
             task['progress'] = [read_json(p, {}) for p in (ROOT / 'runs/g0_benchmark' / task['id']).glob('progress_rank*.json')]
@@ -193,9 +196,13 @@ def collect():
                 phase = 'validation_or_checkpoint'
             if runtime:
                 phase = runtime.get('phase', phase); epoch = runtime.get('epoch', epoch)
+                step = runtime.get('step', step)
                 warmup = runtime.get('field_end_epoch', warmup)
             timing = json_lines(out / 'timing.jsonl')
             scores = [v['val_mae'] for v in timing if v.get('phase') == 'joint_training' and v.get('val_mae') is not None] if runtime else [v['mae'] for v in validation if v['mae'] is not None and v['epoch'] > warmup]
+            initial = read_json(out / 'initial_evaluation.json', {})
+            if initial.get('standardized_mae') is not None:
+                scores.append(initial['standardized_mae'])
             start = job.get('launched_unix', run.get('time_unix'))
             elapsed = now - start if start else None
             eta = None
@@ -203,6 +210,7 @@ def collect():
                 eta = max(0, (epochs * steps_epoch - step) * elapsed / step)
             jobs.append({'id': out.name, 'name': job.get('name', out.name), 'status': status, 'phase': phase,
                 'devices': devices, 'pid': pid, 'purpose': cfg['train'].get('purpose', 'research'), 'stage': job.get('stage'),
+                'role': job.get('role'), 'architecture': cfg['model'].get('architecture', 'legacy'),
                 'backbone': cfg['model'].get('hub_name', cfg['model'].get('backbone')),
                 'feedback': cfg['model'].get('feedback'), 'contact_loss': cfg['train'].get('contact_loss', 'bce'),
                 'seed': cfg['train'].get('seed'), 'frames': cfg['data'].get('frames'),

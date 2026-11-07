@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader, Subset
 from fieldbridge.config import load_config, ModelConfig
 from fieldbridge.data import MaterialDataset, collate, model_inputs
 from fieldbridge.evaluation import move_batch
-from fieldbridge.model import MaterialFieldModel
+from fieldbridge.local_model import build_model
 from fieldbridge.runtime import atomic_json, load_weights, sha256
 
 
@@ -25,7 +25,7 @@ def run(config, checkpoint, output, fit_samples=64):
     if ckpt['manifest_sha256'] != sha256(cfg.data.manifest):
         raise ValueError('Checkpoint/manifest mismatch')
     device = torch.device(cfg.train.device)
-    model = MaterialFieldModel(cfg.model).to(device).eval()
+    model = build_model(cfg.model).to(device).eval()
     load_weights(model, ckpt, sha256(cfg.model.weights) if cfg.model.weights else None)
     if train.prepared and (train.prepared.get('backbone_checkpoint_sha256') != sha256(cfg.model.weights)
                            or train.prepared.get('encoder_source_sha256') != sha256(Path(__file__).parents[1] / 'src/fieldbridge/model.py')):

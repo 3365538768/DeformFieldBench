@@ -59,3 +59,20 @@ def test_followup_routes_require_rgb_and_matching_controls(tmp_path, monkeypatch
     result = manager.followup_results(jobs, original)
     assert result['route'] == expected
     assert not result['resume_full_pair']
+
+
+def test_local_bridge_epoch_zero_fallback_is_not_an_improvement(tmp_path, monkeypatch):
+    monkeypatch.setattr(manager,'ROOT',tmp_path)
+    jobs=[]
+    for name,trained in [('C_frozen_rgb',.8),('D_local_fields',.84),('G_local_features',.79)]:
+        output=tmp_path/name;output.mkdir()
+        (output/'initial_evaluation.json').write_text(json.dumps({'standardized_mae':.8}))
+        (output/'timing.jsonl').write_text(json.dumps(dict(phase='joint_training',epoch=1,val_mae=trained))+'\n')
+        jobs.append(dict(name=name,stage='G1c',state='finished',output=name))
+    original={'results':{'B_rgb_only':{'best_material_mae':.8}}}
+    result=manager.local_bridge_results(jobs,original)
+    assert result['results']['D_local_fields']['best_epoch']==0
+    assert result['results']['D_local_fields']['best_material_mae']==.8
+    assert not result['passes_2_percent_routing_threshold']
+    assert result['route']=='review_field_fit_and_data_targets'
+    assert not result['resume_full_pair']
