@@ -31,6 +31,12 @@ class MotionFieldModel(MaterialFieldModel):
         self.motion_mix = nn.Sequential(nn.Conv2d(3*cfg.width, cfg.width, 1), nn.GELU(),
                                         nn.Conv2d(cfg.width, cfg.width, 3, padding=1, groups=cfg.width))
 
+    def _bridge_embedding(self, bridge, valid, times):
+        b,v,t=valid.shape
+        weights=valid.reshape(b,v*t,1).to(bridge.dtype)
+        embedding=self.field_encoder(bridge).flatten(1).reshape(b,v*t,self.cfg.width)
+        return (embedding*weights).sum(1)/weights.sum(1).clamp_min(1)
+
     def forward(self, rgb, valid, times, prior, prior_mask, features=None, diagnostic_fields=None):
         b, v, t, c, h, w = rgb.shape
         if not valid.flatten(1).any(1).all() or not torch.isfinite(times).all():
@@ -69,8 +75,12 @@ class MotionFieldModel(MaterialFieldModel):
         flow = low[:,1:].sigmoid() if self.cfg.field_mode=='legacy_visual' else low[:,1:]
         stress = self.stress(torch.cat((local,contact,flow),1))
         stress = stress.sigmoid() if self.cfg.field_mode=='legacy_visual' else F.softplus(stress)
+        if self.cfg.field_mode=='observed_motion':
+            stress=stress*0  # No free latent channel masquerading as missing stress.
         fields = torch.cat((contact,flow,stress),1)
         control = self.feature_control(local)
+        if self.cfg.field_mode=='observed_motion':
+            control=torch.cat((control[:,:3],control[:,3:]*0),1)
         if self.cfg.feedback.startswith('oracle'):
             if diagnostic_fields is None:
                 raise ValueError('Oracle requires explicit privileged fields')
@@ -81,9 +91,7 @@ class MotionFieldModel(MaterialFieldModel):
             bridge = control+fields*0 if self.cfg.feedback=='features' else fields+control*0
         if self.cfg.detach_feedback:
             bridge = bridge.detach()
-        weights = valid.reshape(b,v*t,1).to(pooled.dtype)
-        field_embedding = self.field_encoder(bridge).flatten(1).reshape(b,v*t,d)
-        field_embedding = (field_embedding*weights).sum(1)/weights.sum(1).clamp_min(1)
+        field_embedding = self._bridge_embedding(bridge,valid,times)
         if self.cfg.feedback=='none':
             field_embedding = field_embedding*0
         pm = prior_mask.to(prior.dtype)*float(self.cfg.use_prior)

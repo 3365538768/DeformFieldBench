@@ -1,0 +1,41 @@
+{
+  "status": "complete",
+  "completed": 4420,
+  "total": 4420,
+  "splits": {
+    "train": {
+      "samples": 4021,
+      "velocity_driven_samples": 3178,
+      "nonzero_gravity_samples": 843,
+      "explicit_force_history_key_present": 0,
+      "objects": 88,
+      "physics_metadata_groups": 3124,
+      "physics_groups_with_repeats": 352,
+      "render_metadata_groups": 3124,
+      "render_groups_with_repeats": 352,
+      "objects_with_candidate_pairs": 87,
+      "candidate_disjoint_pairs": 541
+    },
+    "val": {
+      "samples": 399,
+      "velocity_driven_samples": 315,
+      "nonzero_gravity_samples": 84,
+      "explicit_force_history_key_present": 0,
+      "objects": 10,
+      "physics_metadata_groups": 319,
+      "physics_groups_with_repeats": 33,
+      "render_metadata_groups": 319,
+      "render_groups_with_repeats": 33,
+      "objects_with_candidate_pairs": 9,
+      "candidate_disjoint_pairs": 48
+    }
+  },
+  "missing_metadata": [],
+  "test_untouched": true,
+  "detail": "只读完整训练/验证元数据：固定边界、动作、非目标数值设置和已导出的视角，寻找材料变化对照。",
+  "scope": "Manifest structure validated; test records excluded before metadata analysis. No test pack or model predictions used. Exported metadata matching does not certify geometry scale, force units, hidden simulator settings or scalar softness order.",
+  "updated_unix": 1794107215.8525162,
+  "candidate_index": "data/manifests/material_pair_candidates.json",
+  "candidate_index_sha256": "4c20a8a63fb2bf725fd12922d3236b761d4d3d979d699c768432c3d437888511",
+  "native_parameter_ranking_admitted": false
+}

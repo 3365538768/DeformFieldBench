@@ -36,6 +36,7 @@ class DataConfig:
     view_dropout: float = 0.0
     prepared_dir: str = ""
     prepared_cache_gib: float = 0.0  # bounded CPU cache per DataLoader worker; opt-in
+    motion_targets_dir: str = ""
 
 
 @dataclass
@@ -82,7 +83,7 @@ class Config:
 
     def validate(self):
         m, d, t = self.model, self.data, self.train
-        if m.architecture not in {"legacy", "local_residual", "motion_field"}:
+        if m.architecture not in {"legacy", "local_residual", "motion_field", "motion_temporal"}:
             raise ValueError("Unknown model architecture")
         if m.architecture == 'local_residual' and (m.width % 4 or not m.freeze_backbone or m.train_last_blocks):
             raise ValueError('Local residual requires width divisible by four and a frozen backbone')
@@ -92,8 +93,10 @@ class Config:
             raise ValueError('Anchored pooling requires local residual without direct RGB input')
         if m.feedback not in {"none", "fields", "features", "oracle", "oracle_shuffled"}:
             raise ValueError("Unknown feedback mode")
-        if m.field_mode not in {"legacy_visual", "metric"}:
+        if m.field_mode not in {"legacy_visual", "metric", "observed_motion"}:
             raise ValueError("Do not mix visual and SI field targets")
+        if m.field_mode == 'observed_motion' and (m.architecture not in {'motion_field','motion_temporal'} or not d.prepared_dir or not d.motion_targets_dir):
+            raise ValueError('Observed motion requires an explicit target overlay and frozen-feature motion architecture')
         if m.width % m.heads or m.width % 2:
             raise ValueError("width must be even and divisible by heads")
         if min(m.width, m.heads, m.layers, m.field_size, m.frame_chunk) < 1 or m.train_last_blocks < 0:
@@ -132,7 +135,7 @@ def load_config(path):
         raise ValueError("Unknown config section")
     mappings = path_map()
     for section, fields in {'model': ('repo', 'weights'),
-                            'data': ('manifest', 'stats', 'prepared_dir'),
+                            'data': ('manifest', 'stats', 'prepared_dir', 'motion_targets_dir'),
                             'train': ('output', 'resume', 'initialize', 'initialize_rgb_baseline')}.items():
         for key in fields:
             if key in raw.get(section, {}):

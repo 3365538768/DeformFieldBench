@@ -1,0 +1,474 @@
+{
+  "status": "complete",
+  "completed": 640,
+  "total": 640,
+  "manifest_sha256": "2d13b51c01b7808277a467ab566c120b9e495dae998249dd7e97734d76cf3f6b",
+  "target_index_sha256": "ebba345a78bca3488904a25d8719e84533e4f536f0c34834af8f533037afc2e8",
+  "splits": {
+    "train": {
+      "samples": 512,
+      "objects": 88,
+      "actions": {
+        "drop": 115,
+        "shear": 102,
+        "bend": 91,
+        "press": 101,
+        "stretch": 103
+      },
+      "laws": {
+        "0": 164,
+        "2": 174,
+        "1": 174
+      },
+      "reliable_cells_per_noninitial_frame": {
+        "p10": 0.0,
+        "p50": 107.0,
+        "p90": 364.0
+      },
+      "sufficient_support_fraction": 0.744921875,
+      "total_displacement_mean_per_frame_px": {
+        "p10": 0.6747689366340637,
+        "p50": 4.014695644378662,
+        "p90": 19.93392562866212
+      },
+      "translation_residual_mean_per_frame_px": {
+        "p10": 0.420893007516861,
+        "p50": 2.0523242950439453,
+        "p90": 5.755228614807129
+      },
+      "residual_to_total_squared_energy": 0.06312966344730317,
+      "per_clip_residual_energy_fraction": {
+        "p10": 0.007658857471511506,
+        "p50": 0.2205516782156166,
+        "p90": 0.7472907221538633
+      },
+      "scope": "Frames with >=32 reliable 56x56 cells; first frame excluded. Values remain in original 224px coordinates."
+    },
+    "val": {
+      "samples": 128,
+      "objects": 10,
+      "actions": {
+        "shear": 25,
+        "stretch": 28,
+        "press": 24,
+        "drop": 25,
+        "bend": 26
+      },
+      "laws": {
+        "1": 46,
+        "2": 42,
+        "0": 40
+      },
+      "reliable_cells_per_noninitial_frame": {
+        "p10": 0.0,
+        "p50": 102.0,
+        "p90": 350.0
+      },
+      "sufficient_support_fraction": 0.7760416666666666,
+      "total_displacement_mean_per_frame_px": {
+        "p10": 0.51652170419693,
+        "p50": 3.5955110788345337,
+        "p90": 21.042588424682616
+      },
+      "translation_residual_mean_per_frame_px": {
+        "p10": 0.2838459223508835,
+        "p50": 1.8053505420684814,
+        "p90": 5.292098331451416
+      },
+      "residual_to_total_squared_energy": 0.053039260840737616,
+      "per_clip_residual_energy_fraction": {
+        "p10": 0.007890925971170342,
+        "p50": 0.23369286043964302,
+        "p90": 0.7163881871863782
+      },
+      "scope": "Frames with >=32 reliable 56x56 cells; first frame excluded. Values remain in original 224px coordinates."
+    }
+  },
+  "models": {
+    "B_rgb": {
+      "best_epoch": 12,
+      "stop_reason": "validation_material_plateau",
+      "errors": {
+        "parameter:E": {
+          "standardized_mae": 0.6274674971646164,
+          "label_count": 128
+        },
+        "parameter:nu": {
+          "standardized_mae": 0.6052606928424211,
+          "label_count": 128
+        },
+        "parameter:rho": {
+          "standardized_mae": 0.8252720493746892,
+          "label_count": 128
+        },
+        "action:shear": {
+          "standardized_mae": 0.7519914220486369,
+          "label_count": 84
+        },
+        "law_id:2": {
+          "standardized_mae": 0.718016018085773,
+          "label_count": 126
+        },
+        "action:stretch": {
+          "standardized_mae": 0.6547373607135477,
+          "label_count": 94
+        },
+        "law_id:0": {
+          "standardized_mae": 0.7257367783672332,
+          "label_count": 120
+        },
+        "parameter:sigma_y": {
+          "standardized_mae": 0.8124187687492889,
+          "label_count": 46
+        },
+        "law_id:1": {
+          "standardized_mae": 0.6697655560894181,
+          "label_count": 184
+        },
+        "action:drop": {
+          "standardized_mae": 0.7951720407055247,
+          "label_count": 84
+        },
+        "action:bend": {
+          "standardized_mae": 0.7365214643122135,
+          "label_count": 87
+        },
+        "action:press": {
+          "standardized_mae": 0.5581590596264527,
+          "label_count": 81
+        }
+      },
+      "timing_seconds": {
+        "train_seconds": {
+          "p10": 17.351209303364158,
+          "p50": 18.471212609205395,
+          "p90": 19.75343088572845
+        },
+        "data_wait_seconds": {
+          "p10": 11.469458734150976,
+          "p50": 12.648410734254867,
+          "p90": 13.79346431279555
+        },
+        "validation_seconds": {
+          "p10": 4.907600660808384,
+          "p50": 5.082030927296728,
+          "p90": 5.788753513246775
+        },
+        "cycle_seconds": {
+          "p10": 22.70101002091542,
+          "p50": 23.946970779448748,
+          "p90": 24.89556278893724
+        }
+      }
+    },
+    "C_aux": {
+      "best_epoch": 17,
+      "stop_reason": "epochs_complete",
+      "errors": {
+        "parameter:E": {
+          "standardized_mae": 0.5898983204097021,
+          "label_count": 128
+        },
+        "parameter:nu": {
+          "standardized_mae": 0.5853871906147106,
+          "label_count": 128
+        },
+        "parameter:rho": {
+          "standardized_mae": 0.8127384896815784,
+          "label_count": 128
+        },
+        "action:shear": {
+          "standardized_mae": 0.7210961912004721,
+          "label_count": 84
+        },
+        "law_id:2": {
+          "standardized_mae": 0.7127044730420623,
+          "label_count": 126
+        },
+        "action:stretch": {
+          "standardized_mae": 0.6939587577449237,
+          "label_count": 94
+        },
+        "law_id:0": {
+          "standardized_mae": 0.6201686750340741,
+          "label_count": 120
+        },
+        "parameter:sigma_y": {
+          "standardized_mae": 0.8509010155887707,
+          "label_count": 46
+        },
+        "law_id:1": {
+          "standardized_mae": 0.7031930119568564,
+          "label_count": 184
+        },
+        "action:drop": {
+          "standardized_mae": 0.7290299687357176,
+          "label_count": 84
+        },
+        "action:bend": {
+          "standardized_mae": 0.6491339765917296,
+          "label_count": 87
+        },
+        "action:press": {
+          "standardized_mae": 0.6184091627321862,
+          "label_count": 81
+        }
+      },
+      "timing_seconds": {
+        "train_seconds": {
+          "p10": 13.135033639892935,
+          "p50": 17.997575219720602,
+          "p90": 19.534940633829684
+        },
+        "data_wait_seconds": {
+          "p10": 7.866103383339942,
+          "p50": 12.179895895998925,
+          "p90": 13.803601392358543
+        },
+        "validation_seconds": {
+          "p10": 3.710397293511778,
+          "p50": 5.080344022717327,
+          "p90": 5.579441209882498
+        },
+        "cycle_seconds": {
+          "p10": 16.9835435080342,
+          "p50": 23.708408762235194,
+          "p90": 24.865813436545434
+        }
+      }
+    },
+    "D_fields": {
+      "best_epoch": 12,
+      "stop_reason": "validation_material_plateau",
+      "errors": {
+        "parameter:E": {
+          "standardized_mae": 0.5553911660972517,
+          "label_count": 128
+        },
+        "parameter:nu": {
+          "standardized_mae": 0.624108405012521,
+          "label_count": 128
+        },
+        "parameter:rho": {
+          "standardized_mae": 0.8245348800282954,
+          "label_count": 128
+        },
+        "action:shear": {
+          "standardized_mae": 0.7300643568769807,
+          "label_count": 84
+        },
+        "law_id:2": {
+          "standardized_mae": 0.7217781318144666,
+          "label_count": 126
+        },
+        "action:stretch": {
+          "standardized_mae": 0.6372722734702116,
+          "label_count": 94
+        },
+        "law_id:0": {
+          "standardized_mae": 0.680874351336388,
+          "label_count": 120
+        },
+        "parameter:sigma_y": {
+          "standardized_mae": 0.8428675968038,
+          "label_count": 46
+        },
+        "law_id:1": {
+          "standardized_mae": 0.6665182197264031,
+          "label_count": 184
+        },
+        "action:drop": {
+          "standardized_mae": 0.8005271067931539,
+          "label_count": 84
+        },
+        "action:bend": {
+          "standardized_mae": 0.6649453833527948,
+          "label_count": 87
+        },
+        "action:press": {
+          "standardized_mae": 0.604503632005718,
+          "label_count": 81
+        }
+      },
+      "timing_seconds": {
+        "train_seconds": {
+          "p10": 17.320734501816332,
+          "p50": 18.395673331804574,
+          "p90": 19.831334804184735
+        },
+        "data_wait_seconds": {
+          "p10": 11.544465289451182,
+          "p50": 12.62041311757639,
+          "p90": 13.840995525941253
+        },
+        "validation_seconds": {
+          "p10": 4.889407129492611,
+          "p50": 5.115787880029529,
+          "p90": 5.706927654333413
+        },
+        "cycle_seconds": {
+          "p10": 22.493807752151042,
+          "p50": 23.901224374305457,
+          "p90": 24.95865377318114
+        }
+      }
+    },
+    "G_features": {
+      "best_epoch": 9,
+      "stop_reason": "validation_material_plateau",
+      "errors": {
+        "parameter:E": {
+          "standardized_mae": 0.640559865074465,
+          "label_count": 128
+        },
+        "parameter:nu": {
+          "standardized_mae": 0.6000899833597941,
+          "label_count": 128
+        },
+        "parameter:rho": {
+          "standardized_mae": 0.8323788206052996,
+          "label_count": 128
+        },
+        "action:shear": {
+          "standardized_mae": 0.7515255239393029,
+          "label_count": 84
+        },
+        "law_id:2": {
+          "standardized_mae": 0.6757395201554847,
+          "label_count": 126
+        },
+        "action:stretch": {
+          "standardized_mae": 0.6538186396120433,
+          "label_count": 94
+        },
+        "law_id:0": {
+          "standardized_mae": 0.6932530329116465,
+          "label_count": 120
+        },
+        "parameter:sigma_y": {
+          "standardized_mae": 0.8338070714279361,
+          "label_count": 46
+        },
+        "law_id:1": {
+          "standardized_mae": 0.7357024534443475,
+          "label_count": 184
+        },
+        "action:drop": {
+          "standardized_mae": 0.8351749476222765,
+          "label_count": 84
+        },
+        "action:bend": {
+          "standardized_mae": 0.6718271259946385,
+          "label_count": 87
+        },
+        "action:press": {
+          "standardized_mae": 0.6236054719322257,
+          "label_count": 81
+        }
+      },
+      "timing_seconds": {
+        "train_seconds": {
+          "p10": 17.813328801095487,
+          "p50": 18.60006527695805,
+          "p90": 19.94957323484123
+        },
+        "data_wait_seconds": {
+          "p10": 11.956440736353397,
+          "p50": 12.999501933343709,
+          "p90": 14.04811877924949
+        },
+        "validation_seconds": {
+          "p10": 5.007201397977769,
+          "p50": 5.101791211403906,
+          "p90": 5.834200291149318
+        },
+        "cycle_seconds": {
+          "p10": 23.29159791264683,
+          "p50": 24.294203439727426,
+          "p90": 25.21641488801688
+        }
+      }
+    },
+    "O_pseudo_oracle": {
+      "best_epoch": 13,
+      "stop_reason": "validation_material_plateau",
+      "errors": {
+        "parameter:E": {
+          "standardized_mae": 0.6229263384884689,
+          "label_count": 128
+        },
+        "parameter:nu": {
+          "standardized_mae": 0.6399752869474469,
+          "label_count": 128
+        },
+        "parameter:rho": {
+          "standardized_mae": 0.8432472443400911,
+          "label_count": 128
+        },
+        "action:shear": {
+          "standardized_mae": 0.8275271583171118,
+          "label_count": 84
+        },
+        "law_id:2": {
+          "standardized_mae": 0.7347524324284186,
+          "label_count": 126
+        },
+        "action:stretch": {
+          "standardized_mae": 0.6927349826028729,
+          "label_count": 94
+        },
+        "law_id:0": {
+          "standardized_mae": 0.7679286019740782,
+          "label_count": 120
+        },
+        "parameter:sigma_y": {
+          "standardized_mae": 0.7883610798288947,
+          "label_count": 46
+        },
+        "law_id:1": {
+          "standardized_mae": 0.6582686210901517,
+          "label_count": 184
+        },
+        "action:drop": {
+          "standardized_mae": 0.7615993956015223,
+          "label_count": 84
+        },
+        "action:bend": {
+          "standardized_mae": 0.6876911196386677,
+          "label_count": 87
+        },
+        "action:press": {
+          "standardized_mae": 0.5854175148278843,
+          "label_count": 81
+        }
+      },
+      "timing_seconds": {
+        "train_seconds": {
+          "p10": 16.767535653710365,
+          "p50": 18.38973413594067,
+          "p90": 19.838730450719595
+        },
+        "data_wait_seconds": {
+          "p10": 10.942695949785412,
+          "p50": 12.678127588704228,
+          "p90": 14.056566234119236
+        },
+        "validation_seconds": {
+          "p10": 4.799865667708218,
+          "p50": 5.091338438913226,
+          "p90": 5.6428297905251386
+        },
+        "cycle_seconds": {
+          "p10": 21.874455026909708,
+          "p50": 23.847074390389025,
+          "p90": 24.978220523521305
+        }
+      }
+    }
+  },
+  "test_untouched": true,
+  "detail": "分离整体平移与空间变化，检查动作覆盖、逐参数/动作误差和训练耗时。",
+  "scope": "Teacher-visible pixels only; image translation residual also includes rotation, perspective and tracking error, not strain GT.",
+  "updated_unix": 1794106462.0105352,
+  "timing_schema_note": "cycle_seconds from original timing.jsonl; corrected unused epoch_seconds key without changing any experiment result"
+}

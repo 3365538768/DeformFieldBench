@@ -118,6 +118,7 @@ def run(config_path):
     trackers = {'field': Plateau(cfg.train.field_plateau_patience, cfg.train.early_stop_relative_delta),
                 'material': Plateau(cfg.train.early_stop_patience, cfg.train.early_stop_relative_delta)}
     manifest_hash = sha256(cfg.data.manifest)
+    motion_hash = sha256(Path(cfg.data.motion_targets_dir)/'index.json') if cfg.data.motion_targets_dir else None
     baseline_init_sha = sha256(cfg.train.initialize_rgb_baseline) if cfg.train.initialize_rgb_baseline else None
     if cfg.model.architecture == 'local_residual' and not (cfg.train.initialize_rgb_baseline or cfg.train.resume or cfg.train.initialize) and cfg.train.purpose != 'smoke':
         raise ValueError('Local residual research requires explicit trained baseline initialization')
@@ -130,6 +131,8 @@ def run(config_path):
         checkpoint = torch.load(cfg.train.resume, map_location='cpu', weights_only=False)
         if checkpoint['manifest_sha256'] != manifest_hash or asdict(ModelConfig(**checkpoint['config']['model'])) != cfg.dump()['model']:
             raise ValueError('Resume data/model mismatch')
+        if checkpoint.get('motion_target_index_sha256')!=motion_hash:
+            raise ValueError('Resume observed-motion supervision mismatch')
         if checkpoint['world_size'] != world or not checkpoint.get('epoch_complete'):
             raise ValueError('Exact epoch resume requires same world size and complete epoch')
         if checkpoint['stats'] != base_dataset.codec.stats:
@@ -149,6 +152,7 @@ def run(config_path):
         source_hash.update(f.name.encode()); source_hash.update(f.read_bytes())
     from .paths import path_map
     provenance = {'engine_version': 2, 'config': cfg.dump(), 'manifest_sha256': manifest_hash,
+                  'motion_target_index_sha256': motion_hash,
                   'runtime_path_map': path_map(),
                   'source_sha256': source_hash.hexdigest(), 'backbone_checkpoint_sha256': backbone_sha,
                   'stats': base_dataset.codec.stats, 'world_size': world, 'torch': torch.__version__,
@@ -171,6 +175,7 @@ def run(config_path):
             atomic_json(out / 'initial_evaluation.json', initial)
             weights, compact = checkpoint_weights(raw_model, cfg.train.compact_checkpoint)
             checkpoint = {'model': weights, 'compact_model': compact, 'optimizer': optimizer.state_dict(),
+                          'motion_target_index_sha256': motion_hash,
                           'config': cfg.dump(), 'manifest_sha256': manifest_hash, 'stats': base_dataset.codec.stats,
                           'source_sha256': source_hash.hexdigest(), 'backbone_checkpoint_sha256': backbone_sha,
                           'baseline_checkpoint_sha256': baseline_init_sha,
@@ -240,6 +245,7 @@ def run(config_path):
             if rank == 0:
                 weights, compact = checkpoint_weights(raw_model, cfg.train.compact_checkpoint)
                 checkpoint = {'model': weights, 'compact_model': compact, 'optimizer': optimizer.state_dict(),
+                              'motion_target_index_sha256': motion_hash,
                               'config': cfg.dump(), 'manifest_sha256': manifest_hash, 'stats': base_dataset.codec.stats,
                               'source_sha256': source_hash.hexdigest(), 'backbone_checkpoint_sha256': backbone_sha,
                               'baseline_checkpoint_sha256': baseline_init_sha,

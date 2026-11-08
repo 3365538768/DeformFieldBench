@@ -17,6 +17,9 @@ def load_render(request,root=ROOT):
     contact_report=root/'docs/G3_CONTACT_PREFLIGHT.json'
     contact=json.loads(contact_report.read_text()) if contact_report.exists() else {}
     data['clips']=data.get('clips',[])+contact.get('clips',[])
+    motion_report=root/'docs/M2_MOTION_PREVIEW.json'
+    motion=json.loads(motion_report.read_text()) if motion_report.exists() else {}
+    data['clips']+=motion.get('clips',[])
     if contact.get('status') and contact['status']!='complete':
         data['status']='running'
     identifier,asset=request['clip'],request['asset']
@@ -26,7 +29,8 @@ def load_render(request,root=ROOT):
         raise ValueError('Invalid registered render artifact')
     row=next((r for r in data.get('clips',[]) if r['id']==identifier),None)
     if row is None:raise ValueError('Clip not registered')
-    folder=(root/row['path']).resolve();allowed=(root/('data/rendered/g3_contact_preflight' if row.get('physical_tool_contact') else 'data/rendered/g3_pilot')).resolve()
+    base='data/rendered/m2_motion' if row.get('motion_supervision') else 'data/rendered/g3_contact_preflight' if row.get('physical_tool_contact') else 'data/rendered/g3_pilot'
+    folder=(root/row['path']).resolve();allowed=(root/base).resolve()
     path=(folder/asset).resolve()
     if not folder.is_relative_to(allowed) or not path.is_relative_to(folder):raise ValueError('Invalid artifact path')
     if path.stat().st_size>8*1024*1024:raise ValueError('Artifact exceeds preview limit')

@@ -1,0 +1,27 @@
+{
+  "retrieved_utc": "2026-11-08T03:01:51.775079+00:00",
+  "search_status": "web_tool_http500_fallback_official_sources_with_existing_proxy",
+  "sources": [
+    {
+      "name": "dinov3",
+      "url": "https://raw.githubusercontent.com/facebookresearch/dinov3/main/README.md",
+      "status": "fetched",
+      "bytes": 36231,
+      "sha256": "da4e6e2fa1f2580be9a782338dc108ae68f98b6c9d10636583f97d8a340e664d"
+    },
+    {
+      "name": "tapnet",
+      "url": "https://raw.githubusercontent.com/google-deepmind/tapnet/main/README.md",
+      "status": "fetched",
+      "bytes": 22951,
+      "sha256": "c0cda10a66a91513fd78e1638ff6db7789d4320dc24e5897ce6bc1bd567c15c3"
+    },
+    {
+      "name": "raft",
+      "url": "https://raw.githubusercontent.com/princeton-vl/RAFT/master/README.md",
+      "status": "fetched",
+      "bytes": 2809,
+      "sha256": "64fe19a2eafcd59075b0e711c8c5e5436ffb20339b302223e6a7954ce74c60d3"
+    }
+  ]
+}

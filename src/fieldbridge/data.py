@@ -129,11 +129,23 @@ class MaterialDataset(Dataset):
             raise ValueError("Statistics must be fitted on the current manifest's train split")
         self.codec = ParameterCodec(stats)
         self.prepared = None
+        self.motion = None
+        if field_mode == 'observed_motion':
+            if not cfg.prepared_dir or not cfg.motion_targets_dir:
+                raise ValueError('Observed motion needs cached features and explicit pseudo-labels')
+            self.motion = json.loads((Path(cfg.motion_targets_dir)/'index.json').read_text())
+            expected = dict(schema='observed_motion_v1',manifest_sha256=digest,frames=cfg.frames,
+                max_views=cfg.max_views,image_size=cfg.image_size,field_size=field_size,field_mode=field_mode,
+                displacement_scale_px=8.,units=['binary_reliability_proxy','pixel','pixel','unavailable'],
+                direction='current_to_first_frame; values live on current-frame pixels')
+            if any(self.motion.get(k)!=v for k,v in expected.items()) or any(r['sample_id'] not in self.motion['files'] for r in self.rows):
+                raise ValueError('Observed-motion contract/coverage mismatch')
         self.memory_cache = TensorLRU(int(cfg.prepared_cache_gib * 1024**3))
         if cfg.prepared_dir:
             self.prepared = json.loads((Path(cfg.prepared_dir) / 'index.json').read_text())
             expected = {'manifest_sha256': digest, 'frames': cfg.frames, 'max_views': cfg.max_views,
-                        'image_size': cfg.image_size, 'field_size': field_size, 'field_mode': field_mode}
+                        'image_size': cfg.image_size, 'field_size': field_size,
+                        'field_mode': 'legacy_visual' if self.motion else field_mode}
             if any(self.prepared.get(k) != v for k, v in expected.items()):
                 raise ValueError('Prepared cache/data contract mismatch')
 
@@ -147,6 +159,18 @@ class MaterialDataset(Dataset):
             sample = self.memory_cache.get(str(path), lambda: torch.load(path, weights_only=True))
             if sample['sample_id'] != r['sample_id']:
                 raise ValueError('Prepared sample identity mismatch')
+            if getattr(self,'motion',None):
+                target_path = Path(self.cfg.motion_targets_dir)/self.motion['files'][r['sample_id']]
+                def load_motion():
+                    if hashlib.sha256(target_path.read_bytes()).hexdigest()!=self.motion['sha256'][r['sample_id']]:
+                        raise ValueError('Observed-motion file SHA mismatch')
+                    return torch.load(target_path,weights_only=True)
+                target=self.memory_cache.get('motion:'+str(target_path),load_motion)
+                if target['sample_id']!=r['sample_id'] or target['fields'].shape!=(*sample['valid'].shape,4,self.field_size,self.field_size):
+                    raise ValueError('Observed-motion identity/shape mismatch')
+                if target['field_mask'].shape!=target['fields'].shape or target['field_mask'][:,:,3:].any() or not torch.isfinite(target['fields']).all():
+                    raise ValueError('Observed motion cannot provide stress labels or non-finite values')
+                sample=dict(sample,fields=target['fields'],field_mask=target['field_mask'])
             # Augmentation must never modify retained samples across epochs.
             sample = dict(sample, valid=sample['valid'].clone(), field_mask=sample['field_mask'].float().clone())
             if self.split == 'train' and self.cfg.view_dropout:

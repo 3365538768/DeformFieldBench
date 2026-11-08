@@ -1,0 +1,122 @@
+{
+  "status": "complete",
+  "completed": 3,
+  "total": 3,
+  "clips": [
+    {
+      "id": "clip_5705f18860ab50866e85",
+      "path": "data/rendered/m2_motion/clip_5705f18860ab50866e85",
+      "motion_supervision": true,
+      "object_id": "a_chrome_banana_013020",
+      "sample_id": "dataset_5000_clean/train/002014",
+      "split": "train",
+      "metrics": {
+        "mean_valid_object_fraction": 0.08514713710352084,
+        "mean_displacement_px": 19.87687635421753
+      },
+      "specification": {
+        "sample_id": "dataset_5000_clean/train/002014",
+        "target_sha256": "cf396d49ba9bee29d1afde8087167715c1a860ada23b566c8151be212d6b9d65",
+        "source_sha256": "8a856994ac5de0c9603e819406833b8d2cde4160443721f862d9eed40e9b39b4"
+      },
+      "frame_times_s": [
+        0.0,
+        0.25,
+        0.51,
+        0.8200000000000001,
+        1.08,
+        1.33,
+        1.58,
+        1.84,
+        2.15,
+        2.41,
+        2.66,
+        2.91,
+        3.17,
+        3.48,
+        3.74,
+        3.99
+      ],
+      "deformation_amplification": 1.0,
+      "eligible_for_video_pilot": false,
+      "scope": "RGB DIS with true object masks; red has no displacement supervision. Not simulator motion GT or force/stress."
+    },
+    {
+      "id": "clip_cfcd3f713ce632643088",
+      "path": "data/rendered/m2_motion/clip_cfcd3f713ce632643088",
+      "motion_supervision": true,
+      "object_id": "a_concrete_bench_013020",
+      "sample_id": "dataset_5000_clean/train/002502",
+      "split": "train",
+      "metrics": {
+        "mean_valid_object_fraction": 0.668412128340691,
+        "mean_displacement_px": 9.481219918198056
+      },
+      "specification": {
+        "sample_id": "dataset_5000_clean/train/002502",
+        "target_sha256": "055c74b653d4f202e465d5e55a1fe5509feecbdda362ff0093907806fba53540",
+        "source_sha256": "8a856994ac5de0c9603e819406833b8d2cde4160443721f862d9eed40e9b39b4"
+      },
+      "frame_times_s": [
+        0.0,
+        0.25,
+        0.51,
+        0.8200000000000001,
+        1.08,
+        1.33,
+        1.58,
+        1.84,
+        2.15,
+        2.41,
+        2.66,
+        2.91,
+        3.17,
+        3.48,
+        3.74,
+        3.99
+      ],
+      "deformation_amplification": 1.0,
+      "eligible_for_video_pilot": false,
+      "scope": "RGB DIS with true object masks; red has no displacement supervision. Not simulator motion GT or force/stress."
+    },
+    {
+      "id": "clip_2555d0de95972b888d12",
+      "path": "data/rendered/m2_motion/clip_2555d0de95972b888d12",
+      "motion_supervision": true,
+      "object_id": "a_wire_mesh_brain_013020",
+      "sample_id": "dataset_5000_clean/train/004882",
+      "split": "train",
+      "metrics": {
+        "mean_valid_object_fraction": 0.9221523173611769,
+        "mean_displacement_px": 6.239164498117235
+      },
+      "specification": {
+        "sample_id": "dataset_5000_clean/train/004882",
+        "target_sha256": "4da6a38af53a408cc49ded6d3216482ed60b0fe5051da14d7d858f8b555bf904",
+        "source_sha256": "8a856994ac5de0c9603e819406833b8d2cde4160443721f862d9eed40e9b39b4"
+      },
+      "frame_times_s": [
+        0.0,
+        0.25,
+        0.51,
+        0.8200000000000001,
+        1.08,
+        1.33,
+        1.58,
+        1.84,
+        2.15,
+        2.41,
+        2.66,
+        2.91,
+        3.17,
+        3.48,
+        3.74,
+        3.99
+      ],
+      "deformation_amplification": 1.0,
+      "eligible_for_video_pilot": false,
+      "scope": "RGB DIS with true object masks; red has no displacement supervision. Not simulator motion GT or force/stress."
+    }
+  ],
+  "detail": "\u8bad\u7ec3\u96c6\u5bf9\u5e94\u8986\u76d6 P10/P50/P90\uff1a\u5b9e\u9645 RGB \u65f6\u95f4\u3001\u50cf\u7d20\u4f4d\u79fb\u4f2a\u6807\u7b7e\u4e0e\u53ef\u9760\u533a\u57df\u3002"
+}

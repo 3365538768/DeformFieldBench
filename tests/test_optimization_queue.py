@@ -31,6 +31,16 @@ def test_append_does_not_reset_finished_or_paused_jobs():
     assert old == snapshot
 
 
+def test_restart_with_argument_only_solver_jobs_preserves_training_configs():
+    jobs=[dict(id='solver',kind='engine_pipeline',args=['solver.py']),
+          dict(id='train',kind='train',config='runtime.json',source_config='original.json'),
+          dict(id='new',kind='train',config='new.json')]
+    planned=[dict(id='solver',args=['solver.py']),dict(id='train',config='planned.json'),dict(id='new',config='new.json')]
+    manager.restore_source_configs(jobs,planned)
+    assert 'source_config' not in jobs[0]
+    assert jobs[1]['source_config']=='original.json' and jobs[2]['source_config']=='new.json'
+
+
 def test_new_backbone_cannot_reuse_old_cache_or_unfinished_baseline():
     job = {'depends_on': ['v3_cache', 'v3_rgb']}
     historical = [{'id':'v2_cache','state':'finished'}, {'id':'v2_rgb','state':'finished'}]

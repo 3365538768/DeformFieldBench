@@ -139,6 +139,14 @@ def collect():
     optimization['motion_dependence']=read_json(ROOT/'docs/M1_MOTION_DEPENDENCE.json')
     optimization['loader_efficiency']=read_json(ROOT/'docs/LOADER_EFFICIENCY.json')
     optimization['loader_workers']=read_json(ROOT/'docs/LOADER_WORKERS.json')
+    optimization['motion_teacher']=read_json(ROOT/'docs/M2_TEACHER_AUDIT.json')
+    motion_targets=read_json(ROOT/'docs/M2_OBSERVED_MOTION.json')
+    optimization['observed_motion_targets']={k:v for k,v in motion_targets.items() if k!='rows'} if motion_targets else None
+    optimization['observed_motion_dependence']=read_json(ROOT/'docs/M2_MOTION_DEPENDENCE.json')
+    optimization['motion_bottlenecks']=read_json(ROOT/'docs/M2_BOTTLENECK_AUDIT.json')
+    optimization['motion_deployment']=read_json(ROOT/'docs/M2_DEPLOYMENT_AUDIT.json')
+    optimization['motion_gradients']=read_json(ROOT/'docs/M2_GRADIENT_AUDIT.json')
+    optimization['material_pairs']=read_json(ROOT/'docs/MATERIAL_PAIR_AUDIT.json')
     # Retries retain their job history, with one stage card for the latest attempt.
     optimization['stages']=list({s['id']:s for s in optimization.get('stages',[])}.values())
     efficiency=read_json(ROOT / 'docs/G3_INTERACTION_EFFICIENCY.json')

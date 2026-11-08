@@ -1,0 +1,58 @@
+{
+  "status": "complete",
+  "completed": 5,
+  "total": 5,
+  "results": {
+    "B_rgb": {
+      "state": "finished",
+      "best_material_mae": 0.6995239395426239,
+      "best_epoch": 12,
+      "epochs_completed": 16,
+      "field_mae_at_best": 0.4862812108569113,
+      "trainable_parameters": 3574839,
+      "stop_reason": "validation_material_plateau"
+    },
+    "C_aux": {
+      "state": "finished",
+      "best_material_mae": 0.6828105088545356,
+      "best_epoch": 17,
+      "epochs_completed": 20,
+      "field_mae_at_best": 0.052698854436624094,
+      "trainable_parameters": 3574839,
+      "stop_reason": "epochs_complete"
+    },
+    "D_fields": {
+      "state": "finished",
+      "best_material_mae": 0.6867170213922035,
+      "best_epoch": 12,
+      "epochs_completed": 16,
+      "field_mae_at_best": 0.06197968455246047,
+      "trainable_parameters": 3574839,
+      "stop_reason": "validation_material_plateau"
+    },
+    "G_features": {
+      "state": "finished",
+      "best_material_mae": 0.7062855695877874,
+      "best_epoch": 9,
+      "epochs_completed": 13,
+      "field_mae_at_best": 0.05459409301493058,
+      "trainable_parameters": 3574839,
+      "stop_reason": "validation_material_plateau"
+    },
+    "O_pseudo_oracle": {
+      "state": "finished",
+      "best_material_mae": 0.711282941868507,
+      "best_epoch": 13,
+      "epochs_completed": 17,
+      "field_mae_at_best": 0.05401352329878705,
+      "trainable_parameters": 3574839,
+      "stop_reason": "validation_material_plateau"
+    }
+  },
+  "passes_2_percent_routing_threshold": false,
+  "single_seed_diagnostic_only": true,
+  "test_untouched": true,
+  "route": "revise_motion_or_metric_fields",
+  "detail": "\u50cf\u7d20\u4f4d\u79fb\u4f2a\u6807\u7b7e\uff0b\u65f6\u7a7a\u573a token \u4e0e\u96f6\u573a\u951a\u70b9\uff1b\u540c\u5bb9\u91cf B/C/D/G\uff0cO \u542b\u771f\u7269\u4f53\u63a9\u7801\u4ec5\u4f5c\u7279\u6743\u8bca\u65ad\u3002",
+  "updated_unix": 1794107472.9479575
+}

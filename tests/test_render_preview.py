@@ -38,3 +38,14 @@ def test_contact_artifacts_require_contact_registration_and_own_root(tmp_path):
     row['physical_tool_contact']=False;report.write_text(json.dumps(dict(clips=[row])))
     with pytest.raises(ValueError,match='path'):
         preview.load_render(dict(clip=identifier,asset='final.png'),tmp_path)
+
+
+def test_motion_teacher_previews_require_separate_registered_root(tmp_path):
+    identifier='clip_'+'d'*20;folder=tmp_path/'data/rendered/m2_motion'/identifier
+    folder.mkdir(parents=True);(folder/'contact_sheet.png').write_bytes(b'motion')
+    docs=tmp_path/'docs';docs.mkdir()
+    row=dict(id=identifier,path=str(folder.relative_to(tmp_path)),motion_supervision=True)
+    report=docs/'M2_MOTION_PREVIEW.json';report.write_text(json.dumps(dict(status='complete',clips=[row])))
+    assert base64.b64decode(preview.load_render(dict(clip=identifier,asset='contact_sheet.png'),tmp_path)['content_base64'])==b'motion'
+    row['motion_supervision']=False;report.write_text(json.dumps(dict(clips=[row])))
+    with pytest.raises(ValueError,match='path'):preview.load_render(dict(clip=identifier,asset='contact_sheet.png'),tmp_path)

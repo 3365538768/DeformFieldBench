@@ -1,0 +1,741 @@
+{
+  "status": "complete",
+  "completed": 5,
+  "total": 5,
+  "models": {
+    "B_rgb": {
+      "checkpoint_epoch": 12,
+      "checkpoint_sha256": "9d48e9d0a07af7d59e6298c11ca2ff135b841c4072af5ccb5aa373a974cb22fe",
+      "metrics": {
+        "original": {
+          "count": 430,
+          "standardized_mae": 0.6995239424151044,
+          "mean_prediction_change_z": 0.0
+        },
+        "repeat_first_frame": {
+          "count": 430,
+          "standardized_mae": 0.9066045361895894,
+          "mean_prediction_change_z": 0.47861647495003634
+        },
+        "reverse_observations": {
+          "count": 430,
+          "standardized_mae": 0.9753982311071352,
+          "mean_prediction_change_z": 0.5894333950308867
+        },
+        "zero_bridge": {
+          "count": 430,
+          "standardized_mae": 0.6995239424151044,
+          "mean_prediction_change_z": 0.0
+        },
+        "reverse_time_bridge": {
+          "count": 430,
+          "standardized_mae": 0.6995239424151044,
+          "mean_prediction_change_z": 0.0
+        },
+        "single_view_0": {
+          "count": 430,
+          "standardized_mae": 0.7551485194716343,
+          "mean_prediction_change_z": 0.24103649050690407
+        },
+        "sparse_eight_frames": {
+          "count": 430,
+          "standardized_mae": 0.7751840580341428,
+          "mean_prediction_change_z": 0.22890497251998546
+        }
+      },
+      "flow_quality": {
+        "predicted_mean_epe_px": 9.244911152173787,
+        "zero_mean_epe_px": 8.3764590240481,
+        "train_constant_mean_epe_px": 8.3764590240481,
+        "valid_pixels": 863010,
+        "reliability_precision": 0.06549114571685515,
+        "reliability_recall": 0.30410828587268784,
+        "first_frame_excluded": true,
+        "scope": "Agreement with RGB teacher only; reliability target is FB consistency, not physical contact or calibrated visibility."
+      },
+      "per_object_flow": {
+        "a_brick_wall_013020": {
+          "samples": 14,
+          "valid_pixels": 131761,
+          "epe_sum": 935345.978515625,
+          "zero_sum": 824283.2475585938
+        },
+        "a_ice_telescope_013020": {
+          "samples": 4,
+          "valid_pixels": 17575,
+          "epe_sum": 63744.9697265625,
+          "zero_sum": 28161.67529296875
+        },
+        "a_silver_human_skele_013020": {
+          "samples": 12,
+          "valid_pixels": 32512,
+          "epe_sum": 128600.474609375,
+          "zero_sum": 90960.35278320312
+        },
+        "a_marble_bread_013020": {
+          "samples": 15,
+          "valid_pixels": 162022,
+          "epe_sum": 2011892.3359375,
+          "zero_sum": 1928714.0546875
+        },
+        "a_stainless_steel_si_013020": {
+          "samples": 14,
+          "valid_pixels": 76680,
+          "epe_sum": 578888.5244140625,
+          "zero_sum": 467188.73046875
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "samples": 15,
+          "valid_pixels": 177617,
+          "epe_sum": 2335328.08203125,
+          "zero_sum": 2285332.1328125
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "samples": 14,
+          "valid_pixels": 88924,
+          "epe_sum": 740330.701171875,
+          "zero_sum": 617546.3232421875
+        },
+        "a_leather_boot_013020": {
+          "samples": 14,
+          "valid_pixels": 123074,
+          "epe_sum": 905311.90234375,
+          "zero_sum": 763165.2272949219
+        },
+        "a_brass_telescope_013020": {
+          "samples": 13,
+          "valid_pixels": 26773,
+          "epe_sum": 158778.10229492188,
+          "zero_sum": 140432.15502929688
+        },
+        "a_bamboo_mat_013020": {
+          "samples": 13,
+          "valid_pixels": 26072,
+          "epe_sum": 120229.6708984375,
+          "zero_sum": 83183.94091796875
+        }
+      }
+    },
+    "C_aux": {
+      "checkpoint_epoch": 17,
+      "checkpoint_sha256": "52a14c5c80e87d8e4d0c009c3f27590dd46006b5fa63f6b154483ecccea8fbbc",
+      "metrics": {
+        "original": {
+          "count": 430,
+          "standardized_mae": 0.6828105017196301,
+          "mean_prediction_change_z": 0.0
+        },
+        "repeat_first_frame": {
+          "count": 430,
+          "standardized_mae": 1.0522377202677173,
+          "mean_prediction_change_z": 0.7338494589162428
+        },
+        "reverse_observations": {
+          "count": 430,
+          "standardized_mae": 0.99515891296919,
+          "mean_prediction_change_z": 0.6241296812545422
+        },
+        "zero_bridge": {
+          "count": 430,
+          "standardized_mae": 0.6828105017196301,
+          "mean_prediction_change_z": 0.0
+        },
+        "reverse_time_bridge": {
+          "count": 430,
+          "standardized_mae": 0.6828105017196301,
+          "mean_prediction_change_z": 0.0
+        },
+        "single_view_0": {
+          "count": 430,
+          "standardized_mae": 0.8268364584723185,
+          "mean_prediction_change_z": 0.2814438221066497
+        },
+        "sparse_eight_frames": {
+          "count": 430,
+          "standardized_mae": 0.8301341955051865,
+          "mean_prediction_change_z": 0.37297029717023983
+        }
+      },
+      "flow_quality": {
+        "predicted_mean_epe_px": 2.846994019297285,
+        "zero_mean_epe_px": 8.3764590240481,
+        "train_constant_mean_epe_px": 8.3764590240481,
+        "valid_pixels": 863010,
+        "reliability_precision": 0.6715791609186075,
+        "reliability_recall": 0.8689781681030863,
+        "first_frame_excluded": true,
+        "scope": "Agreement with RGB teacher only; reliability target is FB consistency, not physical contact or calibrated visibility."
+      },
+      "per_object_flow": {
+        "a_brick_wall_013020": {
+          "samples": 14,
+          "valid_pixels": 131761,
+          "epe_sum": 305637.93359375,
+          "zero_sum": 824283.2475585938
+        },
+        "a_ice_telescope_013020": {
+          "samples": 4,
+          "valid_pixels": 17575,
+          "epe_sum": 33409.6552734375,
+          "zero_sum": 28161.67529296875
+        },
+        "a_silver_human_skele_013020": {
+          "samples": 12,
+          "valid_pixels": 32512,
+          "epe_sum": 61021.29260253906,
+          "zero_sum": 90960.35278320312
+        },
+        "a_marble_bread_013020": {
+          "samples": 15,
+          "valid_pixels": 162022,
+          "epe_sum": 523307.73046875,
+          "zero_sum": 1928714.0546875
+        },
+        "a_stainless_steel_si_013020": {
+          "samples": 14,
+          "valid_pixels": 76680,
+          "epe_sum": 217349.83532714844,
+          "zero_sum": 467188.73046875
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "samples": 15,
+          "valid_pixels": 177617,
+          "epe_sum": 654996.36328125,
+          "zero_sum": 2285332.1328125
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "samples": 14,
+          "valid_pixels": 88924,
+          "epe_sum": 182033.923828125,
+          "zero_sum": 617546.3232421875
+        },
+        "a_leather_boot_013020": {
+          "samples": 14,
+          "valid_pixels": 123074,
+          "epe_sum": 345487.00732421875,
+          "zero_sum": 763165.2272949219
+        },
+        "a_brass_telescope_013020": {
+          "samples": 13,
+          "valid_pixels": 26773,
+          "epe_sum": 66055.39428710938,
+          "zero_sum": 140432.15502929688
+        },
+        "a_bamboo_mat_013020": {
+          "samples": 13,
+          "valid_pixels": 26072,
+          "epe_sum": 67685.17431640625,
+          "zero_sum": 83183.94091796875
+        }
+      }
+    },
+    "D_fields": {
+      "checkpoint_epoch": 12,
+      "checkpoint_sha256": "d03fc72ae8aa63f147a3a072513799f49b7a4cd99445ff4603f05ab57a930766",
+      "metrics": {
+        "original": {
+          "count": 430,
+          "standardized_mae": 0.6867170300594596,
+          "mean_prediction_change_z": 0.0
+        },
+        "repeat_first_frame": {
+          "count": 430,
+          "standardized_mae": 0.9699936323387678,
+          "mean_prediction_change_z": 0.6028792980105377
+        },
+        "reverse_observations": {
+          "count": 430,
+          "standardized_mae": 0.9018150917319364,
+          "mean_prediction_change_z": 0.48522090468295787
+        },
+        "zero_bridge": {
+          "count": 430,
+          "standardized_mae": 0.8659512164980866,
+          "mean_prediction_change_z": 0.5059999687727108
+        },
+        "reverse_time_bridge": {
+          "count": 430,
+          "standardized_mae": 1.0804270788680674,
+          "mean_prediction_change_z": 0.7429577494776526
+        },
+        "single_view_0": {
+          "count": 430,
+          "standardized_mae": 0.8264666379884232,
+          "mean_prediction_change_z": 0.29363183309865554
+        },
+        "sparse_eight_frames": {
+          "count": 430,
+          "standardized_mae": 0.721174533977065,
+          "mean_prediction_change_z": 0.1543014171511628
+        }
+      },
+      "flow_quality": {
+        "predicted_mean_epe_px": 4.006691613871798,
+        "zero_mean_epe_px": 8.3764590240481,
+        "train_constant_mean_epe_px": 8.3764590240481,
+        "valid_pixels": 863010,
+        "reliability_precision": 0.6540528951914593,
+        "reliability_recall": 0.8841246240948877,
+        "first_frame_excluded": true,
+        "scope": "Agreement with RGB teacher only; reliability target is FB consistency, not physical contact or calibrated visibility."
+      },
+      "per_object_flow": {
+        "a_brick_wall_013020": {
+          "samples": 14,
+          "valid_pixels": 131761,
+          "epe_sum": 547899.482421875,
+          "zero_sum": 824283.2475585938
+        },
+        "a_ice_telescope_013020": {
+          "samples": 4,
+          "valid_pixels": 17575,
+          "epe_sum": 34921.1650390625,
+          "zero_sum": 28161.67529296875
+        },
+        "a_silver_human_skele_013020": {
+          "samples": 12,
+          "valid_pixels": 32512,
+          "epe_sum": 80968.63061523438,
+          "zero_sum": 90960.35278320312
+        },
+        "a_marble_bread_013020": {
+          "samples": 15,
+          "valid_pixels": 162022,
+          "epe_sum": 680670.6796875,
+          "zero_sum": 1928714.0546875
+        },
+        "a_stainless_steel_si_013020": {
+          "samples": 14,
+          "valid_pixels": 76680,
+          "epe_sum": 295130.59716796875,
+          "zero_sum": 467188.73046875
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "samples": 15,
+          "valid_pixels": 177617,
+          "epe_sum": 858385.1875,
+          "zero_sum": 2285332.1328125
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "samples": 14,
+          "valid_pixels": 88924,
+          "epe_sum": 302055.7490234375,
+          "zero_sum": 617546.3232421875
+        },
+        "a_leather_boot_013020": {
+          "samples": 14,
+          "valid_pixels": 123074,
+          "epe_sum": 479648.9248046875,
+          "zero_sum": 763165.2272949219
+        },
+        "a_brass_telescope_013020": {
+          "samples": 13,
+          "valid_pixels": 26773,
+          "epe_sum": 73552.35070800781,
+          "zero_sum": 140432.15502929688
+        },
+        "a_bamboo_mat_013020": {
+          "samples": 13,
+          "valid_pixels": 26072,
+          "epe_sum": 104582.14807128906,
+          "zero_sum": 83183.94091796875
+        }
+      }
+    },
+    "G_features": {
+      "checkpoint_epoch": 9,
+      "checkpoint_sha256": "7fecda54965095d3755303e6d642a694368a2c32d0d2043ea4270d5dd788c0ad",
+      "metrics": {
+        "original": {
+          "count": 430,
+          "standardized_mae": 0.7062855742698492,
+          "mean_prediction_change_z": 0.0
+        },
+        "repeat_first_frame": {
+          "count": 430,
+          "standardized_mae": 0.9416291314502095,
+          "mean_prediction_change_z": 0.4953149130178052
+        },
+        "reverse_observations": {
+          "count": 430,
+          "standardized_mae": 0.9426020722056544,
+          "mean_prediction_change_z": 0.4609869668650073
+        },
+        "zero_bridge": {
+          "count": 430,
+          "standardized_mae": 0.7066137446913608,
+          "mean_prediction_change_z": 0.0013586709665697673
+        },
+        "reverse_time_bridge": {
+          "count": 430,
+          "standardized_mae": 0.7063583906306777,
+          "mean_prediction_change_z": 0.0004932492278343023
+        },
+        "single_view_0": {
+          "count": 430,
+          "standardized_mae": 0.7810277206953182,
+          "mean_prediction_change_z": 0.1796535758085029
+        },
+        "sparse_eight_frames": {
+          "count": 430,
+          "standardized_mae": 0.7847606803095618,
+          "mean_prediction_change_z": 0.21969469647074855
+        }
+      },
+      "flow_quality": {
+        "predicted_mean_epe_px": 2.8878347952406402,
+        "zero_mean_epe_px": 8.3764590240481,
+        "train_constant_mean_epe_px": 8.3764590240481,
+        "valid_pixels": 863010,
+        "reliability_precision": 0.655960044795786,
+        "reliability_recall": 0.8776460359860894,
+        "first_frame_excluded": true,
+        "scope": "Agreement with RGB teacher only; reliability target is FB consistency, not physical contact or calibrated visibility."
+      },
+      "per_object_flow": {
+        "a_brick_wall_013020": {
+          "samples": 14,
+          "valid_pixels": 131761,
+          "epe_sum": 314368.1845703125,
+          "zero_sum": 824283.2475585938
+        },
+        "a_ice_telescope_013020": {
+          "samples": 4,
+          "valid_pixels": 17575,
+          "epe_sum": 34129.0263671875,
+          "zero_sum": 28161.67529296875
+        },
+        "a_silver_human_skele_013020": {
+          "samples": 12,
+          "valid_pixels": 32512,
+          "epe_sum": 51617.662109375,
+          "zero_sum": 90960.35278320312
+        },
+        "a_marble_bread_013020": {
+          "samples": 15,
+          "valid_pixels": 162022,
+          "epe_sum": 594289.044921875,
+          "zero_sum": 1928714.0546875
+        },
+        "a_stainless_steel_si_013020": {
+          "samples": 14,
+          "valid_pixels": 76680,
+          "epe_sum": 190487.36279296875,
+          "zero_sum": 467188.73046875
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "samples": 15,
+          "valid_pixels": 177617,
+          "epe_sum": 646152.2001953125,
+          "zero_sum": 2285332.1328125
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "samples": 14,
+          "valid_pixels": 88924,
+          "epe_sum": 189622.396484375,
+          "zero_sum": 617546.3232421875
+        },
+        "a_leather_boot_013020": {
+          "samples": 14,
+          "valid_pixels": 123074,
+          "epe_sum": 342048.43408203125,
+          "zero_sum": 763165.2272949219
+        },
+        "a_brass_telescope_013020": {
+          "samples": 13,
+          "valid_pixels": 26773,
+          "epe_sum": 63788.378479003906,
+          "zero_sum": 140432.15502929688
+        },
+        "a_bamboo_mat_013020": {
+          "samples": 13,
+          "valid_pixels": 26072,
+          "epe_sum": 65727.65637207031,
+          "zero_sum": 83183.94091796875
+        }
+      }
+    },
+    "O_pseudo_oracle": {
+      "checkpoint_epoch": 13,
+      "checkpoint_sha256": "9344ae73ea9703b7b18a0bea4d20bbc77379c5eef2cb4c2646dc4b830f4fa343",
+      "metrics": {
+        "original": {
+          "count": 430,
+          "standardized_mae": 0.7112829507783401,
+          "mean_prediction_change_z": 0.0
+        }
+      },
+      "flow_quality": {
+        "predicted_mean_epe_px": 2.9555966770735567,
+        "zero_mean_epe_px": 8.3764590240481,
+        "train_constant_mean_epe_px": 8.3764590240481,
+        "valid_pixels": 863010,
+        "reliability_precision": 0.6604792903259704,
+        "reliability_recall": 0.8843514271794096,
+        "first_frame_excluded": true,
+        "scope": "Agreement with RGB teacher only; reliability target is FB consistency, not physical contact or calibrated visibility."
+      },
+      "per_object_flow": {
+        "a_brick_wall_013020": {
+          "samples": 14,
+          "valid_pixels": 131761,
+          "epe_sum": 326306.212890625,
+          "zero_sum": 824283.2475585938
+        },
+        "a_ice_telescope_013020": {
+          "samples": 4,
+          "valid_pixels": 17575,
+          "epe_sum": 37527.90771484375,
+          "zero_sum": 28161.67529296875
+        },
+        "a_silver_human_skele_013020": {
+          "samples": 12,
+          "valid_pixels": 32512,
+          "epe_sum": 63104.32177734375,
+          "zero_sum": 90960.35278320312
+        },
+        "a_marble_bread_013020": {
+          "samples": 15,
+          "valid_pixels": 162022,
+          "epe_sum": 545337.357421875,
+          "zero_sum": 1928714.0546875
+        },
+        "a_stainless_steel_si_013020": {
+          "samples": 14,
+          "valid_pixels": 76680,
+          "epe_sum": 224618.45092773438,
+          "zero_sum": 467188.73046875
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "samples": 15,
+          "valid_pixels": 177617,
+          "epe_sum": 617413.5849609375,
+          "zero_sum": 2285332.1328125
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "samples": 14,
+          "valid_pixels": 88924,
+          "epe_sum": 225175.2646484375,
+          "zero_sum": 617546.3232421875
+        },
+        "a_leather_boot_013020": {
+          "samples": 14,
+          "valid_pixels": 123074,
+          "epe_sum": 381212.2099609375,
+          "zero_sum": 763165.2272949219
+        },
+        "a_brass_telescope_013020": {
+          "samples": 13,
+          "valid_pixels": 26773,
+          "epe_sum": 59800.12911987305,
+          "zero_sum": 140432.15502929688
+        },
+        "a_bamboo_mat_013020": {
+          "samples": 13,
+          "valid_pixels": 26072,
+          "epe_sum": 70214.06494140625,
+          "zero_sum": 83183.94091796875
+        }
+      }
+    }
+  },
+  "test_untouched": true,
+  "detail": "\u6700\u4f73\u68c0\u67e5\u70b9\u5168\u9a8c\u8bc1\u8986\u76d6\uff1a\u4f4d\u79fbEPE/\u5e38\u91cf\u57fa\u7ebf\u3001\u65f6\u5e8f\u4e0e\u96f6\u6865\u5e72\u9884\u3001\u7269\u4f53\u914d\u5bf9\u533a\u95f4\u3002",
+  "scope": "RGB-derived pseudo-correspondence; no independent real GT, SI force/stress, or final test claim.",
+  "train_component_median_px": [
+    0.0,
+    0.0
+  ],
+  "updated_unix": 1794106644.226202,
+  "paired_comparisons": {
+    "D_minus_B": {
+      "objects": 10,
+      "samples": 128,
+      "bootstrap_replicates": 10000,
+      "delta_mae_left_minus_right": -0.012806918150420453,
+      "exploratory_95_cluster_interval": [
+        -0.047345796305218284,
+        0.030730679769703267
+      ],
+      "object_rows": {
+        "a_stainless_steel_si_013020": {
+          "left_mae": 0.6774815963986127,
+          "right_mae": 0.6818267950869125,
+          "label_count": 46
+        },
+        "a_silver_human_skele_013020": {
+          "left_mae": 0.860259260609746,
+          "right_mae": 0.7342972245067358,
+          "label_count": 40
+        },
+        "a_brick_wall_013020": {
+          "left_mae": 0.6765727910431142,
+          "right_mae": 0.7221001393775991,
+          "label_count": 47
+        },
+        "a_marble_bread_013020": {
+          "left_mae": 0.43830405235290526,
+          "right_mae": 0.49321683883666995,
+          "label_count": 50
+        },
+        "a_leather_boot_013020": {
+          "left_mae": 0.5888252312991213,
+          "right_mae": 0.6413719588296211,
+          "label_count": 47
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "left_mae": 0.673829035516432,
+          "right_mae": 0.7417087219259206,
+          "label_count": 47
+        },
+        "a_bamboo_mat_013020": {
+          "left_mae": 0.8350734322501178,
+          "right_mae": 0.8988349323838272,
+          "label_count": 44
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "left_mae": 0.7036563592450693,
+          "right_mae": 0.7278928155405446,
+          "label_count": 50
+        },
+        "a_brass_telescope_013020": {
+          "left_mae": 0.7770691782828759,
+          "right_mae": 0.6844698296944526,
+          "label_count": 44
+        },
+        "a_ice_telescope_013020": {
+          "left_mae": 0.7025218784809113,
+          "right_mae": 0.6929987768332163,
+          "label_count": 15
+        }
+      },
+      "scope": "Validation-selected checkpoints; object-cluster bootstrap only; no seed uncertainty or held-out test claim."
+    },
+    "D_minus_C": {
+      "objects": 10,
+      "samples": 128,
+      "bootstrap_replicates": 10000,
+      "delta_mae_left_minus_right": 0.003906512537667918,
+      "exploratory_95_cluster_interval": [
+        -0.03684987144839355,
+        0.048124715963892964
+      ],
+      "object_rows": {
+        "a_stainless_steel_si_013020": {
+          "left_mae": 0.6774815963986127,
+          "right_mae": 0.6375244028218414,
+          "label_count": 46
+        },
+        "a_silver_human_skele_013020": {
+          "left_mae": 0.860259260609746,
+          "right_mae": 0.7240019518882036,
+          "label_count": 40
+        },
+        "a_brick_wall_013020": {
+          "left_mae": 0.6765727910431142,
+          "right_mae": 0.7409907079281959,
+          "label_count": 47
+        },
+        "a_marble_bread_013020": {
+          "left_mae": 0.43830405235290526,
+          "right_mae": 0.5130519750714302,
+          "label_count": 50
+        },
+        "a_leather_boot_013020": {
+          "left_mae": 0.5888252312991213,
+          "right_mae": 0.5480868684009035,
+          "label_count": 47
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "left_mae": 0.673829035516432,
+          "right_mae": 0.6888420556057641,
+          "label_count": 47
+        },
+        "a_bamboo_mat_013020": {
+          "left_mae": 0.8350734322501178,
+          "right_mae": 0.9229006015018306,
+          "label_count": 44
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "left_mae": 0.7036563592450693,
+          "right_mae": 0.7036428242223337,
+          "label_count": 50
+        },
+        "a_brass_telescope_013020": {
+          "left_mae": 0.7770691782828759,
+          "right_mae": 0.6928757406686518,
+          "label_count": 44
+        },
+        "a_ice_telescope_013020": {
+          "left_mae": 0.7025218784809113,
+          "right_mae": 0.6954130987326305,
+          "label_count": 15
+        }
+      },
+      "scope": "Validation-selected checkpoints; object-cluster bootstrap only; no seed uncertainty or held-out test claim."
+    },
+    "D_minus_G": {
+      "objects": 10,
+      "samples": 128,
+      "bootstrap_replicates": 10000,
+      "delta_mae_left_minus_right": -0.019568548195583877,
+      "exploratory_95_cluster_interval": [
+        -0.05254595591263338,
+        0.016214869816414512
+      ],
+      "object_rows": {
+        "a_stainless_steel_si_013020": {
+          "left_mae": 0.6774815963986127,
+          "right_mae": 0.7138123277412809,
+          "label_count": 46
+        },
+        "a_silver_human_skele_013020": {
+          "left_mae": 0.860259260609746,
+          "right_mae": 0.7605602648109198,
+          "label_count": 40
+        },
+        "a_brick_wall_013020": {
+          "left_mae": 0.6765727910431142,
+          "right_mae": 0.7584752536358985,
+          "label_count": 47
+        },
+        "a_marble_bread_013020": {
+          "left_mae": 0.43830405235290526,
+          "right_mae": 0.5232622577250003,
+          "label_count": 50
+        },
+        "a_leather_boot_013020": {
+          "left_mae": 0.5888252312991213,
+          "right_mae": 0.6060701060960901,
+          "label_count": 47
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "left_mae": 0.673829035516432,
+          "right_mae": 0.7513941602107692,
+          "label_count": 47
+        },
+        "a_bamboo_mat_013020": {
+          "left_mae": 0.8350734322501178,
+          "right_mae": 0.8157991541295566,
+          "label_count": 44
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "left_mae": 0.7036563592450693,
+          "right_mae": 0.6995792048471049,
+          "label_count": 50
+        },
+        "a_brass_telescope_013020": {
+          "left_mae": 0.7770691782828759,
+          "right_mae": 0.7469554758122698,
+          "label_count": 44
+        },
+        "a_ice_telescope_013020": {
+          "left_mae": 0.7025218784809113,
+          "right_mae": 0.739505531390508,
+          "label_count": 15
+        }
+      },
+      "scope": "Validation-selected checkpoints; object-cluster bootstrap only; no seed uncertainty or held-out test claim."
+    }
+  }
+}

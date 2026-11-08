@@ -1,0 +1,172 @@
+{
+  "status": "complete",
+  "completed": 8,
+  "total": 8,
+  "batches": [
+    {
+      "motion_projection": {
+        "cosine": -0.04724973440170288,
+        "material_norm": 0.5192839503288269,
+        "field_norm": 0.18178559839725494,
+        "weighted_field_to_material_norm": 0.03500697389245033
+      },
+      "displacement_reliability_decoder": {
+        "cosine": -0.08183874934911728,
+        "material_norm": 0.8425540328025818,
+        "field_norm": 0.8878050446510315,
+        "weighted_field_to_material_norm": 0.10537070035934448
+      }
+    },
+    {
+      "motion_projection": {
+        "cosine": -0.09572532773017883,
+        "material_norm": 0.4793176054954529,
+        "field_norm": 0.1872667819261551,
+        "weighted_field_to_material_norm": 0.03906945511698723
+      },
+      "displacement_reliability_decoder": {
+        "cosine": -0.001470515737310052,
+        "material_norm": 0.6331688165664673,
+        "field_norm": 0.8648635149002075,
+        "weighted_field_to_material_norm": 0.13659287989139557
+      }
+    },
+    {
+      "motion_projection": {
+        "cosine": -0.026857856661081314,
+        "material_norm": 0.2754826545715332,
+        "field_norm": 0.3823586404323578,
+        "weighted_field_to_material_norm": 0.1387959122657776
+      },
+      "displacement_reliability_decoder": {
+        "cosine": -0.15673641860485077,
+        "material_norm": 0.19366611540317535,
+        "field_norm": 1.4622031450271606,
+        "weighted_field_to_material_norm": 0.7550123929977417
+      }
+    },
+    {
+      "motion_projection": {
+        "cosine": 0.16096718609333038,
+        "material_norm": 0.3050847053527832,
+        "field_norm": 0.2404380738735199,
+        "weighted_field_to_material_norm": 0.07881026715040207
+      },
+      "displacement_reliability_decoder": {
+        "cosine": 0.35948923230171204,
+        "material_norm": 0.2677118480205536,
+        "field_norm": 0.4796139895915985,
+        "weighted_field_to_material_norm": 0.17915306985378265
+      }
+    },
+    {
+      "motion_projection": {
+        "cosine": -0.07251965999603271,
+        "material_norm": 0.4768067002296448,
+        "field_norm": 0.28918710350990295,
+        "weighted_field_to_material_norm": 0.06065080687403679
+      },
+      "displacement_reliability_decoder": {
+        "cosine": -0.05009089410305023,
+        "material_norm": 1.2510268688201904,
+        "field_norm": 0.9663435816764832,
+        "weighted_field_to_material_norm": 0.07724402844905853
+      }
+    },
+    {
+      "motion_projection": {
+        "cosine": 0.013936681672930717,
+        "material_norm": 0.23670396208763123,
+        "field_norm": 0.6329089403152466,
+        "weighted_field_to_material_norm": 0.2673841714859009
+      },
+      "displacement_reliability_decoder": {
+        "cosine": -0.11808725446462631,
+        "material_norm": 0.44553422927856445,
+        "field_norm": 2.692094326019287,
+        "weighted_field_to_material_norm": 0.6042396426200867
+      }
+    },
+    {
+      "motion_projection": {
+        "cosine": -0.031247343868017197,
+        "material_norm": 0.22738993167877197,
+        "field_norm": 0.3138964772224426,
+        "weighted_field_to_material_norm": 0.13804326951503754
+      },
+      "displacement_reliability_decoder": {
+        "cosine": 0.08438125252723694,
+        "material_norm": 0.15221960842609406,
+        "field_norm": 1.1265469789505005,
+        "weighted_field_to_material_norm": 0.7400800585746765
+      }
+    },
+    {
+      "motion_projection": {
+        "cosine": -0.03577306121587753,
+        "material_norm": 0.5368717908859253,
+        "field_norm": 0.22023437917232513,
+        "weighted_field_to_material_norm": 0.04102178290486336
+      },
+      "displacement_reliability_decoder": {
+        "cosine": 0.11111675202846527,
+        "material_norm": 0.3543863892555237,
+        "field_norm": 0.9456241726875305,
+        "weighted_field_to_material_norm": 0.26683422923088074
+      }
+    }
+  ],
+  "checkpoint_sha256": "d03fc72ae8aa63f147a3a072513799f49b7a4cd99445ff4603f05ab57a930766",
+  "checkpoint_epoch": 12,
+  "split": "train",
+  "sample_ids": [
+    "dataset_5000_clean/train/001900",
+    "dataset_5000_clean/train/000283",
+    "dataset_5000_clean/train/004162",
+    "dataset_5000_clean/train/002931",
+    "dataset_5000_clean/train/003740",
+    "dataset_5000_clean/train/001240",
+    "dataset_5000_clean/train/002214",
+    "dataset_5000_clean/train/002423",
+    "dataset_5000_clean/train/002393",
+    "dataset_5000_clean/train/001363",
+    "dataset_5000_clean/train/002683",
+    "dataset_5000_clean/train/002442",
+    "dataset_5000_clean/train/004299",
+    "dataset_5000_clean/train/003036",
+    "dataset_5000_clean/train/002250",
+    "dataset_5000_clean/train/000526",
+    "dataset_5000_clean/train/001200",
+    "dataset_5000_clean/train/004139",
+    "dataset_5000_clean/train/004277",
+    "dataset_5000_clean/train/001112",
+    "dataset_5000_clean/train/000384",
+    "dataset_5000_clean/train/004371",
+    "dataset_5000_clean/train/004902",
+    "dataset_5000_clean/train/001010",
+    "dataset_5000_clean/train/000083",
+    "dataset_5000_clean/train/004398",
+    "dataset_5000_clean/train/001882",
+    "dataset_5000_clean/train/004140",
+    "dataset_5000_clean/train/002140",
+    "dataset_5000_clean/train/003375",
+    "dataset_5000_clean/train/004811",
+    "dataset_5000_clean/train/003035"
+  ],
+  "test_untouched": true,
+  "scope": "First 32 deterministic training samples at one fixed checkpoint, eval mode, FP32; local gradient association, not proof of optimization causality.",
+  "detail": "\u56fa\u5b9a\u8bad\u7ec3\u6837\u672c\u4e0a\u6bd4\u8f83\u6750\u53c2\u635f\u5931\u4e0e\u573a\u635f\u5931\u7684\u68af\u5ea6\u5939\u89d2\u3001\u8303\u6570\uff1b\u4e0d\u66f4\u65b0\u6743\u91cd\u3002",
+  "updated_unix": 1794106658.6590853,
+  "summary": {
+    "motion_projection": {
+      "negative_cosine_batches": 6,
+      "mean_cosine": -0.01680863951332867,
+      "mean_weighted_field_to_material_norm": 0.09984782990068197
+    },
+    "displacement_reliability_decoder": {
+      "negative_cosine_batches": 5,
+      "mean_cosine": 0.01834542557480745,
+      "mean_weighted_field_to_material_norm": 0.35806587524712086
+    }
+  }
+}

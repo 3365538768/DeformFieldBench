@@ -36,6 +36,9 @@ def main():
         device = torch.device(cfg.train.device)
         dataset = MaterialDataset(cfg.data, args.split, cfg.model.field_size, cfg.model.field_mode)
         ckpt = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
+        motion_hash=sha256(Path(cfg.data.motion_targets_dir)/'index.json') if cfg.data.motion_targets_dir else None
+        if ckpt.get('motion_target_index_sha256')!=motion_hash:
+            raise ValueError('Evaluation observed-motion supervision mismatch')
         if ckpt["stats"] != dataset.codec.stats or asdict(ModelConfig(**ckpt["config"]["model"])) != cfg.dump()["model"]:
             raise ValueError("Evaluation checkpoint/config/statistics mismatch")
         backbone_sha = sha256(cfg.model.weights) if cfg.model.weights else None
