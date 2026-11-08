@@ -113,6 +113,8 @@ def collect():
     optimization['dice_field_audit'] = read_json(ROOT / 'docs/G1E_D_DICE_FIELD_AUDIT.json')
     optimization['dinov3_preparation'] = read_json(ROOT / 'docs/DINOV3_PREPARATION.json')
     optimization['strong_local_cache'] = read_json(ROOT / 'docs/G1F_LOCAL_CACHE.json')
+    optimization['cache_rebuild'] = {name: read_json(ROOT / filename) for name, filename in
+        [('dinov2', 'docs/CACHE_REBUILD_DINOV2.json'), ('dinov3', 'docs/CACHE_REBUILD_DINOV3.json')]}
     optimization['strong_field_audit'] = read_json(ROOT / 'docs/G1F_D_FIELD_AUDIT.json')
     optimization['strong_sensitivity'] = read_json(ROOT / 'docs/G1F_D_SENSITIVITY.json')
     optimization['cross_engine_calibration'] = read_json(ROOT / 'docs/G2_CROSS_ENGINE_CALIBRATION.json')
