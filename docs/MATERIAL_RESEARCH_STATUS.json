@@ -2,8 +2,8 @@
   "status": "complete",
   "kind": "research_review_not_experiment",
   "updated_utc": "2026-11-08T06:14:42.853087+00:00",
-  "recommendation": "优先小规模真实拟合标签验收与few-shot适配；Qwen和物理教师做匹配消融",
-  "next_gate": "A 真实教师小试与可辨识性 oracle",
+  "recommendation": "优先原论文严格反馈消融、物理校验与独立方法公平比较；长期Qwen/few-shot路线后置",
+  "next_gate": "R0 原稿版本、检查点、运行配置与逐样本证据对应审计",
   "next_gate_state": "paused",
   "new_training_started": false,
   "a8002_deployment_for_this_review": false,
@@ -25,5 +25,10 @@
     "near_online_fitting_quality": "not_yet_demonstrated"
   },
   "latest_four_ideas_report": "docs/FOUR_IDEAS_RESEARCH_AND_PLAN_2026-11-08_ZH.md",
-  "latest_four_ideas_sources": "docs/FOUR_IDEAS_SOURCES_2026-11-08.json"
+  "latest_four_ideas_sources": "docs/FOUR_IDEAS_SOURCES_2026-11-08.json",
+  "latest_rebuttal_report": "docs/REBUTTAL_PRIORITY_PLAN_2026-11-09_ZH.md",
+  "latest_rebuttal_plan": "docs/REBUTTAL_EXECUTION_PLAN_2026-11-09.json",
+  "latest_rebuttal_sources": "docs/REBUTTAL_SOURCES_2026-11-09.json",
+  "rebuttal_deadline_user_supplied": "2026-11-15",
+  "latest_local_research_date": "2026-11-09"
 }

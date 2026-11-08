@@ -1,0 +1,193 @@
+{
+  "reviewed_local_date": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "method": "Primary arXiv HTML, official GitHub README/API, local manuscript and pinned source. Earlier cached papers dated 2026-11-08; newly fetched baseline resource records dated 2026-11-09 local date.",
+  "search_service_limitation": "web search endpoint returned HTTP 500 unsupported channel; official primary URLs were retrieved directly.",
+  "paper_claims_are_not_our_reproductions": true,
+  "records": [
+    {
+      "name": "pixie_paper",
+      "url": "https://arxiv.org/html/2508.17437",
+      "resolved_url": "https://arxiv.org/html/2508.17437",
+      "bytes": 1199034,
+      "sha256": "b6fa029370c326accdc9a3f7f7cf103120328fd9550887dc46668f4be59f5f7a",
+      "seconds": 1.82,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "pixie_readme",
+      "url": "https://raw.githubusercontent.com/vlongle/pixie/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/vlongle/pixie/HEAD/README.md",
+      "bytes": 13672,
+      "sha256": "dc71768e8108eca3c66fdd3aa67faaaae4b42ba59cc32316c8cddd4e3c6c7ff3",
+      "seconds": 0.59,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "pixie_commit_rebuttal",
+      "url": "https://api.github.com/repos/vlongle/pixie/commits/HEAD",
+      "resolved_url": "https://api.github.com/repos/vlongle/pixie/commits/HEAD",
+      "bytes": 82706,
+      "sha256": "141cd25f534159c620405c7d999b610457aa3d4566f82dcb3453bc3da99b2e77",
+      "seconds": 0.9,
+      "status": "ok",
+      "content_not_republished": true,
+      "repository_commit": "bfe198a6d6024f606f64acaf537237da761ebfec"
+    },
+    {
+      "name": "vomp_paper",
+      "url": "https://arxiv.org/html/2510.22975",
+      "resolved_url": "https://arxiv.org/html/2510.22975",
+      "bytes": 1138254,
+      "sha256": "675ec1ce45ca3893fa8c034d55d216a2b93c90330fb6ccb5528001ebf5aa5f0b",
+      "seconds": 0.97,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "vomp_readme",
+      "url": "https://raw.githubusercontent.com/nv-tlabs/VoMP/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/nv-tlabs/VoMP/HEAD/README.md",
+      "bytes": 27541,
+      "sha256": "b42536c4a8cf4536044ae8529671597c439f44faa41313ed22fb9a8fd1499f15",
+      "seconds": 0.75,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "vomp_commit_rebuttal",
+      "url": "https://api.github.com/repos/nv-tlabs/VoMP/commits/HEAD",
+      "resolved_url": "https://api.github.com/repos/nv-tlabs/VoMP/commits/HEAD",
+      "bytes": 889628,
+      "sha256": "07b96abf544579ef675c9e83061abbbd3189bc03bc0a4525751af447c1bdf959",
+      "seconds": 1.5,
+      "status": "ok",
+      "content_not_republished": true,
+      "repository_commit": "641a22d958054b8f4644aaddd4b1cba2a0d45491"
+    },
+    {
+      "name": "autophyx_paper",
+      "url": "https://arxiv.org/html/2610.29517",
+      "resolved_url": "https://arxiv.org/html/2610.29517",
+      "bytes": 350314,
+      "sha256": "3bd36993716c6722e4017e645bb692566b8282a70999c9ccb9ab773113501283",
+      "seconds": 0.6,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "autophyx_readme_rebuttal",
+      "url": "https://raw.githubusercontent.com/HB-pencil-zero/AutoPhyX/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/HB-pencil-zero/AutoPhyX/HEAD/README.md",
+      "bytes": 5801,
+      "sha256": "71d3d66f763720a1160561f6af8dc2303774de66dcb0224f58c66d5ab5986908",
+      "seconds": 0.67,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "autophyx_tree_rebuttal",
+      "url": "https://api.github.com/repos/HB-pencil-zero/AutoPhyX/git/trees/HEAD?recursive=1",
+      "resolved_url": "https://api.github.com/repos/HB-pencil-zero/AutoPhyX/git/trees/HEAD?recursive=1",
+      "bytes": 15502,
+      "sha256": "17190a5cc2339545a177ffd847012cb84f9f920d073d52f9900dac77817cf25c",
+      "seconds": 0.6,
+      "status": "ok",
+      "content_not_republished": true,
+      "repository_tree_sha": "5ca958cc609a0e14558d161e6ae6b586e84bd66f"
+    },
+    {
+      "name": "omniphysgs_paper",
+      "url": "https://arxiv.org/html/2501.18982v1",
+      "resolved_url": "https://arxiv.org/html/2501.18982v1",
+      "bytes": 436088,
+      "sha256": "c420e2856d418244343ebf2583bb1cf125d8059108a100d32ceb61271566f4c2",
+      "seconds": 0.78,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "omniphysgs_project",
+      "url": "https://wgsxm.github.io/projects/omniphysgs/",
+      "resolved_url": "https://wgsxm.github.io/projects/omniphysgs/",
+      "bytes": 24304,
+      "sha256": "a3045f85dd7bcbd90801a2e2b000148fb1ede65bd9b86f9db340bf8abdafdad4",
+      "seconds": 0.61,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "omniphysgs_readme_rebuttal",
+      "url": "https://raw.githubusercontent.com/wgsxm/OmniPhysGS/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/wgsxm/OmniPhysGS/HEAD/README.md",
+      "bytes": 6812,
+      "sha256": "ccf5cc4ef601b799d2a4385a128141946c64dd407b5014d50b9ad55c21e96cf0",
+      "seconds": 0.55,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "reconphys_paper",
+      "url": "https://arxiv.org/html/2604.07882",
+      "resolved_url": "https://arxiv.org/html/2604.07882",
+      "bytes": 198966,
+      "sha256": "d9ba2a26a8b67983d4596f2bec09d4a9768c7995280a8e0cdb94edc629e4f94d",
+      "seconds": 0.93,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "unipixie_paper",
+      "url": "https://arxiv.org/html/2606.05399",
+      "resolved_url": "https://arxiv.org/html/2606.05399",
+      "bytes": 343929,
+      "sha256": "615e53d0ffc0c5d985cc799f934fa87da136862a6c2e1eccfb45e757e523e0d7",
+      "seconds": 0.58,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "analytic_dynamics_paper",
+      "url": "https://arxiv.org/html/2608.31025v1",
+      "resolved_url": "https://arxiv.org/html/2608.31025v1",
+      "bytes": 506672,
+      "sha256": "85b84eea6f1650a9c30a6e388a3192eece3422d488d1cdaf276a0acea5ebfd00",
+      "seconds": 0.7,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "phystwin_paper",
+      "url": "https://arxiv.org/html/2503.17973",
+      "resolved_url": "https://arxiv.org/html/2503.17973",
+      "bytes": 234012,
+      "sha256": "1a01ffbfb229a65d5d4f26de7db8f7aaa5596a2b851823a42a918f3d3126f24e",
+      "seconds": 0.53,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "empm_paper",
+      "url": "https://arxiv.org/html/2601.17251",
+      "resolved_url": "https://arxiv.org/html/2601.17251",
+      "bytes": 186257,
+      "sha256": "3eb77d5858971cb29b98da8c074acf6b627f3bc8127ad19885af1cc693f85894",
+      "seconds": 0.5,
+      "status": "ok",
+      "content_not_republished": true
+    },
+    {
+      "name": "reconphys_readme",
+      "url": "https://raw.githubusercontent.com/chuanshuogushi/ReconPhys/HEAD/README.md",
+      "status": "cached_official_source",
+      "sha256": "8123936e1af08ef5df96aff5785ad925f1a3d44433d1abde8214a42c823ffa5f",
+      "bytes": 2121,
+      "content_not_republished": true,
+      "note": "Fetched during the preceding 2026-11-08 research; checkpoint availability was inspected in that official README, not exercised."
+    }
+  ],
+  "local_provenance": "docs/REBUTTAL_PROVENANCE_2026-11-09.json",
+  "license_and_checkpoint_download_terms_still_to_verify_before_execution": true
+}

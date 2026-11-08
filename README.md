@@ -6,6 +6,8 @@
 
 目标：静态材料先验 + 动态物理场推断可用于指定仿真器的材料参数，以未见受力和真实交互验证。当前项目部署在 A800-2 的 `/kairos-yangsen/kairis-vepfs-6t/linrui/rsi_real_test`。
 
+2026-11-09 rebuttal 更新（用户截止日期 11 月 15 日）：[逐项 reviewer 回应与执行方案](docs/REBUTTAL_PRIORITY_PLAN_2026-11-09_ZH.md)、[阶段与交付清单](docs/REBUTTAL_EXECUTION_PLAN_2026-11-09.json)、[文献/官方实现索引](docs/REBUTTAL_SOURCES_2026-11-09.json)。优先核实原论文运行版本，补“保留 bottleneck 与场监督、仅切断反馈”的重训对照、原 MPM 物理校验、独立方法公平比较。已完成本地源码审计；公开默认配置关闭 consistency loss，但论文实际运行是否使用仍待检查点/日志确认。现有 M2 不能证明桥接优于匹配无桥控制；不把后续 Qwen/多引擎计划当作原稿结论的证据。A800-2 与监控继续暂停，本轮没有启动 GPU 实验。[可复跑审计脚本](scripts/audit_rebuttal_provenance.py)不加载模型、不连接服务器。
+
 2026-11-08 研究更新：[可行性判断、文献实验核对与方法创新方案](docs/RESEARCH_FEASIBILITY_AND_METHOD_2026-11-08_ZH.md)。单视频快速预测有效材料响应有条件可行，任意视频唯一恢复全部真实参数不能保证。UniPixie 已覆盖共享表征、多求解器概率输出及离线拟合蒸馏；建议下一步验证“消除加载/几何混淆的响应后验＋未见干预下的引擎标定”，按 P0–P5 设置停止门槛。此为研究方案，尚未启动这些新实验；[来源与版本索引](docs/RESEARCH_METHOD_SOURCES_2026-11-08.json)可追溯。
 
 补充研究：[Qwen共享材质理解、few-shot引擎/真实域适配、物理中间量及真实拟合数据四方向规划](docs/FOUR_IDEAS_RESEARCH_AND_PLAN_2026-11-08_ZH.md)。新增近邻工作 Analytic Dynamics 已有物理状态教师到视频学生蒸馏，AdaptiGraph 已有少量交互物性适配。建议以可验证的少样本迁移为主问题，真实拟合标签为数据基础，Qwen与物理教师通过匹配消融决定是否保留。A800-2及监控仍按用户要求暂停，本轮没有部署、下载权重或启动新实验。
