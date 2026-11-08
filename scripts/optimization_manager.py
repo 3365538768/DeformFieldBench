@@ -306,6 +306,22 @@ def read_lines(path):
     return [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
 
 
+def fieldfree_results(jobs):
+    members=[j for j in jobs if j.get('queue_group')=='fieldfree_probe']
+    if not members:return None
+    results={}
+    for job in members:
+        rows=read_lines(ROOT/job['output']/'timing.jsonl')
+        best=min(rows,key=lambda x:x['val_mae']) if rows else {}
+        results[job['control_label']]=dict(state=job['state'],best_material_mae=best.get('val_mae'),
+            best_epoch=best.get('epoch'),epochs_completed=len(rows),stop_reason=job.get('stop_reason'))
+    value=dict(status='failed' if any(j['state']=='failed' for j in members) else 'complete' if all(j['state']=='finished' for j in members) else 'running',
+        completed=sum(j['state']=='finished' for j in members),total=len(members),results=results,test_untouched=True,
+        detail='严格零场：N0直接视频 → N1首帧OOF先验 → N2混合后验；无场头、无辅助场损失、无反馈。',updated_unix=time.time())
+    atomic(ROOT/'docs/NF_RESULTS.json',value)
+    return value
+
+
 def execution_roadmap():
     steps=[]
     for identifier,name,filename in [
@@ -317,6 +333,10 @@ def execution_roadmap():
         ('B1p','RGB细节输入与时间/来源验收','B1_PIXEL_PREPARE.json'),
         ('B1','RGB像素分支八组匹配对照','B1_PIXEL_RESULTS.json'),
         ('B1a','像素与场桥收益分别反馈','B1_PIXEL_AUDIT.json'),
+        ('NFp','零场路线：首帧OOF先验','NF_STATIC_PREPARE.json'),
+        ('NF','零场路线：视频/先验/概率推断','NF_RESULTS.json'),
+        ('NFa','零场路线：结果与后验核验','NF_AUDIT.json'),
+        ('NFt','离线教师：受控夹具蒸馏','NF_TEACHER_FIXTURE.json'),
         ('B2','骨干末块适配与公开数据','B2_ADAPTATION_RESULTS.json'),
         ('E2','视频共享响应与分引擎头','E2_VIDEO_ENGINE_RESULTS.json'),
         ('V','多种子、独立测试与在线公平对比','V_CONFIRMATION_RESULTS.json')]:
@@ -400,6 +420,7 @@ def main():
         single_result = single_video_results(jobs)
         pixel_result=single_video_results(jobs,'pixel_probe')
         local_response_result=motion_probe_results(jobs,'local_response_probe')
+        fieldfree_result=fieldfree_results(jobs)
         execution_roadmap()
         engine_jobs = [j for j in jobs if j['kind']=='engine_pipeline' or j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t','G3p','G3q','G3f','G3s'}]
         engine_progress = read('docs/G2_ENGINE_PROGRESS.json', {})
@@ -437,7 +458,7 @@ def main():
                 eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else []) + (locals_ if followup and followup['status'] == 'complete' else []) + (forced if local_bridge and local_bridge['status'] == 'complete' else []) + (anchored if forced_bridge and forced_bridge['status'] == 'complete' else [])
                 eligible += strong if anchored_bridge and anchored_bridge['status'] == 'complete' else []
                 eligible += engine_jobs if strong_result and strong_result['status'] == 'complete' else []
-                eligible += [j for j in jobs if j.get('queue_group') in {'architecture_probe','observed_motion_probe','single_video_probe','local_response_probe','pixel_probe'}]
+                eligible += [j for j in jobs if j.get('queue_group') in {'architecture_probe','observed_motion_probe','single_video_probe','local_response_probe','pixel_probe','fieldfree_probe'}]
                 for j in eligible:
                     control = read(ROOT / j['output'] / 'control.json', {})
                     if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused' or not dependencies_finished(j, jobs):
@@ -538,6 +559,9 @@ def main():
         if pixel_result:
             stages.insert(-1,dict(id='B1',title='RGB像素分支开关的八组匹配对照',state=pixel_result['status'],
                 completed=pixel_result['completed'],total=pixel_result['total'],detail=pixel_result['detail']))
+        if fieldfree_result:
+            stages.insert(-1,dict(id='NF',title='零场直接视频、静态先验与概率材参推断',state=fieldfree_result['status'],
+                completed=fieldfree_result['completed'],total=fieldfree_result['total'],detail=fieldfree_result['detail']))
         state = {'version': 2, 'manager_pid': os.getpid(), 'updated_unix': time.time(),
                  'desired': 'paused' if paused else 'running', 'stages': stages, 'jobs': jobs, 'tasks': tasks,
                  'drain': drain, 'cpu_tests_passed': test_passed, 'benchmark': bench,
@@ -552,6 +576,7 @@ def main():
                  'single_video_probe': single_result,
                  'local_response_probe':local_response_result,
                  'pixel_probe':pixel_result,
+                 'fieldfree_probe':fieldfree_result,
                  'stop_policy': plan['stop_policy']}
         atomic('docs/OPTIMIZATION_PROGRESS.json', state)
         previous = state

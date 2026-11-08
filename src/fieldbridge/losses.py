@@ -46,6 +46,24 @@ def contact_bce_dice(logits, target, mask):
 
 
 def compute_loss(output, batch, cfg, field_only=False):
+    if cfg.model.architecture == 'direct_video':
+        if field_only or cfg.train.field_weight:
+            raise ValueError('Direct-video training cannot use fields')
+        from .direct_video import mixture_log_prob
+        mu = output['mean'].float()
+        target, mask = batch['target'], batch['target_mask']
+        parameter = masked_mean(F.smooth_l1_loss(mu, target, reduction='none'), mask)
+        logits, means, logvars = [output[k] for k in ['mixture_logits','mixture_means','mixture_logvars']]
+        count = mask.sum(-1).clamp_min(1)
+        nll = masked_mean(-mixture_log_prob(logits,means,logvars,target,mask)/count, mask.any(-1))
+        law = masked_mean(F.cross_entropy(output['law_logits'].float(),batch['law'].clamp_min(0),reduction='none'),batch['law']>=0)
+        distillation = mu.sum()*0
+        if cfg.train.distillation_weight:
+            solutions, weights, tm = batch['teacher_solutions'], batch['teacher_weights'], batch['teacher_mask']
+            logp = mixture_log_prob(logits[:,None],means[:,None],logvars[:,None],solutions,tm[:,None])
+            distillation = masked_mean(-(logp*weights).sum(-1)/tm.sum(-1).clamp_min(1),tm.any(-1))
+        total = cfg.train.parameter_weight*(parameter+cfg.train.nll_weight*nll+cfg.train.law_weight*law)+cfg.train.distillation_weight*distillation
+        return total, dict(parameter=parameter.detach(),nll=nll.detach(),law=law.detach(),distillation=distillation.detach())
     mu, lv = output["mean"].float(), output["logvar"].float()
     y, m = batch["target"], batch["target_mask"]
     err = mu - y

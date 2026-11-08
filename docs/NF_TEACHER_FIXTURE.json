@@ -1,0 +1,61 @@
+{
+  "status": "complete",
+  "completed": 120,
+  "total": 120,
+  "test_untouched": true,
+  "detail": "\u53d7\u63a7\u7ebf\u6027FEM\uff1a\u5df2\u77e5\u529b/\u5c3a\u5ea6/\u51e0\u4f55\uff0c\u6295\u5f71\u8f68\u8ff9\u9006\u62df\u5408E\u540e\u84b8\u998f\u5b66\u751f\uff1b\u4e0d\u662f\u539fGS\u89c6\u9891\u8bad\u7ec3\u6216\u771f\u5b9e\u6750\u53c2\u7ed3\u679c\u3002",
+  "scope": "Projected-track and known-force feature student, not an RGB model. Fixed nu=.3/rho=1000; no contact/plasticity; no cross-engine equivalence claim.",
+  "updated_unix": 1794114782.9964278,
+  "free_equation_residual": 1.1091034929360062e-14,
+  "train_samples": 96,
+  "val_samples": 24,
+  "teacher_val_mean_relative_E_error": 1.2992355536524855e-05,
+  "student_val_mean_relative_E_error": 0.04586641842781223,
+  "unseen_load_student_mean_relative_response_error": 0.04718327784131978,
+  "teacher_forward_calls": 1587,
+  "student_updates": 400,
+  "training_history": [
+    {
+      "epoch": 1,
+      "train_log_E_mse": 88.6527328491211
+    },
+    {
+      "epoch": 51,
+      "train_log_E_mse": 0.28432485461235046
+    },
+    {
+      "epoch": 101,
+      "train_log_E_mse": 0.035718340426683426
+    },
+    {
+      "epoch": 151,
+      "train_log_E_mse": 0.013911002315580845
+    },
+    {
+      "epoch": 201,
+      "train_log_E_mse": 0.010063505731523037
+    },
+    {
+      "epoch": 251,
+      "train_log_E_mse": 0.007754009682685137
+    },
+    {
+      "epoch": 301,
+      "train_log_E_mse": 0.0061555528081953526
+    },
+    {
+      "epoch": 351,
+      "train_log_E_mse": 0.004994894843548536
+    }
+  ],
+  "pixels_per_metre": 1600.0,
+  "observation_noise_std_px": 0.002,
+  "pipeline_gate_passed": true,
+  "original_video_teacher_admitted": false,
+  "rgb_video_distillation_completed": false,
+  "limitations": [
+    "Highly simplified known-force, known-geometry single-parameter fixture.",
+    "Labels used by student are optimizer estimates; true E used only to generate and evaluate fixture.",
+    "Projected tracks are privileged inputs, not automatically available from monocular video."
+  ]
+}

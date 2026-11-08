@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "completed": 640,
+  "total": 640,
+  "detail": "\u9996\u4e2a\u6709\u6548\u5e27DINO\u7279\u5f81\u7684\u7269\u4f53\u7ea7\u4e94\u6298\u9759\u6001\u5148\u9a8c\uff1b\u8bad\u7ec3OOF\u3001\u9a8c\u8bc1\u4ec5\u5168\u8bad\u7ec3\u7269\u4f53\u62df\u5408\uff0c\u4e0d\u8bfb\u573a\u6807\u7b7e\u3002",
+  "test_untouched": true,
+  "updated_unix": 1794114836.3851862,
+  "fitted_models": 6,
+  "fit_total": 6,
+  "prior_file": "data/prepared/nf_static_priors.json",
+  "prior_sha256": "6e963269774bfcb471b2b79b33117bab0c3c88dffa9811739d1b8d6dedd2eac2",
+  "fits": 6,
+  "static_validation_mae": 1.307021813077289,
+  "training_protocol": "five object folds; no sample sees own-object fitted labels",
+  "uncertainty": "Training-fit residual variance, uncalibrated; not a verified physical posterior.",
+  "limitation": "Existing synthetic appearances may be decoupled from assigned materials; this is a static prior baseline, not PIXIE/VoMP integration."
+}

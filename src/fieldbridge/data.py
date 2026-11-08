@@ -309,7 +309,7 @@ def collate(samples):
 
 def model_inputs(batch):
     keys = ("rgb", "valid", "times", "prior", "prior_mask")
-    return {k: batch[k] for k in (*keys, 'features') if k in batch}
+    return {k: batch[k] for k in (*keys, 'features', 'prior_logvar') if k in batch}
 
 
 class ShuffledOracleDataset(Dataset):

@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "tests_passed": 121,
+  "existing_fork_warnings": 8,
+  "test_seconds": 12.19,
+  "log": "runs/phase_logs/nf_final_tests.log",
+  "detail": "Strict no-field dataset/model/loss, object-OOF prior, exact mixture likelihood/intervals, multi-solution teacher isolation and complete epoch resume guards.",
+  "scope": "Software verification only; video accuracy trials remain separate."
+}

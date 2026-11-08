@@ -158,6 +158,9 @@ class LocalResidualModel(MaterialFieldModel):
 
 
 def build_model(cfg):
+    if cfg.architecture == 'direct_video':
+        from .direct_video import DirectVideoModel
+        return DirectVideoModel(cfg)
     if cfg.architecture == 'motion_temporal':
         from .temporal_bridge import TemporalBridgeModel
         return TemporalBridgeModel(cfg)

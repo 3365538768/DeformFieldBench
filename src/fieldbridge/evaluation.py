@@ -46,6 +46,13 @@ def summarize(records, codec):
             "nominal_95_coverage_transformed": float(coverage)}
     result["standardized_mae"] = float(np.mean(scores)) if scores else None
     result["note"] = "Train-standardized ln1p/linear errors; raw outputs are constrained; not the legacy SPE. Coverage is empirical, not guaranteed."
+    if all('mixture_logits' in r for r in records):
+        from .posterior import posterior_summary
+        result['posterior'] = posterior_summary(records)
+        for j,name in enumerate(PARAMETERS):
+            if result['parameters'][name]['count']:
+                result['parameters'][name]['nominal_95_coverage_transformed'] = result['posterior']['per_parameter'][j]['coverage']
+        result['note'] += ' Mixture coverage uses exact marginal CDF intervals; point-only runs do not train uncertainty.'
     return result
 
 
@@ -70,9 +77,10 @@ def evaluate(model, dataset, device, output=None, batch_size=1, workers=0, bf16=
         batch = move_batch(batch, device)
         with torch.autocast(device_type=device.type, dtype=torch.bfloat16, enabled=bf16 and device.type == 'cuda'):
             prediction = forward_batch(model, batch, model.cfg.feedback)
-        err = (prediction["fields"].float() - batch["fields"]).abs() * batch["field_mask"]
-        field_num += err.sum().item()
-        field_den += batch["field_mask"].sum().item()
+        if 'fields' in prediction:
+            err = (prediction["fields"].float() - batch["fields"]).abs() * batch["field_mask"]
+            field_num += err.sum().item()
+            field_den += batch["field_mask"].sum().item()
         means = prediction['mean'].float().cpu().tolist()
         logvars = prediction['logvar'].float().cpu().tolist()
         laws = prediction['law_logits'].argmax(-1).cpu().tolist()
@@ -83,6 +91,9 @@ def evaluate(model, dataset, device, output=None, batch_size=1, workers=0, bf16=
                             "action": batch["action"][i], "law_id": gt_laws[i], 'predicted_law_id': laws[i],
                             "prediction_z": means[i], "logvar": logvars[i],
                             "target_z": targets[i], "target_mask": masks[i]})
+            if 'mixture_logits' in prediction:
+                records[-1].update({k:prediction[k][i].float().cpu().tolist() for k in
+                                   ['mixture_logits','mixture_means','mixture_logvars']})
         processed += len(batch['sample_id'])
         if progress:
             progress({'rank': rank, 'processed': processed, 'total': len(shard), 'updated_unix': time.time()})

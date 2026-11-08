@@ -84,11 +84,15 @@ def run(config_path):
         if rank == 0:
             atomic_json(out / 'runtime.json', {'phase': phase, 'step': step, 'epoch': epoch + 1,
                         'updated_unix': time.time(), 'pause_requested': paused(out), 'field_end_epoch': field_end, **extra})
-    train = MaterialDataset(cfg.data, 'train', cfg.model.field_size, cfg.model.field_mode)
-    val = MaterialDataset(cfg.data, 'val', cfg.model.field_size, cfg.model.field_mode)
+    dataset_class = MaterialDataset
+    if cfg.model.architecture == 'direct_video':
+        from .direct_data import FieldFreeDataset
+        dataset_class = FieldFreeDataset
+    train = dataset_class(cfg.data, 'train', cfg.model.field_size, cfg.model.field_mode)
+    val = dataset_class(cfg.data, 'val', cfg.model.field_size, cfg.model.field_mode)
     if cfg.model.feedback == 'oracle_shuffled':
         train, val = ShuffledOracleDataset(train), ShuffledOracleDataset(val)
-    if cfg.model.use_prior and not any(r.get('prior_parameters') for r in train.rows):
+    if cfg.model.use_prior and not cfg.data.material_prior_file and not any(r.get('prior_parameters') for r in train.rows):
         raise ValueError('Independent priors missing')
     generator = torch.Generator().manual_seed(seed)
     sampler = DistributedSampler(train, shuffle=True, seed=cfg.train.seed) if world > 1 else None
@@ -120,6 +124,9 @@ def run(config_path):
     manifest_hash = sha256(cfg.data.manifest)
     motion_hash = sha256(Path(cfg.data.motion_targets_dir)/'index.json') if cfg.data.motion_targets_dir else None
     rgb_hash=sha256(Path(cfg.data.rgb_cache_dir)/'index.json') if cfg.data.rgb_cache_dir else None
+    overlays = {key: sha256(getattr(cfg.data,key)) if getattr(cfg.data,key) else None
+                for key in ['material_prior_file','material_teacher_file']}
+    feature_index_hash = sha256(Path(cfg.data.prepared_dir)/'index.json') if cfg.data.prepared_dir else None
     baseline_init_sha = sha256(cfg.train.initialize_rgb_baseline) if cfg.train.initialize_rgb_baseline else None
     if cfg.model.architecture == 'local_residual' and not (cfg.train.initialize_rgb_baseline or cfg.train.resume or cfg.train.initialize) and cfg.train.purpose != 'smoke':
         raise ValueError('Local residual research requires explicit trained baseline initialization')
@@ -130,6 +137,8 @@ def run(config_path):
         load_weights(raw_model, torch.load(cfg.train.initialize, map_location='cpu', weights_only=False), backbone_sha)
     if cfg.train.resume:
         checkpoint = torch.load(cfg.train.resume, map_location='cpu', weights_only=False)
+        if cfg.model.architecture == 'direct_video' and (checkpoint.get('material_overlay_sha256')!=overlays or checkpoint.get('feature_index_sha256')!=feature_index_hash):
+            raise ValueError('Resume direct-video prior/teacher/feature provenance mismatch')
         if checkpoint['manifest_sha256'] != manifest_hash or asdict(ModelConfig(**checkpoint['config']['model'])) != cfg.dump()['model']:
             raise ValueError('Resume data/model mismatch')
         if checkpoint.get('motion_target_index_sha256')!=motion_hash:
@@ -156,6 +165,7 @@ def run(config_path):
     from .paths import path_map
     provenance = {'engine_version': 2, 'config': cfg.dump(), 'manifest_sha256': manifest_hash,
                   'motion_target_index_sha256': motion_hash, 'rgb_cache_index_sha256':rgb_hash,
+                  'material_overlay_sha256': overlays, 'feature_index_sha256': feature_index_hash,
                   'runtime_path_map': path_map(),
                   'source_sha256': source_hash.hexdigest(), 'backbone_checkpoint_sha256': backbone_sha,
                   'stats': base_dataset.codec.stats, 'world_size': world, 'torch': torch.__version__,
@@ -248,6 +258,7 @@ def run(config_path):
             if rank == 0:
                 weights, compact = checkpoint_weights(raw_model, cfg.train.compact_checkpoint)
                 checkpoint = {'model': weights, 'compact_model': compact, 'optimizer': optimizer.state_dict(),
+                              'material_overlay_sha256': overlays, 'feature_index_sha256': feature_index_hash,
                               'motion_target_index_sha256': motion_hash, 'rgb_cache_index_sha256':rgb_hash,
                               'config': cfg.dump(), 'manifest_sha256': manifest_hash, 'stats': base_dataset.codec.stats,
                               'source_sha256': source_hash.hexdigest(), 'backbone_checkpoint_sha256': backbone_sha,
@@ -266,7 +277,7 @@ def run(config_path):
                            progress=lambda value: atomic_json(out / f'val_progress_rank{rank}.json', {**value, 'epoch': epoch + 1}))
         score = metrics['standardized_mae']; field_score = metrics['field_absolute_error_encoded']
         improved_material = not field_only and score is not None and (best_material is None or score < best_material)
-        improved_field = best_field is None or field_score < best_field
+        improved_field = field_score is not None and (best_field is None or field_score < best_field)
         if improved_material:
             best_material = score
         if improved_field:
