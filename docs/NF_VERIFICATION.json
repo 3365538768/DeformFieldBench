@@ -1,9 +1,12 @@
 {
   "status": "complete",
-  "tests_passed": 121,
-  "existing_fork_warnings": 8,
-  "test_seconds": 12.19,
+  "tests": 122,
+  "command": "python -m pytest tests -q",
+  "elapsed_seconds": 12.782667398452759,
   "log": "runs/phase_logs/nf_final_tests.log",
-  "detail": "Strict no-field dataset/model/loss, object-OOF prior, exact mixture likelihood/intervals, multi-solution teacher isolation and complete epoch resume guards.",
-  "scope": "Software verification only; video accuracy trials remain separate."
+  "updated_unix": 1794115687.0413082,
+  "scope": "Software tests; inference frame-time checks included, not a material accuracy claim.",
+  "tests_passed": 122,
+  "existing_fork_warnings": 8,
+  "test_seconds": 12.09
 }

@@ -1,0 +1,340 @@
+{
+  "status": "complete",
+  "completed": 3,
+  "total": 3,
+  "models": {
+    "N0_video_point": {
+      "common_standardized_mae": 0.7664164905420093,
+      "best_epoch": 10,
+      "epochs_completed": 14,
+      "trainable_parameters": 2128179,
+      "checkpoint_sha256": "2f91b04885ac2d4b01ebc11fbb49929f2d3b5a820fb16c0e055054e76b1a27a5",
+      "posterior": {
+        "joint_nll_per_observed_parameter": 1.6422793865203857,
+        "marginal_95_coverage": 0.9720930232558139,
+        "mean_interval_width_z": 5.814648478714853,
+        "per_parameter": [
+          {
+            "count": 128,
+            "coverage": 1.0,
+            "mean_interval_width_z": 7.357678855805381
+          },
+          {
+            "count": 128,
+            "coverage": 1.0,
+            "mean_interval_width_z": 5.6786333006334715
+          },
+          {
+            "count": 128,
+            "coverage": 0.90625,
+            "mean_interval_width_z": 4.562221246799926
+          },
+          {
+            "count": 46,
+            "coverage": 1.0,
+            "mean_interval_width_z": 5.384490657235278
+          }
+        ],
+        "interval_method": "Numerical inversion of the exact marginal mixture CDF; empirical validation coverage, no calibration guarantee."
+      },
+      "uncertainty_trained": false,
+      "timing_medians": {
+        "train_seconds": 12.05076116276905,
+        "data_wait_seconds": 9.757493664044887,
+        "validation_seconds": 3.1425933041609824
+      }
+    },
+    "N1_prior_point": {
+      "common_standardized_mae": 0.7729030678270731,
+      "best_epoch": 8,
+      "epochs_completed": 12,
+      "trainable_parameters": 2128179,
+      "checkpoint_sha256": "af263e220b612d218399d9a0fccaa59f262d34eb234d1dae6a883fe1568320db",
+      "posterior": {
+        "joint_nll_per_observed_parameter": 1.6238230466842651,
+        "marginal_95_coverage": 0.9813953488372092,
+        "mean_interval_width_z": 6.629714929908337,
+        "per_parameter": [
+          {
+            "count": 128,
+            "coverage": 1.0,
+            "mean_interval_width_z": 9.201119726926878
+          },
+          {
+            "count": 128,
+            "coverage": 1.0,
+            "mean_interval_width_z": 5.626226390560901
+          },
+          {
+            "count": 128,
+            "coverage": 0.9375,
+            "mean_interval_width_z": 5.068735938905466
+          },
+          {
+            "count": 46,
+            "coverage": 1.0,
+            "mean_interval_width_z": 6.610411231353247
+          }
+        ],
+        "interval_method": "Numerical inversion of the exact marginal mixture CDF; empirical validation coverage, no calibration guarantee."
+      },
+      "uncertainty_trained": false,
+      "timing_medians": {
+        "train_seconds": 12.012111187912524,
+        "data_wait_seconds": 9.862538042012602,
+        "validation_seconds": 3.0628461414016783
+      }
+    },
+    "N2_prior_posterior": {
+      "common_standardized_mae": 0.7798548697477726,
+      "best_epoch": 8,
+      "epochs_completed": 12,
+      "trainable_parameters": 2128179,
+      "checkpoint_sha256": "e3c1ed42f6e814268eb91805911f500ff453faaca54b1774ef658f8dd55cda3a",
+      "posterior": {
+        "joint_nll_per_observed_parameter": 1.2799997329711914,
+        "marginal_95_coverage": 0.8976744186046511,
+        "mean_interval_width_z": 3.270107398226398,
+        "per_parameter": [
+          {
+            "count": 128,
+            "coverage": 0.9375,
+            "mean_interval_width_z": 3.11547892592818
+          },
+          {
+            "count": 128,
+            "coverage": 0.84375,
+            "mean_interval_width_z": 2.6114205050571258
+          },
+          {
+            "count": 128,
+            "coverage": 0.875,
+            "mean_interval_width_z": 3.706349540074962
+          },
+          {
+            "count": 46,
+            "coverage": 1.0,
+            "mean_interval_width_z": 4.319354629166019
+          }
+        ],
+        "interval_method": "Numerical inversion of the exact marginal mixture CDF; empirical validation coverage, no calibration guarantee."
+      },
+      "uncertainty_trained": true,
+      "timing_medians": {
+        "train_seconds": 12.031976251862943,
+        "data_wait_seconds": 9.811630120035261,
+        "validation_seconds": 3.121932916343212
+      }
+    }
+  },
+  "comparisons": {
+    "N1_prior_point_minus_N0_video_point": {
+      "objects": 10,
+      "samples": 128,
+      "bootstrap_replicates": 10000,
+      "delta_mae_left_minus_right": 0.006486577285063821,
+      "exploratory_95_cluster_interval": [
+        -0.026461576444610207,
+        0.0433173783613739
+      ],
+      "object_rows": {
+        "a_stainless_steel_si_013020": {
+          "left_mae": 0.8513383594867976,
+          "right_mae": 0.849568938512517,
+          "label_count": 46
+        },
+        "a_silver_human_skele_013020": {
+          "left_mae": 0.7799468696117401,
+          "right_mae": 0.7646849006414413,
+          "label_count": 40
+        },
+        "a_brick_wall_013020": {
+          "left_mae": 0.8799044542173122,
+          "right_mae": 0.9095610587045233,
+          "label_count": 47
+        },
+        "a_marble_bread_013020": {
+          "left_mae": 0.5442683704942465,
+          "right_mae": 0.5495077186822891,
+          "label_count": 50
+        },
+        "a_leather_boot_013020": {
+          "left_mae": 0.6452885408826331,
+          "right_mae": 0.6398228383920295,
+          "label_count": 47
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "left_mae": 0.7857594910137197,
+          "right_mae": 0.8282963856658403,
+          "label_count": 47
+        },
+        "a_bamboo_mat_013020": {
+          "left_mae": 0.8865186179649424,
+          "right_mae": 0.8029659390872852,
+          "label_count": 44
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "left_mae": 0.7931523672537878,
+          "right_mae": 0.6791023585991934,
+          "label_count": 50
+        },
+        "a_brass_telescope_013020": {
+          "left_mae": 0.8002880900166929,
+          "right_mae": 0.8519872426563366,
+          "label_count": 44
+        },
+        "a_ice_telescope_013020": {
+          "left_mae": 0.8189053972562154,
+          "right_mae": 0.9261404390136401,
+          "label_count": 15
+        }
+      },
+      "scope": "Validation-selected checkpoints; object-cluster bootstrap only; no seed uncertainty or held-out test claim."
+    },
+    "N2_prior_posterior_minus_N1_prior_point": {
+      "objects": 10,
+      "samples": 128,
+      "bootstrap_replicates": 10000,
+      "delta_mae_left_minus_right": 0.006951801920699519,
+      "exploratory_95_cluster_interval": [
+        -0.02710029082167815,
+        0.0412877421701874
+      ],
+      "object_rows": {
+        "a_stainless_steel_si_013020": {
+          "left_mae": 0.8877185371744892,
+          "right_mae": 0.8513383594867976,
+          "label_count": 46
+        },
+        "a_silver_human_skele_013020": {
+          "left_mae": 0.791090689599514,
+          "right_mae": 0.7799468696117401,
+          "label_count": 40
+        },
+        "a_brick_wall_013020": {
+          "left_mae": 0.8783379175720063,
+          "right_mae": 0.8799044542173122,
+          "label_count": 47
+        },
+        "a_marble_bread_013020": {
+          "left_mae": 0.45190570831298826,
+          "right_mae": 0.5442683704942465,
+          "label_count": 50
+        },
+        "a_leather_boot_013020": {
+          "left_mae": 0.6793554445054937,
+          "right_mae": 0.6452885408826331,
+          "label_count": 47
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "left_mae": 0.8775941372472555,
+          "right_mae": 0.7857594910137197,
+          "label_count": 47
+        },
+        "a_bamboo_mat_013020": {
+          "left_mae": 0.8344584324143149,
+          "right_mae": 0.8865186179649424,
+          "label_count": 44
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "left_mae": 0.7789668729202822,
+          "right_mae": 0.7931523672537878,
+          "label_count": 50
+        },
+        "a_brass_telescope_013020": {
+          "left_mae": 0.8095694905231622,
+          "right_mae": 0.8002880900166929,
+          "label_count": 44
+        },
+        "a_ice_telescope_013020": {
+          "left_mae": 0.9679695705572764,
+          "right_mae": 0.8189053972562154,
+          "label_count": 15
+        }
+      },
+      "scope": "Validation-selected checkpoints; object-cluster bootstrap only; no seed uncertainty or held-out test claim."
+    },
+    "N2_prior_posterior_minus_N0_video_point": {
+      "objects": 10,
+      "samples": 128,
+      "bootstrap_replicates": 10000,
+      "delta_mae_left_minus_right": 0.01343837920576334,
+      "exploratory_95_cluster_interval": [
+        -0.024693818000889482,
+        0.048112914119046384
+      ],
+      "object_rows": {
+        "a_stainless_steel_si_013020": {
+          "left_mae": 0.8877185371744892,
+          "right_mae": 0.849568938512517,
+          "label_count": 46
+        },
+        "a_silver_human_skele_013020": {
+          "left_mae": 0.791090689599514,
+          "right_mae": 0.7646849006414413,
+          "label_count": 40
+        },
+        "a_brick_wall_013020": {
+          "left_mae": 0.8783379175720063,
+          "right_mae": 0.9095610587045233,
+          "label_count": 47
+        },
+        "a_marble_bread_013020": {
+          "left_mae": 0.45190570831298826,
+          "right_mae": 0.5495077186822891,
+          "label_count": 50
+        },
+        "a_leather_boot_013020": {
+          "left_mae": 0.6793554445054937,
+          "right_mae": 0.6398228383920295,
+          "label_count": 47
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "left_mae": 0.8775941372472555,
+          "right_mae": 0.8282963856658403,
+          "label_count": 47
+        },
+        "a_bamboo_mat_013020": {
+          "left_mae": 0.8344584324143149,
+          "right_mae": 0.8029659390872852,
+          "label_count": 44
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "left_mae": 0.7789668729202822,
+          "right_mae": 0.6791023585991934,
+          "label_count": 50
+        },
+        "a_brass_telescope_013020": {
+          "left_mae": 0.8095694905231622,
+          "right_mae": 0.8519872426563366,
+          "label_count": 44
+        },
+        "a_ice_telescope_013020": {
+          "left_mae": 0.9679695705572764,
+          "right_mae": 0.9261404390136401,
+          "label_count": 15
+        }
+      },
+      "scope": "Validation-selected checkpoints; object-cluster bootstrap only; no seed uncertainty or held-out test claim."
+    }
+  },
+  "test_untouched": true,
+  "detail": "\u96f6\u573a\u4e09\u7ec4\u7edf\u4e00\u5c3a\u5ea6\u3001\u7269\u4f53\u914d\u5bf9\u53ca\u7cbe\u786e\u6df7\u5408\u540e\u9a8c\u533a\u95f4\u6838\u9a8c\uff1b\u5355\u79cd\u5b50\u9a8c\u8bc1\u7b5b\u67e5\uff0c\u5c1a\u975e\u6700\u7ec8\u6d4b\u8bd5\u3002",
+  "updated_unix": 1794115470.4934113,
+  "reference_baselines": {
+    "train_codec_mean_standardized_mae": 0.8651592062185194,
+    "static_first_frame_mae": 1.307021813077289,
+    "note": "Training-mean constant and OOF/static ridge baseline; same fixed validation IDs, not tuned on test."
+  },
+  "prior_gain_over_direct": -0.008463514766594349,
+  "posterior_point_gain_over_direct": -0.017534042353733348,
+  "automatic_full_training": false,
+  "original_video_teacher_admitted": false,
+  "next_step": "Assess static information and interval coverage before independent seeds; original-video teacher distillation remains gated by geometry/loading and response validation.",
+  "historical_sanity": {
+    "best_B1_mae": 0.7339675750448044,
+    "best_current_mae": 0.7664164905420093,
+    "beats_B1": false,
+    "scope": "Different parameter count, objective and source; context only, not a matched bridge-removal causal estimate."
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "status": "complete",
+  "input_scope": {
+    "sample_id": "dataset_5000_clean/train/004873",
+    "split": "val",
+    "source": "Existing packed RGB, lossless encoding; no real-world accuracy claim.",
+    "timestamps_sha256": "a8a57d2d2fbf3aec6093e16e6f343b72cfb6cb0256c2da28291fb3b20c95bde1"
+  },
+  "results": {
+    "N0_video_point": {
+      "video_decode_forward_success": true,
+      "checkpoint_sha256": "2f91b04885ac2d4b01ebc11fbb49929f2d3b5a820fb16c0e055054e76b1a27a5",
+      "max_parameter_z_delta_vs_cached_validation": 0.0009767860174179077,
+      "setup_inclusive_seconds": 8.33504390809685,
+      "timing_source": "explicit_timestamps_seconds",
+      "trained_interval_emitted": false,
+      "scope": "Lossless RGB and original physical timestamps, batch-one BF16 video extraction vs saved batched feature validation; numerical deltas reported, not assumed zero."
+    },
+    "N1_prior_point": {
+      "video_decode_forward_success": true,
+      "checkpoint_sha256": "af263e220b612d218399d9a0fccaa59f262d34eb234d1dae6a883fe1568320db",
+      "max_parameter_z_delta_vs_cached_validation": 0.002652674913406372,
+      "setup_inclusive_seconds": 8.549260778352618,
+      "timing_source": "explicit_timestamps_seconds",
+      "trained_interval_emitted": false,
+      "scope": "Lossless RGB and original physical timestamps, batch-one BF16 video extraction vs saved batched feature validation; numerical deltas reported, not assumed zero."
+    },
+    "N2_prior_posterior": {
+      "video_decode_forward_success": true,
+      "checkpoint_sha256": "e3c1ed42f6e814268eb91805911f500ff453faaca54b1774ef658f8dd55cda3a",
+      "max_parameter_z_delta_vs_cached_validation": 1.0877847671508789e-05,
+      "setup_inclusive_seconds": 8.280120262876153,
+      "timing_source": "explicit_timestamps_seconds",
+      "trained_interval_emitted": true,
+      "scope": "Lossless RGB and original physical timestamps, batch-one BF16 video extraction vs saved batched feature validation; numerical deltas reported, not assumed zero."
+    }
+  },
+  "uses_fields": false,
+  "uses_online_optimization": false,
+  "real_world_accuracy_evaluated": false,
+  "constant_fps_export_results": {
+    "N0_video_point": {
+      "video_decode_forward_success": true,
+      "checkpoint_sha256": "2f91b04885ac2d4b01ebc11fbb49929f2d3b5a820fb16c0e055054e76b1a27a5",
+      "max_parameter_z_delta_vs_cached_validation": 0.029296827377084958,
+      "setup_inclusive_seconds": 11.374670129269361,
+      "scope": "Lossless RGB, container FPS rounding and native-output codec round trip included. Not an exact feature parity benchmark."
+    },
+    "N1_prior_point": {
+      "video_decode_forward_success": true,
+      "checkpoint_sha256": "af263e220b612d218399d9a0fccaa59f262d34eb234d1dae6a883fe1568320db",
+      "max_parameter_z_delta_vs_cached_validation": 0.022804157976591743,
+      "setup_inclusive_seconds": 10.814463029615581,
+      "scope": "Lossless RGB, container FPS rounding and native-output codec round trip included. Not an exact feature parity benchmark."
+    }
+  },
+  "updated_unix": 1794115811.6480923,
+  "timing_finding": "Original render samples are not exactly equally spaced. Constant-FPS export changes physical timing; explicit original timestamps are supported and verified."
+}

@@ -138,3 +138,30 @@ def test_multisolution_teacher_enters_loss_but_not_model_inputs(direct_config,tm
     model=build_model(cfg.model);output=model(**model_inputs(batch))
     loss,parts=compute_loss(output,batch,cfg);loss.backward()
     assert torch.isfinite(loss) and parts['distillation']!=0 and model.uncertainty_head.weight.grad.abs().sum()>0
+
+
+def test_single_video_cli_needs_no_fields_or_labels(direct_config,tmp_path,monkeypatch):
+    cv2=pytest.importorskip('cv2')
+    import numpy as np
+    import fieldbridge.train as trainer
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1]/'scripts'))
+    from infer_fieldfree_video import run,read_video
+    cfg=direct_config;monkeypatch.chdir(tmp_path);config=tmp_path/'config.json'
+    config.write_text(json.dumps(cfg.dump()));trainer.run(config)
+    video=tmp_path/'video.avi';writer=cv2.VideoWriter(str(video),cv2.VideoWriter_fourcc(*'MJPG'),10.,(32,32))
+    if not writer.isOpened():pytest.skip('MJPG video encoder unavailable')
+    try:
+        for i in range(6):writer.write(np.full((32,32,3),i*20,dtype=np.uint8))
+    finally:writer.release()
+    output=tmp_path/'inference.json'
+    result=run(Path(cfg.train.output)/'best_material.pt',video,output,'cpu')
+    assert result['uses_fields'] is False and result['uses_online_optimization'] is False
+    assert set(result['parameters'])=={'E','nu','rho','sigma_y'}
+    assert result['video']['sampled_frame_indices']==[0,2,3,5] and output.exists()
+    assert result['video']['timing_source']=='constant_container_fps'
+    timestamps=tmp_path/'times.json';timestamps.write_text(json.dumps([2.,2.1,2.4,2.8,3.,3.5]))
+    _,times,metadata=read_video(video,4,32,timestamps)
+    torch.testing.assert_close(times,torch.tensor([0.,.4,.8,1.5]))
+    assert metadata['timing_source']=='explicit_timestamps_seconds' and metadata['source_time_origin_seconds']==2.
+    timestamps.write_text(json.dumps([0.,1.,1.,2.,3.,4.]))
+    with pytest.raises(ValueError,match='strictly increasing'):read_video(video,4,32,timestamps)
