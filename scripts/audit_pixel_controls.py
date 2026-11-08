@@ -45,6 +45,14 @@ def main():
             report['routing_gates'][arm]=dict(best_control=best,field_gain_over_best_control=gain,passes_2_percent_direction_gate=gain>.02)
             for label in ['B_rgb','C_aux','G_features']:report['comparisons'][arm+'_D_minus_'+label]=paired_bootstrap(selected[arm+'_D_fields'],selected[arm+'_'+label])
         for label in LABELS:report['comparisons']['pixel_on_minus_off_'+label]=paired_bootstrap(selected['on_'+label],selected['off_'+label])
+        historical=json.loads((ROOT/'docs/M3_LOCAL_RESPONSE_AUDIT.json').read_text())
+        previous_control=min(historical['models'][name]['common_standardized_mae'] for name in ['B_rgb','C_aux','G_raw','G_decomposed'])
+        current=report['models']['on_D_fields']['common_standardized_mae']
+        report['historical_control_sanity']=dict(previous_stage='M3',same_input_information=True,
+            initialization_and_parameter_allocation_differ=True,best_previous_no_field_control=previous_control,
+            pixel_field_beats_previous_control=current<previous_control,
+            passes_conservative_direction_gate=report['routing_gates']['on']['passes_2_percent_direction_gate'] and current<.98*previous_control,
+            note='A weak new control caused by initialization or early stopping cannot erase an already stronger same-information baseline. Cross-stage check is a sanity gate, not a matched causal estimate.')
         report.update(status='complete',automatic_full_training=False,updated_unix=time.time(),next_step='Review matched bridge gains and independent seed requirements; pixel gains alone do not justify a field bridge claim.')
         atomic(ROOT/'docs/B1_PIXEL_AUDIT.json',report);atomic(out/'status.json',dict(status='complete',reason='pixel_and_bridge_matched_feedback_ready'))
     except Exception as error:

@@ -105,7 +105,7 @@ def collect():
     optimization = read_json(ROOT / 'docs/OPTIMIZATION_PROGRESS.json', {})
     optimization['bridge_sensitivity'] = read_json(ROOT / 'docs/G1C_D_BRIDGE_SENSITIVITY_FP32.json')
     optimization['forced_bridge_sensitivity'] = read_json(ROOT / 'docs/G1D_D_BRIDGE_SENSITIVITY_FP32.json')
-    optimization['latest_verification'] = read_json(ROOT / 'docs/G3_STARTUP.json') or read_json(ROOT / 'docs/G2_STARTUP.json') or read_json(ROOT / 'docs/G1F_STARTUP.json') or read_json(ROOT / 'docs/G1E_STARTUP.json') or read_json(ROOT / 'docs/G1D_STARTUP.json')
+    optimization['latest_verification'] = read_json(ROOT / 'docs/D3_EXECUTION_VERIFICATION.json') or read_json(ROOT / 'docs/G3_STARTUP.json') or read_json(ROOT / 'docs/G2_STARTUP.json') or read_json(ROOT / 'docs/G1F_STARTUP.json') or read_json(ROOT / 'docs/G1E_STARTUP.json') or read_json(ROOT / 'docs/G1D_STARTUP.json')
     optimization['previous_bridge_health'] = read_json(ROOT / 'docs/G1E_PREVIOUS_BRIDGE_HEALTH.json')
     optimization['target_audit'] = read_json(ROOT / 'docs/G1E_TARGET_AUDIT.json')
     optimization['anchor_sensitivity'] = read_json(ROOT / 'docs/G1E_D_BRIDGE_SENSITIVITY_FP32.json')
@@ -157,6 +157,7 @@ def collect():
     optimization['pixel_prepare']=read_json(ROOT/'docs/B1_PIXEL_PREPARE.json')
     optimization['pixel_probe']=read_json(ROOT/'docs/B1_PIXEL_RESULTS.json')
     optimization['pixel_audit']=read_json(ROOT/'docs/B1_PIXEL_AUDIT.json')
+    optimization['cache_precision']=read_json(ROOT/'docs/CACHE_PRECISION_PROBE.json')
     # Retries retain their job history, with one stage card for the latest attempt.
     optimization['stages']=list({s['id']:s for s in optimization.get('stages',[])}.values())
     efficiency=read_json(ROOT / 'docs/G3_INTERACTION_EFFICIENCY.json')

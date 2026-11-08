@@ -1,0 +1,204 @@
+{
+  "status": "complete",
+  "completed": 16,
+  "total": 16,
+  "rows": [
+    {
+      "sample_id": "dataset_5000_clean/train/004873",
+      "original_sha256": "0504c1c4c2cc9a2ac24b2513bf95faaba3369dff15ba876fdea8531c508117b1",
+      "prediction_max_z_delta": {
+        "fp16": 0.001953125,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "d60637ed0a4180ab93bbedbd215c921790e609863fb315d0b1a21402d65ad0ac",
+      "bf16_sha256": "a3391e1e70fc9f4fb9315689331c19283b870f27a7b3a2696a384699e2c0bf5d"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/003997",
+      "original_sha256": "fe8f29fd68b5ca83f5a38d5babdefcb5246fa461ae2bca0fa341e7b0320cb0c3",
+      "prediction_max_z_delta": {
+        "fp16": 0.001953125,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "33378644afbaf37c11fa131384ce99c17eb0d46879dd80c45d6ebec058eaa1eb",
+      "bf16_sha256": "73e454426e7420e059f7d9a80891245a5aca1a383062b684d2b3266d7eca13f0"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/004981",
+      "original_sha256": "c4913f6db772f03b16e40450f6c7f0092c7ff85214f7fa31b54439586f63ffbc",
+      "prediction_max_z_delta": {
+        "fp16": 0.00390625,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "8ddc964ec9de262bae9c527112ffa40788ed76b7173d6c2a342bd02de12a4336",
+      "bf16_sha256": "3aa5602b9ad84a66c5ae549b0f3cdad938e5e322db5a3b8e9551ccdc232607cd"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/002192",
+      "original_sha256": "5dd63b7cced5b3b52d36afacdb5d792b4a9b56fda97a992b1faaccaaa3163cf2",
+      "prediction_max_z_delta": {
+        "fp16": 0.015625,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "9cf404ae131fcb9a057cff1b05f3604d42cc06758a97597fc4105d52af918392",
+      "bf16_sha256": "b2b4e46f172d4913b37d34bccf356d505dabd1a3a0eda81d5b6df8fe7a298940"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/002066",
+      "original_sha256": "ea03f961c03dd81c69c15292d28a7317dab9e77d5007127687f2e45995dec2e0",
+      "prediction_max_z_delta": {
+        "fp16": 0.0003819465637207031,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "0e6577625bf7695d17232a21cc1ebde2f289ad2bef86696eadaeb22f5f70f842",
+      "bf16_sha256": "cdb3f163f8efd7a1f098b252843a86bf4c40c38ae17ea06ad3aaf15a1b5fd64d"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/001966",
+      "original_sha256": "3ee5d05442a1f4acafde3f06706bd5c0bca9d55990f9cd3712d7db70082e8b5e",
+      "prediction_max_z_delta": {
+        "fp16": 0.0078125,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "65429de06c9590b5e31a79aa510c980aa3e297d7fbd7e7b70ee5db5efcd8b6fd",
+      "bf16_sha256": "14d96e76759e272d2a6a26d26b2f6aba8201d2f8f0731608c95082fe5d96d480"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/004928",
+      "original_sha256": "3a0b1d0f17a7a95846f2ab4c99d32fd62f91040cf3a6de480ea5d6d355b2099c",
+      "prediction_max_z_delta": {
+        "fp16": 0.000244140625,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "ed9dcc6c194e0ec29418f3dc24349e0714e59b2343499397b9ea6f33e3ed9366",
+      "bf16_sha256": "137e6fdbc3dc4e4a8620959c08cf046cd94988b42f401568562b9650f30d6d82"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/000724",
+      "original_sha256": "bb525b4309ca59d95500ae2ffea865894804e47d3f48c9442cba60d4b75009c3",
+      "prediction_max_z_delta": {
+        "fp16": 0.015625,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "2b4ef81d8aa4d04620d488b1231f0bf2df5ff19bd488977db7e5f2872552d228",
+      "bf16_sha256": "e7ed727948ba3d5af85e2d11d1c0fde4c7618f376616b0a4290510d3314308aa"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/000976",
+      "original_sha256": "2648f78bfe3c8c6fb015bcff6396384755655c42e0e6b11f285ffe4f19e3802c",
+      "prediction_max_z_delta": {
+        "fp16": 0.00390625,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "7592b42a4975eabbd371befd8e30b17b0f5f224dde384694bb8ff484b8c7a409",
+      "bf16_sha256": "4ebc7456a666bb0656b38563256343cea4fbbb39c4641380d3f8f9e2bf453af7"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/002283",
+      "original_sha256": "940c7a2f635973fcb67d003462f307b1dc76be2c80137a6d3c83fcc8b6784733",
+      "prediction_max_z_delta": {
+        "fp16": 0.00439453125,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "c3f332edc386fda8d6d18c8d8b4bea354ec770535c3a0b4c70e71f410075621d",
+      "bf16_sha256": "37f006328998ec26a5a9efb78f7e854d48cbe3a7c706d3b95ae5082fa1b2c51b"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/002590",
+      "original_sha256": "f7a6598b661f79bd35599d7a12dccc8e1b1493cad76e63975cdf72e76c0f1b62",
+      "prediction_max_z_delta": {
+        "fp16": 0.0107421875,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "62bda31c0a1ac29a5d2d009b5bc07d56e91b65301d3c4639e6015cb1ce37075d",
+      "bf16_sha256": "ab4c30510b99ed6b8999f4bf701912900059058356a67b34729cc3c6e407fff8"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/001061",
+      "original_sha256": "bb22392c1c9e7577541cb53d6618af05a1a73dc978b1050e71332297882cd953",
+      "prediction_max_z_delta": {
+        "fp16": 0.001953125,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "2c32ca952bee1b9faf46e0f35234fbc0361fae57c15cf2f04554dfff2370d14b",
+      "bf16_sha256": "4b944ce4ed4d5c95ba73bc85da71b78f9e5b236314f5ac055c57304561cf2f2d"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/001785",
+      "original_sha256": "aa094bdd7f137879d9f323b1f7c17e2af3028603571621a6b93d226d70108c14",
+      "prediction_max_z_delta": {
+        "fp16": 0.001953125,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "667c0049ca3e21d7f8b1b5ed79a3661df7ed041591d47d8d0724e092b61752d9",
+      "bf16_sha256": "6af4b32aab4c862c8981b55742a2b1cd654cfa4a272a1fb5996f94def2fec066"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/000498",
+      "original_sha256": "03962803ab81788246ab0839b7c4ba04ab6802df6b901c5c03b3a854f0cd74bd",
+      "prediction_max_z_delta": {
+        "fp16": 0.00390625,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "01b7fec6e747b8d59da8a18c8645f03801de82612c4a6697200eaca1ddb4dda4",
+      "bf16_sha256": "1ec7053b2c3c7c7777dea38a04c6d09a523eaa06026413771b000a9283eead4f"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/002290",
+      "original_sha256": "0413b8d59e44a5cdd93159db0d0f6fc5ac4aec0bf008aea791bfb19b1d005270",
+      "prediction_max_z_delta": {
+        "fp16": 0.0015869140625,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "9e4c12637398f101b2fd8f0c9b6f950c64213a24456cefda7616db194dc9b421",
+      "bf16_sha256": "820360a58f535aaab8b1b77c0fb843f23ba34909b9e9ca8baf9bced85cb1cabc"
+    },
+    {
+      "sample_id": "dataset_5000_clean/train/001160",
+      "original_sha256": "28c1e289503cd3efb7e75fbbca86e712f1a415c2de66faa25614fd652dbfc54e",
+      "prediction_max_z_delta": {
+        "fp16": 0.0078125,
+        "bf16": 0.0
+      },
+      "fp16_sha256": "6a35be1b553307757de2ae856550e88dbad30c276e7846abaffcdc76ee4c46b0",
+      "bf16_sha256": "a7224630ffa79941d4482fe8be72cf82875bc16401833b56ed39cda01388499f"
+    }
+  ],
+  "test_untouched": true,
+  "detail": "16\u6761\u56fa\u5b9a\u9a8c\u8bc1\u6837\u672c\uff1a\u539fFP32\u3001FP16\u3001BF16\u7279\u5f81\u4e0e\u5197\u4f59\u65e7\u573a\u5265\u79bb\u5019\u9009\uff1b\u53ea\u505a\u53d7\u63a7\u9884\u6d4bparity\uff0c\u4e0d\u66ff\u6362\u8bad\u7ec3\u7f13\u5b58\u3002",
+  "scope": "Bounded validation-selected checkpoint diagnostic. Warm file loading is not full training or cold shared-disk throughput. Candidates are not admitted for training.",
+  "updated_unix": 1794111574.5565867,
+  "bytes_by_mode": {
+    "original": 700967904,
+    "fp16": 308352442,
+    "bf16": 308352442
+  },
+  "prediction_max_z_delta": {
+    "fp16": 0.015625,
+    "bf16": 0.0
+  },
+  "feature_max_absolute_error": {
+    "fp16": 0.0009765625,
+    "bf16": 0.0078125
+  },
+  "passes_point_prediction_gate": {
+    "fp16": false,
+    "bf16": true
+  },
+  "point_prediction_gate": 0.001,
+  "serial_warm_load_and_finite_check_seconds": {
+    "original": [
+      1.0923396004363894,
+      1.0651915539056063
+    ],
+    "fp16": [
+      0.8328491467982531,
+      0.7510536508634686
+    ],
+    "bf16": [
+      0.6728699561208487,
+      0.6467345571145415
+    ]
+  },
+  "next_step": "Only passing precision may proceed to full 128-sample outputs/uncertainty and resume parity, explicit cache-format contract, then matched training-time benchmark. Existing caches remain fixed."
+}

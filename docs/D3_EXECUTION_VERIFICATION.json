@@ -1,0 +1,37 @@
+{
+  "status": "complete",
+  "tests_passed": 113,
+  "existing_fork_warnings": 8,
+  "tests": {
+    "passed": 113,
+    "warnings": 8,
+    "scope": "Complete A800-2 tests suite after single-video, linear fixture, translation bridge and RGB pixel branch changes; result observed in command output during this execution."
+  },
+  "python_syntax": {
+    "files_parsed": 160,
+    "scope": "src, scripts, monitor and tests; includes final standalone cache probe and pixel audit"
+  },
+  "javascript_syntax": "node --check monitor/app.js passed",
+  "completed_model_runs": {
+    "D3": 8,
+    "M3": 6,
+    "B1": 8
+  },
+  "completed_reports": [
+    "D3_SINGLE_VIDEO_AUDIT.json",
+    "I1_IDENTIFIABILITY.json",
+    "M3_LOCAL_RESPONSE_AUDIT.json",
+    "B1_PIXEL_AUDIT.json",
+    "CACHE_PRECISION_PROBE.json"
+  ],
+  "web_control": {
+    "run": "m3_G_decomposed_seed17",
+    "pause_after_epoch": 4,
+    "resume_from_next_epoch": 5,
+    "sessions_after_resume": 2,
+    "final_state": "finished",
+    "stop_reason": "validation_material_plateau"
+  },
+  "test_untouched": true,
+  "scope": "Software and stage execution verification; does not establish field bridge accuracy gains or admit candidate caches for training."
+}

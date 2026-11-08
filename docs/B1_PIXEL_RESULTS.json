@@ -1,0 +1,72 @@
+{
+  "status": "complete",
+  "completed": 8,
+  "total": 8,
+  "cohorts": {
+    "off": {
+      "B_rgb": {
+        "state": "finished",
+        "best_material_mae": 0.7713244973535671,
+        "best_epoch": 11,
+        "epochs_completed": 15,
+        "stop_reason": "validation_material_plateau"
+      },
+      "C_aux": {
+        "state": "finished",
+        "best_material_mae": 0.8561081430295395,
+        "best_epoch": 5,
+        "epochs_completed": 6,
+        "stop_reason": "validation_material_plateau"
+      },
+      "D_fields": {
+        "state": "finished",
+        "best_material_mae": 0.7556049260424537,
+        "best_epoch": 12,
+        "epochs_completed": 12,
+        "stop_reason": "validation_material_plateau"
+      },
+      "G_features": {
+        "state": "finished",
+        "best_material_mae": 0.8568484189600662,
+        "best_epoch": 2,
+        "epochs_completed": 6,
+        "stop_reason": "validation_material_plateau"
+      }
+    },
+    "on": {
+      "B_rgb": {
+        "state": "finished",
+        "best_material_mae": 0.8568494291894875,
+        "best_epoch": 2,
+        "epochs_completed": 6,
+        "stop_reason": "validation_material_plateau"
+      },
+      "C_aux": {
+        "state": "finished",
+        "best_material_mae": 0.7573061804227574,
+        "best_epoch": 8,
+        "epochs_completed": 12,
+        "stop_reason": "validation_material_plateau"
+      },
+      "D_fields": {
+        "state": "finished",
+        "best_material_mae": 0.7591220790352455,
+        "best_epoch": 13,
+        "epochs_completed": 13,
+        "stop_reason": "validation_material_plateau"
+      },
+      "G_features": {
+        "state": "finished",
+        "best_material_mae": 0.7339675750448044,
+        "best_epoch": 14,
+        "epochs_completed": 18,
+        "stop_reason": "validation_material_plateau"
+      }
+    }
+  },
+  "test_untouched": true,
+  "detail": "RGB\u50cf\u7d20\u5206\u652f\u5f00/\u5173\u516b\u7ec4B/C/D/G\uff1a\u540c\u53c2\u6570\u91cf\u3001\u540c\u521d\u59cb\u5316\u3001\u540c\u5355\u89c6\u9891\u534f\u8bae\uff1b\u56fa\u5b9aDINO\uff0c\u4ec5\u8bad\u7ec3\u8f7b\u91cf\u5206\u652f\u3002",
+  "comparison_note": "Within each cohort MAE uses its train codec; cross-cohort comparison requires the common-codec audit.",
+  "updated_unix": 1794111690.0625775,
+  "executed_view_layout": "compact, existing RGB plus frozen features; pixel off/on matched controls"
+}
