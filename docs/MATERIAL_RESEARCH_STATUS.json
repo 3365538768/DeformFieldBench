@@ -1,9 +1,9 @@
 {
   "status": "complete",
   "kind": "research_review_not_experiment",
-  "updated_utc": "2026-11-08T05:55:31.876130+00:00",
-  "recommendation": "有条件可行；优先验证可辨识响应后验与未见干预下的跨引擎标定",
-  "next_gate": "P0 可辨识性 oracle",
+  "updated_utc": "2026-11-08T06:14:42.853087+00:00",
+  "recommendation": "优先小规模真实拟合标签验收与few-shot适配；Qwen和物理教师做匹配消融",
+  "next_gate": "A 真实教师小试与可辨识性 oracle",
   "next_gate_state": "paused",
   "new_training_started": false,
   "a8002_deployment_for_this_review": false,
@@ -23,5 +23,7 @@
     "effective_engine_response_from_informative_video": "conditional_research_hypothesis",
     "arbitrary_video_unique_all_true_parameters_all_engines": "not_identifiable_in_general",
     "near_online_fitting_quality": "not_yet_demonstrated"
-  }
+  },
+  "latest_four_ideas_report": "docs/FOUR_IDEAS_RESEARCH_AND_PLAN_2026-11-08_ZH.md",
+  "latest_four_ideas_sources": "docs/FOUR_IDEAS_SOURCES_2026-11-08.json"
 }
