@@ -1,0 +1,565 @@
+{
+  "research_date": "2026-11-08",
+  "compiled_utc": "2026-11-08T05:55:31.876130+00:00",
+  "report": "docs/RESEARCH_FEASIBILITY_AND_METHOD_2026-11-08_ZH.md",
+  "method": "Primary arXiv HTML reading, official repository/project verification, local experiment audits.",
+  "search_limitation": "web search/open endpoint returned HTTP 500 twice (channel does not support /v1/alpha/search). Used direct official-site retrieval and arXiv API topic queries. Non-exhaustive novelty review.",
+  "raw_copyright_text_in_git": false,
+  "new_training_started_for_this_research": false,
+  "sources": [
+    {
+      "name": "phystwin_readme",
+      "url": "https://raw.githubusercontent.com/Jianghanxiao/PhysTwin/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/Jianghanxiao/PhysTwin/HEAD/README.md",
+      "bytes": 20350,
+      "sha256": "67a10e7149e2575a8cedeb95b3b6f9cfc9ffc8bd22fe00496f0564e37a7db014",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.131585+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    },
+    {
+      "name": "pixie_readme",
+      "url": "https://raw.githubusercontent.com/vlongle/pixie/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/vlongle/pixie/HEAD/README.md",
+      "bytes": 13672,
+      "sha256": "dc71768e8108eca3c66fdd3aa67faaaae4b42ba59cc32316c8cddd4e3c6c7ff3",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.083805+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    },
+    {
+      "name": "vomp_readme",
+      "url": "https://raw.githubusercontent.com/nv-tlabs/VoMP/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/nv-tlabs/VoMP/HEAD/README.md",
+      "bytes": 27541,
+      "sha256": "b42536c4a8cf4536044ae8529671597c439f44faa41313ed22fb9a8fd1499f15",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.246731+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    },
+    {
+      "name": "matphys_readme",
+      "url": "https://raw.githubusercontent.com/Yrainy0615/MatPhys/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/Yrainy0615/MatPhys/HEAD/README.md",
+      "bytes": 7249,
+      "sha256": "dc0dc21e892aab4ab517e1df114d87944aefc7ce8a262676c34ca5e027b8cc93",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.193340+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    },
+    {
+      "name": "empm_readme",
+      "url": "https://raw.githubusercontent.com/rai-opensource/empm/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/rai-opensource/empm/HEAD/README.md",
+      "bytes": 5805,
+      "sha256": "1f2aef4c26eb5ca2ede96974eac6b1fffec88d727b70200d4b5751db9453755c",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.083805+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    },
+    {
+      "name": "boba_readme",
+      "url": "https://raw.githubusercontent.com/jianxiapyh/Boba-Public/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/jianxiapyh/Boba-Public/HEAD/README.md",
+      "bytes": 12745,
+      "sha256": "27e87adefb6ce2e79008b4b1cd1635465255026bad293a066c7c0739d4d362b0",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.082395+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    },
+    {
+      "name": "deform360_readme",
+      "url": "https://raw.githubusercontent.com/lhy0807/deform360/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/lhy0807/deform360/HEAD/README.md",
+      "bytes": 28101,
+      "sha256": "52f2ebed1800eb8c1e6dde05fefaca15ebba4456f0756b1ca05cfc4380fc8f7a",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.544313+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    },
+    {
+      "name": "autophyx_readme",
+      "url": "https://raw.githubusercontent.com/HB-pencil-zero/AutoPhyX/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/HB-pencil-zero/AutoPhyX/HEAD/README.md",
+      "bytes": 5801,
+      "sha256": "71d3d66f763720a1160561f6af8dc2303774de66dcb0224f58c66d5ab5986908",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.495385+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    },
+    {
+      "name": "egophys_project",
+      "url": "https://hjhyunjinkim.github.io/EgoPhys/",
+      "resolved_url": "https://hjhyunjinkim.github.io/EgoPhys/",
+      "bytes": 33912,
+      "sha256": "a1230fd20fd803a014b3cbd65da72b2b02763af4cc1b0cdc44c05981897673a3",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.653646+00:00",
+      "reading_scope": "Official project or abstract page, including release availability."
+    },
+    {
+      "name": "unipixie_project",
+      "url": "https://unipixie.github.io/",
+      "resolved_url": "https://unipixie.github.io/",
+      "bytes": 23994,
+      "sha256": "8b3893258b7375d76f5705b2059f5dd8a051bdf88f942e31a728f797c0eec288",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.668485+00:00",
+      "reading_scope": "Official project or abstract page, including release availability."
+    },
+    {
+      "name": "pokeflex_project",
+      "url": "https://pokeflex-dataset.github.io/",
+      "resolved_url": "https://pokeflex-dataset.github.io/",
+      "bytes": 26839,
+      "sha256": "90efc4455264c19ba8184d6b2590d644247c4a8f2160130493005304eac2f53c",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.913597+00:00",
+      "reading_scope": "Official project or abstract page, including release availability."
+    },
+    {
+      "name": "newton_readme",
+      "url": "https://raw.githubusercontent.com/newton-physics/newton/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/newton-physics/newton/HEAD/README.md",
+      "bytes": 56631,
+      "sha256": "c24edaa4c2b9e35e3b374102f37a6a04619e39e7903648db42e4088cbfae4851",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.755455+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    },
+    {
+      "name": "arxiv_search",
+      "url": "https://export.arxiv.org/api/query?search_query=all%3Amaterial+AND+all%3Avideo&start=0&max_results=25&sortBy=submittedDate&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=all%3Amaterial+AND+all%3Avideo&start=0&max_results=25&sortBy=submittedDate&sortOrder=descending",
+      "bytes": 61051,
+      "sha256": "479ab2270d3ca56feaac6e627af7c19b041f5813a3d3b156cc0a201726eb13b1",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:30.126205+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "empm_abs",
+      "url": "https://arxiv.org/abs/2601.17251",
+      "resolved_url": "https://arxiv.org/abs/2601.17251",
+      "bytes": 41253,
+      "sha256": "b1d6543feba379c106b6ef72bd3b630064ff376ac9199690383e0ef6d3297324",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:36:29.966911+00:00",
+      "reading_scope": "Official project or abstract page, including release availability."
+    },
+    {
+      "name": "phystwin_paper",
+      "url": "https://arxiv.org/html/2503.17973",
+      "resolved_url": "https://arxiv.org/html/2503.17973",
+      "bytes": 234012,
+      "sha256": "1a01ffbfb229a65d5d4f26de7db8f7aaa5596a2b851823a42a918f3d3126f24e",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:36.385307+00:00",
+      "arxiv_id_version": "2503.17973v1",
+      "title": "PhysTwin: Physics-Informed Reconstruction and Simulation of Deformable Objects from Videos",
+      "first_published_utc": "2025-03-23T07:49:19Z",
+      "updated_utc": "2025-03-23T07:49:19Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "pixie_paper",
+      "url": "https://arxiv.org/html/2508.17437",
+      "resolved_url": "https://arxiv.org/html/2508.17437",
+      "bytes": 1199034,
+      "sha256": "b6fa029370c326accdc9a3f7f7cf103120328fd9550887dc46668f4be59f5f7a",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:37.596937+00:00",
+      "arxiv_id_version": "2508.17437v2",
+      "title": "Pixie: Fast and Generalizable Supervised Learning of 3D Physics from Pixels",
+      "first_published_utc": "2025-08-20T19:24:04Z",
+      "updated_utc": "2025-08-26T16:57:07Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "vomp_paper",
+      "url": "https://arxiv.org/html/2510.22975",
+      "resolved_url": "https://arxiv.org/html/2510.22975",
+      "bytes": 1138254,
+      "sha256": "675ec1ce45ca3893fa8c034d55d216a2b93c90330fb6ccb5528001ebf5aa5f0b",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:36.688925+00:00",
+      "arxiv_id_version": "2510.22975v2",
+      "title": "VoMP: Predicting Volumetric Mechanical Property Fields",
+      "first_published_utc": "2025-10-27T03:56:25Z",
+      "updated_utc": "2026-03-02T00:48:34Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "matphys_paper",
+      "url": "https://arxiv.org/html/2605.19386",
+      "resolved_url": "https://arxiv.org/html/2605.19386",
+      "bytes": 210881,
+      "sha256": "ed64ae76585f6cd5a603f8ee4586c9568f420b20ef4fa546b2b9fa85c971886e",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:36.480825+00:00",
+      "arxiv_id_version": "2605.19386v1",
+      "title": "MatPhys: Learning Material-Aware Physics Parameters for Deformable Object Simulation from Videos",
+      "first_published_utc": "2026-05-19T05:32:49Z",
+      "updated_utc": "2026-05-19T05:32:49Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "egophys_paper",
+      "url": "https://arxiv.org/html/2606.16202",
+      "resolved_url": "https://arxiv.org/html/2606.16202",
+      "bytes": 255111,
+      "sha256": "3ccb355397192858b0f98a11d980f6e3e8cbc15a8641697c80366e4376ebc0eb",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:36.343484+00:00",
+      "arxiv_id_version": "2606.16202v1",
+      "title": "EgoPhys: Learning Generalizable Physics Models of Deformable Objects from Egocentric Video",
+      "first_published_utc": "2026-06-15T04:25:15Z",
+      "updated_utc": "2026-06-15T04:25:15Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "empm_paper",
+      "url": "https://arxiv.org/html/2601.17251",
+      "resolved_url": "https://arxiv.org/html/2601.17251",
+      "bytes": 186257,
+      "sha256": "3eb77d5858971cb29b98da8c074acf6b627f3bc8127ad19885af1cc693f85894",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:36.883906+00:00",
+      "arxiv_id_version": "2601.17251v1",
+      "title": "EMPM: Embodied MPM for Modeling and Simulation of Deformable Objects",
+      "first_published_utc": "2026-01-24T01:27:09Z",
+      "updated_utc": "2026-01-24T01:27:09Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "physworld_paper",
+      "url": "https://arxiv.org/html/2510.21447",
+      "resolved_url": "https://arxiv.org/html/2510.21447",
+      "bytes": 235528,
+      "sha256": "58002e93c98fc36aceb2cbf2c76426342ed1d6f76f6a001f9252a38f72e0238d",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:36.848515+00:00",
+      "arxiv_id_version": "2510.21447v1",
+      "title": "PhysWorld: From Real Videos to World Models of Deformable Objects via Physics-Aware Demonstration Synthesis",
+      "first_published_utc": "2025-10-24T13:25:39Z",
+      "updated_utc": "2025-10-24T13:25:39Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "neuspring_paper",
+      "url": "https://arxiv.org/html/2511.08310",
+      "resolved_url": "https://arxiv.org/html/2511.08310",
+      "bytes": 204488,
+      "sha256": "01616b8873ef8be6a5b3ffc008a02ea5827f52c192111a88115361116b5ca60b",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:36.983825+00:00",
+      "arxiv_id_version": "2511.08310v1",
+      "title": "NeuSpring: Neural Spring Fields for Reconstruction and Simulation of Deformable Objects from Videos",
+      "first_published_utc": "2025-11-11T14:40:09Z",
+      "updated_utc": "2025-11-11T14:40:09Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "deformmaster_paper",
+      "url": "https://arxiv.org/html/2605.09586",
+      "resolved_url": "https://arxiv.org/html/2605.09586",
+      "bytes": 342454,
+      "sha256": "22d045d1bc79f9c49eb322a3528d9621ff09339652eb0748b25dedd427863bba",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:37.392191+00:00",
+      "arxiv_id_version": "2605.09586v2",
+      "title": "DeformMaster: An Interactive Physics-Neural World Model for Deformable Objects from Videos",
+      "first_published_utc": "2026-05-10T14:55:54Z",
+      "updated_utc": "2026-05-20T11:59:59Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "gpwm_paper",
+      "url": "https://arxiv.org/html/2611.08338",
+      "resolved_url": "https://arxiv.org/html/2611.08338",
+      "bytes": 303457,
+      "sha256": "d3cba2c8cdf60c37ef69ea1d2fa273037889e1fa4cf4da8711e51b919399debd",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:37.318932+00:00",
+      "arxiv_id_version": "2611.08338v1",
+      "title": "GPWM: Modeling the World as 3D Particle Motion",
+      "first_published_utc": "2026-11-05T17:24:36Z",
+      "updated_utc": "2026-11-05T17:24:36Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "collision_paper",
+      "url": "https://arxiv.org/html/2611.07900",
+      "resolved_url": "https://arxiv.org/html/2611.07900",
+      "bytes": 599793,
+      "sha256": "6971d3e6a4ad735297027f02e9a60dab21bbbfe9545d9754a6a915ce96db3bdd",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:37.237151+00:00",
+      "arxiv_id_version": "2611.07900v1",
+      "title": "Structure from Collision via Hypothesis-Space Reasoning",
+      "first_published_utc": "2026-11-05T12:20:11Z",
+      "updated_utc": "2026-11-05T12:20:11Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "search_inverse",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22material+properties%22+AND+%28all%3Avideo+OR+all%3Avisual%29%29&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22material+properties%22+AND+%28all%3Avideo+OR+all%3Avisual%29%29&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending",
+      "bytes": 49143,
+      "sha256": "ae71b732f4ea0bd0a4bca46530f24e6f30cc7c7a41d759358d2ab1025cb59615",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:37.734545+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "search_amortized",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3Aamortized+AND+%28all%3Adeformable+OR+all%3Amaterial+OR+all%3Asimulation%29%29&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3Aamortized+AND+%28all%3Adeformable+OR+all%3Amaterial+OR+all%3Asimulation%29%29&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending",
+      "bytes": 51092,
+      "sha256": "56dc35466574594b8c3d2474fae4cd96d71e7c01c61cb45036292aee8a7d106e",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:38.580663+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "search_crossengine",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22system+identification%22+AND+%28all%3Adeformable+OR+all%3Avision%29%29&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22system+identification%22+AND+%28all%3Adeformable+OR+all%3Avision%29%29&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending",
+      "bytes": 53131,
+      "sha256": "d374e800944eb9f6bfb01cd9e5e84e71c4c892560f453dd7a164df488e453678",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:38.119399+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "search_active",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22material+estimation%22+OR+all%3A%22material+inference%22+OR+all%3A%22physical+parameter+estimation%22%29&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22material+estimation%22+OR+all%3A%22material+inference%22+OR+all%3A%22physical+parameter+estimation%22%29&start=0&max_results=20&sortBy=submittedDate&sortOrder=descending",
+      "bytes": 49128,
+      "sha256": "a3e1b2aae8da6fd992bf85276317712afd52d0ae60cf786c2f0dabed93c7a5dc",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:37:39.130414+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "unipixie_paper",
+      "url": "https://arxiv.org/html/2606.05399",
+      "resolved_url": "https://arxiv.org/html/2606.05399",
+      "bytes": 343929,
+      "sha256": "615e53d0ffc0c5d985cc799f934fa87da136862a6c2e1eccfb45e757e523e0d7",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:58.228831+00:00",
+      "arxiv_id_version": "2606.05399v2",
+      "title": "UniPixie: Unified and Probabilistic 3D Physics Learning via Flow Matching",
+      "first_published_utc": "2026-06-03T20:08:23Z",
+      "updated_utc": "2026-06-09T15:06:29Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "deform360_paper",
+      "url": "https://arxiv.org/html/2607.05390",
+      "resolved_url": "https://arxiv.org/html/2607.05390",
+      "bytes": 343933,
+      "sha256": "189ed2670251a4256fafd144b6d544ed070b5104428992d743df22857babde76",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:58.334990+00:00",
+      "arxiv_id_version": "2607.05390v1",
+      "title": "Deform360: A Massive Multi-view Visuotactile Dataset for Deformable World Models",
+      "first_published_utc": "2026-07-06T17:59:18Z",
+      "updated_utc": "2026-07-06T17:59:18Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "physreal_paper",
+      "url": "https://arxiv.org/html/2609.07532",
+      "resolved_url": "https://arxiv.org/html/2609.07532",
+      "bytes": 229791,
+      "sha256": "ff0a62deb7681ac0936ab0a7b9fdaaa2ce3f730b4ef7afa345e0cff4e6ffa7bd",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:58.959161+00:00",
+      "arxiv_id_version": "2609.07532v1",
+      "title": "PhysReal: Learning Real-World Deformable Object Physics via Hybrid Constitutive Modeling",
+      "first_published_utc": "2026-09-07T14:11:57Z",
+      "updated_utc": "2026-09-07T14:11:57Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "autophyx_paper",
+      "url": "https://arxiv.org/html/2610.29517",
+      "resolved_url": "https://arxiv.org/html/2610.29517",
+      "bytes": 350314,
+      "sha256": "3bd36993716c6722e4017e645bb692566b8282a70999c9ccb9ab773113501283",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:58.270241+00:00",
+      "arxiv_id_version": "2610.29517v1",
+      "title": "AutoPhyX: Automatic Text-Condition Physics Property Generation",
+      "first_published_utc": "2026-10-21T10:05:23Z",
+      "updated_utc": "2026-10-21T10:05:23Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "numerical_paper",
+      "url": "https://arxiv.org/html/2609.34666",
+      "resolved_url": "https://arxiv.org/html/2609.34666",
+      "bytes": 171316,
+      "sha256": "986c769ef1fdcc68c0cf4e4bf50070130de2a3a16da15d293d7eae664acba50d",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:58.444989+00:00",
+      "arxiv_id_version": "2609.34666v1",
+      "title": "On the Numerical Reliability of Differentiable Physics-Based Optimization for Robotic Material Manipulation",
+      "first_published_utc": "2026-09-28T09:03:54Z",
+      "updated_utc": "2026-09-28T09:03:54Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "askworld_paper",
+      "url": "https://arxiv.org/html/2609.39135",
+      "resolved_url": "https://arxiv.org/html/2609.39135",
+      "bytes": 315383,
+      "sha256": "b2637d80cafd047b6ef06bf4a4a130970056d91a8f315f6695eae8280a833257",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:58.838690+00:00",
+      "arxiv_id_version": "2609.39135v2",
+      "title": "Asking the World: Generalist Physical Reasoning through Agentic World Modeling and Probing",
+      "first_published_utc": "2026-09-30T07:04:21Z",
+      "updated_utc": "2026-10-24T18:11:49Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "search_reconphys",
+      "url": "https://export.arxiv.org/api/query?search_query=ti%3AReconPhys&max_results=6",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=ti%3AReconPhys&max_results=6",
+      "bytes": 3144,
+      "sha256": "e851fdf3066decccc1ce4f489a88396c157c7b38d3bfd492b0e32af5a37d0a25",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:58.719740+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "search_physsplat",
+      "url": "https://export.arxiv.org/api/query?search_query=all%3APhysSplat&max_results=6",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=all%3APhysSplat&max_results=6",
+      "bytes": 697,
+      "sha256": "a675c96238d6d3f22e6418a8e9570f5786587bdb4a756129c4a696863b704d38",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:58.870719+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "search_sbi",
+      "url": "https://export.arxiv.org/api/query?search_query=ti%3A%22Automatic+Posterior+Transformation%22&max_results=6",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=ti%3A%22Automatic+Posterior+Transformation%22&max_results=6",
+      "bytes": 5426,
+      "sha256": "ae46732e6aa8951877133484412f1b6b1955e2b9a6d9c5e57bde595846060178",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:58.925328+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "search_constitutive",
+      "url": "https://export.arxiv.org/api/query?search_query=ti%3A%22Learning+Neural+Constitutive+Laws%22&max_results=6",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=ti%3A%22Learning+Neural+Constitutive+Laws%22&max_results=6",
+      "bytes": 3423,
+      "sha256": "8ffa631473ef5e4098ab3992cb3af4d7979536d9797cc42fa5d390f5bd733694",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:38:59.250873+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "reconphys_paper",
+      "url": "https://arxiv.org/html/2604.07882",
+      "resolved_url": "https://arxiv.org/html/2604.07882",
+      "bytes": 198966,
+      "sha256": "d9ba2a26a8b67983d4596f2bec09d4a9768c7995280a8e0cdb94edc629e4f94d",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:39:39.135248+00:00",
+      "arxiv_id_version": "2604.07882v1",
+      "title": "ReconPhys: Reconstruct Appearance and Physical Attributes from Single Video",
+      "first_published_utc": "2026-04-09T06:51:14Z",
+      "updated_utc": "2026-04-09T06:51:14Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "nclaw_paper",
+      "url": "https://arxiv.org/html/2304.14369",
+      "resolved_url": "https://arxiv.org/html/2304.14369",
+      "bytes": 390709,
+      "sha256": "204dfb8110bdcb19071fa317cd26024335dc7f91d0b4216ee18829fa89aeef4c",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:39:39.802091+00:00",
+      "arxiv_id_version": "2304.14369v2",
+      "title": "Learning Neural Constitutive Laws From Motion Observations for Generalizable PDE Dynamics",
+      "first_published_utc": "2023-04-27T17:42:24Z",
+      "updated_utc": "2023-06-16T00:16:00Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "own_paper",
+      "url": "https://arxiv.org/html/2610.17591",
+      "resolved_url": "https://arxiv.org/html/2610.17591",
+      "bytes": 420517,
+      "sha256": "2dc9e6973664cbd405e2cebb90b894433e357c9ef5640ff2c3fcee1a0d96bd02",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:39:38.994575+00:00",
+      "arxiv_id_version": "2610.17591v1",
+      "title": "Physical-Field-Bridged Material Parameter Inference from Multi-View Deformation Videos",
+      "first_published_utc": "2026-10-13T02:08:37Z",
+      "updated_utc": "2026-10-13T02:08:37Z",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "sbc_paper",
+      "url": "https://arxiv.org/html/1805.09294",
+      "resolved_url": "https://arxiv.org/html/1805.09294",
+      "bytes": 206442,
+      "sha256": "0c8cb9c09b20b6b29c284fbb78391d097ec573fcde329575c5ea0873e090ae6b",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:39:38.941706+00:00",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "paper_metadata",
+      "url": "https://export.arxiv.org/api/query?id_list=2503.17973,2508.17437,2510.22975,2605.19386,2606.16202,2601.17251,2510.21447,2511.08310,2605.09586,2611.08338,2611.07900,2606.05399,2607.05390,2609.07532,2610.29517,2609.34666,2609.39135,2604.07882,2304.14369,2610.17591",
+      "resolved_url": "https://export.arxiv.org/api/query?id_list=2503.17973,2508.17437,2510.22975,2605.19386,2606.16202,2601.17251,2510.21447,2511.08310,2605.09586,2611.08338,2611.07900,2606.05399,2607.05390,2609.07532,2610.29517,2609.34666,2609.39135,2604.07882,2304.14369,2610.17591",
+      "bytes": 25846,
+      "sha256": "f81cbfb8045bf39b2d54b1b090f58251877d3001afabcf64b0457fef7dd740ef",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:39:38.941706+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "paper_metadata_full",
+      "url": "https://export.arxiv.org/api/query?id_list=2503.17973,2508.17437,2510.22975,2605.19386,2606.16202,2601.17251,2510.21447,2511.08310,2605.09586,2611.08338,2611.07900,2606.05399,2607.05390,2609.07532,2610.29517,2609.34666,2609.39135,2604.07882,2304.14369,2610.17591&max_results=30",
+      "resolved_url": "https://export.arxiv.org/api/query?id_list=2503.17973,2508.17437,2510.22975,2605.19386,2606.16202,2601.17251,2510.21447,2511.08310,2605.09586,2611.08338,2611.07900,2606.05399,2607.05390,2609.07532,2610.29517,2609.34666,2609.39135,2604.07882,2304.14369,2610.17591&max_results=30",
+      "bytes": 52258,
+      "sha256": "c213e89089da1925e94a15ffb46572d9de3961c92c40809e5c5e2a95e32db5ce",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:44:59.967931+00:00",
+      "reading_scope": "arXiv API discovery or bibliographic metadata, not experiment evidence."
+    },
+    {
+      "name": "reconphys_project",
+      "url": "https://chuanshuogushi.github.io/ReconPhys/",
+      "resolved_url": "https://chuanshuogushi.github.io/ReconPhys/",
+      "bytes": 17745,
+      "sha256": "ad2748508410dc44d798040fa18f912d247ad2d30d24536a04294422425cea9c",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:44:59.756863+00:00",
+      "reading_scope": "Official project or abstract page, including release availability."
+    },
+    {
+      "name": "physreal_project",
+      "url": "https://physreal.github.io/anonymous_web",
+      "resolved_url": "https://physreal.github.io/anonymous_web/",
+      "bytes": 14340,
+      "sha256": "3f3e940f7f39d39351d7bbc3e367a8d886e3dff3184ff31ab2093c518a12f842",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:45:00.196171+00:00",
+      "reading_scope": "Official project or abstract page, including release availability."
+    },
+    {
+      "name": "pokeflex_paper",
+      "url": "https://arxiv.org/html/2410.07688",
+      "resolved_url": "https://arxiv.org/html/2410.07688",
+      "bytes": 186743,
+      "sha256": "6e4fde9b8ccfe5c5b799753c86ab88bec6eb0b8e646294adaa67f0fcb273ef4d",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:44:59.756863+00:00",
+      "reading_scope": "Primary HTML text; method, experiment protocol, limitations and relevant tables. Not an independent reproduction. HTML revision markup may include replaced text; claims were checked against context and official implementation notes when available."
+    },
+    {
+      "name": "reconphys_readme",
+      "url": "https://raw.githubusercontent.com/chuanshuogushi/ReconPhys/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/chuanshuogushi/ReconPhys/HEAD/README.md",
+      "bytes": 2121,
+      "sha256": "8123936e1af08ef5df96aff5785ad925f1a3d44433d1abde8214a42c823ffa5f",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T05:45:24.950123+00:00",
+      "reading_scope": "Official repository README snapshot; HEAD is mutable, content hash preserved."
+    }
+  ],
+  "local_evidence": [
+    {
+      "path": "docs/NF_AUDIT.json",
+      "sha256": "09dff03009b7e820b6f454649af193b1bc869abbbb79646a46cdf647ddf24a28"
+    },
+    {
+      "path": "docs/I1_IDENTIFIABILITY.json",
+      "sha256": "d6d75c8c89da441e8205bbe5b189c36821541b3dc0190dbd493960affc565101"
+    },
+    {
+      "path": "docs/NF_TEACHER_FIXTURE.json",
+      "sha256": "4469234e19979fc777a61c8e4c73ab17a05377f90de2d12d574e52ddaeea8b50"
+    },
+    {
+      "path": "docs/NF_VIDEO_INFERENCE.json",
+      "sha256": "abb846fcdce4d9e337419bf60ba4c2f2fd2f1487ecfb9ad60f73286d61dc6452"
+    },
+    {
+      "path": "docs/NF_PROTOCOL.json",
+      "sha256": "01053be46d9112fe566ed752748a6c11dc7937b3fa9fd092ee9010436ed2060d"
+    }
+  ],
+  "closest_prior_art": {
+    "UniPixie": "Shared solver-agnostic encoding, probabilistic multi-solver outputs, offline solver fitting and amortization already exist.",
+    "ReconPhys": "Single-video feedforward simulation parameters already demonstrated, primarily synthetic free-fall/collision.",
+    "MatPhys": "Material priors, part representation and codebook already exist; paper vs released per-case recipe require protocol separation.",
+    "EgoPhys": "Shared bounded material corrections already reduce dense optimization; sequence-specific CMA-ES remains."
+  },
+  "proposed_contribution_not_yet_verified": [
+    "Observation-conditioned response posterior with explicit force/geometry nuisance uncertainty and observability-aware contraction.",
+    "Cross-engine adapters validated on unseen interventions and numerical settings, with irreducible representation-error output.",
+    "Distill observational equivalence sets and evaluate intervention response uncertainty without treating optimizer frequency as posterior probability."
+  ]
+}

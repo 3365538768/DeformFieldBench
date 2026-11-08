@@ -163,6 +163,7 @@ def collect():
     optimization['fieldfree_audit']=read_json(ROOT/'docs/NF_AUDIT.json')
     optimization['fieldfree_teacher']=read_json(ROOT/'docs/NF_TEACHER_FIXTURE.json')
     optimization['fieldfree_inference']=read_json(ROOT/'docs/NF_VIDEO_INFERENCE.json')
+    optimization['material_research']=read_json(ROOT/'docs/MATERIAL_RESEARCH_STATUS.json')
     # Retries retain their job history, with one stage card for the latest attempt.
     optimization['stages']=list({s['id']:s for s in optimization.get('stages',[])}.values())
     efficiency=read_json(ROOT / 'docs/G3_INTERACTION_EFFICIENCY.json')
