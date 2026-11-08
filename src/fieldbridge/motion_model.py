@@ -30,6 +30,9 @@ class MotionFieldModel(MaterialFieldModel):
         super().__init__(cfg)
         self.motion_mix = nn.Sequential(nn.Conv2d(3*cfg.width, cfg.width, 1), nn.GELU(),
                                         nn.Conv2d(cfg.width, cfg.width, 3, padding=1, groups=cfg.width))
+        if cfg.pixel_branch:
+            self.pixel_encoder=nn.Sequential(nn.Conv2d(3,16,5,stride=4,padding=2),nn.GELU(),
+                nn.Conv2d(16,32,3,stride=2,padding=1),nn.GELU(),nn.Conv2d(32,cfg.width,3,stride=2,padding=1))
 
     def _bridge_embedding(self, bridge, valid, times):
         b,v,t=valid.shape
@@ -50,6 +53,11 @@ class MotionFieldModel(MaterialFieldModel):
         else:
             frame = self.frame_encoder(rgb.flatten(0, 2))
         projected = self.project(frame)
+        if self.cfg.pixel_branch:
+            if min(rgb.shape[-2:])<16:raise ValueError('Pixel branch requires real RGB images, not feature-cache placeholders')
+            pixel=self.pixel_encoder(rgb.flatten(0,2))
+            pixel=F.interpolate(pixel,projected.shape[-2:],mode='bilinear',align_corners=False)
+            projected=projected+pixel*float(self.cfg.pixel_enabled)
         d, hh, ww = projected.shape[1:]
         clean, departure, adjacent = temporal_differences(projected.reshape(b,v,t,d,hh,ww), valid)
         local = clean.flatten(0, 2) + self.motion_mix(torch.cat((clean,departure,adjacent), 3).flatten(0, 2))

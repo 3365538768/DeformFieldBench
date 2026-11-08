@@ -1,0 +1,67 @@
+{
+  "status": "complete",
+  "completed": 6,
+  "total": 6,
+  "results": {
+    "B_rgb": {
+      "state": "finished",
+      "best_material_mae": 0.7422082374137718,
+      "best_epoch": 16,
+      "epochs_completed": 20,
+      "field_mae_at_best": 0.5095939046284476,
+      "trainable_parameters": 3574839,
+      "stop_reason": "validation_material_plateau"
+    },
+    "C_aux": {
+      "state": "finished",
+      "best_material_mae": 0.8562696732802663,
+      "best_epoch": 5,
+      "epochs_completed": 6,
+      "field_mae_at_best": 0.05326583359775543,
+      "trainable_parameters": 3574839,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_raw": {
+      "state": "finished",
+      "best_material_mae": 0.7352553776394966,
+      "best_epoch": 18,
+      "epochs_completed": 20,
+      "field_mae_at_best": 0.05671215327676015,
+      "trainable_parameters": 3574839,
+      "stop_reason": "epochs_complete"
+    },
+    "G_raw": {
+      "state": "finished",
+      "best_material_mae": 0.7397139585593195,
+      "best_epoch": 18,
+      "epochs_completed": 20,
+      "field_mae_at_best": 0.050826663064153156,
+      "trainable_parameters": 3574839,
+      "stop_reason": "epochs_complete"
+    },
+    "D_decomposed": {
+      "state": "finished",
+      "best_material_mae": 0.7574787380439121,
+      "best_epoch": 8,
+      "epochs_completed": 12,
+      "field_mae_at_best": 0.07797052760967821,
+      "trainable_parameters": 3574839,
+      "stop_reason": "validation_material_plateau"
+    },
+    "G_decomposed": {
+      "state": "finished",
+      "best_material_mae": 0.856804132986229,
+      "best_epoch": 2,
+      "epochs_completed": 6,
+      "field_mae_at_best": 0.06376382603583933,
+      "trainable_parameters": 3574839,
+      "stop_reason": "validation_material_plateau"
+    }
+  },
+  "passes_2_percent_routing_threshold": false,
+  "single_seed_diagnostic_only": true,
+  "test_untouched": true,
+  "route": "revise_motion_or_metric_fields",
+  "detail": "\u7d27\u51d1\u5355\u89c6\u9891\u516d\u7ec4\uff1a\u5168\u5c40/\u76f8\u5bf9\u8fd0\u52a8\u53cc\u5e93\u4e0e\u539f\u59cb\u573a\u3001\u666e\u901a\u7279\u5f81\u3001\u65e0\u6865\u5339\u914d\uff1b\u53ea\u6539\u6865\u8868\u793a\uff0c\u4e0d\u589e\u52a0\u53c2\u6570\u6216\u8f93\u5165\u4fe1\u606f\u3002",
+  "updated_unix": 1794111011.7950265
+}

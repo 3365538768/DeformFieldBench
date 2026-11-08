@@ -120,3 +120,16 @@ def test_local_bridge_epoch_zero_fallback_is_not_an_improvement(tmp_path, monkey
     assert not result['passes_2_percent_routing_threshold']
     assert result['route']=='review_field_fit_and_data_targets'
     assert not result['resume_full_pair']
+
+
+def test_local_response_routing_keeps_raw_feature_control_and_separate_report(tmp_path,monkeypatch):
+    monkeypatch.setattr(manager,'ROOT',tmp_path);(tmp_path/'docs').mkdir()
+    jobs=[]
+    for name,score in [('B_rgb',.8),('C_aux',.79),('D_raw',.78),('G_raw',.70),('D_decomposed',.74),('G_decomposed',.78)]:
+        folder=tmp_path/name;folder.mkdir()
+        (folder/'timing.jsonl').write_text(json.dumps(dict(phase='joint_training',epoch=1,val_mae=score))+'\n')
+        jobs.append(dict(name=name,queue_group='local_response_probe',state='finished',output=name))
+    result=manager.motion_probe_results(jobs,'local_response_probe')
+    assert not result['passes_2_percent_routing_threshold']
+    assert (tmp_path/'docs/M3_LOCAL_RESPONSE_RESULTS.json').exists()
+    assert not (tmp_path/'docs/M1_MOTION_RESULTS.json').exists()

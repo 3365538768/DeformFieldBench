@@ -12,6 +12,7 @@ dependencies = ["torch>=2.7,<2.9", "torchvision>=0.22,<0.24", "numpy>=1.26,<3"]
 [project.optional-dependencies]
 dev = ["pytest>=8,<10"]
 video = ["opencv-python-headless==4.11.0.86"]
+analysis = ["scipy>=1.11,<2"]
 dinov3 = ["transformers==4.57.6", "safetensors==0.8.0", "torchmetrics==1.9.0", "omegaconf==2.4.0", "ftfy>=6,<7", "scikit-learn>=1.5,<2", "submitit>=1.5,<2", "termcolor>=2,<4"]
 
 [tool.setuptools.packages.find]

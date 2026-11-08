@@ -194,17 +194,18 @@ def motion_probe_results(jobs, group='architecture_probe'):
     failed = any(j['state']=='failed' for j in members)
     values = {name:r['best_material_mae'] for name,r in results.items()}
     observed=group=='observed_motion_probe'
-    names = ['B_rgb','C_aux','D_fields','G_features'] if observed else ['B_motion_rgb','C_motion_aux','D_motion_fields','G_motion_features']
-    field_name='D_fields' if observed else 'D_motion_fields'
+    local=group=='local_response_probe'
+    names = ['B_rgb','C_aux','D_decomposed','G_raw','G_decomposed'] if local else ['B_rgb','C_aux','D_fields','G_features'] if observed else ['B_motion_rgb','C_motion_aux','D_motion_fields','G_motion_features']
+    field_name='D_decomposed' if local else 'D_fields' if observed else 'D_motion_fields'
     passed = complete and all(values.get(n) is not None for n in names) and values[field_name] < .98*min(values[n] for n in names if n!=field_name)
     result = dict(status='failed' if failed else 'complete' if complete else 'running',
         completed=sum(j['state']=='finished' for j in members),total=len(members),results=results,
         passes_2_percent_routing_threshold=bool(passed),single_seed_diagnostic_only=True,test_untouched=True,
         route='repeat_independent_seeds_before_real_test' if passed else 'revise_motion_or_metric_fields' if complete else 'collecting_evidence',
-        detail=('像素位移伪标签＋时空场 token 与零场锚点；同容量 B/C/D/G，O 含真物体掩码仅作特权诊断。' if observed else
+        detail=('紧凑单视频六组：全局/相对运动双库与原始场、普通特征、无桥匹配；只改桥表示，不增加参数或输入信息。' if local else '像素位移伪标签＋时空场 token 与零场锚点；同容量 B/C/D/G，O 含真物体掩码仅作特权诊断。' if observed else
                 '同一冻结 DINOv3，先保留 4×4 局部时序再池化；B/C/D/G 同容量同预算，seed17 仅作方向筛查。'),
         updated_unix=time.time())
-    atomic(ROOT/('docs/M2_OBSERVED_RESULTS.json' if observed else 'docs/M1_MOTION_RESULTS.json'),result)
+    atomic(ROOT/('docs/M3_LOCAL_RESPONSE_RESULTS.json' if local else 'docs/M2_OBSERVED_RESULTS.json' if observed else 'docs/M1_MOTION_RESULTS.json'),result)
     return result
 
 
@@ -278,6 +279,54 @@ def restore_source_configs(jobs,planned):
             job['source_config']=configs.get(job['id']) or job['config']
 
 
+def single_video_results(jobs,group='single_video_probe'):
+    members=[j for j in jobs if j.get('queue_group')==group]
+    if not members:return None
+    cohorts={}
+    for job in members:
+        rows=read_lines(ROOT/job['output']/'timing.jsonl')
+        scores=[r for r in rows if r.get('phase')=='joint_training' and r.get('val_mae') is not None]
+        best=min(scores,key=lambda r:r['val_mae']) if scores else {}
+        cohorts.setdefault(job['cohort'],{})[job['control_label']]=dict(state=job['state'],best_material_mae=best.get('val_mae'),
+            best_epoch=best.get('epoch'),epochs_completed=len(rows),stop_reason=job.get('stop_reason'))
+    complete=all(j['state']=='finished' for j in members)
+    value=dict(status='failed' if any(j['state']=='failed' for j in members) else 'complete' if complete else 'running',
+        completed=sum(j['state']=='finished' for j in members),total=len(members),cohorts=cohorts,test_untouched=True,
+        detail='两套512/128同预算：原取样/材料重复；每套B/C/D/G均按单视频训练，验证固定首个有效视角。',
+        comparison_note='Within each cohort MAE uses its train codec; cross-cohort comparison requires the common-codec audit.',updated_unix=time.time())
+    value['executed_view_layout']='masked: three cached views, exactly one valid camera; compact transfer reserved for new experiment IDs.'
+    if group=='pixel_probe':
+        value.update(detail='RGB像素分支开/关八组B/C/D/G：同参数量、同初始化、同单视频协议；固定DINO，仅训练轻量分支。',
+            executed_view_layout='compact, existing RGB plus frozen features; pixel off/on matched controls')
+    atomic(ROOT/('docs/B1_PIXEL_RESULTS.json' if group=='pixel_probe' else 'docs/D3_SINGLE_VIDEO_RESULTS.json'),value)
+    return value
+
+
+def read_lines(path):
+    return [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
+
+
+def execution_roadmap():
+    steps=[]
+    for identifier,name,filename in [
+        ('D3p','材料动作平衡、重复取样与缓存','D3_SINGLE_VIDEO_PREPARE.json'),
+        ('D3','单视频八组匹配对照','D3_SINGLE_VIDEO_RESULTS.json'),
+        ('D3a','统一尺度与物体配对反馈','D3_SINGLE_VIDEO_AUDIT.json'),
+        ('I1','加载与尺度可辨识性核验','I1_IDENTIFIABILITY.json'),
+        ('M3','局部相对运动与响应表示','M3_LOCAL_RESPONSE_RESULTS.json'),
+        ('B1p','RGB细节输入与时间/来源验收','B1_PIXEL_PREPARE.json'),
+        ('B1','RGB像素分支八组匹配对照','B1_PIXEL_RESULTS.json'),
+        ('B1a','像素与场桥收益分别反馈','B1_PIXEL_AUDIT.json'),
+        ('B2','骨干末块适配与公开数据','B2_ADAPTATION_RESULTS.json'),
+        ('E2','视频共享响应与分引擎头','E2_VIDEO_ENGINE_RESULTS.json'),
+        ('V','多种子、独立测试与在线公平对比','V_CONFIRMATION_RESULTS.json')]:
+        report=read(ROOT/'docs'/filename,{})
+        steps.append(dict(id=identifier,name=name,state=report.get('status','waiting_for_previous_feedback'),
+            completed=report.get('completed',0),total=report.get('total',0),report='docs/'+filename))
+    atomic(ROOT/'docs/D3_EXECUTION_ROADMAP.json',dict(updated_unix=time.time(),steps=steps,
+        scope='Sequential feedback gates; no automatic full-scale promotion, no hourly automation.'))
+
+
 def main():
     os.chdir(ROOT)
     lock = (ROOT / 'docs/.optimization_manager.lock').open('a')
@@ -348,6 +397,10 @@ def main():
         strong_result = strong_backbone_results(strong) if strong else None
         motion_result = motion_probe_results(jobs)
         observed_result = motion_probe_results(jobs,'observed_motion_probe')
+        single_result = single_video_results(jobs)
+        pixel_result=single_video_results(jobs,'pixel_probe')
+        local_response_result=motion_probe_results(jobs,'local_response_probe')
+        execution_roadmap()
         engine_jobs = [j for j in jobs if j['kind']=='engine_pipeline' or j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t','G3p','G3q','G3f','G3s'}]
         engine_progress = read('docs/G2_ENGINE_PROGRESS.json', {})
         if strong_result and strong_result['status'] in {'complete','failed'} and (previous.get('strong_backbone') or {}).get('status') != strong_result['status']:
@@ -384,7 +437,7 @@ def main():
                 eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else []) + (locals_ if followup and followup['status'] == 'complete' else []) + (forced if local_bridge and local_bridge['status'] == 'complete' else []) + (anchored if forced_bridge and forced_bridge['status'] == 'complete' else [])
                 eligible += strong if anchored_bridge and anchored_bridge['status'] == 'complete' else []
                 eligible += engine_jobs if strong_result and strong_result['status'] == 'complete' else []
-                eligible += [j for j in jobs if j.get('queue_group') in {'architecture_probe','observed_motion_probe'}]
+                eligible += [j for j in jobs if j.get('queue_group') in {'architecture_probe','observed_motion_probe','single_video_probe','local_response_probe','pixel_probe'}]
                 for j in eligible:
                     control = read(ROOT / j['output'] / 'control.json', {})
                     if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused' or not dependencies_finished(j, jobs):
@@ -476,6 +529,15 @@ def main():
         if observed_result:
             stages.insert(-1,dict(id='M2',title='可见位移与保留时空结构的场桥对照',state=observed_result['status'],
                 completed=observed_result['completed'],total=observed_result['total'],detail=observed_result['detail']))
+        if single_result:
+            stages.insert(-1,dict(id='D3',title='材料重复与单视频八组匹配对照',state=single_result['status'],
+                completed=single_result['completed'],total=single_result['total'],detail=single_result['detail']))
+        if local_response_result:
+            stages.insert(-1,dict(id='M3',title='全局与局部相对运动表示对照',state=local_response_result['status'],
+                completed=local_response_result['completed'],total=local_response_result['total'],detail=local_response_result['detail']))
+        if pixel_result:
+            stages.insert(-1,dict(id='B1',title='RGB像素分支开关的八组匹配对照',state=pixel_result['status'],
+                completed=pixel_result['completed'],total=pixel_result['total'],detail=pixel_result['detail']))
         state = {'version': 2, 'manager_pid': os.getpid(), 'updated_unix': time.time(),
                  'desired': 'paused' if paused else 'running', 'stages': stages, 'jobs': jobs, 'tasks': tasks,
                  'drain': drain, 'cpu_tests_passed': test_passed, 'benchmark': bench,
@@ -487,6 +549,9 @@ def main():
                  'engine_progress': engine_progress,
                  'motion_probe': motion_result,
                  'observed_motion_probe': observed_result,
+                 'single_video_probe': single_result,
+                 'local_response_probe':local_response_result,
+                 'pixel_probe':pixel_result,
                  'stop_policy': plan['stop_policy']}
         atomic('docs/OPTIMIZATION_PROGRESS.json', state)
         previous = state

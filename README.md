@@ -82,6 +82,8 @@ DINOv3 的官方权重需要按 Meta 的许可/访问流程取得，再放入配
 
 ## 公平实验
 
+最新按序执行与验收见 [D3 / I1 / M3 反馈](docs/D3_I1_M3_EXECUTION_ZH.md)。D3 已完成两套同预算单视频 B/C/D/G，严格材料重复仅在 jelly 存在，三类材料×动作配额保持不变；场桥未超过最强 RGB 控制。受控小应变夹具的可辨识性核验已通过，但不代替原 MPM 重放。M3 使用同参数量的全局/相对位移双库及六组控制，网页显示真实阶段和每任务暂停/继续。
+
 G1–G1e 已完成，预测场尚无独有收益。G1e 修复门值整体塌缩及常量捷径后，真场诊断 MAE 降至 0.67557；预测场 0.78649、等容量特征控制 0.77761。BCE+Dice 配对结果为 0.78008 / 0.77713，仍未通过验收。G1f DINOv3 匹配对照已完成：预测场 0.802526、等容量特征 0.802460、RGB 0.805450，未获得场桥独有收益。已转向 G2 双引擎 SI 响应矩阵与三种子适配控制，网页显示实际进度并支持暂停/继续，新增双引擎三维位移预览与实际求解轨迹播放。见 [G1f 反馈](docs/G1F_FEEDBACK_ZH.md) 和 [G2 协议](docs/G2_CROSS_ENGINE_PROTOCOL_ZH.md)。不自动重启旧全量训练。见 [G1f 执行说明](docs/G1F_DINOV3_EXECUTION_ZH.md)、[G1e 完成反馈与数据升级](docs/G1E_FEEDBACK_AND_DATA_UPGRADE_ZH.md)、[跨引擎 adapter 方案及实现边界](docs/CROSS_ENGINE_MATERIAL_ADAPTER_ZH.md)。
 
 `C_aux_no_feedback` 对 `D_field_bridge` 是首要对照；`E_prior_direct` 对 `F_prior_field` 是静态先验融合对照。生成器提供 3 seeds × 6 variants。后两组必须提供独立静态模型的预测和来源信息，缺失时拒绝训练。禁止把 GT 参数作为先验填充。

@@ -1,0 +1,25 @@
+{
+  "status": "registered_before_training",
+  "sampling": "original 512/128 diagnostic; no selection by D3 winner",
+  "seed": 17,
+  "epochs": 20,
+  "patience": 4,
+  "primary": "common-codec material MAE on fixed single validation camera",
+  "controls": [
+    "B_rgb",
+    "C_aux",
+    "D_raw",
+    "G_raw",
+    "D_decomposed",
+    "G_decomposed"
+  ],
+  "hypothesis": "Separate predicted global translation and confidence-weighted relative displacement; preserve both in shared-weight temporal encoders.",
+  "capacity": "No additional parameters. D/G have raw and decomposed arms. B/C are shared: outputs and material+field gradients verified exactly equal without feedback.",
+  "information": "No target field enters inference. DIS remains pixel correspondence, residual is not strain, confidence is not contact force.",
+  "efficiency": "All six use compact layout; compare representation only within M3. D3 masked-layout times are a separate efficiency comparison.",
+  "gates": "At least 2% direction gain over all B/C/G controls; paired object intervals and independent seeds required before a final claim.",
+  "dependencies": [
+    "d3_single_video_audit",
+    "i1_identifiability_solve64"
+  ]
+}

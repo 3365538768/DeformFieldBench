@@ -23,6 +23,7 @@ def test_augmented_cached_sample_does_not_corrupt_future_views(tmp_path,monkeypa
     ds.rows=[{'sample_id':'a'}];ds.prepared={'files':{'a':'a.pt'}}
     ds.cfg=DataConfig(prepared_dir=str(tmp_path),view_dropout=.9)
     ds.split='train';ds.memory_cache=TensorLRU(4096)
+    ds.rgb_cache=None
     first=ds[0];first['valid'].zero_();first['field_mask'].zero_()
     monkeypatch.setattr(torch,'load',lambda *a,**kw:(_ for _ in ()).throw(AssertionError('cache miss')))
     ds.cfg.view_dropout=0

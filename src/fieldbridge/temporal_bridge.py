@@ -14,6 +14,12 @@ class TemporalBridgeModel(MotionFieldModel):
         self.bridge_temporal=nn.TransformerEncoder(layer,1,enable_nested_tensor=False)
 
     def _bridge_embedding(self,bridge,valid,times):
+        if self.cfg.bridge_decomposition=='translation':
+            local,global_motion=translation_banks(bridge,self.cfg.feedback=='features')
+            return .5*(self._encode_bridge(local,valid,times)+self._encode_bridge(global_motion,valid,times))
+        return self._encode_bridge(bridge,valid,times)
+
+    def _encode_bridge(self,bridge,valid,times):
         b,v,t=valid.shape;d=self.cfg.width
         frequency=torch.exp(torch.arange(0,d,2,device=times.device).float()*(-math.log(10000.)/d))
         phase=times[...,None]*frequency
@@ -30,3 +36,21 @@ class TemporalBridgeModel(MotionFieldModel):
             encoded=encoded*mask[...,None]
             return encoded.reshape(b,v,16,t,d).sum((1,2,3))/(valid.sum((1,2)).clamp_min(1)[:,None]*16)
         return encode(bridge)-encode(torch.zeros_like(bridge))
+
+
+def translation_banks(bridge,feature_control=False):
+    """Two predicted image-motion banks; no ground truth enters the bridge.
+
+    The residual includes rotation, perspective and tracking errors, not strain.
+    Feature controls receive the same operation and have identical capacity.
+    """
+    if bridge.shape[1]!=4:raise ValueError('Expected observed-motion bridge channels')
+    confidence=bridge[:,:1].sigmoid() if feature_control else bridge[:,:1].clamp(0,1)
+    denominator=confidence.sum((-1,-2),keepdim=True)
+    flow=bridge[:,1:3]
+    mean=(flow*confidence).sum((-1,-2),keepdim=True)/denominator.clamp_min(1e-6)
+    mean=mean*(denominator>1e-6)
+    zero=bridge[:,3:4]*0
+    local=torch.cat((bridge[:,:1],(flow-mean)*confidence,zero),1)
+    global_motion=torch.cat((bridge[:,:1].mean((-1,-2),keepdim=True).expand_as(bridge[:,:1]),mean.expand_as(flow),zero),1)
+    return local,global_motion

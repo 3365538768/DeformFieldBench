@@ -22,6 +22,9 @@ class ModelConfig:
     frame_chunk: int = 8
     detach_feedback: bool = False
     architecture: str = "legacy"
+    pixel_branch: bool = False
+    pixel_enabled: bool = True
+    bridge_decomposition: str = "none"  # translation keeps global and relative evidence
     residual_rgb_input: bool = True
     bridge_pooling: str = "legacy"  # normalized_anchor cancels zero-field shortcuts
 
@@ -37,6 +40,9 @@ class DataConfig:
     prepared_dir: str = ""
     prepared_cache_gib: float = 0.0  # bounded CPU cache per DataLoader worker; opt-in
     motion_targets_dir: str = ""
+    view_policy: str = "all"  # single: random train view, fixed first valid val/test view
+    rgb_cache_dir: str = ""
+    single_view_layout: str = "masked"  # compact is opt-in for new experiment IDs
 
 
 @dataclass
@@ -85,6 +91,10 @@ class Config:
         m, d, t = self.model, self.data, self.train
         if m.architecture not in {"legacy", "local_residual", "motion_field", "motion_temporal"}:
             raise ValueError("Unknown model architecture")
+        if m.pixel_branch and (m.architecture not in {'motion_field','motion_temporal'} or not d.rgb_cache_dir):
+            raise ValueError('Pixel branch needs an explicit RGB cache and motion architecture')
+        if m.bridge_decomposition not in {'none','translation'} or (m.bridge_decomposition!='none' and (m.architecture!='motion_temporal' or m.field_mode!='observed_motion')):
+            raise ValueError('Bridge decomposition requires the observed-motion temporal model')
         if m.architecture == 'local_residual' and (m.width % 4 or not m.freeze_backbone or m.train_last_blocks):
             raise ValueError('Local residual requires width divisible by four and a frozen backbone')
         if m.bridge_pooling not in {'legacy', 'normalized_anchor'}:
@@ -105,6 +115,10 @@ class Config:
             raise ValueError("Invalid data or batch dimensions")
         if not 0 <= d.view_dropout < 1:
             raise ValueError("Invalid dropout")
+        if d.view_policy not in {'all','single'} or (d.view_policy=='single' and (not d.prepared_dir or d.view_dropout)):
+            raise ValueError('Single-view policy requires a prepared cache and no view dropout')
+        if d.single_view_layout not in {'masked','compact'}:
+            raise ValueError('Unknown single-view layout')
         if not 0 <= d.prepared_cache_gib < float('inf'):
             raise ValueError("Invalid prepared-cache memory budget")
         if m.backbone != "tiny" and (not m.repo or not m.weights):
@@ -135,7 +149,7 @@ def load_config(path):
         raise ValueError("Unknown config section")
     mappings = path_map()
     for section, fields in {'model': ('repo', 'weights'),
-                            'data': ('manifest', 'stats', 'prepared_dir', 'motion_targets_dir'),
+                            'data': ('manifest', 'stats', 'prepared_dir', 'motion_targets_dir', 'rgb_cache_dir'),
                             'train': ('output', 'resume', 'initialize', 'initialize_rgb_baseline')}.items():
         for key in fields:
             if key in raw.get(section, {}):

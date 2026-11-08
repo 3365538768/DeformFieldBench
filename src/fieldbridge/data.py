@@ -141,6 +141,12 @@ class MaterialDataset(Dataset):
             if any(self.motion.get(k)!=v for k,v in expected.items()) or any(r['sample_id'] not in self.motion['files'] for r in self.rows):
                 raise ValueError('Observed-motion contract/coverage mismatch')
         self.memory_cache = TensorLRU(int(cfg.prepared_cache_gib * 1024**3))
+        self.rgb_cache=None
+        if getattr(cfg,'rgb_cache_dir',''):
+            self.rgb_cache=json.loads((Path(cfg.rgb_cache_dir)/'index.json').read_text())
+            contract=dict(schema='uint8_rgb_v1',manifest_sha256=digest,frames=cfg.frames,max_views=cfg.max_views,image_size=cfg.image_size)
+            if not cfg.prepared_dir or any(self.rgb_cache.get(k)!=v for k,v in contract.items()) or any(r['sample_id'] not in self.rgb_cache['files'] for r in self.rows):
+                raise ValueError('RGB cache contract/coverage mismatch')
         if cfg.prepared_dir:
             self.prepared = json.loads((Path(cfg.prepared_dir) / 'index.json').read_text())
             expected = {'manifest_sha256': digest, 'frames': cfg.frames, 'max_views': cfg.max_views,
@@ -173,6 +179,29 @@ class MaterialDataset(Dataset):
                 sample=dict(sample,fields=target['fields'],field_mask=target['field_mask'])
             # Augmentation must never modify retained samples across epochs.
             sample = dict(sample, valid=sample['valid'].clone(), field_mask=sample['field_mask'].float().clone())
+            if self.rgb_cache:
+                rgb_path=Path(self.cfg.rgb_cache_dir)/self.rgb_cache['files'][r['sample_id']]
+                payload=rgb_path.read_bytes()
+                if hashlib.sha256(payload).hexdigest()!=self.rgb_cache['sha256'][r['sample_id']]:raise ValueError('RGB cache SHA mismatch')
+                import io
+                cached=torch.load(io.BytesIO(payload),weights_only=True)
+                if cached['sample_id']!=r['sample_id'] or cached['rgb'].dtype!=torch.uint8 or not torch.equal(cached['valid'],sample['valid']) or not torch.equal(cached['times'],sample['times']):
+                    raise ValueError('RGB cache identity/time/mask mismatch')
+                if cached['rgb'].shape!=(*sample['valid'].shape,3,self.cfg.image_size,self.cfg.image_size):raise ValueError('RGB cache image shape mismatch')
+                sample['rgb']=cached['rgb'].float()/255.
+            if getattr(self.cfg,'view_policy','all')=='single':
+                available=torch.where(sample['valid'].any(1))[0]
+                if not len(available):raise ValueError('No available camera for single-view policy')
+                chosen=int(available[torch.randint(len(available),())] if self.split=='train' else available[0])
+                # Copy just the selected view so worker IPC/GPU transfer and model
+                # computation do not carry two masked cameras or their storage.
+                if getattr(self.cfg,'single_view_layout','masked')=='compact':
+                    for key in ['rgb','features','fields','field_mask','valid','times','diagnostic_fields']:
+                        if key in sample:sample[key]=sample[key][chosen:chosen+1].clone()
+                else:
+                    keep=torch.zeros_like(sample['valid']);keep[chosen]=sample['valid'][chosen]
+                    sample['valid']=keep;sample['field_mask']*=keep[:,:,None,None,None]
+                sample['camera_index']=chosen
             if self.split == 'train' and self.cfg.view_dropout:
                 v = sample['valid'].shape[0]
                 keep = torch.rand(v) >= self.cfg.view_dropout; keep[torch.randint(v, ())] = True

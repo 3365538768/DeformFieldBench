@@ -1,0 +1,23 @@
+{
+  "status": "complete",
+  "completed": 640,
+  "total": 640,
+  "max_quantization_error": 0.0,
+  "detail": "\u53ea\u89e3\u538b\u73b0\u6709RGB\uff0c\u4fdd\u755916\u5e27\u3001\u4e09\u53f0\u6e90\u76f8\u673a\u3001\u539f\u65f6\u95f4\u4e0e\u50cf\u7d20\uff0c\u4e0d\u8bfb\u53d6\u65e7RGB\u573a\u6570\u7ec4\uff1b\u8bad\u7ec3\u518d\u9009\u4e00\u53f0\u3002",
+  "source": "existing DeformFieldBench RGB only",
+  "new_material_labels": false,
+  "test_untouched": true,
+  "updated_unix": 1794111064.5296412,
+  "rgb_cache": "data/prepared/b1_pixel_rgb",
+  "index_sha256": "0b1687e4f2f4af92998be2ada65f6bd07b97f8fd5f09c196143023e4a94fdd30",
+  "source_rgb_shapes": [
+    [
+      3,
+      64,
+      3,
+      224,
+      224
+    ]
+  ],
+  "limitation": "Original packed RGB only; upsampling cannot recover native missing detail. Frozen DINO remains unchanged in B1 pixel probe."
+}

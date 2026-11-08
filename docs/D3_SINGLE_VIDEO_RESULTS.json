@@ -1,0 +1,72 @@
+{
+  "status": "complete",
+  "completed": 8,
+  "total": 8,
+  "cohorts": {
+    "original": {
+      "B_rgb": {
+        "state": "finished",
+        "best_material_mae": 0.7294626195801336,
+        "best_epoch": 18,
+        "epochs_completed": 20,
+        "stop_reason": "epochs_complete"
+      },
+      "C_aux": {
+        "state": "finished",
+        "best_material_mae": 0.8562205612708186,
+        "best_epoch": 5,
+        "epochs_completed": 6,
+        "stop_reason": "validation_material_plateau"
+      },
+      "D_fields": {
+        "state": "finished",
+        "best_material_mae": 0.7643306211985345,
+        "best_epoch": 9,
+        "epochs_completed": 13,
+        "stop_reason": "validation_material_plateau"
+      },
+      "G_features": {
+        "state": "finished",
+        "best_material_mae": 0.7405749256219065,
+        "best_epoch": 17,
+        "epochs_completed": 20,
+        "stop_reason": "epochs_complete"
+      }
+    },
+    "repeat": {
+      "B_rgb": {
+        "state": "finished",
+        "best_material_mae": 0.74834511233426,
+        "best_epoch": 20,
+        "epochs_completed": 20,
+        "stop_reason": "epochs_complete"
+      },
+      "C_aux": {
+        "state": "finished",
+        "best_material_mae": 0.7845474292988467,
+        "best_epoch": 11,
+        "epochs_completed": 13,
+        "stop_reason": "validation_material_plateau"
+      },
+      "D_fields": {
+        "state": "finished",
+        "best_material_mae": 0.7777422305097706,
+        "best_epoch": 9,
+        "epochs_completed": 13,
+        "stop_reason": "validation_material_plateau"
+      },
+      "G_features": {
+        "state": "finished",
+        "best_material_mae": 0.7586689613571358,
+        "best_epoch": 15,
+        "epochs_completed": 19,
+        "stop_reason": "validation_material_plateau"
+      }
+    }
+  },
+  "test_untouched": true,
+  "detail": "\u4e24\u5957512/128\u540c\u9884\u7b97\uff1a\u539f\u53d6\u6837/\u6750\u6599\u91cd\u590d\uff1b\u6bcf\u5957B/C/D/G\u5747\u6309\u5355\u89c6\u9891\u8bad\u7ec3\uff0c\u9a8c\u8bc1\u56fa\u5b9a\u9996\u4e2a\u6709\u6548\u89c6\u89d2\u3002",
+  "comparison_note": "Within each cohort MAE uses its train codec; cross-cohort comparison requires the common-codec audit.",
+  "updated_unix": 1794110383.7141452,
+  "executed_view_layout": "masked: three cached views, exactly one valid camera; compact transfer reserved for new experiment IDs."
+}

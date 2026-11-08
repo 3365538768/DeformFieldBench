@@ -1,0 +1,11 @@
+{
+  "status": "registered_before_training",
+  "primary": "fixed 128 single-camera validation material MAE",
+  "seed": 17,
+  "budget": "512 train, 20 epochs maximum, batch4 accumulation2, workers4, patience4",
+  "hypothesis": "Lightweight 224px RGB evidence complements frozen 14x14 DINO patch features.",
+  "controls": "B/C/D/G each with the same pixel encoder enabled or multiplied by zero; same trainable parameter count and initialization.",
+  "interpretation": "RGB branch gains are not field-bridge gains. Compare D against B/C/G within each arm; the off arm also controls parameter allocation and initialization.",
+  "scope": "Existing rendered RGB only. No larger source resolution, new external data, unfreezing, SI field labels or force inputs.",
+  "next_gate": "2% field gain over all matched controls then independent seeds; no automatic full training."
+}

@@ -22,23 +22,27 @@ def warp_solve(case, rest, tets):
     # Definitions need a source file for Warp's AST compiler.
     from warp_fixture_forms import stiffness, clamp_projector, tip_traction
     wp.init(); wp.set_module_options({'enable_backward': False})
-    with wp.ScopedDevice('cuda:0'):
+    with wp.ScopedDevice(case.get('device','cuda:0')):
         geo = fem.Tetmesh(tet_vertex_indices=wp.array(tets, dtype=wp.int32),
                           positions=wp.array(rest, dtype=wp.vec3))
+        double=case.get('solver_precision','float32')=='float64'
+        scalar,vector=(wp.float64,wp.vec3d) if double else (wp.float32,wp.vec3)
+        # Warp 1.11 tetra geometry/basis/forms use FP32. Its integral
+        # accumulator is FP64; retain FP64 output matrices and solve in FP64.
         space = fem.make_polynomial_space(geo, degree=1, dtype=wp.vec3)
         test = fem.make_test(space=space, domain=fem.Cells(geo))
         trial = fem.make_trial(space=space, domain=fem.Cells(geo))
         young, nu = case['young_pa'], case['poisson']
         mu = young / (2 * (1 + nu)); lam = young * nu / ((1 + nu) * (1 - 2 * nu))
         matrix = fem.integrate(stiffness, fields={'u': trial, 'v': test},
-                               values={'mu': wp.float32(mu), 'lam': wp.float32(lam)}, output_dtype=wp.float32)
+                               values={'mu': wp.float32(mu), 'lam': wp.float32(lam)}, output_dtype=scalar)
         boundary = fem.BoundarySides(geo)
         bd_test = fem.make_test(space=space, domain=boundary)
         bd_trial = fem.make_trial(space=space, domain=boundary)
-        projector = fem.integrate(clamp_projector, fields={'u': bd_trial, 'v': bd_test}, assembly='nodal', output_dtype=wp.float32)
+        projector = fem.integrate(clamp_projector, fields={'u': bd_trial, 'v': bd_test}, assembly='nodal', output_dtype=scalar)
         force = np.zeros(3); force[case['axis']] = case['force_n'] / np.prod(case['dimensions_m'][1:])
-        rhs = fem.integrate(tip_traction, fields={'v': bd_test},
-                            values={'traction': wp.vec3(*force), 'length': wp.float32(case['dimensions_m'][0])}, output_dtype=wp.vec3)
+        values={'traction':wp.vec3(*force),'length':wp.float32(case['dimensions_m'][0])}
+        rhs = fem.integrate(tip_traction, fields={'v': bd_test},values=values,output_dtype=vector)
         # Record assembled resultant before the fixed-boundary projection.
         resultant = rhs.numpy().sum(axis=0)
         fem.project_linear_system(matrix, rhs, projector)
@@ -55,7 +59,8 @@ def warp_solve(case, rest, tets):
             raise ValueError('Warp P1 node ordering differs from fixture vertices')
         return rest + displacement, {'native_coefficients_pa': {'mu': mu, 'lambda_lame': lam},
             'assembled_resultant_n': resultant.tolist(), 'cg_residual': float(residual),
-            'actual_relative_residual': actual_relative_residual, 'field_precision': 'float32',
+            'actual_relative_residual': actual_relative_residual, 'field_precision': 'float64' if double else 'float32',
+            'geometry_basis_form_precision':'float32','assembly_solve_precision':'float64' if double else 'float32',
             'cg_iterations': int(iterations), 'completed': True, 'final_max_speed_m_s': None,
             'last20_displacement_change_m': None, 'engine_version': importlib.metadata.version('warp-lang')}
 
