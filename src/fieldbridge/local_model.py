@@ -158,6 +158,9 @@ class LocalResidualModel(MaterialFieldModel):
 
 
 def build_model(cfg):
+    if cfg.architecture == 'motion_field':
+        from .motion_model import MotionFieldModel
+        return MotionFieldModel(cfg)
     return LocalResidualModel(cfg) if cfg.architecture == 'local_residual' else MaterialFieldModel(cfg)
 
 

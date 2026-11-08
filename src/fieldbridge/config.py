@@ -35,6 +35,7 @@ class DataConfig:
     image_size: int = 224
     view_dropout: float = 0.0
     prepared_dir: str = ""
+    prepared_cache_gib: float = 0.0  # bounded CPU cache per DataLoader worker; opt-in
 
 
 @dataclass
@@ -81,7 +82,7 @@ class Config:
 
     def validate(self):
         m, d, t = self.model, self.data, self.train
-        if m.architecture not in {"legacy", "local_residual"}:
+        if m.architecture not in {"legacy", "local_residual", "motion_field"}:
             raise ValueError("Unknown model architecture")
         if m.architecture == 'local_residual' and (m.width % 4 or not m.freeze_backbone or m.train_last_blocks):
             raise ValueError('Local residual requires width divisible by four and a frozen backbone')
@@ -101,6 +102,8 @@ class Config:
             raise ValueError("Invalid data or batch dimensions")
         if not 0 <= d.view_dropout < 1:
             raise ValueError("Invalid dropout")
+        if not 0 <= d.prepared_cache_gib < float('inf'):
+            raise ValueError("Invalid prepared-cache memory budget")
         if m.backbone != "tiny" and (not m.repo or not m.weights):
             raise ValueError("Pretrained runs require an explicit local repository and checkpoint")
         if sum(bool(x) for x in (t.resume, t.initialize, t.initialize_rgb_baseline)) > 1:

@@ -1,0 +1,49 @@
+{
+  "status": "complete",
+  "completed": 4,
+  "total": 4,
+  "results": {
+    "B_motion_rgb": {
+      "state": "finished",
+      "best_material_mae": 0.7034852625201131,
+      "best_epoch": 14,
+      "epochs_completed": 18,
+      "field_mae_at_best": 0.46124068728557693,
+      "trainable_parameters": 3050909,
+      "stop_reason": "validation_material_plateau"
+    },
+    "C_motion_aux": {
+      "state": "finished",
+      "best_material_mae": 0.6802820784976532,
+      "best_epoch": 12,
+      "epochs_completed": 16,
+      "field_mae_at_best": 0.06191476136276471,
+      "trainable_parameters": 3050909,
+      "stop_reason": "validation_material_plateau"
+    },
+    "D_motion_fields": {
+      "state": "finished",
+      "best_material_mae": 0.6828363447910348,
+      "best_epoch": 12,
+      "epochs_completed": 16,
+      "field_mae_at_best": 0.06053140440824115,
+      "trainable_parameters": 3050909,
+      "stop_reason": "validation_material_plateau"
+    },
+    "G_motion_features": {
+      "state": "finished",
+      "best_material_mae": 0.6779407158369458,
+      "best_epoch": 14,
+      "epochs_completed": 18,
+      "field_mae_at_best": 0.06616364419497137,
+      "trainable_parameters": 3050909,
+      "stop_reason": "validation_material_plateau"
+    }
+  },
+  "passes_2_percent_routing_threshold": false,
+  "single_seed_diagnostic_only": true,
+  "test_untouched": true,
+  "route": "revise_motion_or_metric_fields",
+  "detail": "\u540c\u4e00\u51bb\u7ed3 DINOv3\uff0c\u5148\u4fdd\u7559 4\u00d74 \u5c40\u90e8\u65f6\u5e8f\u518d\u6c60\u5316\uff1bB/C/D/G \u540c\u5bb9\u91cf\u540c\u9884\u7b97\uff0cseed17 \u4ec5\u4f5c\u65b9\u5411\u7b5b\u67e5\u3002",
+  "updated_unix": 1794104047.2778528
+}

@@ -1,0 +1,426 @@
+{
+  "status": "complete",
+  "completed": 4,
+  "total": 4,
+  "models": {
+    "B_motion_rgb": {
+      "checkpoint_epoch": 14,
+      "checkpoint_sha256": "c929da9f072de33de0a1a30e3ebab1934ccbdbbbe5ad967622b1b5e5f921f368",
+      "metrics": {
+        "original": {
+          "count": 430,
+          "standardized_mae": 0.7034852637801059,
+          "prediction_change_z": 0.0
+        },
+        "repeat_first_frame": {
+          "count": 430,
+          "standardized_mae": 1.0326131853946419,
+          "prediction_change_z": 0.6833098655523255
+        },
+        "reverse_observations": {
+          "count": 430,
+          "standardized_mae": 1.0025360617526742,
+          "prediction_change_z": 0.619365603424782
+        },
+        "zero_bridge": {
+          "count": 430,
+          "standardized_mae": 0.7034852637801059,
+          "prediction_change_z": 0.0
+        },
+        "reverse_time_bridge": {
+          "count": 430,
+          "standardized_mae": 0.7034852637801059,
+          "prediction_change_z": 0.0
+        }
+      },
+      "audit_seconds": 6.855697067454457,
+      "epoch_timing_median": {
+        "train_seconds": 23.862153876107186,
+        "data_wait_seconds": 18.300759816542268,
+        "validation_seconds": 6.380320628173649,
+        "cycle_seconds": 30.68689056672156
+      },
+      "parameter_mae_z": {
+        "E": {
+          "count": 128,
+          "mae": 0.6303330738155637
+        },
+        "nu": {
+          "count": 128,
+          "mae": 0.6486335907393368
+        },
+        "rho": {
+          "count": 128,
+          "mae": 0.8084010754555493
+        },
+        "sigma_y": {
+          "count": 46,
+          "mae": 0.7677302643980669
+        }
+      }
+    },
+    "C_motion_aux": {
+      "checkpoint_epoch": 12,
+      "checkpoint_sha256": "547c40b3f9eb322b03ae193e399652ee8c1b6ebfcf7814ffd49e386945e90656",
+      "metrics": {
+        "original": {
+          "count": 430,
+          "standardized_mae": 0.6802820782328761,
+          "prediction_change_z": 0.0
+        },
+        "repeat_first_frame": {
+          "count": 430,
+          "standardized_mae": 1.0298815239307493,
+          "prediction_change_z": 0.7356216785519623
+        },
+        "reverse_observations": {
+          "count": 430,
+          "standardized_mae": 0.9618327695269917,
+          "prediction_change_z": 0.5605930062227471
+        },
+        "zero_bridge": {
+          "count": 430,
+          "standardized_mae": 0.6802820782328761,
+          "prediction_change_z": 0.0
+        },
+        "reverse_time_bridge": {
+          "count": 430,
+          "standardized_mae": 0.6802820782328761,
+          "prediction_change_z": 0.0
+        }
+      },
+      "audit_seconds": 5.732106428593397,
+      "epoch_timing_median": {
+        "train_seconds": 24.057294060010463,
+        "data_wait_seconds": 18.42899116082117,
+        "validation_seconds": 6.386340289842337,
+        "cycle_seconds": 31.147303354926407
+      },
+      "parameter_mae_z": {
+        "E": {
+          "count": 128,
+          "mae": 0.5813002119830344
+        },
+        "nu": {
+          "count": 128,
+          "mae": 0.5986678341432707
+        },
+        "rho": {
+          "count": 128,
+          "mae": 0.8175616674434423
+        },
+        "sigma_y": {
+          "count": 46,
+          "mae": 0.8008150090665921
+        }
+      }
+    },
+    "D_motion_fields": {
+      "checkpoint_epoch": 12,
+      "checkpoint_sha256": "92361ec858ae83e47580a4428a6157a10a506db88a5a4afd3fdb21bf8bf4e9e7",
+      "metrics": {
+        "original": {
+          "count": 430,
+          "standardized_mae": 0.6828363374222156,
+          "prediction_change_z": 0.0
+        },
+        "repeat_first_frame": {
+          "count": 430,
+          "standardized_mae": 1.0760548757952313,
+          "prediction_change_z": 0.8004766419876453
+        },
+        "reverse_observations": {
+          "count": 430,
+          "standardized_mae": 0.9662949861482132,
+          "prediction_change_z": 0.563356195494186
+        },
+        "zero_bridge": {
+          "count": 430,
+          "standardized_mae": 0.682753159279047,
+          "prediction_change_z": 0.0013626453488372093
+        },
+        "reverse_time_bridge": {
+          "count": 430,
+          "standardized_mae": 0.6828363374222156,
+          "prediction_change_z": 0.0
+        }
+      },
+      "audit_seconds": 5.980344599112868,
+      "epoch_timing_median": {
+        "train_seconds": 23.78762015979737,
+        "data_wait_seconds": 18.27061069244519,
+        "validation_seconds": 6.4431323213502765,
+        "cycle_seconds": 30.83959025796503
+      },
+      "parameter_mae_z": {
+        "E": {
+          "count": 128,
+          "mae": 0.5828535970358644
+        },
+        "nu": {
+          "count": 128,
+          "mae": 0.6014336117805215
+        },
+        "rho": {
+          "count": 128,
+          "mae": 0.8252950124751806
+        },
+        "sigma_y": {
+          "count": 46,
+          "mae": 0.7911544333657493
+        }
+      }
+    },
+    "G_motion_features": {
+      "checkpoint_epoch": 14,
+      "checkpoint_sha256": "869a8edc2ba5971bc3638ab86c7f1c7f30cb48b3b7ac0a6d583911869d047dc8",
+      "metrics": {
+        "original": {
+          "count": 430,
+          "standardized_mae": 0.6779407235079034,
+          "prediction_change_z": 0.0
+        },
+        "repeat_first_frame": {
+          "count": 430,
+          "standardized_mae": 0.9830947787262673,
+          "prediction_change_z": 0.6524905182594477
+        },
+        "reverse_observations": {
+          "count": 430,
+          "standardized_mae": 0.955122503014498,
+          "prediction_change_z": 0.5501021984011628
+        },
+        "zero_bridge": {
+          "count": 430,
+          "standardized_mae": 0.677892179267351,
+          "prediction_change_z": 0.001542060319767442
+        },
+        "reverse_time_bridge": {
+          "count": 430,
+          "standardized_mae": 0.6779407235079034,
+          "prediction_change_z": 0.0
+        }
+      },
+      "audit_seconds": 5.876450605690479,
+      "epoch_timing_median": {
+        "train_seconds": 23.93554047960788,
+        "data_wait_seconds": 18.370971891563386,
+        "validation_seconds": 6.353465409483761,
+        "cycle_seconds": 30.737651250325143
+      },
+      "parameter_mae_z": {
+        "E": {
+          "count": 128,
+          "mae": 0.5924142910225783
+        },
+        "nu": {
+          "count": 128,
+          "mae": 0.6007119960413547
+        },
+        "rho": {
+          "count": 128,
+          "mae": 0.8135471586447238
+        },
+        "sigma_y": {
+          "count": 46,
+          "mae": 0.7534849295473617
+        }
+      }
+    }
+  },
+  "test_untouched": true,
+  "detail": "\u56fa\u5b9a\u6700\u4f73\u9a8c\u8bc1\u68c0\u67e5\u70b9\uff0c\u68c0\u67e5\u65f6\u95f4\u987a\u5e8f/\u9759\u5e27/\u573a\u6865\u4f9d\u8d56\uff1b\u6309\u7269\u4f53\u914d\u5bf9 bootstrap\uff0c\u975e\u6700\u7ec8\u6d4b\u8bd5\u3002",
+  "updated_unix": 1794103760.1989489,
+  "paired_comparisons": {
+    "D_minus_B": {
+      "objects": 10,
+      "samples": 128,
+      "bootstrap_replicates": 10000,
+      "delta_mae_left_minus_right": -0.02064891772907834,
+      "exploratory_95_cluster_interval": [
+        -0.048056587704413026,
+        0.006601517410279716
+      ],
+      "object_rows": {
+        "a_stainless_steel_si_013020": {
+          "left_mae": 0.6627008016018764,
+          "right_mae": 0.6791403450719689,
+          "label_count": 46
+        },
+        "a_silver_human_skele_013020": {
+          "left_mae": 0.7192076068371535,
+          "right_mae": 0.7770708475261927,
+          "label_count": 40
+        },
+        "a_brick_wall_013020": {
+          "left_mae": 0.7162866650268118,
+          "right_mae": 0.8002410259177076,
+          "label_count": 47
+        },
+        "a_marble_bread_013020": {
+          "left_mae": 0.4937397909164429,
+          "right_mae": 0.48143420457839964,
+          "label_count": 50
+        },
+        "a_leather_boot_013020": {
+          "left_mae": 0.5551036035919443,
+          "right_mae": 0.5610692847440851,
+          "label_count": 47
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "left_mae": 0.7512388832153792,
+          "right_mae": 0.7703189121044063,
+          "label_count": 47
+        },
+        "a_bamboo_mat_013020": {
+          "left_mae": 0.8662973914549432,
+          "right_mae": 0.8004998698068614,
+          "label_count": 44
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "left_mae": 0.7033381181256846,
+          "right_mae": 0.7008106624381617,
+          "label_count": 50
+        },
+        "a_brass_telescope_013020": {
+          "left_mae": 0.6903730601664971,
+          "right_mae": 0.7521031686443497,
+          "label_count": 44
+        },
+        "a_ice_telescope_013020": {
+          "left_mae": 0.730408110221227,
+          "right_mae": 0.8374681731065114,
+          "label_count": 15
+        }
+      },
+      "scope": "Validation-selected checkpoints; object-cluster bootstrap only; no seed uncertainty or held-out test claim."
+    },
+    "D_minus_C": {
+      "objects": 10,
+      "samples": 128,
+      "bootstrap_replicates": 10000,
+      "delta_mae_left_minus_right": 0.0025542662933815356,
+      "exploratory_95_cluster_interval": [
+        -0.004752873470695881,
+        0.01061861564311158
+      ],
+      "object_rows": {
+        "a_stainless_steel_si_013020": {
+          "left_mae": 0.6627008016018764,
+          "right_mae": 0.66591553406223,
+          "label_count": 46
+        },
+        "a_silver_human_skele_013020": {
+          "left_mae": 0.7192076068371535,
+          "right_mae": 0.7333115067332983,
+          "label_count": 40
+        },
+        "a_brick_wall_013020": {
+          "left_mae": 0.7162866650268118,
+          "right_mae": 0.7125881942821309,
+          "label_count": 47
+        },
+        "a_marble_bread_013020": {
+          "left_mae": 0.4937397909164429,
+          "right_mae": 0.4882859945297241,
+          "label_count": 50
+        },
+        "a_leather_boot_013020": {
+          "left_mae": 0.5551036035919443,
+          "right_mae": 0.5362320527275826,
+          "label_count": 47
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "left_mae": 0.7512388832153792,
+          "right_mae": 0.749200105072653,
+          "label_count": 47
+        },
+        "a_bamboo_mat_013020": {
+          "left_mae": 0.8662973914549432,
+          "right_mae": 0.8414418397217311,
+          "label_count": 44
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "left_mae": 0.7033381181256846,
+          "right_mae": 0.7131139402883128,
+          "label_count": 50
+        },
+        "a_brass_telescope_013020": {
+          "left_mae": 0.6903730601664971,
+          "right_mae": 0.7005167547190054,
+          "label_count": 44
+        },
+        "a_ice_telescope_013020": {
+          "left_mae": 0.730408110221227,
+          "right_mae": 0.7155724982420604,
+          "label_count": 15
+        }
+      },
+      "scope": "Validation-selected checkpoints; object-cluster bootstrap only; no seed uncertainty or held-out test claim."
+    },
+    "D_minus_G": {
+      "objects": 10,
+      "samples": 128,
+      "bootstrap_replicates": 10000,
+      "delta_mae_left_minus_right": 0.004895628954088965,
+      "exploratory_95_cluster_interval": [
+        -0.008878358966127141,
+        0.01711062921262087
+      ],
+      "object_rows": {
+        "a_stainless_steel_si_013020": {
+          "left_mae": 0.6627008016018764,
+          "right_mae": 0.6534470956286659,
+          "label_count": 46
+        },
+        "a_silver_human_skele_013020": {
+          "left_mae": 0.7192076068371535,
+          "right_mae": 0.7586851451545954,
+          "label_count": 40
+        },
+        "a_brick_wall_013020": {
+          "left_mae": 0.7162866650268118,
+          "right_mae": 0.6885519187025567,
+          "label_count": 47
+        },
+        "a_marble_bread_013020": {
+          "left_mae": 0.4937397909164429,
+          "right_mae": 0.46745810031890866,
+          "label_count": 50
+        },
+        "a_leather_boot_013020": {
+          "left_mae": 0.5551036035919443,
+          "right_mae": 0.5363943219343399,
+          "label_count": 47
+        },
+        "a_plastic_water_bottle_thin_transparent_plastic_isolated_013020": {
+          "left_mae": 0.7512388832153792,
+          "right_mae": 0.7475179491287216,
+          "label_count": 47
+        },
+        "a_bamboo_mat_013020": {
+          "left_mae": 0.8662973914549432,
+          "right_mae": 0.8462932815521278,
+          "label_count": 44
+        },
+        "a_gold_leaf_hamburge_013020": {
+          "left_mae": 0.7033381181256846,
+          "right_mae": 0.7139979182975367,
+          "label_count": 50
+        },
+        "a_brass_telescope_013020": {
+          "left_mae": 0.6903730601664971,
+          "right_mae": 0.7121251575564119,
+          "label_count": 44
+        },
+        "a_ice_telescope_013020": {
+          "left_mae": 0.730408110221227,
+          "right_mae": 0.7173004289468129,
+          "label_count": 15
+        }
+      },
+      "scope": "Validation-selected checkpoints; object-cluster bootstrap only; no seed uncertainty or held-out test claim."
+    }
+  },
+  "interpretation": "Dependency interventions may be out of distribution; sensitivity does not establish physical causality. Bridge time reversal can be structurally invariant under mean pooling."
+}

@@ -14,6 +14,7 @@ from torch.utils.data import Dataset
 import torch.nn.functional as F
 from .engine_domains import validate_single_parameter_domain
 from .paths import path_map, relocate_path
+from .memory_cache import TensorLRU
 
 PARAMETERS = ("E", "nu", "rho", "sigma_y")
 LAWS = {"jelly": 0, "metal": 1, "plasticine": 2}
@@ -128,6 +129,7 @@ class MaterialDataset(Dataset):
             raise ValueError("Statistics must be fitted on the current manifest's train split")
         self.codec = ParameterCodec(stats)
         self.prepared = None
+        self.memory_cache = TensorLRU(int(cfg.prepared_cache_gib * 1024**3))
         if cfg.prepared_dir:
             self.prepared = json.loads((Path(cfg.prepared_dir) / 'index.json').read_text())
             expected = {'manifest_sha256': digest, 'frames': cfg.frames, 'max_views': cfg.max_views,
@@ -141,10 +143,12 @@ class MaterialDataset(Dataset):
     def __getitem__(self, index):
         r = self.rows[index]
         if self.prepared is not None:
-            sample = torch.load(Path(self.cfg.prepared_dir) / self.prepared['files'][r['sample_id']], weights_only=True)
+            path = Path(self.cfg.prepared_dir) / self.prepared['files'][r['sample_id']]
+            sample = self.memory_cache.get(str(path), lambda: torch.load(path, weights_only=True))
             if sample['sample_id'] != r['sample_id']:
                 raise ValueError('Prepared sample identity mismatch')
-            sample['field_mask'] = sample['field_mask'].float()
+            # Augmentation must never modify retained samples across epochs.
+            sample = dict(sample, valid=sample['valid'].clone(), field_mask=sample['field_mask'].float().clone())
             if self.split == 'train' and self.cfg.view_dropout:
                 v = sample['valid'].shape[0]
                 keep = torch.rand(v) >= self.cfg.view_dropout; keep[torch.randint(v, ())] = True

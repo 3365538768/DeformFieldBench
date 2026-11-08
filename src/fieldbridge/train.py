@@ -94,6 +94,7 @@ def run(config_path):
     sampler = DistributedSampler(train, shuffle=True, seed=cfg.train.seed) if world > 1 else None
     loader = DataLoader(train, batch_size=cfg.train.batch_size, sampler=sampler, shuffle=sampler is None,
                         num_workers=cfg.train.workers, collate_fn=collate, pin_memory=device.type == 'cuda',
+                        persistent_workers=bool(cfg.train.workers and cfg.data.prepared_cache_gib),
                         generator=generator, **({'prefetch_factor': 2} if cfg.train.workers else {}))
     raw_model = build_model(cfg.model).to(device)
     backbone_sha = broadcast(sha256(cfg.model.weights) if rank == 0 and cfg.model.weights else None, world)

@@ -1,0 +1,118 @@
+{
+  "retrieved_utc": "2026-11-08T01:47:24.954030+00:00",
+  "search_tool_status": "unavailable_http_500_used_primary_source_http",
+  "sources": [
+    {
+      "name": "phystwin",
+      "url": "https://raw.githubusercontent.com/Jianghanxiao/PhysTwin/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/Jianghanxiao/PhysTwin/HEAD/README.md",
+      "status": "fetched",
+      "bytes": 20350,
+      "sha256": "67a10e7149e2575a8cedeb95b3b6f9cfc9ffc8bd22fe00496f0564e37a7db014"
+    },
+    {
+      "name": "pixie",
+      "url": "https://raw.githubusercontent.com/vlongle/pixie/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/vlongle/pixie/HEAD/README.md",
+      "status": "fetched",
+      "bytes": 13672,
+      "sha256": "dc71768e8108eca3c66fdd3aa67faaaae4b42ba59cc32316c8cddd4e3c6c7ff3"
+    },
+    {
+      "name": "vompi",
+      "url": "https://raw.githubusercontent.com/nv-tlabs/VoMP/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/nv-tlabs/VoMP/HEAD/README.md",
+      "status": "fetched",
+      "bytes": 27541,
+      "sha256": "b42536c4a8cf4536044ae8529671597c439f44faa41313ed22fb9a8fd1499f15"
+    },
+    {
+      "name": "deform360",
+      "url": "https://raw.githubusercontent.com/lhy0807/deform360/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/lhy0807/deform360/HEAD/README.md",
+      "status": "fetched",
+      "bytes": 28101,
+      "sha256": "52f2ebed1800eb8c1e6dde05fefaca15ebba4456f0756b1ca05cfc4380fc8f7a"
+    },
+    {
+      "name": "empm",
+      "url": "https://raw.githubusercontent.com/rai-opensource/empm/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/rai-opensource/empm/HEAD/README.md",
+      "status": "fetched",
+      "bytes": 5805,
+      "sha256": "1f2aef4c26eb5ca2ede96974eac6b1fffec88d727b70200d4b5751db9453755c"
+    },
+    {
+      "name": "matphys",
+      "url": "https://raw.githubusercontent.com/Yrainy0615/MatPhys/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/Yrainy0615/MatPhys/HEAD/README.md",
+      "status": "fetched",
+      "bytes": 7249,
+      "sha256": "dc0dc21e892aab4ab517e1df114d87944aefc7ce8a262676c34ca5e027b8cc93"
+    },
+    {
+      "name": "boba",
+      "url": "https://raw.githubusercontent.com/jianxiapyh/Boba-Public/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/jianxiapyh/Boba-Public/HEAD/README.md",
+      "status": "fetched",
+      "bytes": 12745,
+      "sha256": "27e87adefb6ce2e79008b4b1cd1635465255026bad293a066c7c0739d4d362b0"
+    },
+    {
+      "name": "pokeflex",
+      "url": "https://pokeflex-dataset.github.io/",
+      "resolved_url": "https://pokeflex-dataset.github.io/",
+      "status": "fetched",
+      "bytes": 26839,
+      "sha256": "90efc4455264c19ba8184d6b2590d644247c4a8f2160130493005304eac2f53c"
+    },
+    {
+      "name": "newton_mpm",
+      "url": "https://raw.githubusercontent.com/newton-physics/newton/HEAD/newton/examples/mpm/example_mpm_multi_material.py",
+      "resolved_url": "https://raw.githubusercontent.com/newton-physics/newton/HEAD/newton/examples/mpm/example_mpm_multi_material.py",
+      "status": "fetched",
+      "bytes": 7164,
+      "sha256": "3d0ffecb1e7148e5e46e5b73543704b0ac31de5c6da61ba768effd5d17ec72af"
+    },
+    {
+      "name": "arxiv_recent",
+      "url": "https://export.arxiv.org/api/query?search_query=all%3A%22material%22+AND+%28all%3A%22deformable%22+OR+all%3A%22physical+parameters%22%29&sortBy=submittedDate&sortOrder=descending&max_results=12",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=all%3A%22material%22+AND+%28all%3A%22deformable%22+OR+all%3A%22physical+parameters%22%29&sortBy=submittedDate&sortOrder=descending&max_results=12",
+      "status": "fetched",
+      "bytes": 30745,
+      "sha256": "9a9475b03a767e0efaba66335d6e6663f32f7e25d5ce19cc18be35e6cd019fb1"
+    },
+    {
+      "name": "newton_pyproject",
+      "url": "https://raw.githubusercontent.com/newton-physics/newton/HEAD/pyproject.toml",
+      "bytes": 11081,
+      "sha256": "1489c75f87346098e3e1aaf761fba8385649e7be21747572416c09586e77c44a",
+      "status": "fetched",
+      "note": "Primary-source HTTP fallback; raw source retained only on research host."
+    },
+    {
+      "name": "newton_readme",
+      "url": "https://raw.githubusercontent.com/newton-physics/newton/HEAD/README.md",
+      "bytes": 56631,
+      "sha256": "c24edaa4c2b9e35e3b374102f37a6a04619e39e7903648db42e4088cbfae4851",
+      "status": "fetched",
+      "note": "Primary-source HTTP fallback; raw source retained only on research host."
+    },
+    {
+      "name": "gpwm",
+      "url": "https://arxiv.org/abs/2611.08338",
+      "bytes": 303457,
+      "sha256": "d3cba2c8cdf60c37ef69ea1d2fa273037889e1fa4cf4da8711e51b919399debd",
+      "status": "fetched",
+      "note": "Primary-source HTTP fallback; raw source retained only on research host."
+    },
+    {
+      "name": "sfc",
+      "url": "https://arxiv.org/abs/2611.07900",
+      "bytes": 599793,
+      "sha256": "6971d3e6a4ad735297027f02e9a60dab21bbbfe9545d9754a6a915ce96db3bdd",
+      "status": "fetched",
+      "note": "Primary-source HTTP fallback; raw source retained only on research host."
+    }
+  ]
+}

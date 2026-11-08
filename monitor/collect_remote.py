@@ -133,6 +133,14 @@ def collect():
     optimization['contact_force_audit']=force_audit
     optimization['contact_surface_audit']=read_json(ROOT/'docs/G3_CONTACT_SURFACE_AUDIT.json')
     optimization['contact_force_refinement']=read_json(ROOT/'docs/G3_CONTACT_FORCE_REFINEMENT.json')
+    optimization['contact_regularization']=read_json(ROOT/'docs/G3_CONTACT_REGULARIZATION.json')
+    optimization['external_motion']=read_json(ROOT/'docs/EXTERNAL_MOTION_V1.json')
+    optimization['phystwin_eval_inputs']=read_json(ROOT/'docs/PHYSTWIN_EVAL_INPUTS.json')
+    optimization['motion_dependence']=read_json(ROOT/'docs/M1_MOTION_DEPENDENCE.json')
+    optimization['loader_efficiency']=read_json(ROOT/'docs/LOADER_EFFICIENCY.json')
+    optimization['loader_workers']=read_json(ROOT/'docs/LOADER_WORKERS.json')
+    # Retries retain their job history, with one stage card for the latest attempt.
+    optimization['stages']=list({s['id']:s for s in optimization.get('stages',[])}.values())
     efficiency=read_json(ROOT / 'docs/G3_INTERACTION_EFFICIENCY.json')
     optimization['interaction_efficiency']={k:v for k,v in efficiency.items() if k!='rows'} if efficiency else None
     optimization['data_realism_plan']=read_json(ROOT / 'docs/G3_DATA_V2_PLAN.json')

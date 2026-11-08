@@ -1,0 +1,33 @@
+{
+  "status": "complete",
+  "completed": 2,
+  "total": 2,
+  "rows": [
+    {
+      "budget_gib_per_worker": 0.0,
+      "workers": 2,
+      "passes_seconds": [
+        3.395668014883995,
+        3.2247712472453713
+      ],
+      "same_features_and_order": true,
+      "samples": 64,
+      "feature_sum": -5844781.5748681
+    },
+    {
+      "budget_gib_per_worker": 4.0,
+      "workers": 2,
+      "passes_seconds": [
+        3.306605459190905,
+        3.1497648917138577
+      ],
+      "same_features_and_order": true,
+      "samples": 64,
+      "feature_sum": -5844781.5748681
+    }
+  ],
+  "detail": "\u76f8\u540c 64 \u6761\u7f13\u5b58\u30012 workers\u3001\u4e24\u904d\u5b8c\u6574\u8bfb\u53d6\uff1b\u7b2c\u4e8c\u904d\u68c0\u9a8c\u6709\u754c RAM \u7f13\u5b58\uff0c\u72ec\u7acb\u4e8e\u6a21\u578b\u8bad\u7ec3\u3002",
+  "updated_unix": 1794103724.9284592,
+  "warm_pass_speedup": 1.0238133188063765,
+  "scope": "Loading/collation/checksum only, CPU, bounded 64 samples; not end-to-end training speedup. Budget counts tensor storage per worker, excludes Python/IPC/OS page cache."
+}

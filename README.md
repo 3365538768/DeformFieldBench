@@ -4,7 +4,9 @@
 
 核心入口：[模型](src/fieldbridge/model.py)、[训练与早停](src/fieldbridge/train.py)、[验证](src/fieldbridge/evaluation.py)、[实验队列](scripts/optimization_manager.py)、[Web 监控](monitor/README.md)、[G0/G1 配置](configs/)。
 
-目标：静态材料先验 + 动态物理场推断可用于指定仿真器的材料参数，以未见受力和真实交互验证。项目位于 A800 的 `/mnt/afs_engine/linrui/rsi_real_test`。
+目标：静态材料先验 + 动态物理场推断可用于指定仿真器的材料参数，以未见受力和真实交互验证。当前项目部署在 A800-2 的 `/kairos-yangsen/kairis-vepfs-6t/linrui/rsi_real_test`。
+
+2026-11-08：新增局部时序 `motion_field`、同容量四组对照、真实视频准备与加载效率诊断。**预测场桥仍未显示独立优势**，反力网格诊断也未通过；下一阶段以可预测的度量场、共享响应/引擎适配和公平在线预算为主。见 [本轮结果与详细优化方案](docs/NEXT_OPTIMIZATION_2026-11-08_ZH.md)。旧路径仅保留为历史记录，迁移已停止。
 
 详细路线见 [docs/OPTIMIZATION_PLAN_ZH.md](docs/OPTIMIZATION_PLAN_ZH.md)，当前验收记录见 [G0/G1 执行说明](docs/G0_G1_IMPLEMENTATION_AND_CONTROL_ZH.md)。运行时状态和日志保存在部署目录，不随 Git 发布。
 
@@ -23,7 +25,7 @@
 
 ## 环境与最短运行
 
-推荐 Python 3.12；项目支持 Python 3.10+。A800 已验证环境为 PyTorch 2.8.0+cu128 / torchvision 0.23.0。先按设备安装匹配的 PyTorch/torchvision，再安装本项目；CPU 软件检查不需要 CUDA、数据集、预训练权重或原仓库源码。
+推荐 Python 3.12；项目支持 Python 3.10+。A800-2 已验证 PyTorch 2.8.0+cu126 / torchvision 0.23.0，环境快照见 [新机环境](docs/environment-lock-a8002.txt)。该机驱动535需将 `/usr/local/cuda-12.6/compat` 放到 `LD_LIBRARY_PATH` 前部；旧 A800 的 cu128 环境仅为历史记录。先按设备安装匹配的 PyTorch/torchvision，再安装本项目；CPU 软件检查不需要 CUDA、数据集、预训练权重或原仓库源码。
 
 从全新克隆运行 CPU 最小例子：
 

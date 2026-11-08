@@ -176,6 +176,35 @@ def available_gpu_devices(job, used, totals, occupied):
             (totals[i]-used[i] >= minimum if minimum is not None else used[i] < 1000)]
 
 
+def motion_probe_results(jobs):
+    members = [j for j in jobs if j.get('queue_group') == 'architecture_probe']
+    if not members:
+        return None
+    results = {}
+    for job in members:
+        path = ROOT/job['output']/'timing.jsonl'
+        rows = [json.loads(s) for s in path.read_text().splitlines()] if path.exists() else []
+        scores = [r for r in rows if r['phase']=='joint_training' and r.get('val_mae') is not None]
+        best = min(scores,key=lambda r:r['val_mae']) if scores else {}
+        run = read(ROOT/job['output']/'run.json',{})
+        results[job['name']] = dict(state=job['state'],best_material_mae=best.get('val_mae'),
+            best_epoch=best.get('epoch'),epochs_completed=len(rows),field_mae_at_best=best.get('field_mae'),
+            trainable_parameters=run.get('trainable_parameters'),stop_reason=job.get('stop_reason'))
+    complete = all(j['state']=='finished' for j in members)
+    failed = any(j['state']=='failed' for j in members)
+    values = {name:r['best_material_mae'] for name,r in results.items()}
+    names = ['B_motion_rgb','C_motion_aux','D_motion_fields','G_motion_features']
+    passed = complete and all(values.get(n) is not None for n in names) and values['D_motion_fields'] < .98*min(values[n] for n in names if n!='D_motion_fields')
+    result = dict(status='failed' if failed else 'complete' if complete else 'running',
+        completed=sum(j['state']=='finished' for j in members),total=len(members),results=results,
+        passes_2_percent_routing_threshold=bool(passed),single_seed_diagnostic_only=True,test_untouched=True,
+        route='repeat_independent_seeds_before_real_test' if passed else 'revise_motion_or_metric_fields' if complete else 'collecting_evidence',
+        detail='同一冻结 DINOv3，先保留 4×4 局部时序再池化；B/C/D/G 同容量同预算，seed17 仅作方向筛查。',
+        updated_unix=time.time())
+    atomic(ROOT/'docs/M1_MOTION_RESULTS.json',result)
+    return result
+
+
 def strong_backbone_results(jobs):
     """Compare bridges against their own backbone's RGB estimator, never DINOv2."""
     trained = [j for j in jobs if j['kind'] == 'train']
@@ -307,6 +336,7 @@ def main():
         anchored = [j for j in jobs if j['stage'] == 'G1e']
         strong = [j for j in jobs if j['stage'] == 'G1f']
         strong_result = strong_backbone_results(strong) if strong else None
+        motion_result = motion_probe_results(jobs)
         engine_jobs = [j for j in jobs if j['kind']=='engine_pipeline' or j['stage'] in {'G2','G2r','G3v','G3c','G3r','G3t','G3p','G3q','G3f','G3s'}]
         engine_progress = read('docs/G2_ENGINE_PROGRESS.json', {})
         if strong_result and strong_result['status'] in {'complete','failed'} and (previous.get('strong_backbone') or {}).get('status') != strong_result['status']:
@@ -343,6 +373,7 @@ def main():
                 eligible = diagnostics + (followups if diagnostic and diagnostic['status'] == 'complete' else []) + (locals_ if followup and followup['status'] == 'complete' else []) + (forced if local_bridge and local_bridge['status'] == 'complete' else []) + (anchored if forced_bridge and forced_bridge['status'] == 'complete' else [])
                 eligible += strong if anchored_bridge and anchored_bridge['status'] == 'complete' else []
                 eligible += engine_jobs if strong_result and strong_result['status'] == 'complete' else []
+                eligible += [j for j in jobs if j.get('queue_group') == 'architecture_probe']
                 for j in eligible:
                     control = read(ROOT / j['output'] / 'control.json', {})
                     if j['state'] not in {'queued', 'paused'} or control.get('desired') == 'paused' or not dependencies_finished(j, jobs):
@@ -427,6 +458,10 @@ def main():
                     detail=quality.get('detail','有界诊断；未准入训练，不自动扩量。')))
             j['control'] = read(ROOT / j['output'] / 'control.json', {'desired': 'running'})
             j['runtime'] = read(ROOT / j['output'] / 'runtime.json', {})
+        if motion_result:
+            stages.insert(-1,dict(id='M1',title='局部运动编码与场桥匹配对照',
+                state=motion_result['status'],completed=motion_result['completed'],total=motion_result['total'],
+                detail=motion_result['detail']))
         state = {'version': 2, 'manager_pid': os.getpid(), 'updated_unix': time.time(),
                  'desired': 'paused' if paused else 'running', 'stages': stages, 'jobs': jobs, 'tasks': tasks,
                  'drain': drain, 'cpu_tests_passed': test_passed, 'benchmark': bench,
@@ -436,6 +471,7 @@ def main():
                  'forced_bridge': forced_bridge, 'anchored_bridge': anchored_bridge, 'events': events,
                  'strong_backbone': strong_result, 'strong_cache': read('docs/G1F_CACHE_STATUS.json'),
                  'engine_progress': engine_progress,
+                 'motion_probe': motion_result,
                  'stop_policy': plan['stop_policy']}
         atomic('docs/OPTIMIZATION_PROGRESS.json', state)
         previous = state

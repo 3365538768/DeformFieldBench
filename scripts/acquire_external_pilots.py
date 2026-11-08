@@ -6,12 +6,23 @@ examples; PhysTwin ZIP ranges inspect available schemas before a full download.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import urllib.parse
 import urllib.request
 import zipfile
 
 from fetch_sample_subset import HTTPRange
+
+
+def configure_proxy(project_root):
+    """Standard environment first; private deployment config is optional."""
+    proxy=os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy')
+    private=Path(project_root).parent/'.private/fieldbridge/proxy.json'
+    if not proxy and private.exists():proxy=json.loads(private.read_text())['proxy_url']
+    if proxy:
+        urllib.request.install_opener(urllib.request.build_opener(
+            urllib.request.ProxyHandler({'https':proxy,'http':proxy})))
 
 
 def get_json(url):
@@ -27,7 +38,7 @@ def write_json(path, value):
     temp.replace(path)
 
 
-def deform360(root, object_ids):
+def deform360(root, object_ids, before_file=None):
     repo = 'brownu/deform360'
     info = get_json(f'https://huggingface.co/api/datasets/{repo}')
     revision = info['sha']
@@ -41,6 +52,7 @@ def deform360(root, object_ids):
     selected += [n[:-4]+'.txt' for n in selected if n[:-4]+'.txt' in existing]
     receipts, budget = [], 256 * 1024**2
     for name in selected:
+        if before_file:before_file(name)
         folder = name.rsplit('/', 1)[0]
         entries = get_json(f'https://huggingface.co/api/datasets/{repo}/tree/{revision}/{urllib.parse.quote(folder)}')
         entry = next(e for e in entries if e['path'] == name)

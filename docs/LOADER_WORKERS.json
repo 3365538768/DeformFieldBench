@@ -1,0 +1,83 @@
+{
+  "status": "complete",
+  "completed": 5,
+  "total": 5,
+  "rows": [
+    {
+      "budget_gib_per_worker": 0.0,
+      "workers": 0,
+      "passes_seconds": [
+        3.617604154162109,
+        3.2637496050447226
+      ],
+      "same_probe_and_order": true,
+      "samples": 64,
+      "feature_sum": 722.971923828125,
+      "checksum_scope": "one feature element per view/frame"
+    },
+    {
+      "budget_gib_per_worker": 0.0,
+      "workers": 2,
+      "passes_seconds": [
+        1.912592627108097,
+        1.6800464950501919
+      ],
+      "same_probe_and_order": true,
+      "samples": 64,
+      "feature_sum": 722.971923828125,
+      "checksum_scope": "one feature element per view/frame"
+    },
+    {
+      "budget_gib_per_worker": 0.0,
+      "workers": 4,
+      "passes_seconds": [
+        1.2953282305970788,
+        1.182910650037229
+      ],
+      "same_probe_and_order": true,
+      "samples": 64,
+      "feature_sum": 722.971923828125,
+      "checksum_scope": "one feature element per view/frame"
+    },
+    {
+      "budget_gib_per_worker": 4.0,
+      "workers": 0,
+      "passes_seconds": [
+        3.746311859227717,
+        1.8442115364596248
+      ],
+      "same_probe_and_order": true,
+      "samples": 64,
+      "feature_sum": 722.971923828125,
+      "checksum_scope": "one feature element per view/frame"
+    },
+    {
+      "budget_gib_per_worker": 4.0,
+      "workers": 2,
+      "passes_seconds": [
+        2.2472768370062113,
+        1.2114763036370277
+      ],
+      "same_probe_and_order": true,
+      "samples": 64,
+      "feature_sum": 722.971923828125,
+      "checksum_scope": "one feature element per view/frame"
+    }
+  ],
+  "detail": "\u76f8\u540c 64 \u6761\u7f13\u5b58\u3001\u56fa\u5b9a\u987a\u5e8f\u4e24\u904d\u8bfb\u53d6\uff1b\u533a\u5206\u78c1\u76d8\u3001\u8fdb\u7a0b\u95f4\u590d\u5236\u548c\u6709\u754c RAM \u7f13\u5b58\u3002",
+  "updated_unix": 1794103921.7027957,
+  "best_bounded_configuration": {
+    "budget_gib_per_worker": 0.0,
+    "workers": 4,
+    "passes_seconds": [
+      1.2953282305970788,
+      1.182910650037229
+    ],
+    "same_probe_and_order": true,
+    "samples": 64,
+    "feature_sum": 722.971923828125,
+    "checksum_scope": "one feature element per view/frame"
+  },
+  "warm_pass_speedup": 2.759083794656853,
+  "scope": "Loading/collation/checksum only, CPU, bounded 64 samples; not end-to-end training speedup. Budget counts tensor storage per worker, excludes Python/IPC/OS page cache."
+}
