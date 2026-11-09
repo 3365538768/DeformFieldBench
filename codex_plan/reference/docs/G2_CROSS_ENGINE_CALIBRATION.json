@@ -1,0 +1,592 @@
+{
+  "status": "passed",
+  "gates": {
+    "all_cases_healthy": true,
+    "cross_engine_field_difference_below_2_percent": true,
+    "mesh_change_below_15_percent": true,
+    "inverse_E_error_below_1_percent": true,
+    "time_step_change_below_1_percent": true
+  },
+  "cross_engine_relative_field_errors": [
+    0.0001667518807856404,
+    0.0002433162504226701,
+    0.0001796577287434658,
+    1.1158550434114984e-05,
+    0.00024331625042066504
+  ],
+  "mesh_relative_changes": {
+    "warp": 0.1448405634366188,
+    "uipc": 0.14475759926418122
+  },
+  "inverse_E_relative_errors": {
+    "warp": 0.0,
+    "uipc": 1.6355177271387689e-06
+  },
+  "time_step_relative_changes": {
+    "warp": 0.0,
+    "uipc": 2.7197838896479593e-15
+  },
+  "cases": [
+    {
+      "id": "warp_c97b8168b1cc6ac82f09",
+      "native_coefficients_pa": {
+        "mu": 7692.307692307692,
+        "lambda_lame": 11538.461538461537
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.0002000000240514055,
+        0.0
+      ],
+      "cg_residual": 9.79701823139445e-12,
+      "actual_relative_residual": 0.0002224843337899074,
+      "field_precision": "float32",
+      "cg_iterations": 133,
+      "completed": true,
+      "final_max_speed_m_s": null,
+      "last20_displacement_change_m": null,
+      "engine_version": "1.11.1",
+      "engine": "warp",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          8,
+          4,
+          4
+        ],
+        "young_pa": 20000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "949b552799c90547cbf95f17bc164389b003e9fb07d8995c91b9546e9e2a4ab8",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "4d80fec9df477b2c13d26b33ab245486e181adf16447b6c1dc3f4dca682a4808",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9997973531435491,
+      "max_displacement_gradient": 0.0007274337532516009,
+      "tip_displacement_m": [
+        4.296207811727003e-08,
+        1.4887419117333895e-05,
+        -8.481610601999515e-07
+      ],
+      "wall_seconds": 2.655163571005687,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    },
+    {
+      "id": "uipc_c97b8168b1cc6ac82f09",
+      "native_coefficients_pa": {
+        "mu": 7692.307692307692,
+        "lambda_snk1": 19230.76923076923
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.00019999999999999996,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 1.9395110657546764e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          8,
+          4,
+          4
+        ],
+        "young_pa": 20000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "949b552799c90547cbf95f17bc164389b003e9fb07d8995c91b9546e9e2a4ab8",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "4d80fec9df477b2c13d26b33ab245486e181adf16447b6c1dc3f4dca682a4808",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9997973489318867,
+      "max_displacement_gradient": 0.0007274066702176946,
+      "tip_displacement_m": [
+        4.039106603088282e-08,
+        1.4886786576536609e-05,
+        -8.48143202634105e-07
+      ],
+      "wall_seconds": 1.8025900379288942,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    },
+    {
+      "id": "warp_200c86b5114c3c7bc6d5",
+      "native_coefficients_pa": {
+        "mu": 7692.307692307692,
+        "lambda_lame": 11538.461538461537
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.0001999998785322532,
+        0.0
+      ],
+      "cg_residual": 9.544406931460969e-12,
+      "actual_relative_residual": 0.0009314478957094252,
+      "field_precision": "float32",
+      "cg_iterations": 268,
+      "completed": true,
+      "final_max_speed_m_s": null,
+      "last20_displacement_change_m": null,
+      "engine_version": "1.11.1",
+      "engine": "warp",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          16,
+          8,
+          8
+        ],
+        "young_pa": 20000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "a0692c6eb8cbdb46f4c2e9096fe474473f3648ff458fefe745b17d1fc06bac08",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "4d80fec9df477b2c13d26b33ab245486e181adf16447b6c1dc3f4dca682a4808",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9997512616801032,
+      "max_displacement_gradient": 0.0008863548177262757,
+      "tip_displacement_m": [
+        1.575154489249156e-08,
+        1.7341072431046694e-05,
+        -3.101477041115668e-07
+      ],
+      "wall_seconds": 4.143312112079002,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    },
+    {
+      "id": "uipc_200c86b5114c3c7bc6d5",
+      "native_coefficients_pa": {
+        "mu": 7692.307692307692,
+        "lambda_snk1": 19230.76923076923
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.00019999999999999998,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          16,
+          8,
+          8
+        ],
+        "young_pa": 20000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "a0692c6eb8cbdb46f4c2e9096fe474473f3648ff458fefe745b17d1fc06bac08",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "4d80fec9df477b2c13d26b33ab245486e181adf16447b6c1dc3f4dca682a4808",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9997512933165876,
+      "max_displacement_gradient": 0.0008862645678232422,
+      "tip_displacement_m": [
+        1.2174885388116733e-08,
+        1.733857194706643e-05,
+        -3.100742211133277e-07
+      ],
+      "wall_seconds": 3.2995527629973367,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    },
+    {
+      "id": "warp_2184811b0cff893b62b9",
+      "native_coefficients_pa": {
+        "mu": 15384.615384615385,
+        "lambda_lame": 23076.923076923074
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.0001999998785322532,
+        0.0
+      ],
+      "cg_residual": 9.544406931460969e-12,
+      "actual_relative_residual": 0.0009314478957094252,
+      "field_precision": "float32",
+      "cg_iterations": 268,
+      "completed": true,
+      "final_max_speed_m_s": null,
+      "last20_displacement_change_m": null,
+      "engine_version": "1.11.1",
+      "engine": "warp",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          16,
+          8,
+          8
+        ],
+        "young_pa": 40000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "a0692c6eb8cbdb46f4c2e9096fe474473f3648ff458fefe745b17d1fc06bac08",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "4d80fec9df477b2c13d26b33ab245486e181adf16447b6c1dc3f4dca682a4808",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9998756308400516,
+      "max_displacement_gradient": 0.0004431774088630933,
+      "tip_displacement_m": [
+        7.87577244624578e-09,
+        8.670536215523347e-06,
+        -1.550738520557834e-07
+      ],
+      "wall_seconds": 2.5737750330008566,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    },
+    {
+      "id": "uipc_2184811b0cff893b62b9",
+      "native_coefficients_pa": {
+        "mu": 15384.615384615385,
+        "lambda_snk1": 38461.53846153846
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.00019999999999999998,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.4701624475671486e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          16,
+          8,
+          8
+        ],
+        "young_pa": 40000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "a0692c6eb8cbdb46f4c2e9096fe474473f3648ff458fefe745b17d1fc06bac08",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "4d80fec9df477b2c13d26b33ab245486e181adf16447b6c1dc3f4dca682a4808",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.999875649349902,
+      "max_displacement_gradient": 0.0004431315351363585,
+      "tip_displacement_m": [
+        6.979760986050452e-09,
+        8.669299508475007e-06,
+        -1.550357629311546e-07
+      ],
+      "wall_seconds": 3.108166935038753,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    },
+    {
+      "id": "warp_6ab05f9f56af2dbf79a9",
+      "native_coefficients_pa": {
+        "mu": 7692.307692307692,
+        "lambda_lame": 11538.461538461537
+      },
+      "assembled_resultant_n": [
+        0.0001999998785322532,
+        0.0,
+        0.0
+      ],
+      "cg_residual": 8.729348840996742e-12,
+      "actual_relative_residual": 4.956007614964619e-05,
+      "field_precision": "float32",
+      "cg_iterations": 189,
+      "completed": true,
+      "final_max_speed_m_s": null,
+      "last20_displacement_change_m": null,
+      "engine_version": "1.11.1",
+      "engine": "warp",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          16,
+          8,
+          8
+        ],
+        "young_pa": 20000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 0,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "a0692c6eb8cbdb46f4c2e9096fe474473f3648ff458fefe745b17d1fc06bac08",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "2728188cd2d9bb4ddca3f3e7585d43b5b69946a6fe6a1cbab6e6b3c4cc5f8c78",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 1.0000083652562919,
+      "max_displacement_gradient": 4.18019369617658e-05,
+      "tip_displacement_m": [
+        9.813325589173398e-07,
+        1.5750158221620552e-08,
+        1.573600948446182e-08
+      ],
+      "wall_seconds": 2.629957930999808,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    },
+    {
+      "id": "uipc_6ab05f9f56af2dbf79a9",
+      "native_coefficients_pa": {
+        "mu": 7692.307692307692,
+        "lambda_snk1": 19230.76923076923
+      },
+      "assembled_resultant_n": [
+        0.00019999999999999998,
+        0.0,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.4819682751927493e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          16,
+          8,
+          8
+        ],
+        "young_pa": 20000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 0,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "a0692c6eb8cbdb46f4c2e9096fe474473f3648ff458fefe745b17d1fc06bac08",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "2728188cd2d9bb4ddca3f3e7585d43b5b69946a6fe6a1cbab6e6b3c4cc5f8c78",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 1.00000836541115,
+      "max_displacement_gradient": 4.1801261494958454e-05,
+      "tip_displacement_m": [
+        9.813363462510495e-07,
+        1.573846126656996e-08,
+        1.5738461267150313e-08
+      ],
+      "wall_seconds": 2.3376863470766693,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    },
+    {
+      "id": "warp_efc00a1d2b8399cfff7f",
+      "native_coefficients_pa": {
+        "mu": 7692.307692307692,
+        "lambda_lame": 11538.461538461537
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.0001999998785322532,
+        0.0
+      ],
+      "cg_residual": 9.544406931460969e-12,
+      "actual_relative_residual": 0.0009314478957094252,
+      "field_precision": "float32",
+      "cg_iterations": 268,
+      "completed": true,
+      "final_max_speed_m_s": null,
+      "last20_displacement_change_m": null,
+      "engine_version": "1.11.1",
+      "engine": "warp",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          16,
+          8,
+          8
+        ],
+        "young_pa": 20000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 1,
+        "dt_seconds": 0.01,
+        "steps": 400
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "a0692c6eb8cbdb46f4c2e9096fe474473f3648ff458fefe745b17d1fc06bac08",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "4d80fec9df477b2c13d26b33ab245486e181adf16447b6c1dc3f4dca682a4808",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9997512616801032,
+      "max_displacement_gradient": 0.0008863548177262757,
+      "tip_displacement_m": [
+        1.575154489249156e-08,
+        1.7341072431046694e-05,
+        -3.101477041115668e-07
+      ],
+      "wall_seconds": 2.531039366964251,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    },
+    {
+      "id": "uipc_efc00a1d2b8399cfff7f",
+      "native_coefficients_pa": {
+        "mu": 7692.307692307692,
+        "lambda_snk1": 19230.76923076923
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.00019999999999999998,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 6.938893903907228e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          16,
+          8,
+          8
+        ],
+        "young_pa": 20000.0,
+        "poisson": 0.3,
+        "force_n": 0.0002,
+        "axis": 1,
+        "dt_seconds": 0.01,
+        "steps": 400
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "a0692c6eb8cbdb46f4c2e9096fe474473f3648ff458fefe745b17d1fc06bac08",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "4d80fec9df477b2c13d26b33ab245486e181adf16447b6c1dc3f4dca682a4808",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9997512933165876,
+      "max_displacement_gradient": 0.0008862645678232428,
+      "tip_displacement_m": [
+        1.2174885388116733e-08,
+        1.733857194706647e-05,
+        -3.100742211132988e-07
+      ],
+      "wall_seconds": 5.821543578989804,
+      "solver_source_sha256": "b5ace7bfb64f57d522666e04f5e34648d9baf5d14da08babe24f33ca7e8c3c42"
+    }
+  ],
+  "scope": "Known SI block, clamp and small known tip traction. Warp linear elasticity vs corrected UIPC SNK1. No contact, finite-strain equivalence, density inference, mixed material or RGB claims."
+}

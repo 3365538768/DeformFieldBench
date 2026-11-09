@@ -1,0 +1,134 @@
+{
+  "status": "passed",
+  "engine": "libuipc",
+  "version": "0.0.29",
+  "mapping": "snk1_physical",
+  "cases": [
+    {
+      "young_pa": 1000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        40,
+        8,
+        8
+      ],
+      "vertices": 3321,
+      "tetrahedra": 15360,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 0.00017788466942724704,
+      "euler_bernoulli_deflection_m": 0.00019999999999999998,
+      "relative_analytic_error": 0.11057665286376472,
+      "last20_deflection_range_over_analytic": 5.701684895365891e-05,
+      "final_max_speed_m_s": 4.186019606360583e-08,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.9999109100037082,
+      "completed": true,
+      "wall_seconds": 13.946906530996785,
+      "native_energy_coefficients_pa": {
+        "mu": 512820.5128205128,
+        "lambda": 897435.8974358974
+      },
+      "used_energy_coefficients_pa": {
+        "mu": 384615.3846153846,
+        "lambda": 961538.4615384615
+      }
+    },
+    {
+      "young_pa": 1000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        80,
+        16,
+        16
+      ],
+      "vertices": 23409,
+      "tetrahedra": 122880,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 0.0001938892865606023,
+      "euler_bernoulli_deflection_m": 0.00019999999999999998,
+      "relative_analytic_error": 0.03055356719698843,
+      "last20_deflection_range_over_analytic": 0.00016590317441082567,
+      "final_max_speed_m_s": 2.0736762109328077e-08,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.9998761682242803,
+      "completed": true,
+      "wall_seconds": 56.83856911689509,
+      "native_energy_coefficients_pa": {
+        "mu": 512820.5128205128,
+        "lambda": 897435.8974358974
+      },
+      "used_energy_coefficients_pa": {
+        "mu": 384615.3846153846,
+        "lambda": 961538.4615384615
+      }
+    },
+    {
+      "young_pa": 2000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        80,
+        16,
+        16
+      ],
+      "vertices": 23409,
+      "tetrahedra": 122880,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 9.694873006197444e-05,
+      "euler_bernoulli_deflection_m": 9.999999999999999e-05,
+      "relative_analytic_error": 0.03051269938025558,
+      "last20_deflection_range_over_analytic": 3.5594190220039276e-08,
+      "final_max_speed_m_s": 9.518542149990431e-12,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.9999380810455197,
+      "completed": true,
+      "wall_seconds": 42.40968340600375,
+      "native_energy_coefficients_pa": {
+        "mu": 1025641.0256410256,
+        "lambda": 1794871.7948717948
+      },
+      "used_energy_coefficients_pa": {
+        "mu": 769230.7692307692,
+        "lambda": 1923076.923076923
+      }
+    }
+  ],
+  "gates": {
+    "finite_positive_volume": true,
+    "fixed_boundary": true,
+    "settled": true,
+    "fine_analytic_within_20_percent": true,
+    "mesh_change_within_10_percent": true,
+    "inverse_E_within_5_percent": true
+  },
+  "mesh_change_over_analytic": 0.08002308566677631,
+  "inverse_E_response_ratio": 1.9999156918987866,
+  "scope": "Small-strain clamped beam under known end load. Euler-Bernoulli reference excludes shear; aspect ratio 10. Gate thresholds set before execution. Does not validate contact/mixed materials.",
+  "material_reference": "https://github.com/spiriMirror/libuipc/blob/main/docs/specification/constitutions/stable_neo_hookean.md"
+}

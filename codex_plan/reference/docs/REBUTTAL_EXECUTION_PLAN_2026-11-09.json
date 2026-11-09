@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "kind": "rebuttal_plan_not_executable_training_queue",
+  "created_local_date": "2026-11-09",
+  "deadline_user_supplied": "2026-11-15",
+  "deadline_time_and_timezone_not_supplied": true,
+  "internal_evidence_freeze_date": "2026-11-14",
+  "report": "docs/REBUTTAL_PRIORITY_PLAN_2026-11-09_ZH.md",
+  "execution_state": "paused_by_existing_user_instruction",
+  "automatic_resume": false,
+  "server_or_monitor_state_reverified_this_turn": false,
+  "new_gpu_experiments_started": false,
+  "no_results_implied_by_target_dates": true,
+  "tasks": [
+    {
+      "id": "P0-identity",
+      "target_local_dates_2026": "11-09/10",
+      "objective": "paper/table/checkpoint/runtime-config identity",
+      "state": "offline_audit_complete_runtime_receipts_unverified",
+      "depends_on": [],
+      "planned_artifacts": [
+        "version_manifest.json",
+        "checkpoint_sha256.json",
+        "resolved_configs/"
+      ]
+    },
+    {
+      "id": "P0-recompute",
+      "target_local_dates_2026": "11-10",
+      "objective": "original predictions, splits, scatter and constant controls",
+      "state": "planned_paused",
+      "depends_on": [
+        "P0-identity"
+      ],
+      "planned_artifacts": [
+        "sample_predictions.csv",
+        "scatter/",
+        "constant_controls.json"
+      ]
+    },
+    {
+      "id": "P0-feedback",
+      "target_local_dates_2026": "11-10/12",
+      "objective": "original matched C/D retraining; 3 seeds if budget allows",
+      "state": "planned_paused",
+      "depends_on": [
+        "P0-identity"
+      ],
+      "planned_artifacts": [
+        "control_matrix.json",
+        "C_D_per_seed.csv",
+        "learning_curves/"
+      ]
+    },
+    {
+      "id": "P0-physics",
+      "target_local_dates_2026": "11-10/12",
+      "objective": "original MPM calibration and damping/dt/grid audit",
+      "state": "planned_paused",
+      "depends_on": [
+        "P0-identity"
+      ],
+      "planned_artifacts": [
+        "calibration_manifest.json",
+        "response_curves/",
+        "failure_regions.json"
+      ]
+    },
+    {
+      "id": "P0-loss",
+      "target_local_dates_2026": "11-10/12",
+      "objective": "actual regularizer usage; correct text or matched loss-off retrain",
+      "state": "source_audit_complete_runtime_unverified",
+      "depends_on": [
+        "P0-identity"
+      ],
+      "planned_artifacts": [
+        "loss_runtime_receipts.json",
+        "phase_stratified_metrics.csv"
+      ]
+    },
+    {
+      "id": "P1-baselines",
+      "target_local_dates_2026": "11-10/13",
+      "objective": "PIXIE and VoMP first, AutoPhyX availability and OmniPhysGS conditional",
+      "state": "research_complete_execution_paused",
+      "depends_on": [
+        "P0-identity"
+      ],
+      "planned_artifacts": [
+        "baseline_input_contracts.json",
+        "resource_receipts.json",
+        "baseline_results.csv"
+      ]
+    },
+    {
+      "id": "P1-real",
+      "target_local_dates_2026": "11-12/13",
+      "objective": "five real sequences, common visibility and behavior comparison",
+      "state": "planned_paused",
+      "depends_on": [
+        "P0-recompute"
+      ],
+      "planned_artifacts": [
+        "real_protocol.json",
+        "visibility_masks_receipts.json",
+        "real_behavior_results.csv"
+      ]
+    },
+    {
+      "id": "P0-test",
+      "target_local_dates_2026": "11-13",
+      "objective": "locked main evaluation; paired object uncertainty and all failures",
+      "state": "planned_paused",
+      "depends_on": [
+        "P0-feedback",
+        "P0-physics",
+        "P1-baselines"
+      ],
+      "planned_artifacts": [
+        "frozen_protocol.json",
+        "test_metrics.json",
+        "cluster_bootstrap.json"
+      ]
+    },
+    {
+      "id": "P0-response",
+      "target_local_dates_2026": "11-14",
+      "objective": "three reviewer responses, figures, reproducibility and scope corrections",
+      "state": "plan_written_results_pending",
+      "depends_on": [
+        "P0-test",
+        "P0-loss"
+      ],
+      "planned_artifacts": [
+        "reviewer_responses_draft.md",
+        "claim_evidence_matrix.json",
+        "artifact_index.json"
+      ]
+    }
+  ],
+  "scope": "core_rebuttal_only",
+  "scope_update_user_authorized_local_date": "2026-11-09",
+  "review_attachment_same_sha256_as_previous": true,
+  "decision_policy": "docs/REBUTTAL_CORE_AND_V2_DECISION_ZH.md",
+  "responses_working_draft": "docs/REBUTTAL_RESPONSES_WORKING_DRAFT.md",
+  "resource_resume_clarification": "user_confirmed_no_free_machine_continue_planning_only",
+  "v2_transition": {
+    "authorized_by_user": true,
+    "state": "conditional_not_triggered",
+    "notify_user_before_starting_v2": true,
+    "do_not_wait_for_v2_success_to_report_negative_results": true,
+    "trigger_evidence": "Strict audited original-model comparison; distinguish no feedback benefit, no overall system benefit and inconclusive evidence.",
+    "practical_relative_improvement_threshold": 0.02,
+    "threshold_role": "previous_project_engineering_threshold_not_a_universal_statistical_or_physical_constant",
+    "preserve_v1_evidence": true,
+    "heavy_compute_remains_subject_to_active_resource_constraints": true
+  },
+  "decision_checkpoint": {
+    "state": "not_enough_original_protocol_evidence",
+    "current_m2_bridge_relative_error_increase_vs_aux": 0.005721224976781958,
+    "m2_is_single_seed_restructured_diagnostic": true,
+    "original_strict_C_D_results_available": false,
+    "v1_no_benefit_proven": false,
+    "v2_started": false
+  },
+  "resource_constraint_confirmed_local_date": "2026-11-09",
+  "compute_minimal_protocol": "docs/REBUTTAL_COMPUTE_MINIMAL_PROTOCOL_ZH.md",
+  "target_dates_conditional_on_compute_availability": true,
+  "blocking_evidence_missing": [
+    "Original manuscript-to-checkpoint identity and resolved runtime configs",
+    "Original per-sample predictions/replay receipts and object/split manifest",
+    "Independent strict original C/D retraining results",
+    "Original MPM physical validation receipts"
+  ],
+  "extra_source_audit_risks": [
+    "GT object mask passed by historical forward wrapper; actual evaluation input contract unverified",
+    "Training supports optional mixed GT/predicted fields; default ratio zero, actual runtime unverified",
+    "Optional shared decoder latent must be separated from predicted-map feedback in ablation definition"
+  ]
+}

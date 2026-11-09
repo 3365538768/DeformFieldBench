@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "scope": "local_source_and_saved_diagnostics_only",
+  "current_source_commit": "05f7553db383f177e9f70eb2444caf966ae51a6e",
+  "legacy_source_commit": "131c0b063d81b5413691e43ea78fe3ba64e53e9c",
+  "remote_contacted": false,
+  "gpu_jobs_launched": false,
+  "actual_paper_checkpoint_and_runtime_config_verified": false,
+  "manuscript_matches_reviewer_seen_version_verified": false,
+  "legacy_sources": {
+    "configs/logic_model/final_logic_413_5000_new.json": {
+      "status": "read",
+      "sha256": "856a454435164379bc417c88ff2ee3279e0ff298aea7a6d686eabb193791b6e0"
+    },
+    "configs/my_model/train_dataset_5000_param_only.json": {
+      "status": "read",
+      "sha256": "83507ffd57ff2fc8dfe35d3db1ab91ee4efa769f44c986f26bc4f074b4da1182"
+    },
+    "logic_model/losses.py": {
+      "status": "read",
+      "sha256": "d5db89f088a6758733317115602dadd64e83e20a2ffdcb09dbb2d16f5bd204b2"
+    },
+    "logic_model/model2.py": {
+      "status": "read",
+      "sha256": "9a06962da2b0fd2af421efd653ff1fb42332fb578a83dbbaedc66a44b43c064d"
+    },
+    "logic_model/train.py": {
+      "status": "read",
+      "sha256": "6b2b1618f4a4c9bfb87486f8903103bef1e10b4d2042ebe712f8893d45ff2306"
+    },
+    "eval/make_ablation_configs.py": {
+      "status": "read",
+      "sha256": "cfecfb839e38278d05b6ed07f5b309320cb6646f6d96b0109923f748a253c9e3"
+    },
+    "scripts/run_vlm_benchmark.sh": {
+      "status": "read",
+      "sha256": "2369c12cfb462a31e52dc1bfe954984d5d10a7d0e12ed7b0065a08245866a948"
+    },
+    "vlm_benchmark/vlm_model_registry.py": {
+      "status": "read",
+      "sha256": "bf2352495e7bdcf27ec3cb867092924404b5551d36d818867e7f38e86c91be57"
+    }
+  },
+  "optional_documents": {
+    "manuscript": {
+      "sha256": "9962dbbb6e883c95ba3891f37662a9deee7f4dca94548501e659278585745b1d",
+      "content_not_republished": true
+    },
+    "reviews": {
+      "sha256": "7640e55006b41ad436ca2cc73121e98655426cd135f9dc55efde3e3d77dcd6a6",
+      "content_not_republished": true
+    }
+  },
+  "diagnostics": {
+    "M2": {
+      "source": "docs/M2_OBSERVED_RESULTS.json",
+      "sha256": "4a4c35660ac305518f2bd4e3f929306b7a8d45a81c9cfdfe2660773e5d3bcfa6",
+      "saved_updated_unix": 1794107472.9479575,
+      "not_an_exact_original_paper_reproduction": true,
+      "scores_lower_is_better": {
+        "B_rgb": 0.6995239395426239,
+        "C_aux": 0.6828105088545356,
+        "D_fields": 0.6867170213922035,
+        "G_features": 0.7062855695877874,
+        "O_pseudo_oracle": 0.711282941868507
+      }
+    },
+    "G1F": {
+      "source": "docs/G1F_RESULTS.json",
+      "sha256": "be6402045c987033faa262a515bea6a0f9167cd3848f934bffde97b6f16c4c64",
+      "saved_updated_unix": 1794058041.4109914,
+      "not_an_exact_original_paper_reproduction": true,
+      "scores_lower_is_better": {
+        "B_rgb_only": 0.8054503357129951,
+        "D_local_fields": 0.8025261577180869,
+        "G_local_features": 0.8024597931095551,
+        "O_local_oracle": 0.6903227797909748,
+        "S_local_shuffled": 0.8019458471737846
+      }
+    },
+    "NF": {
+      "source": "docs/NF_RESULTS.json",
+      "sha256": "fca9808e4a38d71f7df560e66b4ac09ba3c2ea138bdfaf517bf57140f4da4d64",
+      "saved_updated_unix": 1794115847.467508,
+      "not_an_exact_original_paper_reproduction": true,
+      "scores_lower_is_better": {
+        "N0_video_point": 0.7664164905420093,
+        "N1_prior_point": 0.7729030678270731,
+        "N2_prior_posterior": 0.7798548697477726
+      }
+    }
+  },
+  "published_full_model_config_only": {
+    "source": "configs/logic_model/final_logic_413_5000_new.json",
+    "not_an_actual_training_receipt": true,
+    "model": {
+      "arch": "logic_v2_dino",
+      "num_views": 3,
+      "num_frames": 64,
+      "img_size": 224,
+      "dec_h": 112,
+      "dec_w": 112,
+      "dino_backbone_name": "dinov2_vitg14_reg",
+      "freeze_backbone": true,
+      "bottleneck_dim": 512
+    },
+    "train": {
+      "epochs": 320,
+      "batch_size": 1,
+      "lr": 1e-05,
+      "use_amp": true,
+      "eval_split": "train",
+      "eval_every_epochs": 9999,
+      "lambda_stress": 1,
+      "lambda_flow": 1,
+      "lambda_force": 2,
+      "lambda_phys": 0.0,
+      "use_phys_loss": false,
+      "stage1_use_phys_loss": false,
+      "stage_flow_force_epochs": 100,
+      "stage_stress_epochs": 80,
+      "stage_joint_epochs": 100,
+      "lambda_stress_edge": 0.05,
+      "lambda_flow_edge": 0.2,
+      "force_bce_weight": 0.7,
+      "force_dice_weight": 0.3,
+      "use_param_groups": false
+    },
+    "inferred_final_param_stage_epochs_if_no_cli_override": 40
+  },
+  "source_audit_findings": [
+    {
+      "finding": "Published default disables physics consistency.",
+      "source": "configs/logic_model/final_logic_413_5000_new.json",
+      "runtime_verified": false
+    },
+    {
+      "finding": "Legacy consistency aggregates V,T,H,W per sample after abs channel averaging; it is not a per-time mechanical balance.",
+      "source": "logic_model/losses.py",
+      "runtime_verified": false
+    },
+    {
+      "finding": "Legacy ablation generator has no variant removing only feedback while retaining bottleneck and field supervision.",
+      "source": "eval/make_ablation_configs.py",
+      "runtime_verified": false
+    },
+    {
+      "finding": "Default VLM wrapper selects qwen3.5-plus; this does not identify the model used for the manuscript table.",
+      "source": "scripts/run_vlm_benchmark.sh",
+      "runtime_verified": false
+    }
+  ],
+  "m2_bridge_relative_error_increase_vs_aux_control": 0.005721224976781958,
+  "unresolved_required_artifacts": [
+    "Manuscript submission/revision identity and exact associated tables.",
+    "Original model checkpoint hashes, resolved runtime configs and training logs.",
+    "Per-sample predictions, exact splits, label transforms and replay receipts.",
+    "Actual VLM request/response metadata with credentials removed.",
+    "Original simulator versions, effective runtime settings and calibration evidence."
+  ],
+  "manuscript_local_text_verified_pages_1_based": [
+    8,
+    15,
+    21,
+    22
+  ],
+  "manuscript_text_matches_preexisting_extract_for_key_tables": true
+}

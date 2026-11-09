@@ -1,0 +1,299 @@
+{
+  "schema_version": 1,
+  "created_local_date": "2026-11-09",
+  "source_commit": "de6ad15545de68bdaa636dbffddf667e92fe210b",
+  "purpose": "Claude handoff snapshot; hashes protect copy consistency, not experimental validity",
+  "files": [
+    {
+      "path": "handoff_state.json",
+      "bytes": 3396,
+      "sha256": "79081d2b321767004edbf3371970961684680a38bd034821150e5d6a4882e798"
+    },
+    {
+      "path": "README.md",
+      "bytes": 18427,
+      "sha256": "cebb2782af23a70b6de5038c0603e0cad77b29a4c06d97a211a5f26c1d4616fe"
+    },
+    {
+      "path": "reference/docs/CROSS_ENGINE_MATERIAL_ADAPTER_ZH.md",
+      "bytes": 6549,
+      "sha256": "025067608174e3f68242d590f1ed5b1aacb730434dd23e935235d2ef1e56f134"
+    },
+    {
+      "path": "reference/docs/D3_I1_M3_EXECUTION_ZH.md",
+      "bytes": 12068,
+      "sha256": "4e2d71f1a8d29ada6d1ca0b725ad76d6c1a06519727f1f63bb21b463edde2c99"
+    },
+    {
+      "path": "reference/docs/DATA_SOURCE_PILOTS.json",
+      "bytes": 8772,
+      "sha256": "2d6befb442152989fbdc57d32005bc38d9c57e3cadcfa3f09c9e9a0830a943a7"
+    },
+    {
+      "path": "reference/docs/DINOV3_PREPARATION.json",
+      "bytes": 728,
+      "sha256": "95f87b3c2ba301b103148fb76a54e9481bfbf844f99153bbf5d60230395a867a"
+    },
+    {
+      "path": "reference/docs/ENGINE_DOMAIN_ADAPTER_STATUS.json",
+      "bytes": 1198,
+      "sha256": "c40e9c772fd508f371f4e29635aab8a1bb3b92adcd43a92d2c3d86170cb2a876"
+    },
+    {
+      "path": "reference/docs/FOUR_IDEAS_RESEARCH_AND_PLAN_2026-11-08_ZH.md",
+      "bytes": 25455,
+      "sha256": "9af95f6324bc81d04c55db027903f9ab0da2f5d7890d5c66987ede1a13e27083"
+    },
+    {
+      "path": "reference/docs/FOUR_IDEAS_SOURCES_2026-11-08.json",
+      "bytes": 18660,
+      "sha256": "2e447702d878cb4d1798fef978de5f28ce04e7edd9dd64b6c0d4e35610635e13"
+    },
+    {
+      "path": "reference/docs/G1F_CACHE_STATUS.json",
+      "bytes": 267,
+      "sha256": "0d54b704d8e757f8bfc34245afb4a1ae81dc2ed881fbdd7059428954fc7929e9"
+    },
+    {
+      "path": "reference/docs/G1F_COLLATE_BENCHMARK.json",
+      "bytes": 327,
+      "sha256": "77a20b61cf4e427e04c56d197eaaff5e645606574465e9d83a0481f39a0acdd8"
+    },
+    {
+      "path": "reference/docs/G1F_DINOV3_EXECUTION_ZH.md",
+      "bytes": 5496,
+      "sha256": "962ed8d272e6f8a5fe1a5a54f150626edc636bfa2ee621b50101c248d9a46da6"
+    },
+    {
+      "path": "reference/docs/G1F_FEEDBACK_ZH.md",
+      "bytes": 1634,
+      "sha256": "4bcecdcdc9c8096ddec187ede910315f55d3cfa03ec05d2aca6e46d300fbad56"
+    },
+    {
+      "path": "reference/docs/G1F_LOCAL_CACHE.json",
+      "bytes": 635,
+      "sha256": "1e2a85fa53ddb3409d2eee0bb34a4562ac72e4a906b9e4b4a5d219200360d704"
+    },
+    {
+      "path": "reference/docs/G1F_RESULTS.json",
+      "bytes": 1735,
+      "sha256": "be6402045c987033faa262a515bea6a0f9167cd3848f934bffde97b6f16c4c64"
+    },
+    {
+      "path": "reference/docs/G1F_STARTUP.json",
+      "bytes": 245,
+      "sha256": "95e40517c0e48a1e90a4d7875faefcfcabd1b6ccf60a3e679adb37bb1df97e7f"
+    },
+    {
+      "path": "reference/docs/G2_ADAPTER_RESULTS.json",
+      "bytes": 7922,
+      "sha256": "88aaffae393bc900cc8f49123f139a921f50ef40c2cf0cf3518fc228ac8922c8"
+    },
+    {
+      "path": "reference/docs/G2_CROSS_ENGINE_CALIBRATION.json",
+      "bytes": 19036,
+      "sha256": "afa6205d10b56fc4bad6fc1fef18824c61cf9d2f14088c383e5e9986525925bb"
+    },
+    {
+      "path": "reference/docs/G2_CROSS_ENGINE_PROTOCOL_ZH.md",
+      "bytes": 8113,
+      "sha256": "3a0896802314acf10cc99af40d4f1bf105be7290ed39b16030f7239d144f9d35"
+    },
+    {
+      "path": "reference/docs/G2_ENGINE_REPLAY.json",
+      "bytes": 126968,
+      "sha256": "3293d3f35c24dc8a615036a201feb9f7ce9484c7cecf5aa032e3b65c5b17ad07"
+    },
+    {
+      "path": "reference/docs/G3_CONTACT_REGULARIZATION.json",
+      "bytes": 11786,
+      "sha256": "034f7a2546a18f7bf4967faaa97f696237c1676cf0e28f00d53856d6f7ed194f"
+    },
+    {
+      "path": "reference/docs/G3_DATA_V2_PLAN.json",
+      "bytes": 1346,
+      "sha256": "0dd1a3f57d091d9f49d18cb921f7aa4ef43134341a163ea719b85969656ce7d2"
+    },
+    {
+      "path": "reference/docs/G3_FEEDBACK_ZH.md",
+      "bytes": 2829,
+      "sha256": "9e0ba2f93e854cac0f3f3eb53d83173832a2e93e2563b5d7d61dbd1c6c9e6b8e"
+    },
+    {
+      "path": "reference/docs/G3_FORCE_VISIBILITY.json",
+      "bytes": 14227,
+      "sha256": "77de2fdd794ae7adc6e890481c030c807ccdb6368f3f393c3f979ef1e3572333"
+    },
+    {
+      "path": "reference/docs/G3_INTERACTION_EFFICIENCY.json",
+      "bytes": 33960,
+      "sha256": "428de9c793d0ec17b875fdb970349fbea5c2d8edeb7f57ca3fc8ba69f38de70f"
+    },
+    {
+      "path": "reference/docs/G3_MESH_CONVERGENCE.json",
+      "bytes": 37132,
+      "sha256": "ecdedf02a81d01fc08677a527d2e42ed3244ec97622251e316499ec4c8c4922f"
+    },
+    {
+      "path": "reference/docs/G3_REALISTIC_DATA_V2_ZH.md",
+      "bytes": 13570,
+      "sha256": "e3d914aa35794f6cc277768385406ed675a0a85b1381c0f5914b5a73d20beaaa"
+    },
+    {
+      "path": "reference/docs/I1_IDENTIFIABILITY.json",
+      "bytes": 8146,
+      "sha256": "d6d75c8c89da441e8205bbe5b189c36821541b3dc0190dbd493960affc565101"
+    },
+    {
+      "path": "reference/docs/M2_BOTTLENECK_AUDIT.json",
+      "bytes": 13623,
+      "sha256": "6d236332db0b40fce1832db7e797fdfacdf665761f4e9c804d72b3fc43402321"
+    },
+    {
+      "path": "reference/docs/M2_FEEDBACK_AND_BOTTLENECKS_ZH.md",
+      "bytes": 16218,
+      "sha256": "1ab26a408e299f58e24e6c8d92fe9422687031076e07f9f29aea9afa6fae5ec7"
+    },
+    {
+      "path": "reference/docs/M2_GRADIENT_AUDIT.json",
+      "bytes": 6173,
+      "sha256": "43482c4ea4ec1cbf186303ec59f287e279289a0555ff2b7d724825ce08b1ecfb"
+    },
+    {
+      "path": "reference/docs/M2_OBSERVED_RESULTS.json",
+      "bytes": 1953,
+      "sha256": "4a4c35660ac305518f2bd4e3f929306b7a8d45a81c9cfdfe2660773e5d3bcfa6"
+    },
+    {
+      "path": "reference/docs/M2_TEACHER_AUDIT.json",
+      "bytes": 15952,
+      "sha256": "4b0451be49c42ed27a24bb21796cee61de616a2f431b4d62c633af5c3eecd4a6"
+    },
+    {
+      "path": "reference/docs/MATERIAL_RESEARCH_STATUS.json",
+      "bytes": 2109,
+      "sha256": "57a9f27ec8b941219b2fa046f36002db90244a3a7baa85ba81dae6b1da841ae8"
+    },
+    {
+      "path": "reference/docs/NEXT_OPTIMIZATION_2026-11-08_ZH.md",
+      "bytes": 16353,
+      "sha256": "a148739dd0c46e47cb70bc812c0d12e5d35b9fcb29e94039e478f16afb73cdfd"
+    },
+    {
+      "path": "reference/docs/NF_AUDIT.json",
+      "bytes": 11851,
+      "sha256": "09dff03009b7e820b6f454649af193b1bc869abbbb79646a46cdf647ddf24a28"
+    },
+    {
+      "path": "reference/docs/NF_IMPLEMENTATION_ZH.md",
+      "bytes": 8217,
+      "sha256": "dfbd2d169273cd3d839ca57a29d2e7eee576d8a0b2b66540b0f9fd4e03b5b2db"
+    },
+    {
+      "path": "reference/docs/NF_PROTOCOL.json",
+      "bytes": 1348,
+      "sha256": "01053be46d9112fe566ed752748a6c11dc7937b3fa9fd092ee9010436ed2060d"
+    },
+    {
+      "path": "reference/docs/NF_RESULTS.json",
+      "bytes": 1011,
+      "sha256": "fca9808e4a38d71f7df560e66b4ac09ba3c2ea138bdfaf517bf57140f4da4d64"
+    },
+    {
+      "path": "reference/docs/NF_TEACHER_FIXTURE.json",
+      "bytes": 2056,
+      "sha256": "4469234e19979fc777a61c8e4c73ab17a05377f90de2d12d574e52ddaeea8b50"
+    },
+    {
+      "path": "reference/docs/PHYSTWIN_EVAL_INPUTS.json",
+      "bytes": 7002,
+      "sha256": "4a771d8b7d530d9b2a9c982ccb0d42895c3f485551b86673ed56df6ec1dbe543"
+    },
+    {
+      "path": "reference/docs/REBUTTAL_COMPUTE_MINIMAL_PROTOCOL_ZH.md",
+      "bytes": 9351,
+      "sha256": "c82566d459bcdc9ce4cae3fa9238fbb4f7eaf7613ce7ae3f5c2bb8c9be0e89ed"
+    },
+    {
+      "path": "reference/docs/REBUTTAL_CORE_AND_V2_DECISION_ZH.md",
+      "bytes": 7687,
+      "sha256": "fb9a85bfb1113d3028fc537b913879ee453fc5214f18c981a9e739729f1a1151"
+    },
+    {
+      "path": "reference/docs/REBUTTAL_EXECUTION_PLAN_2026-11-09.json",
+      "bytes": 6365,
+      "sha256": "ba821ab56da4e581a06735cb207315d2bbc2bdbf9265afafdf6d05994f306d53"
+    },
+    {
+      "path": "reference/docs/REBUTTAL_PRIORITY_PLAN_2026-11-09_ZH.md",
+      "bytes": 33622,
+      "sha256": "4a9732b824c6aeb06da54753a566b38998948af5cec4f4eebc6cbbd1963ef9e7"
+    },
+    {
+      "path": "reference/docs/REBUTTAL_PROVENANCE_2026-11-09.json",
+      "bytes": 6129,
+      "sha256": "0106254651e330a7f84fead2e5a06fd6b301f75e343f20ac5d42add4e9ffd1fd"
+    },
+    {
+      "path": "reference/docs/REBUTTAL_RESPONSES_WORKING_DRAFT.md",
+      "bytes": 8865,
+      "sha256": "7c78ff21cdb989dbe6b56762733fe1200083c608fb1952d5ffb17d06c7ab07bf"
+    },
+    {
+      "path": "reference/docs/REBUTTAL_SOURCES_2026-11-09.json",
+      "bytes": 7666,
+      "sha256": "7178f353498cdf8d0e672f79fd561a36a5f6b75d85828599a44bbe8996c19f94"
+    },
+    {
+      "path": "reference/docs/RESEARCH_DIAGNOSIS_AND_OPTIMIZATION_2026-11-07_ZH.md",
+      "bytes": 30900,
+      "sha256": "69b42b67c9a5276e4881beb2bfbf699f98b8d6a0ed149dca085d7a7b4d4cce3f"
+    },
+    {
+      "path": "reference/docs/RESEARCH_FEASIBILITY_AND_METHOD_2026-11-08_ZH.md",
+      "bytes": 35506,
+      "sha256": "7ca60e28b3c12d1e7ac7e954fbf9f758c57faa42ac998fb480c81b1edf7305ca"
+    },
+    {
+      "path": "reference/docs/RESEARCH_METHOD_SOURCES_2026-11-08.json",
+      "bytes": 36015,
+      "sha256": "c561536b6fc79270f1eb6ff4da0bdf961e58635afe9241f0df8cb4625975b060"
+    },
+    {
+      "path": "reference/docs/ROOT_MIGRATION_2026-11-07_ZH.md",
+      "bytes": 3045,
+      "sha256": "f37240eeab00401fd087b42861b2c17387949041015d2f5817d8fea864137c2f"
+    },
+    {
+      "path": "reference/docs/ROOT_MIGRATION_VALIDATION.json",
+      "bytes": 516,
+      "sha256": "5d210ae54c26e254658b54b8dae82ca395568dbf841a1b612eb43a974fbc826c"
+    },
+    {
+      "path": "reference/docs/TARGET_AND_STAGE_GATES_ZH.md",
+      "bytes": 6257,
+      "sha256": "4a56c015c47401ca192a7bba766e6664dabad43705c1412ff7edf68251807c04"
+    },
+    {
+      "path": "reference/docs/UIPC_BEAM_CALIBRATION.json",
+      "bytes": 3214,
+      "sha256": "76cf8b217e11589c96f4cfd8d7ddf0d7cb979c3f3e68b0c10184f0cc999ac13a"
+    },
+    {
+      "path": "reference/docs/UIPC_BEAM_CORRECTED_CALIBRATION.json",
+      "bytes": 4102,
+      "sha256": "cc9701d2ed6dba507b6fb52af2a05ecc2cf4f97bdebdd054be516c08c77eed65"
+    },
+    {
+      "path": "reference/docs/UIPC_MAPPING_GRID_ABLATION.json",
+      "bytes": 4616,
+      "sha256": "89c2785a798ed148a1b51dc049d545218a858140a0add8a0d9e1760bf993638a"
+    },
+    {
+      "path": "reference/scripts/audit_rebuttal_provenance.py",
+      "bytes": 6845,
+      "sha256": "1f4b804a3310191f4a47934337d551c5b4595315611fa40228fed9ab9aeeb1c6"
+    }
+  ],
+  "text_encoding": "UTF-8 with LF newlines"
+}

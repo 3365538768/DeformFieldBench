@@ -1,0 +1,31 @@
+{
+  "status": "complete",
+  "completed": 3,
+  "total": 3,
+  "results": {
+    "N0_video_point": {
+      "state": "finished",
+      "best_material_mae": 0.7664164905420093,
+      "best_epoch": 10,
+      "epochs_completed": 14,
+      "stop_reason": "validation_material_plateau"
+    },
+    "N1_prior_point": {
+      "state": "finished",
+      "best_material_mae": 0.7729030678270731,
+      "best_epoch": 8,
+      "epochs_completed": 12,
+      "stop_reason": "validation_material_plateau"
+    },
+    "N2_prior_posterior": {
+      "state": "finished",
+      "best_material_mae": 0.7798548697477726,
+      "best_epoch": 8,
+      "epochs_completed": 12,
+      "stop_reason": "validation_material_plateau"
+    }
+  },
+  "test_untouched": true,
+  "detail": "\u4e25\u683c\u96f6\u573a\uff1aN0\u76f4\u63a5\u89c6\u9891 \u2192 N1\u9996\u5e27OOF\u5148\u9a8c \u2192 N2\u6df7\u5408\u540e\u9a8c\uff1b\u65e0\u573a\u5934\u3001\u65e0\u8f85\u52a9\u573a\u635f\u5931\u3001\u65e0\u53cd\u9988\u3002",
+  "updated_unix": 1794115847.467508
+}

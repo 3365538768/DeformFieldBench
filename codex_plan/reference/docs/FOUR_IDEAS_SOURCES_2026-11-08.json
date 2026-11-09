@@ -1,0 +1,328 @@
+{
+  "research_date": "2026-11-08",
+  "compiled_utc": "2026-11-08T06:14:42.853087+00:00",
+  "report": "docs/FOUR_IDEAS_RESEARCH_AND_PLAN_2026-11-08_ZH.md",
+  "previous_source_index": "docs/RESEARCH_METHOD_SOURCES_2026-11-08.json",
+  "resource_constraint": "A800-2 remains paused. No SSH, training, model downloads, simulations or monitor polling during this four-idea review.",
+  "search_method": "Direct official source retrieval and arXiv API keyword queries. General search endpoint failed during prior review. Non-exhaustive novelty assessment.",
+  "limitations": [
+    "MaNGO HTML 404; abstract only, not detailed results evidence.",
+    "Qwen2.5-VL repository README resolves to same content as Qwen3-VL; corresponding older technical report used for historical facts.",
+    "Comparative paper numbers retain their native protocols, not pooled into a ranking."
+  ],
+  "new_sources": [
+    {
+      "name": "ideas_search_qwen_models",
+      "url": "https://export.arxiv.org/api/query?search_query=ti%3A%22Qwen3-VL%22+OR+ti%3A%22Qwen2.5-VL%22&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=ti%3A%22Qwen3-VL%22+OR+ti%3A%22Qwen2.5-VL%22&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "bytes": 25022,
+      "sha256": "69fe6ece9cbef0e8f4044fa774bf5cf43daf2c424080735d4b55202e6968ef04",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:01.969877+00:00",
+      "scope": "arXiv API discovery; abstracts are not full-paper reproduction evidence."
+    },
+    {
+      "name": "ideas_search_vlm_material",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22material%22+AND+%28all%3A%22Qwen%22+OR+all%3A%22vision-language%22%29%29+AND+%28all%3A%22physical%22+OR+all%3A%22mechanical%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22material%22+AND+%28all%3A%22Qwen%22+OR+all%3A%22vision-language%22%29%29+AND+%28all%3A%22physical%22+OR+all%3A%22mechanical%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "bytes": 42388,
+      "sha256": "f1e68c4e31af95477fade01f28add17e881df354a6716eab508279310d94374c",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:02.131452+00:00",
+      "scope": "arXiv API discovery; abstracts are not full-paper reproduction evidence."
+    },
+    {
+      "name": "ideas_search_fewshot_material",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22few-shot%22+OR+all%3A%22meta-learning%22%29+AND+%28all%3A%22material%22+OR+all%3A%22system+identification%22%29+AND+%28all%3A%22deformable%22+OR+all%3A%22physics%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22few-shot%22+OR+all%3A%22meta-learning%22%29+AND+%28all%3A%22material%22+OR+all%3A%22system+identification%22%29+AND+%28all%3A%22deformable%22+OR+all%3A%22physics%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "bytes": 41187,
+      "sha256": "82d9211cf109ad9340d73b6ad7a890afd96f371992336df0cf4c36ba34dd7b01",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:02.357520+00:00",
+      "scope": "arXiv API discovery; abstracts are not full-paper reproduction evidence."
+    },
+    {
+      "name": "ideas_search_cross_simulator",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22cross-simulator%22+OR+all%3A%22cross-engine%22+OR+all%3A%22multi-solver%22%29+AND+%28all%3A%22material%22+OR+all%3A%22physics%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22cross-simulator%22+OR+all%3A%22cross-engine%22+OR+all%3A%22multi-solver%22%29+AND+%28all%3A%22material%22+OR+all%3A%22physics%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "bytes": 42660,
+      "sha256": "128db49b9f2dbdf106a9efd941c659984677b12a807791fe8f0e6eb4ad304076",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:02.526521+00:00",
+      "scope": "arXiv API discovery; abstracts are not full-paper reproduction evidence."
+    },
+    {
+      "name": "ideas_search_intermediate_physics",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22physical%22+AND+all%3A%22material%22%29+AND+%28all%3A%22intermediate%22+OR+all%3A%22privileged%22%29+AND+all%3A%22video%22&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22physical%22+AND+all%3A%22material%22%29+AND+%28all%3A%22intermediate%22+OR+all%3A%22privileged%22%29+AND+all%3A%22video%22&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "bytes": 17869,
+      "sha256": "12587d0913b7e10ae8417e84d7fc2730a7543478969a9690a95f0a35cf7393d0",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:02.084271+00:00",
+      "scope": "arXiv API discovery; abstracts are not full-paper reproduction evidence."
+    },
+    {
+      "name": "ideas_search_real_teacher",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22distillation%22+OR+all%3A%22pseudo-label%22%29+AND+all%3A%22physics%22+AND+%28all%3A%22deformable%22+OR+all%3A%22material%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22distillation%22+OR+all%3A%22pseudo-label%22%29+AND+all%3A%22physics%22+AND+%28all%3A%22deformable%22+OR+all%3A%22material%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "bytes": 38369,
+      "sha256": "fa518506843fb9a4234e3695326dac747d959fed55c5ae73c759e7b3ec452b7a",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:02.967340+00:00",
+      "scope": "arXiv API discovery; abstracts are not full-paper reproduction evidence."
+    },
+    {
+      "name": "ideas_search_bayessim_simopt",
+      "url": "https://export.arxiv.org/api/query?search_query=ti%3A%22BayesSim%22+OR+ti%3A%22SimOpt%22+OR+ti%3A%22Rapid+Motor+Adaptation%22&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=ti%3A%22BayesSim%22+OR+ti%3A%22SimOpt%22+OR+ti%3A%22Rapid+Motor+Adaptation%22&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "bytes": 19976,
+      "sha256": "a78ebe38e075fb2ac6a61964bd8f13d9a67be44d9d135ea814ea6ab1c77ced71",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:02.573647+00:00",
+      "scope": "arXiv API discovery; abstracts are not full-paper reproduction evidence."
+    },
+    {
+      "name": "ideas_search_material_foundation",
+      "url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22foundation+model%22+OR+all%3A%22large+multimodal%22%29+AND+%28all%3A%22material+properties%22+OR+all%3A%22physical+parameter%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "resolved_url": "https://export.arxiv.org/api/query?search_query=%28all%3A%22foundation+model%22+OR+all%3A%22large+multimodal%22%29+AND+%28all%3A%22material+properties%22+OR+all%3A%22physical+parameter%22%29&start=0&max_results=16&sortBy=relevance&sortOrder=descending",
+      "bytes": 46395,
+      "sha256": "d62ed54ddf6e6a6d61aed839647d7a737aaf2499b1fdc56ca17bc424b4d7c965",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:03.445662+00:00",
+      "scope": "arXiv API discovery; abstracts are not full-paper reproduction evidence."
+    },
+    {
+      "name": "qwen3vl_readme",
+      "url": "https://raw.githubusercontent.com/QwenLM/Qwen3-VL/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/QwenLM/Qwen3-VL/HEAD/README.md",
+      "bytes": 52828,
+      "sha256": "fc21106258c51e0b91a652eef12f5925becb146ea8b8c79a4251ac2e89a2f1ac",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:02.775459+00:00",
+      "scope": "Official project / repository release notes, or abstract page only."
+    },
+    {
+      "name": "qwen25vl_readme",
+      "url": "https://raw.githubusercontent.com/QwenLM/Qwen2.5-VL/HEAD/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/QwenLM/Qwen2.5-VL/HEAD/README.md",
+      "bytes": 52828,
+      "sha256": "fc21106258c51e0b91a652eef12f5925becb146ea8b8c79a4251ac2e89a2f1ac",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:03.124167+00:00",
+      "scope": "Official project / repository release notes, or abstract page only."
+    },
+    {
+      "name": "qwen3vl_paper",
+      "url": "https://arxiv.org/html/2511.21631v2",
+      "resolved_url": "https://arxiv.org/html/2511.21631v2",
+      "bytes": 613623,
+      "sha256": "a22c5f2d9070182dd6758369f423feb6953dbe1855baf391ae88ff3a909cff48",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:33.771601+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "qwen25vl_paper",
+      "url": "https://arxiv.org/html/2502.13923v1",
+      "resolved_url": "https://arxiv.org/html/2502.13923v1",
+      "bytes": 323578,
+      "sha256": "e2e0f6ba456f1b2fb77e0f3c57dd875842c6c317160b47362e4f62cb853f8939",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:33.737467+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "adaptigraph_paper",
+      "url": "https://arxiv.org/html/2407.07889v1",
+      "resolved_url": "https://arxiv.org/html/2407.07889v1",
+      "bytes": 243948,
+      "sha256": "f88079b2d1bc3dd280a649a36d6ba137fb1ff731969793ffa94cf0927a01bec4",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:33.704610+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "bayessim_paper",
+      "url": "https://arxiv.org/html/1906.01728v1",
+      "resolved_url": "https://arxiv.org/html/1906.01728v1",
+      "bytes": 212286,
+      "sha256": "9434819aaa6885d6a9720e691fe561c4acccf3b121a3c10413c1c85ee12cd0a0",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:33.798236+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "physics_label_paper",
+      "url": "https://arxiv.org/html/2609.12181v1",
+      "resolved_url": "https://arxiv.org/html/2609.12181v1",
+      "bytes": 629293,
+      "sha256": "d3f067cfa39805c0709b2619983e3d9dc16f5a59b535b412695d7ba1003d8154",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:33.978895+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "analytic_dynamics_paper",
+      "url": "https://arxiv.org/html/2608.31025v1",
+      "resolved_url": "https://arxiv.org/html/2608.31025v1",
+      "bytes": 506672,
+      "sha256": "85b84eea6f1650a9c30a6e388a3192eece3422d488d1cdaf276a0acea5ebfd00",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:33.876443+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "physvlm_paper",
+      "url": "https://arxiv.org/html/2309.02561v4",
+      "resolved_url": "https://arxiv.org/html/2309.02561v4",
+      "bytes": 628894,
+      "sha256": "871bd087397b112c3f218e11a341736e7e18dacec1483165def1e09b9b202e3e",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:34.557565+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "vlmaterial_paper",
+      "url": "https://arxiv.org/html/2604.11671v2",
+      "resolved_url": "https://arxiv.org/html/2604.11671v2",
+      "bytes": 302073,
+      "sha256": "b6cb1ae98ebd369ff3e5f732f61f717d00b8828c40b4091d1e811d05366baf6a",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:34.284450+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "mango_paper",
+      "url": "https://arxiv.org/html/2510.05874v2",
+      "status": "failed",
+      "error": "HTTP Error 404: Not Found",
+      "scope": "Full HTML unavailable; not used as detailed experiment evidence."
+    },
+    {
+      "name": "metasysid_paper",
+      "url": "https://arxiv.org/html/2501.06167v1",
+      "resolved_url": "https://arxiv.org/html/2501.06167v1",
+      "bytes": 456003,
+      "sha256": "5d1a91e408059a2674a67e204ee88f75620b9d5a9c4d593ae707db97f6166df6",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:34.335261+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "scanmaterial_paper",
+      "url": "https://arxiv.org/html/2505.14938v1",
+      "resolved_url": "https://arxiv.org/html/2505.14938v1",
+      "bytes": 254476,
+      "sha256": "2d941fd7f98192003c9a57404741fe895ee32ae95d3f61020dd06595f8419cf9",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:34.488141+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "gen2physics_paper",
+      "url": "https://arxiv.org/html/2608.23869v1",
+      "resolved_url": "https://arxiv.org/html/2608.23869v1",
+      "bytes": 173439,
+      "sha256": "05fe71246a1788bde2740d12a4eb01b5036d7ca2c03f47a4b12bf7e92b3d1eb0",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:08:34.409450+00:00",
+      "scope": "Primary HTML full text; relevant methods, protocols, tables and limitations read; no independent reproduction."
+    },
+    {
+      "name": "adaptigraph_project",
+      "url": "https://robopil.github.io/adaptigraph/",
+      "resolved_url": "https://robopil.github.io/adaptigraph/",
+      "bytes": 21448,
+      "sha256": "a99e988d0724002beb8cead6c86b743cc6232b9e9e470deecafc1204fbed2723",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:10:22.365107+00:00",
+      "scope": "Official project / repository release notes, or abstract page only."
+    },
+    {
+      "name": "physobjects_project",
+      "url": "https://iliad.stanford.edu/pg-vlm/",
+      "resolved_url": "https://iliad.stanford.edu/pg-vlm/",
+      "bytes": 14826,
+      "sha256": "2fa93708b1e5d2db099eff1cf7588e96add166f574d4c3e642f9d727e934ad07",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:10:22.912025+00:00",
+      "scope": "Official project / repository release notes, or abstract page only."
+    },
+    {
+      "name": "qwen3vl4b_metadata",
+      "url": "https://huggingface.co/api/models/Qwen/Qwen3-VL-4B-Instruct",
+      "resolved_url": "https://huggingface.co/api/models/Qwen/Qwen3-VL-4B-Instruct",
+      "bytes": 15918,
+      "sha256": "aa8e21511b0c2296f53a9e62c086fcbdcf4c045dc2f9a28c25377665bd212b11",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:10:22.716917+00:00",
+      "model": {
+        "id": "Qwen/Qwen3-VL-4B-Instruct",
+        "sha": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+        "gated": false,
+        "private": false,
+        "license": "apache-2.0"
+      },
+      "scope": "Metadata only; no model weights downloaded or executed."
+    },
+    {
+      "name": "qwen3vl8b_metadata",
+      "url": "https://huggingface.co/api/models/Qwen/Qwen3-VL-8B-Instruct",
+      "resolved_url": "https://huggingface.co/api/models/Qwen/Qwen3-VL-8B-Instruct",
+      "bytes": 16193,
+      "sha256": "937e4a555dd796c739854cf4f632f94e6fe526e33a374c7cdebce189963156f6",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:10:22.828423+00:00",
+      "model": {
+        "id": "Qwen/Qwen3-VL-8B-Instruct",
+        "sha": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+        "gated": false,
+        "private": false,
+        "license": "apache-2.0"
+      },
+      "scope": "Metadata only; no model weights downloaded or executed."
+    },
+    {
+      "name": "mango_abs",
+      "url": "https://arxiv.org/abs/2510.05874v2",
+      "resolved_url": "https://arxiv.org/abs/2510.05874v2",
+      "bytes": 42457,
+      "sha256": "83537d28ece6b4055b5ee18730a2acf90f74ec204922b3d29a3315535fea4dba",
+      "status": "ok",
+      "retrieved_utc_from_cache_mtime": "2026-11-08T06:10:22.376712+00:00",
+      "scope": "Official project / repository release notes, or abstract page only."
+    }
+  ],
+  "local_evidence": [
+    {
+      "path": "docs/NF_AUDIT.json",
+      "sha256": "09dff03009b7e820b6f454649af193b1bc869abbbb79646a46cdf647ddf24a28"
+    },
+    {
+      "path": "docs/ENGINE_DOMAIN_ADAPTER_STATUS.json",
+      "sha256": "a35bf649c6eb9db68d020e013440e8f2891224b4b545d1100bfd218a292556bd"
+    },
+    {
+      "path": "docs/G2_ADAPTER_RESULTS.json",
+      "sha256": "88aaffae393bc900cc8f49123f139a921f50ef40c2cf0cf3518fc228ac8922c8"
+    },
+    {
+      "path": "docs/G2_ENGINE_REPLAY.json",
+      "sha256": "3293d3f35c24dc8a615036a201feb9f7ce9484c7cecf5aa032e3b65c5b17ad07"
+    },
+    {
+      "path": "docs/G3_FORCE_VISIBILITY.json",
+      "sha256": "77de2fdd794ae7adc6e890481c030c807ccdb6368f3f393c3f979ef1e3572333"
+    },
+    {
+      "path": "docs/I1_IDENTIFIABILITY.json",
+      "sha256": "d6d75c8c89da441e8205bbe5b189c36821541b3dc0190dbd493960affc565101"
+    }
+  ],
+  "new_closest_prior_art": {
+    "Analytic Dynamics": "Privileged position/displacement/deformation-gradient teacher distilled to monocular video student already demonstrated.",
+    "AdaptiGraph": "Few-interaction real-world physical-property adaptation of a material-conditioned GNN already demonstrated; not arbitrary multi-engine parameter transfer.",
+    "PhysObjects": "VLM fine-tuning on semantic physical concepts already improves recognition; distinct from measured continuous mechanical parameters."
+  },
+  "implementation_started": false
+}

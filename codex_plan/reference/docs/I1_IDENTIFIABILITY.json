@@ -1,0 +1,260 @@
+{
+  "status": "complete",
+  "completed": 8,
+  "total": 8,
+  "cases": [
+    {
+      "name": "reference",
+      "young_pa": 10000.0,
+      "density_kg_m3": 1000.0,
+      "poisson": 0.3,
+      "force_n": 0.002,
+      "force_control_tip_displacement_m": [
+        1.7553198988992622e-06,
+        -3.147387647105514e-05,
+        0.0002610621653126985
+      ],
+      "displacement_control_tip_reaction_n": [
+        -0.00025423175660486074,
+        0.00017731046704329615,
+        0.0021975146397806636
+      ],
+      "first_three_natural_frequencies_hz": [
+        1.8370381832850464,
+        2.05570543171797,
+        6.533999546466384
+      ],
+      "free_relative_residual": 1.1895937287479362e-14
+    },
+    {
+      "name": "E_half",
+      "young_pa": 5000.0,
+      "density_kg_m3": 1000.0,
+      "poisson": 0.3,
+      "force_n": 0.002,
+      "force_control_tip_displacement_m": [
+        3.5106397977985396e-06,
+        -6.294775294210811e-05,
+        0.000522124330625375
+      ],
+      "displacement_control_tip_reaction_n": [
+        -0.00012711587830242657,
+        8.865523352164612e-05,
+        0.00109875731989033
+      ],
+      "first_three_natural_frequencies_hz": [
+        1.2989821566994721,
+        1.4536032508897956,
+        4.620235387576206
+      ],
+      "free_relative_residual": 1.3356795589928676e-14
+    },
+    {
+      "name": "E_double",
+      "young_pa": 20000.0,
+      "density_kg_m3": 1000.0,
+      "poisson": 0.3,
+      "force_n": 0.002,
+      "force_control_tip_displacement_m": [
+        8.776599494496349e-07,
+        -1.5736938235527027e-05,
+        0.00013053108265634374
+      ],
+      "displacement_control_tip_reaction_n": [
+        -0.0005084635132097063,
+        0.0003546209340865845,
+        0.00439502927956132
+      ],
+      "first_three_natural_frequencies_hz": [
+        2.5979643133989443,
+        2.907206501779591,
+        9.240470775152412
+      ],
+      "free_relative_residual": 1.3356795589928676e-14
+    },
+    {
+      "name": "rho_double",
+      "young_pa": 10000.0,
+      "density_kg_m3": 2000.0,
+      "poisson": 0.3,
+      "force_n": 0.002,
+      "force_control_tip_displacement_m": [
+        1.7553198988992622e-06,
+        -3.147387647105514e-05,
+        0.0002610621653126985
+      ],
+      "displacement_control_tip_reaction_n": [
+        -0.00025423175660486074,
+        0.00017731046704329615,
+        0.0021975146397806636
+      ],
+      "first_three_natural_frequencies_hz": [
+        1.2989821566989685,
+        1.4536032508904941,
+        4.6202353875761775
+      ],
+      "free_relative_residual": 1.1895937287479362e-14
+    },
+    {
+      "name": "E_rho_force_double",
+      "young_pa": 20000.0,
+      "density_kg_m3": 2000.0,
+      "poisson": 0.3,
+      "force_n": 0.004,
+      "force_control_tip_displacement_m": [
+        1.7553198988992698e-06,
+        -3.1473876471054054e-05,
+        0.0002610621653126875
+      ],
+      "displacement_control_tip_reaction_n": [
+        -0.0005084635132097063,
+        0.0003546209340865845,
+        0.00439502927956132
+      ],
+      "first_three_natural_frequencies_hz": [
+        1.8370381832843345,
+        2.0557054317189576,
+        6.533999546466344
+      ],
+      "free_relative_residual": 1.3356795589928676e-14
+    },
+    {
+      "name": "nu_lower",
+      "young_pa": 10000.0,
+      "density_kg_m3": 1000.0,
+      "poisson": 0.25,
+      "force_n": 0.002,
+      "force_control_tip_displacement_m": [
+        1.259156217176617e-06,
+        -3.0051002296104205e-05,
+        0.0002688576914613526
+      ],
+      "displacement_control_tip_reaction_n": [
+        -0.0001755730519576058,
+        0.00016817269512009415,
+        0.002171450093389895
+      ],
+      "first_three_natural_frequencies_hz": [
+        1.8183651477008609,
+        2.0204902889353624,
+        6.648268928493956
+      ],
+      "free_relative_residual": 1.5926265115669512e-14
+    },
+    {
+      "name": "nu_higher",
+      "young_pa": 10000.0,
+      "density_kg_m3": 1000.0,
+      "poisson": 0.35,
+      "force_n": 0.002,
+      "force_control_tip_displacement_m": [
+        2.4272775361003894e-06,
+        -3.3054111363030673e-05,
+        0.0002471459926671687
+      ],
+      "displacement_control_tip_reaction_n": [
+        -0.00037447826984324034,
+        0.00019393616985625278,
+        0.0022640782171899116
+      ],
+      "first_three_natural_frequencies_hz": [
+        1.8756586038649492,
+        2.120762216323125,
+        6.427864507526248
+      ],
+      "free_relative_residual": 1.4658978623455913e-14
+    }
+  ],
+  "test_untouched": true,
+  "detail": "\u5df2\u77e5\u5c0f\u5e94\u53d8\u5939\u5177\uff1a\u5b9a\u529b/\u5b9a\u4f4d\u79fb\u3001E/\u5bc6\u5ea6\u5c3a\u5ea6\u591a\u89e3\u3001\u03bd\u654f\u611f\u6027\uff1b\u72ec\u7acb\u7ebf\u6027FEM\u4e0eWarp\u4ea4\u53c9\u6821\u9a8c\u3002",
+  "scope": "Controlled isotropic linear elastic block only. Not a replay of the original MPM dataset, not proof of plastic/finite-strain equivalence, and not a new material ground-truth source.",
+  "retry_of": [
+    "runs/i1_identifiability",
+    "runs/i1_identifiability_f64",
+    "runs/i1_identifiability_verified"
+  ],
+  "repair": "FP64 integration accumulation, matrix storage and solve; FP32 Warp geometry/basis/form values; same admission gates. Prior FP32 and mixed-basis failures retained.",
+  "updated_unix": 1794110185.3257194,
+  "controlled_fixture": {
+    "cells": [
+      4,
+      2,
+      2
+    ],
+    "dimensions_m": [
+      0.12,
+      0.04,
+      0.04
+    ],
+    "young_pa": 10000.0,
+    "poisson": 0.3,
+    "density_kg_m3": 1000.0,
+    "force_n": 0.002,
+    "axis": 2,
+    "device": "cpu",
+    "solver_precision": "float64"
+  },
+  "cross_solver": {
+    "reference": "float64 P1 tetra / scipy",
+    "check": "Warp FEM 1st-order isotropic linear elasticity on CPU",
+    "relative_displacement_difference": 1.591599300919468e-06,
+    "gate": 0.005,
+    "passed": true,
+    "warp_result_sha256": "d0873ee88bf81975e5c1ff7572b3359e66cee4962569c6a5bd727ef4719b6d93"
+  },
+  "normalized_response_changes": {
+    "reference": {
+      "force_displacement": 0.0,
+      "dirichlet_displacement": 0.0,
+      "frequency": 0.0
+    },
+    "E_half": {
+      "force_displacement": 0.9999999999999157,
+      "dirichlet_displacement": 6.412127440601346e-16,
+      "frequency": 0.29289321881345254
+    },
+    "E_double": {
+      "force_displacement": 0.5000000000000211,
+      "dirichlet_displacement": 6.412127440601346e-16,
+      "frequency": 0.414213562373095
+    },
+    "rho_double": {
+      "force_displacement": 0.0,
+      "dirichlet_displacement": 0.0,
+      "frequency": 0.29289321881344604
+    },
+    "E_rho_force_double": {
+      "force_displacement": 4.2280802683996626e-14,
+      "dirichlet_displacement": 6.412127440601346e-16,
+      "frequency": 1.7176478838073412e-13
+    },
+    "nu_lower": {
+      "force_displacement": 0.03052920891475116,
+      "dirichlet_displacement": 0.005837106363748577,
+      "frequency": 0.01706500863673639
+    },
+    "nu_higher": {
+      "force_displacement": 0.053688944512807195,
+      "dirichlet_displacement": 0.007980387631738242,
+      "frequency": 0.0183789728911479
+    }
+  },
+  "scaling_checks": {
+    "force_E_half_relative_error": 4.2280802683996626e-14,
+    "force_E_double_relative_error": 4.2280802683996626e-14
+  },
+  "maximum_free_residual": 1.5926265115669512e-14,
+  "admissions": {
+    "reference_fixture_quality": true,
+    "original_mpm_replay": false,
+    "contact_force_ground_truth": false,
+    "mass_dataset_generation": false
+  },
+  "findings": [
+    "Under displacement control, homogeneous E scaling leaves this static displacement unchanged while reactions scale.",
+    "Under known force, static displacement scales inversely with E; density is absent from static equilibrium.",
+    "Joint E/rho/unknown-force scaling leaves static force response and natural frequencies invariant in this linear fixture.",
+    "Nu changes response here; sensitivity does not establish unique recoverability from a monocular video."
+  ],
+  "next_step": "Use calibrated loading/scale metadata or report response equivalence and uncertainty. Validate original MPM sensitivity separately before absolute-parameter claims."
+}

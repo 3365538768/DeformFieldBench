@@ -1,0 +1,453 @@
+{
+  "status": "complete",
+  "completed": 20,
+  "total": 20,
+  "results": [
+    {
+      "id": "uipc_90a1762fe0ca2e3d8247",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.0002,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 2.6287562481629485e-05,
+      "ideal_max_motion_px": 0.07350660799281697,
+      "healthy": true,
+      "min_jacobian": 0.9996622371863492,
+      "max_displacement_gradient": 0.0012123363469665651,
+      "final_max_speed_m_s": 1.734723475976807e-16,
+      "wall_seconds": 4.867733052000403
+    },
+    {
+      "id": "uipc_884ec6fdaf0897c4f7da",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.0002,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 3.0555122545710234e-05,
+      "ideal_max_motion_px": 0.08553931864693767,
+      "healthy": true,
+      "min_jacobian": 0.9995854769240458,
+      "max_displacement_gradient": 0.001477110812823982,
+      "final_max_speed_m_s": 3.4762166109799766e-16,
+      "wall_seconds": 6.365647600032389
+    },
+    {
+      "id": "uipc_05a9dab79e2a368b8ae5",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.002,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 0.0002627682477394101,
+      "ideal_max_motion_px": 0.7347718576372557,
+      "healthy": true,
+      "min_jacobian": 0.9966199350571294,
+      "max_displacement_gradient": 0.01212133408905504,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "wall_seconds": 1.9758108119713143
+    },
+    {
+      "id": "uipc_51cbedf491434596ed58",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.01,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 0.001311972143337152,
+      "ideal_max_motion_px": 3.6665323499964515,
+      "healthy": true,
+      "min_jacobian": 0.9830508525689159,
+      "max_displacement_gradient": 0.060537808530284815,
+      "final_max_speed_m_s": 1.7400093785197408e-16,
+      "wall_seconds": 5.910558667033911
+    },
+    {
+      "id": "uipc_6651c92a2980dedbad39",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.002,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 0.00030563016399447966,
+      "ideal_max_motion_px": 0.8556131692263991,
+      "healthy": true,
+      "min_jacobian": 0.9958521613785014,
+      "max_displacement_gradient": 0.014771440936558682,
+      "final_max_speed_m_s": 1.7371423268546006e-16,
+      "wall_seconds": 7.250416380935349
+    },
+    {
+      "id": "uipc_2422a7bf8e8c0fd17131",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.02,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 0.002622278790059295,
+      "ideal_max_motion_px": 7.328052958347887,
+      "healthy": true,
+      "min_jacobian": 0.966004333275481,
+      "max_displacement_gradient": 0.12079571349159444,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "wall_seconds": 7.560299157048576
+    },
+    {
+      "id": "uipc_bec39d99f8ecb7fc175f",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.01,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 0.0015291744541784337,
+      "ideal_max_motion_px": 4.280923683340561,
+      "healthy": true,
+      "min_jacobian": 0.9792119241060995,
+      "max_displacement_gradient": 0.07381977081280355,
+      "final_max_speed_m_s": 1.7469918497965415e-16,
+      "wall_seconds": 9.112804344971664
+    },
+    {
+      "id": "uipc_b66c0505419dc5349668",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.05,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 0.006512339178435868,
+      "ideal_max_motion_px": 18.19810440419233,
+      "healthy": true,
+      "min_jacobian": 0.9146928442109443,
+      "max_displacement_gradient": 0.29849161442741867,
+      "final_max_speed_m_s": 3.576224061345498e-16,
+      "wall_seconds": 8.539790490991436
+    },
+    {
+      "id": "uipc_4a33b0825c0895165ac9",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.02,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 0.003057599037654441,
+      "ideal_max_motion_px": 8.559824649427307,
+      "healthy": true,
+      "min_jacobian": 0.9583434511687968,
+      "max_displacement_gradient": 0.14734132468915642,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "wall_seconds": 10.236037448979914
+    },
+    {
+      "id": "uipc_66b413d79655fac7c2b8",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.0002,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 6.572106621127663e-06,
+      "ideal_max_motion_px": 0.018377243507704904,
+      "healthy": true,
+      "min_jacobian": 0.9999155644720645,
+      "max_displacement_gradient": 0.0003030878692074717,
+      "final_max_speed_m_s": 1.7347700042622787e-16,
+      "wall_seconds": 4.040301452041604
+    },
+    {
+      "id": "uipc_bcde5e417bad26cbaf0f",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.0002,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 7.638602570744724e-06,
+      "ideal_max_motion_px": 0.02138433327543427,
+      "healthy": true,
+      "min_jacobian": 0.9998963748324887,
+      "max_displacement_gradient": 0.000369276173281254,
+      "final_max_speed_m_s": 1.7349158365027486e-16,
+      "wall_seconds": 5.821534272981808
+    },
+    {
+      "id": "uipc_7cba9e0467db703bd7ca",
+      "young_pa": 12000.0,
+      "poisson": 0.3,
+      "force_n": 0.05,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 0.007584726487761991,
+      "ideal_max_motion_px": 21.233414048441283,
+      "healthy": true,
+      "min_jacobian": 0.8959385853299923,
+      "max_displacement_gradient": 0.3628576701341934,
+      "final_max_speed_m_s": 3.878959614448864e-16,
+      "wall_seconds": 11.077865918981843
+    },
+    {
+      "id": "uipc_166e1e7864b2ef6e80f7",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.002,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 6.571455061276665e-05,
+      "ideal_max_motion_px": 0.18375459069086725,
+      "healthy": true,
+      "min_jacobian": 0.9991554899118434,
+      "max_displacement_gradient": 0.0030307631611358843,
+      "final_max_speed_m_s": 3.469481389638046e-16,
+      "wall_seconds": 2.8893197580473498
+    },
+    {
+      "id": "uipc_39dfe22adf1d2237c4ca",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.002,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 7.639130488393084e-05,
+      "ideal_max_motion_px": 0.21385804861274882,
+      "healthy": true,
+      "min_jacobian": 0.9989635810572772,
+      "max_displacement_gradient": 0.0036928037699486397,
+      "final_max_speed_m_s": 1.7371338600385558e-16,
+      "wall_seconds": 4.093687622924335
+    },
+    {
+      "id": "uipc_fce5324b7d8fd46f3a6f",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.01,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 0.0003284215142376968,
+      "ideal_max_motion_px": 0.9183584502004926,
+      "healthy": true,
+      "min_jacobian": 0.9957740921618605,
+      "max_displacement_gradient": 0.015150875494423495,
+      "final_max_speed_m_s": 1.7350543166734091e-16,
+      "wall_seconds": 1.6064851710107177
+    },
+    {
+      "id": "uipc_87b1b8740131be0abfaf",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.02,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 0.0006564354168843993,
+      "ideal_max_motion_px": 1.8355984160972345,
+      "healthy": true,
+      "min_jacobian": 0.9915401722440159,
+      "max_displacement_gradient": 0.03029269137790668,
+      "final_max_speed_m_s": 3.469870442581002e-16,
+      "wall_seconds": 4.342323973076418
+    },
+    {
+      "id": "uipc_388203105eab13de107d",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.01,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 0.00038206243720422314,
+      "ideal_max_motion_px": 1.069585352850498,
+      "healthy": true,
+      "min_jacobian": 0.9948143293703493,
+      "max_displacement_gradient": 0.01846425224948839,
+      "final_max_speed_m_s": 3.469870442581002e-16,
+      "wall_seconds": 5.700988164055161
+    },
+    {
+      "id": "uipc_d0a8131b56f151c9af70",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.05,
+      "cells": [
+        8,
+        4,
+        4
+      ],
+      "max_final_displacement_m": 0.0016398289975454344,
+      "ideal_max_motion_px": 4.582727281592161,
+      "healthy": true,
+      "min_jacobian": 0.9787967384399111,
+      "max_displacement_gradient": 0.07563548591172863,
+      "final_max_speed_m_s": 3.4762760514932967e-16,
+      "wall_seconds": 4.570551563054323
+    },
+    {
+      "id": "uipc_b99ed3e3a643b92af693",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.02,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 0.0007643372520470879,
+      "ideal_max_motion_px": 2.139761828096924,
+      "healthy": true,
+      "min_jacobian": 0.9896203686717265,
+      "max_displacement_gradient": 0.03692586993353663,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "wall_seconds": 5.875421906937845
+    },
+    {
+      "id": "uipc_e735544fbbef8467112c",
+      "young_pa": 48000.0,
+      "poisson": 0.3,
+      "force_n": 0.05,
+      "cells": [
+        16,
+        8,
+        8
+      ],
+      "max_final_displacement_m": 0.0019115622504568266,
+      "ideal_max_motion_px": 5.351446824362433,
+      "healthy": true,
+      "min_jacobian": 0.9739996198838542,
+      "max_displacement_gradient": 0.09224137488567286,
+      "final_max_speed_m_s": 3.4964469463373513e-16,
+      "wall_seconds": 3.4508888709824532
+    }
+  ],
+  "updated_unix": 1794059815.5887275,
+  "detail": "\u5b9e\u9645 SNK1 \u8f7d\u8377/\u7f51\u683c\u4e0e\u89c6\u9891\u53ef\u89c2\u6d4b\u6027\u5ba1\u8ba1 20/20\uff1b\u4e0d\u5f3a\u5236\u5927\u5f62\u53d8\u4e0e\u7ebf\u6027\u5f15\u64ce\u7b49\u4ef7\u3002",
+  "scope": "UIPC known-traction block only; ideal orthographic 224px / 0.08m FoV, XY view, no occlusion/appearance/noise. Screening bound, not measured rendered optical flow.",
+  "candidates": [
+    {
+      "young_pa": 12000.0,
+      "force_n": 0.0002,
+      "fine_ideal_max_motion_px": 0.08553931864693767,
+      "mesh_relative_displacement_change": 0.13966758135878887,
+      "usable_for_next_refinement": false,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    },
+    {
+      "young_pa": 12000.0,
+      "force_n": 0.002,
+      "fine_ideal_max_motion_px": 0.8556131692263991,
+      "mesh_relative_displacement_change": 0.14024111918430837,
+      "usable_for_next_refinement": false,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    },
+    {
+      "young_pa": 12000.0,
+      "force_n": 0.01,
+      "fine_ideal_max_motion_px": 4.280923683340561,
+      "mesh_relative_displacement_change": 0.1420389349611363,
+      "usable_for_next_refinement": true,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    },
+    {
+      "young_pa": 12000.0,
+      "force_n": 0.02,
+      "fine_ideal_max_motion_px": 8.559824649427307,
+      "mesh_relative_displacement_change": 0.14237322887473525,
+      "usable_for_next_refinement": true,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    },
+    {
+      "young_pa": 12000.0,
+      "force_n": 0.05,
+      "fine_ideal_max_motion_px": 21.233414048441283,
+      "mesh_relative_displacement_change": 0.14138773640109858,
+      "usable_for_next_refinement": true,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    },
+    {
+      "young_pa": 48000.0,
+      "force_n": 0.0002,
+      "fine_ideal_max_motion_px": 0.02138433327543427,
+      "mesh_relative_displacement_change": 0.13961924838211393,
+      "usable_for_next_refinement": false,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    },
+    {
+      "young_pa": 48000.0,
+      "force_n": 0.002,
+      "fine_ideal_max_motion_px": 0.21385804861274882,
+      "mesh_relative_displacement_change": 0.13976399915391524,
+      "usable_for_next_refinement": false,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    },
+    {
+      "young_pa": 48000.0,
+      "force_n": 0.01,
+      "fine_ideal_max_motion_px": 1.069585352850498,
+      "mesh_relative_displacement_change": 0.14039831646117495,
+      "usable_for_next_refinement": false,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    },
+    {
+      "young_pa": 48000.0,
+      "force_n": 0.02,
+      "fine_ideal_max_motion_px": 2.139761828096924,
+      "mesh_relative_displacement_change": 0.14117045175241716,
+      "usable_for_next_refinement": true,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    },
+    {
+      "young_pa": 48000.0,
+      "force_n": 0.05,
+      "fine_ideal_max_motion_px": 5.351446824362433,
+      "mesh_relative_displacement_change": 0.14215244774082203,
+      "usable_for_next_refinement": true,
+      "note": "A positive candidate still needs finer mesh convergence, realistic rendering, contact and boundary/scale variation."
+    }
+  ],
+  "wall_seconds": 65.47429347038269
+}

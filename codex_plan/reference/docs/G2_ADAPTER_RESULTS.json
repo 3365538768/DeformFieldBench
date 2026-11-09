@@ -1,0 +1,262 @@
+{
+  "status": "complete",
+  "runs": [
+    {
+      "seed": 17,
+      "variant": "native_only",
+      "best_epoch": 120,
+      "epochs": 200,
+      "val_native_mae_z": 0.03711472824215889,
+      "stop_reason": "validation_plateau",
+      "per_engine": {
+        "warp": {
+          "standardized_mae": 0.03585032001958774,
+          "native_parameter_mape": {
+            "mu": 0.020649864416119063,
+            "lambda_lame": 0.031035116067944877
+          }
+        },
+        "uipc": {
+          "standardized_mae": 0.03837912624945668,
+          "native_parameter_mape": {
+            "mu": 0.01620207909104313,
+            "lambda_snk1": 0.033346927979133606
+          }
+        }
+      },
+      "held_response_mae_m": null,
+      "wall_seconds": 1.6587457656860352
+    },
+    {
+      "seed": 17,
+      "variant": "response_aux",
+      "best_epoch": 305,
+      "epochs": 385,
+      "val_native_mae_z": 0.030208386480808258,
+      "stop_reason": "validation_plateau",
+      "per_engine": {
+        "warp": {
+          "standardized_mae": 0.03496232246054672,
+          "native_parameter_mape": {
+            "mu": 0.012617345058348852,
+            "lambda_lame": 0.040568125858917684
+          }
+        },
+        "uipc": {
+          "standardized_mae": 0.025454431702864037,
+          "native_parameter_mape": {
+            "mu": 0.012785300025339045,
+            "lambda_snk1": 0.019583861819702657
+          }
+        }
+      },
+      "held_response_mae_m": 3.8399424845199376e-07,
+      "wall_seconds": 2.3389668464660645
+    },
+    {
+      "seed": 17,
+      "variant": "paired_alignment",
+      "best_epoch": 305,
+      "epochs": 385,
+      "val_native_mae_z": 0.02999606356024742,
+      "stop_reason": "validation_plateau",
+      "per_engine": {
+        "warp": {
+          "standardized_mae": 0.03472674131088915,
+          "native_parameter_mape": {
+            "mu": 0.012370162049211177,
+            "lambda_lame": 0.040546802876874254
+          }
+        },
+        "uipc": {
+          "standardized_mae": 0.025265360388661624,
+          "native_parameter_mape": {
+            "mu": 0.012449196122624843,
+            "lambda_snk1": 0.019730766373611628
+          }
+        }
+      },
+      "held_response_mae_m": 3.8342788782866334e-07,
+      "wall_seconds": 2.5906684398651123
+    },
+    {
+      "seed": 29,
+      "variant": "native_only",
+      "best_epoch": 132,
+      "epochs": 212,
+      "val_native_mae_z": 0.03118305094540119,
+      "stop_reason": "validation_plateau",
+      "per_engine": {
+        "warp": {
+          "standardized_mae": 0.03196884414716419,
+          "native_parameter_mape": {
+            "mu": 0.019213289917661955,
+            "lambda_lame": 0.026224320443724396
+          }
+        },
+        "uipc": {
+          "standardized_mae": 0.030397253856140425,
+          "native_parameter_mape": {
+            "mu": 0.014427433123193216,
+            "lambda_snk1": 0.02383191989132929
+          }
+        }
+      },
+      "held_response_mae_m": null,
+      "wall_seconds": 1.1802606582641602
+    },
+    {
+      "seed": 29,
+      "variant": "response_aux",
+      "best_epoch": 127,
+      "epochs": 207,
+      "val_native_mae_z": 0.03403182700276375,
+      "stop_reason": "validation_plateau",
+      "per_engine": {
+        "warp": {
+          "standardized_mae": 0.029106516201557568,
+          "native_parameter_mape": {
+            "mu": 0.014787156306589734,
+            "lambda_lame": 0.028515443789760824
+          }
+        },
+        "uipc": {
+          "standardized_mae": 0.03895713296629922,
+          "native_parameter_mape": {
+            "mu": 0.018815563372621025,
+            "lambda_snk1": 0.030240655513952622
+          }
+        }
+      },
+      "held_response_mae_m": 4.5110801572691946e-07,
+      "wall_seconds": 1.267266035079956
+    },
+    {
+      "seed": 29,
+      "variant": "paired_alignment",
+      "best_epoch": 127,
+      "epochs": 207,
+      "val_native_mae_z": 0.034033194184303284,
+      "stop_reason": "validation_plateau",
+      "per_engine": {
+        "warp": {
+          "standardized_mae": 0.029104549455240554,
+          "native_parameter_mape": {
+            "mu": 0.014784863076135309,
+            "lambda_lame": 0.028515444159790786
+          }
+        },
+        "uipc": {
+          "standardized_mae": 0.03896182434854842,
+          "native_parameter_mape": {
+            "mu": 0.018816727392194928,
+            "lambda_snk1": 0.030245492590796525
+          }
+        }
+      },
+      "held_response_mae_m": 4.511043134894286e-07,
+      "wall_seconds": 1.4057440757751465
+    },
+    {
+      "seed": 43,
+      "variant": "native_only",
+      "best_epoch": 218,
+      "epochs": 298,
+      "val_native_mae_z": 0.042420919984579086,
+      "stop_reason": "validation_plateau",
+      "per_engine": {
+        "warp": {
+          "standardized_mae": 0.0404759569214492,
+          "native_parameter_mape": {
+            "mu": 0.024800711596187235,
+            "lambda_lame": 0.032406733490884264
+          }
+        },
+        "uipc": {
+          "standardized_mae": 0.04436588474811726,
+          "native_parameter_mape": {
+            "mu": 0.025533882486178716,
+            "lambda_snk1": 0.0300255672939673
+          }
+        }
+      },
+      "held_response_mae_m": null,
+      "wall_seconds": 1.6415247917175293
+    },
+    {
+      "seed": 43,
+      "variant": "response_aux",
+      "best_epoch": 143,
+      "epochs": 223,
+      "val_native_mae_z": 0.04522886499762535,
+      "stop_reason": "validation_plateau",
+      "per_engine": {
+        "warp": {
+          "standardized_mae": 0.045969175846657696,
+          "native_parameter_mape": {
+            "mu": 0.022801628634590922,
+            "lambda_lame": 0.043829463802335725
+          }
+        },
+        "uipc": {
+          "standardized_mae": 0.04448854418415818,
+          "native_parameter_mape": {
+            "mu": 0.024138176613705167,
+            "lambda_snk1": 0.031245664151421864
+          }
+        }
+      },
+      "held_response_mae_m": 4.734251602495702e-07,
+      "wall_seconds": 1.3076448440551758
+    },
+    {
+      "seed": 43,
+      "variant": "paired_alignment",
+      "best_epoch": 143,
+      "epochs": 223,
+      "val_native_mae_z": 0.045235078781843185,
+      "stop_reason": "validation_plateau",
+      "per_engine": {
+        "warp": {
+          "standardized_mae": 0.0459710721228999,
+          "native_parameter_mape": {
+            "mu": 0.022804348821290423,
+            "lambda_lame": 0.04382729568430758
+          }
+        },
+        "uipc": {
+          "standardized_mae": 0.04449907348435614,
+          "native_parameter_mape": {
+            "mu": 0.024125112353019434,
+            "lambda_snk1": 0.0312743576486992
+          }
+        }
+      },
+      "held_response_mae_m": 4.734661616375323e-07,
+      "wall_seconds": 1.4536378383636475
+    }
+  ],
+  "aggregate": {
+    "native_only": {
+      "mean_val_native_mae_z": 0.03690623305737972,
+      "std_val_native_mae_z": 0.004590208987035002
+    },
+    "response_aux": {
+      "mean_val_native_mae_z": 0.03648969282706579,
+      "std_val_native_mae_z": 0.006373618649100624
+    },
+    "paired_alignment": {
+      "mean_val_native_mae_z": 0.036421445508797966,
+      "std_val_native_mae_z": 0.006446430770729892
+    }
+  },
+  "samples": {
+    "train": 72,
+    "val": 36,
+    "test": 0
+  },
+  "train_manifest_sha256": "694ca8131067917d2f68356966133538c60c1977a2db72db95256f18a2d7c44a",
+  "scope": "Privileged full nodal X/Y displacement fields plus known geometry/load; predict native coefficients and held Z response. Same encoder/head capacity/initialization/budget, 3 seeds. Validation tunes/selects checkpoints; NOT final testing or video/no-bridge/online-fitting comparison.",
+  "leakage_controls": "Fit all feature/response/native statistics on train only; entire geometry/material/engine/action groups stay in one split; engine ID selects native output head only.",
+  "updated_unix": 1794058712.316963
+}

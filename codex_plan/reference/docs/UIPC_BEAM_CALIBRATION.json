@@ -1,0 +1,108 @@
+{
+  "status": "failed",
+  "engine": "libuipc",
+  "version": "0.0.29",
+  "cases": [
+    {
+      "young_pa": 1000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        10,
+        2,
+        2
+      ],
+      "vertices": 99,
+      "tetrahedra": 240,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 5.849126519964783e-05,
+      "euler_bernoulli_deflection_m": 0.00019999999999999998,
+      "relative_analytic_error": 0.7075436740017609,
+      "last20_deflection_range_over_analytic": 2.4002542032934564e-12,
+      "final_max_speed_m_s": 1.4218794301797452e-15,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.9999638509975461,
+      "completed": true,
+      "wall_seconds": 2.216204656055197
+    },
+    {
+      "young_pa": 1000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        20,
+        4,
+        4
+      ],
+      "vertices": 525,
+      "tetrahedra": 1920,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 0.0001106972352913545,
+      "euler_bernoulli_deflection_m": 0.00019999999999999998,
+      "relative_analytic_error": 0.44651382354322744,
+      "last20_deflection_range_over_analytic": 1.2903412869170582e-07,
+      "final_max_speed_m_s": 1.2136048834064655e-10,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.9999348732010699,
+      "completed": true,
+      "wall_seconds": 4.156166551983915
+    },
+    {
+      "young_pa": 2000000.0,
+      "poisson": 0.3,
+      "density_kg_m3": 1000.0,
+      "force_n": 0.001,
+      "dt_seconds": 0.02,
+      "frames": 200,
+      "mesh_cells": [
+        20,
+        4,
+        4
+      ],
+      "vertices": 525,
+      "tetrahedra": 1920,
+      "length_m": 0.2,
+      "cross_section_m": [
+        0.02,
+        0.02
+      ],
+      "fixed_boundary": "all x=0 vertices, exact is_fixed",
+      "tip_deflection_m": 5.5348637314239745e-05,
+      "euler_bernoulli_deflection_m": 9.999999999999999e-05,
+      "relative_analytic_error": 0.44651362685760254,
+      "last20_deflection_range_over_analytic": 1.497554250745603e-14,
+      "final_max_speed_m_s": 6.992893892674703e-16,
+      "fixed_vertex_max_error_m": 0.0,
+      "min_final_jacobian": 0.999967437287031,
+      "completed": true,
+      "wall_seconds": 3.177333040977828
+    }
+  ],
+  "gates": {
+    "finite_positive_volume": true,
+    "fixed_boundary": true,
+    "settled": true,
+    "fine_analytic_within_20_percent": false,
+    "mesh_change_within_10_percent": false,
+    "inverse_E_within_5_percent": true
+  },
+  "mesh_change_over_analytic": 0.2610298504585334,
+  "inverse_E_response_ratio": 1.9999992892846707,
+  "scope": "Small-strain clamped beam under known end load. Euler-Bernoulli reference excludes shear; aspect ratio 10. Gate thresholds set before execution. Does not validate contact/mixed materials."
+}

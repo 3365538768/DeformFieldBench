@@ -1,0 +1,314 @@
+{
+  "status": "complete",
+  "completed": 3,
+  "total": 3,
+  "originals": [
+    {
+      "path": "data/calibration/g3_contact_force_audit/d9b811cc4624ec00ae93",
+      "cells": [
+        24,
+        12,
+        12
+      ],
+      "active_balance_p95": 1.3793593019395367e-06,
+      "active_frames": 242,
+      "hold_mean_force_y_n": 0.011266679463654157,
+      "all_frame_balance_p95": 422.6133953275258
+    },
+    {
+      "path": "data/calibration/g3_contact_force_refinement/f25a2759d54227b39c0b",
+      "cells": [
+        36,
+        18,
+        18
+      ],
+      "active_balance_p95": 6.5813367576898925e-06,
+      "active_frames": 240,
+      "hold_mean_force_y_n": 0.011034510213107794,
+      "all_frame_balance_p95": 542.7990227636772
+    },
+    {
+      "path": "data/calibration/g3_contact_force_refinement/ef98acfde46b8ade4401",
+      "cells": [
+        48,
+        24,
+        24
+      ],
+      "active_balance_p95": 2.639561762644833e-06,
+      "active_frames": 241,
+      "hold_mean_force_y_n": 0.010973684323653657,
+      "all_frame_balance_p95": 616.654471123903
+    }
+  ],
+  "rows": [
+    {
+      "status": "probe_complete",
+      "case": {
+        "shape": "waisted",
+        "cells": [
+          24,
+          12,
+          12
+        ],
+        "layout": "homogeneous",
+        "young_pa": [
+          12000.0,
+          12000.0
+        ],
+        "poisson": 0.3,
+        "dt_seconds": 0.005,
+        "duration_s": 2.4,
+        "motion_time_scale": 4.0,
+        "indentation_m": 0.004,
+        "initial_gap_m": 0.0007,
+        "barrier_distance_m": 5e-05,
+        "friction": 0.0,
+        "export_contact_diagnostics": true
+      },
+      "engine": "uipc",
+      "engine_version": "0.0.29",
+      "source_sha256": "20b280b98c96939d87eda96f8c2b7445abc579decb85312b6a4534bef7352915",
+      "mesh": {
+        "vertices": 4225,
+        "tetrahedra": 20736,
+        "volume_m3": 1.1132217275813607e-05,
+        "min_signed_tet_volume_m3": 3.2600308641975264e-10,
+        "max_basis_condition": 5.8689421588814135,
+        "boundary_triangles": 2880,
+        "face_incidence_valid": true,
+        "passed": true
+      },
+      "completed": true,
+      "min_jacobian": 0.9741590866471346,
+      "fixed_vertex_max_error_m": 0.0,
+      "max_tool_tracking_error_m": 1.756379242566497e-09,
+      "vertex_inside_tool_count": 0,
+      "max_displacement_m": 0.0034265789235296247,
+      "final_displacement_m": 2.9293642370379476e-05,
+      "native_parameter_mapping": "mu=E/(2(1+nu)); lambda_snk1=lambda_lame+mu",
+      "material_interface": "shared-node bonded P1 tetrahedral mesh; no slip/debonding",
+      "reaction_force_gt_available": false,
+      "admitted_for_training": false,
+      "wall_seconds": 56.878326177597046,
+      "pending": [
+        "two successive mesh refinements",
+        "time-step halving",
+        "full surface clearance and contact force units",
+        "energy balance and friction sensitivity",
+        "material identifiability and independent geometry split"
+      ],
+      "scope": "Physical ABD/FEM contact prototype. Prescribed tool motion is not calibrated force. Uniform absolute E cannot be inferred from a static displacement-controlled shape without force evidence.",
+      "contact_diagnostics": {
+        "status": "exported_not_calibrated",
+        "tool_global_vertex_offset": 0,
+        "solid_global_vertex_offset": 8,
+        "conversion": "force=-raw_incremental_gradient/dt^2; barrier_energy=raw_incremental_energy/dt^2",
+        "source_reference_commit": "cd1acc989b29f18d044cf4e449bee1576ac7d49f",
+        "max_action_reaction_relative_error": 5.552286697532867e-16,
+        "free_node_relative_residual_p95": 365.4842303433936,
+        "peak_tool_contact_force_n": 0.01117420983457339,
+        "energy_scope": "Solid elastic/kinetic and barrier energy only; endpoint contact work excludes actuator/tool inertia/ABD elastic energy; not a complete energy balance certification"
+      },
+      "path": "data/calibration/g3_contact_regularization/96a93d3c1f644ff463fa",
+      "phase_statistics": {
+        "active_balance_p95": 3.3813121740297483e-06,
+        "active_frames": 238,
+        "hold_mean_force_y_n": 0.011092461349655866,
+        "all_frame_balance_p95": 365.4842303433936
+      }
+    },
+    {
+      "status": "probe_complete",
+      "case": {
+        "shape": "waisted",
+        "cells": [
+          36,
+          18,
+          18
+        ],
+        "layout": "homogeneous",
+        "young_pa": [
+          12000.0,
+          12000.0
+        ],
+        "poisson": 0.3,
+        "dt_seconds": 0.005,
+        "duration_s": 2.4,
+        "motion_time_scale": 4.0,
+        "indentation_m": 0.004,
+        "initial_gap_m": 0.0007,
+        "barrier_distance_m": 5e-05,
+        "friction": 0.0,
+        "export_contact_diagnostics": true
+      },
+      "engine": "uipc",
+      "engine_version": "0.0.29",
+      "source_sha256": "20b280b98c96939d87eda96f8c2b7445abc579decb85312b6a4534bef7352915",
+      "mesh": {
+        "vertices": 13357,
+        "tetrahedra": 69984,
+        "volume_m3": 1.1133759299829327e-05,
+        "min_signed_tet_volume_m3": 9.659350708733396e-11,
+        "max_basis_condition": 5.8613347591020375,
+        "boundary_triangles": 6480,
+        "face_incidence_valid": true,
+        "passed": true
+      },
+      "completed": true,
+      "min_jacobian": 0.9754605751416133,
+      "fixed_vertex_max_error_m": 0.0,
+      "max_tool_tracking_error_m": 1.7228640051061839e-09,
+      "vertex_inside_tool_count": 0,
+      "max_displacement_m": 0.0034156732854512266,
+      "final_displacement_m": 3.4044006235362766e-05,
+      "native_parameter_mapping": "mu=E/(2(1+nu)); lambda_snk1=lambda_lame+mu",
+      "material_interface": "shared-node bonded P1 tetrahedral mesh; no slip/debonding",
+      "reaction_force_gt_available": false,
+      "admitted_for_training": false,
+      "wall_seconds": 157.66157221794128,
+      "pending": [
+        "two successive mesh refinements",
+        "time-step halving",
+        "full surface clearance and contact force units",
+        "energy balance and friction sensitivity",
+        "material identifiability and independent geometry split"
+      ],
+      "scope": "Physical ABD/FEM contact prototype. Prescribed tool motion is not calibrated force. Uniform absolute E cannot be inferred from a static displacement-controlled shape without force evidence.",
+      "contact_diagnostics": {
+        "status": "exported_not_calibrated",
+        "tool_global_vertex_offset": 0,
+        "solid_global_vertex_offset": 8,
+        "conversion": "force=-raw_incremental_gradient/dt^2; barrier_energy=raw_incremental_energy/dt^2",
+        "source_reference_commit": "cd1acc989b29f18d044cf4e449bee1576ac7d49f",
+        "max_action_reaction_relative_error": 1.2812786284388325e-15,
+        "free_node_relative_residual_p95": 520.9967127176006,
+        "peak_tool_contact_force_n": 0.010920749257601954,
+        "energy_scope": "Solid elastic/kinetic and barrier energy only; endpoint contact work excludes actuator/tool inertia/ABD elastic energy; not a complete energy balance certification"
+      },
+      "path": "data/calibration/g3_contact_regularization/ba7753215dc5d512159d",
+      "phase_statistics": {
+        "active_balance_p95": 1.2388974209526557e-05,
+        "active_frames": 236,
+        "hold_mean_force_y_n": 0.01084277939005037,
+        "all_frame_balance_p95": 520.9967127176006
+      }
+    },
+    {
+      "status": "probe_complete",
+      "case": {
+        "shape": "waisted",
+        "cells": [
+          48,
+          24,
+          24
+        ],
+        "layout": "homogeneous",
+        "young_pa": [
+          12000.0,
+          12000.0
+        ],
+        "poisson": 0.3,
+        "dt_seconds": 0.005,
+        "duration_s": 2.4,
+        "motion_time_scale": 4.0,
+        "indentation_m": 0.004,
+        "initial_gap_m": 0.0007,
+        "barrier_distance_m": 5e-05,
+        "friction": 0.0,
+        "export_contact_diagnostics": true
+      },
+      "engine": "uipc",
+      "engine_version": "0.0.29",
+      "source_sha256": "20b280b98c96939d87eda96f8c2b7445abc579decb85312b6a4534bef7352915",
+      "mesh": {
+        "vertices": 30625,
+        "tetrahedra": 165888,
+        "volume_m3": 1.1134301330345528e-05,
+        "min_signed_tet_volume_m3": 4.0750385802468996e-11,
+        "max_basis_condition": 5.855955154266117,
+        "boundary_triangles": 11520,
+        "face_incidence_valid": true,
+        "passed": true
+      },
+      "completed": true,
+      "min_jacobian": 0.9706202740237826,
+      "fixed_vertex_max_error_m": 0.0,
+      "max_tool_tracking_error_m": 1.7356875190582821e-09,
+      "vertex_inside_tool_count": 0,
+      "max_displacement_m": 0.0033978269898166835,
+      "final_displacement_m": 3.433327052646929e-05,
+      "native_parameter_mapping": "mu=E/(2(1+nu)); lambda_snk1=lambda_lame+mu",
+      "material_interface": "shared-node bonded P1 tetrahedral mesh; no slip/debonding",
+      "reaction_force_gt_available": false,
+      "admitted_for_training": false,
+      "wall_seconds": 338.3850884437561,
+      "pending": [
+        "two successive mesh refinements",
+        "time-step halving",
+        "full surface clearance and contact force units",
+        "energy balance and friction sensitivity",
+        "material identifiability and independent geometry split"
+      ],
+      "scope": "Physical ABD/FEM contact prototype. Prescribed tool motion is not calibrated force. Uniform absolute E cannot be inferred from a static displacement-controlled shape without force evidence.",
+      "contact_diagnostics": {
+        "status": "exported_not_calibrated",
+        "tool_global_vertex_offset": 0,
+        "solid_global_vertex_offset": 8,
+        "conversion": "force=-raw_incremental_gradient/dt^2; barrier_energy=raw_incremental_energy/dt^2",
+        "source_reference_commit": "cd1acc989b29f18d044cf4e449bee1576ac7d49f",
+        "max_action_reaction_relative_error": 8.114016130757123e-16,
+        "free_node_relative_residual_p95": 663.7764334066193,
+        "peak_tool_contact_force_n": 0.010846242956439817,
+        "energy_scope": "Solid elastic/kinetic and barrier energy only; endpoint contact work excludes actuator/tool inertia/ABD elastic energy; not a complete energy balance certification"
+      },
+      "path": "data/calibration/g3_contact_regularization/435dcc72347cf63e5fee",
+      "phase_statistics": {
+        "active_balance_p95": 5.994883019770461e-06,
+        "active_frames": 237,
+        "hold_mean_force_y_n": 0.010778806639103047,
+        "all_frame_balance_p95": 663.7764334066193
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "cells_coarse": [
+        24,
+        12,
+        12
+      ],
+      "cells_fine": [
+        36,
+        18,
+        18
+      ],
+      "relative_l2": 0.03629552099704632,
+      "threshold": 0.03,
+      "passed": false
+    },
+    {
+      "cells_coarse": [
+        36,
+        18,
+        18
+      ],
+      "cells_fine": [
+        48,
+        24,
+        24
+      ],
+      "relative_l2": 0.05588587201106678,
+      "threshold": 0.03,
+      "passed": false
+    }
+  ],
+  "admitted_for_training": false,
+  "reaction_force_gt_available": false,
+  "hypothesis": "Fixed barrier distance may change force convergence under mesh refinement; halve d_hat with all else fixed.",
+  "original_force_mesh_screen_passed": false,
+  "updated_unix": 1794103501.8012269,
+  "detail": "\u51cf\u534a\u63a5\u89e6\u5c4f\u969c\u8ddd\u79bb\u7684\u8fde\u7eed\u4e24\u7ea7\u53cd\u529b\u7f51\u683c\u8bca\u65ad\uff1b\u672a\u51c6\u5165\u8bad\u7ec3\u3002",
+  "force_mesh_screen_passed": false,
+  "route": "contact_discretization_or_alternative_solver_required",
+  "note": "Active-only balance avoids division by almost-zero contact in inactive frames; failed mesh thresholds remain unchanged. No force GT admission."
+}

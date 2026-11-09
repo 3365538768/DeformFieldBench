@@ -1,0 +1,266 @@
+{
+  "status": "complete",
+  "completed": 12,
+  "total": 12,
+  "source": "https://huggingface.co/datasets/Jianghanxiao/PhysTwin",
+  "revision": "05665bcd0edad8f069c7def9cbb58d2eb75d68d0",
+  "used_for_training": false,
+  "parameter_gt_available": false,
+  "files": [
+    {
+      "scene": "weird_package",
+      "member": "data/different_types/weird_package/metadata.json",
+      "bytes": 501,
+      "sha256": "d0729952df9e4be3ca05e1547186169d20bf1702afb60fbafafffcdc0aa755d2",
+      "zip_crc_verified": true,
+      "metadata": {
+        "intrinsics": [
+          [
+            [
+              427.45977783203125,
+              0.0,
+              424.4333190917969
+            ],
+            [
+              0.0,
+              427.07403564453125,
+              246.92410278320312
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              426.9201354980469,
+              0.0,
+              423.0926818847656
+            ],
+            [
+              0.0,
+              426.39068603515625,
+              248.86141967773438
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              427.9455871582031,
+              0.0,
+              424.8780212402344
+            ],
+            [
+              0.0,
+              427.3822937011719,
+              241.48138427734375
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        "serial_numbers": [
+          "239222300433",
+          "239222300781",
+          "239222303506"
+        ],
+        "fps": 30,
+        "WH": [
+          848,
+          480
+        ],
+        "frame_num": 39,
+        "start_step": 1777,
+        "end_step": 1815
+      }
+    },
+    {
+      "scene": "weird_package",
+      "member": "data/different_types/weird_package/split.json",
+      "bytes": 53,
+      "sha256": "e0c57e3a9629e2dd995f9dee3ec99658c2966b45f43c7406bc4ea1c26e24b3d3",
+      "zip_crc_verified": true,
+      "metadata": {
+        "frame_len": 39,
+        "train": [
+          0,
+          27
+        ],
+        "test": [
+          27,
+          39
+        ]
+      }
+    },
+    {
+      "scene": "weird_package",
+      "member": "data/different_types/weird_package/final_data.mp4",
+      "bytes": 1438514,
+      "sha256": "0433ec4a2181395026847edbf1a95386dafc72ce408ce3ae5791f356b9a6acfa",
+      "zip_crc_verified": true,
+      "decoded_frames": 39
+    },
+    {
+      "scene": "weird_package",
+      "member": "data/different_types/weird_package/color/0.mp4",
+      "bytes": 5975668,
+      "sha256": "81dd778dbe1146a852bbfe50f8d0d2c84f1242aecd99326e6a7db6962bb93fe3",
+      "zip_crc_verified": true,
+      "decoded_frames": 39
+    },
+    {
+      "scene": "weird_package",
+      "member": "data/different_types/weird_package/color/1.mp4",
+      "bytes": 6114117,
+      "sha256": "31111608e5c92edfe1e8e3b85340c8303dceb2a84b14abb04ddf806248f9dff4",
+      "zip_crc_verified": true,
+      "decoded_frames": 39
+    },
+    {
+      "scene": "weird_package",
+      "member": "data/different_types/weird_package/color/2.mp4",
+      "bytes": 6034426,
+      "sha256": "872ec7f637fa75ea065ff887500e34f2e2e17ac2a7a59c49a44d6ecca070b95b",
+      "zip_crc_verified": true,
+      "decoded_frames": 39
+    },
+    {
+      "scene": "single_push_sloth",
+      "member": "data/different_types/single_push_sloth/metadata.json",
+      "bytes": 497,
+      "sha256": "8f4d4366a7cf8953541040ccfc3a1885d4c85de8f836213fd2f560c96e10a4d3",
+      "zip_crc_verified": true,
+      "metadata": {
+        "intrinsics": [
+          [
+            [
+              427.45977783203125,
+              0.0,
+              424.4333190917969
+            ],
+            [
+              0.0,
+              427.07403564453125,
+              246.92410278320312
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              426.9201354980469,
+              0.0,
+              423.0926818847656
+            ],
+            [
+              0.0,
+              426.39068603515625,
+              248.86141967773438
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              427.8292236328125,
+              0.0,
+              424.8780212402344
+            ],
+            [
+              0.0,
+              427.26611328125,
+              241.48138427734375
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        "serial_numbers": [
+          "239222300433",
+          "239222300781",
+          "239222303506"
+        ],
+        "fps": 30,
+        "WH": [
+          848,
+          480
+        ],
+        "frame_num": 68,
+        "start_step": 265,
+        "end_step": 332
+      }
+    },
+    {
+      "scene": "single_push_sloth",
+      "member": "data/different_types/single_push_sloth/split.json",
+      "bytes": 53,
+      "sha256": "e6a258ca1899a18e1f7b3c3fde9778ccb61fe0d5c1e594e238e885f7e1f59363",
+      "zip_crc_verified": true,
+      "metadata": {
+        "frame_len": 68,
+        "train": [
+          0,
+          47
+        ],
+        "test": [
+          47,
+          68
+        ]
+      }
+    },
+    {
+      "scene": "single_push_sloth",
+      "member": "data/different_types/single_push_sloth/final_data.mp4",
+      "bytes": 3977446,
+      "sha256": "0539900dd8795cdbfbcb7114b3a2dc19319502d905d4e7e42b0b38a08042832d",
+      "zip_crc_verified": true,
+      "decoded_frames": 68
+    },
+    {
+      "scene": "single_push_sloth",
+      "member": "data/different_types/single_push_sloth/color/0.mp4",
+      "bytes": 10731457,
+      "sha256": "3bad779faf55e75fda23a7c75af9d2e7fe28956e23d966ca0f470387da32cc79",
+      "zip_crc_verified": true,
+      "decoded_frames": 68
+    },
+    {
+      "scene": "single_push_sloth",
+      "member": "data/different_types/single_push_sloth/color/1.mp4",
+      "bytes": 10616319,
+      "sha256": "52f64ea559f3761d653f9b64d29d64994ab12af8569cddf6fac6b8cf16b8de49",
+      "zip_crc_verified": true,
+      "decoded_frames": 68
+    },
+    {
+      "scene": "single_push_sloth",
+      "member": "data/different_types/single_push_sloth/color/2.mp4",
+      "bytes": 10678351,
+      "sha256": "5e850b6d76073515fdafce6d0e747dad00d7e651d525da1e383036bc254994f6",
+      "zip_crc_verified": true,
+      "decoded_frames": 68
+    }
+  ],
+  "evaluation_role": "RGB and RGB-D tracks must be reported separately",
+  "updated_unix": 1794103153.579162,
+  "detail": "PhysTwin \u4e24\u573a\u666f\u7684\u5b98\u65b9\u89c6\u9891/\u5212\u5206/\u5143\u6570\u636e\uff1b\u4e0d\u628a\u5f39\u7c27\u7cfb\u6570\u5f53 E\u3002",
+  "range_downloaded_bytes": 61354771,
+  "scope": "Selected RGB videos/metadata only; no full archive SHA, depth/tracks or official optimizer run yet. Both scenes are evaluation-only."
+}

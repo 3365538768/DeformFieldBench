@@ -1,0 +1,228 @@
+{
+  "status": "complete",
+  "sources": {
+    "deform360": {
+      "status": "complete",
+      "source": "https://huggingface.co/datasets/brownu/deform360",
+      "revision": "5ea8c5d3fc7b4a7b4f9f921f2ceb1de24610f6a4",
+      "license": "mit",
+      "files": [
+        {
+          "path": "raw/001-rope/brics-odroid-001_cam0/brics-odroid-001_cam0_1766067991367625.mp4",
+          "status": "downloaded",
+          "bytes": 2366808,
+          "sha256": "58dbff8e83d1b45f09b3904649177127c4f8ad93151fa5e61e116fa607f19c56",
+          "expected_lfs_sha256": "58dbff8e83d1b45f09b3904649177127c4f8ad93151fa5e61e116fa607f19c56"
+        },
+        {
+          "path": "raw/004-rubber-band/brics-odroid-001_cam0/brics-odroid-001_cam0_1769463716718331.mp4",
+          "status": "downloaded",
+          "bytes": 2944964,
+          "sha256": "455c3e348dba06f312b491d64dd68ae5190a7ed50fe948b4c42add1493c01666",
+          "expected_lfs_sha256": "455c3e348dba06f312b491d64dd68ae5190a7ed50fe948b4c42add1493c01666"
+        },
+        {
+          "path": "raw/008-pink-cloth/brics-odroid-001_cam0/brics-odroid-001_cam0_1766008304850644.mp4",
+          "status": "downloaded",
+          "bytes": 4253743,
+          "sha256": "ee6bfb467a56f38fce5597489074a1be321c1c955564735d987e9009ba5ced91",
+          "expected_lfs_sha256": "ee6bfb467a56f38fce5597489074a1be321c1c955564735d987e9009ba5ced91"
+        },
+        {
+          "path": "raw/046-sponge/brics-odroid-001_cam0/brics-odroid-001_cam0_1766161369112580.mp4",
+          "status": "downloaded",
+          "bytes": 3416782,
+          "sha256": "97de5de1da02809862549b84a51a74c0ffca4bfe74af36315a1a7c8a01fc0c3a",
+          "expected_lfs_sha256": "97de5de1da02809862549b84a51a74c0ffca4bfe74af36315a1a7c8a01fc0c3a"
+        },
+        {
+          "path": "raw/105-clay-cloth/brics-odroid-001_cam0/brics-odroid-001_cam0_1769128933475143.mp4",
+          "status": "downloaded",
+          "bytes": 2430479,
+          "sha256": "951d0f3c94d9a1bc5b16c304370442dc7e9462e118ae07f012f777557c1d375e",
+          "expected_lfs_sha256": "951d0f3c94d9a1bc5b16c304370442dc7e9462e118ae07f012f777557c1d375e"
+        },
+        {
+          "path": "raw/001-rope/brics-odroid-001_cam0/brics-odroid-001_cam0_1766067991367625.txt",
+          "status": "downloaded",
+          "bytes": 9288,
+          "sha256": "53d75b612e7219c2b81d7316392bbbec07b8031bc5ffd2e245a6dfc796f84d99",
+          "expected_lfs_sha256": null
+        },
+        {
+          "path": "raw/004-rubber-band/brics-odroid-001_cam0/brics-odroid-001_cam0_1769463716718331.txt",
+          "status": "downloaded",
+          "bytes": 12312,
+          "sha256": "ef56d26873e103b2125b569b7dc92eb73a7d09f9ef400e5c60aa4001e6fa26ec",
+          "expected_lfs_sha256": null
+        },
+        {
+          "path": "raw/008-pink-cloth/brics-odroid-001_cam0/brics-odroid-001_cam0_1766008304850644.txt",
+          "status": "downloaded",
+          "bytes": 12852,
+          "sha256": "be7beacde49ddf75c3181e112d881d6888b338c3a6d5f5dfd2df4ac83fbd8935",
+          "expected_lfs_sha256": null
+        },
+        {
+          "path": "raw/046-sponge/brics-odroid-001_cam0/brics-odroid-001_cam0_1766161369112580.txt",
+          "status": "downloaded",
+          "bytes": 15480,
+          "sha256": "e213ccbe58ac049bd31bbaf3974548f3aef07e381c2d79979f549079398f0052",
+          "expected_lfs_sha256": null
+        },
+        {
+          "path": "raw/105-clay-cloth/brics-odroid-001_cam0/brics-odroid-001_cam0_1769128933475143.txt",
+          "status": "downloaded",
+          "bytes": 9576,
+          "sha256": "16e68ae2f6cf74494db99bef4de9be76f09e8a83dd54e82819b92a64643b8eae",
+          "expected_lfs_sha256": null
+        }
+      ],
+      "scope": "5 deterministic real-video pilot objects, not a representative benchmark; no E/nu/rho labels assumed."
+    },
+    "phystwin": {
+      "status": "complete",
+      "source": "https://huggingface.co/datasets/Jianghanxiao/PhysTwin",
+      "revision": "05665bcd0edad8f069c7def9cbb58d2eb75d68d0",
+      "dataset_card_license": "mit",
+      "archive_bytes": 8075884740,
+      "archive_lfs_sha256": "586a237a0f870b2a0a144ee69c3f04b636cac4fe251df969c1fd1feaf67eeae2",
+      "archive_members": 41554,
+      "metadata_candidates": 264,
+      "range_downloaded_bytes": 5864402,
+      "metadata_files": [
+        {
+          "name": "data/different_types/double_lift_cloth_1/calibrate.pkl",
+          "bytes": 601,
+          "sha256": "6ac96096800b1e2b9c16f0c3a68a8ea3e97e96a53034f9a124157fb081958abb"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/gt_track_3d.pkl",
+          "bytes": 25210,
+          "sha256": "6702a80b7c09d7628a05acd1951fd186373ea3df9e137416b06ebc3ff8523d9a"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/mask/mask_info_0.json",
+          "bytes": 40,
+          "sha256": "2b151b6ab12f4b52736812d7d27fd20faa02173dac40d40e96aa1438a55f0e61"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/mask/mask_info_1.json",
+          "bytes": 40,
+          "sha256": "2b151b6ab12f4b52736812d7d27fd20faa02173dac40d40e96aa1438a55f0e61"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/mask/mask_info_2.json",
+          "bytes": 27,
+          "sha256": "7cc3c3f5606729c1f5b98bf7bedd187ae7da745d9c3583529e5f4c76be2c152a"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/metadata.json",
+          "bytes": 500,
+          "sha256": "b9dee11493f84a1c383c31cad2d07e9ba2dd0f42936a43ccfeef1cd61c5246ba"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/split.json",
+          "bytes": 55,
+          "sha256": "c0a2923d97276e03d1b28faa3e7f17776ddc7c80376debeca2e4a9d91aaa992a"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_3/calibrate.pkl",
+          "bytes": 601,
+          "sha256": "6ac96096800b1e2b9c16f0c3a68a8ea3e97e96a53034f9a124157fb081958abb"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_3/gt_track_3d.pkl",
+          "bytes": 25642,
+          "sha256": "9b05b081ae1746e92cdc901d96066ab3f7ff2cbee9503336f5aed97cae19655d"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_3/mask/mask_info_0.json",
+          "bytes": 40,
+          "sha256": "2b151b6ab12f4b52736812d7d27fd20faa02173dac40d40e96aa1438a55f0e61"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_3/mask/mask_info_1.json",
+          "bytes": 40,
+          "sha256": "2b151b6ab12f4b52736812d7d27fd20faa02173dac40d40e96aa1438a55f0e61"
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_3/mask/mask_info_2.json",
+          "bytes": 40,
+          "sha256": "2b151b6ab12f4b52736812d7d27fd20faa02173dac40d40e96aa1438a55f0e61"
+        }
+      ],
+      "schemas": [
+        {
+          "name": "data/different_types/double_lift_cloth_1/mask/mask_info_0.json",
+          "top_level_keys": [
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/mask/mask_info_1.json",
+          "top_level_keys": [
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/mask/mask_info_2.json",
+          "top_level_keys": [
+            "0",
+            "1"
+          ]
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/metadata.json",
+          "top_level_keys": [
+            "intrinsics",
+            "serial_numbers",
+            "fps",
+            "WH",
+            "frame_num",
+            "start_step",
+            "end_step"
+          ]
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_1/split.json",
+          "top_level_keys": [
+            "frame_len",
+            "train",
+            "test"
+          ]
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_3/mask/mask_info_0.json",
+          "top_level_keys": [
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_3/mask/mask_info_1.json",
+          "top_level_keys": [
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "name": "data/different_types/double_lift_cloth_3/mask/mask_info_2.json",
+          "top_level_keys": [
+            "0",
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "scope": "ZIP central-directory and selected metadata only; CRC checked for extracted members. Full archive SHA not checked; no videos installed or material labels normalized yet."
+    }
+  },
+  "used_for_training": false
+}

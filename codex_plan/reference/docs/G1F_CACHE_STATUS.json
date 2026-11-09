@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "completed": 640,
+  "total": 640,
+  "elapsed_seconds": 94.81049656867981,
+  "bytes": 28038716160,
+  "parity_max_z_delta": 0.0,
+  "parity_samples": 4,
+  "prefetch_workers": 4,
+  "resumed_samples": 288,
+  "updated_unix": 1794055380.0829873
+}

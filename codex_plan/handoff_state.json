@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "handoff_local_date": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "recipient": "Claude",
+  "goal": "Core ICLR rebuttal; promptly report audited lack of practical V1 benefit and start authorized V2 construction if triggered",
+  "user_deadline_date": "2026-11-15",
+  "deadline_exact_time_unconfirmed": true,
+  "evidence_freeze_target": "2026-11-14",
+  "target_dates_conditional_on_compute": true,
+  "source_repository": "https://github.com/3365538768/DeformFieldBench",
+  "source_commit_before_handoff": "de6ad15545de68bdaa636dbffddf667e92fe210b",
+  "legacy_paper_code_commit": "131c0b063d81b5413691e43ea78fe3ba64e53e9c",
+  "authoritative_local_checkout": "C:\\Users\\shoul\\Documents\\ChatGPT\\ICLR 2\\.repo-sync\\DeformFieldBench",
+  "local_project_copy": "C:\\Users\\shoul\\Documents\\ChatGPT\\ICLR 2\\rsi_real_test",
+  "project_copy_may_be_older_than_source_checkout": true,
+  "resource_state": {
+    "user_confirmed_no_free_machine": true,
+    "planning_and_local_preparation_only": true,
+    "allow_gpu_training": false,
+    "allow_simulation_generation": false,
+    "allow_remote_polling": false,
+    "automatic_resume": false,
+    "server_state_reverified_during_handoff": false
+  },
+  "remote_project": {
+    "host": "180.153.172.11",
+    "ssh_user": "root",
+    "ssh_port": 50002,
+    "project_path": "/kairos-yangsen/kairis-vepfs-6t/linrui/rsi_real_test",
+    "must_not_connect_or_resume_until_user_releases_resource_constraint": true
+  },
+  "v2_transition": {
+    "authorized": true,
+    "triggered": false,
+    "notify_before_starting": true,
+    "current_evidence": "No stable unique bridge benefit established; strict original-model retraining unavailable, so V1 ineffectiveness is not proven",
+    "policy": "reference/docs/REBUTTAL_CORE_AND_V2_DECISION_ZH.md"
+  },
+  "first_steps_now": [
+    "Read README.md and referenced core/compute-minimal protocols",
+    "Continue local plan and evidence audit; keep all machine tasks paused",
+    "Find existing local original-run small receipts if accessible; record missing files explicitly",
+    "Do not claim planned experiments completed or submit working reviewer draft"
+  ],
+  "when_compute_available": [
+    "Verify original checkpoint/config/split identity and reproduce predictions",
+    "Strictly matched C/D retraining, distinguishing predicted-map feedback and optional shared decoder latent",
+    "Original MPM physical validation and consistency-loss runtime audit",
+    "Independent baseline comparison with disclosed input privileges, units and budgets",
+    "Locked evaluation and evidence-backed reviewer responses"
+  ],
+  "must_preserve": [
+    "V1 evidence/checkpoints and failure reports",
+    "MLE runs and monitoring on 4090/5090",
+    "No credentials in docs or Git",
+    "Raw papers, model weights and datasets are not bundled"
+  ],
+  "copies_are_snapshots_not_live_status": true,
+  "bundle_includes_full_source_or_models": false,
+  "diagnostic_scores_lower_is_better": {
+    "M2_C_aux": 0.6828105088545356,
+    "M2_D_fields": 0.6867170213922035,
+    "M2_single_seed_not_original_reproduction": true,
+    "G1F_D_fields": 0.8025261577180869,
+    "G1F_G_features": 0.8024597931095551,
+    "NF_N0": 0.7664164905420093,
+    "NF_N1": 0.7729030678270731,
+    "NF_N2": 0.7798548697477726
+  },
+  "review_attachment_sha256": "7640e55006b41ad436ca2cc73121e98655426cd135f9dc55efde3e3d77dcd6a6"
+}

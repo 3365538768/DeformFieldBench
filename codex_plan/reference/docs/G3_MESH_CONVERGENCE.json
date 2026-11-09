@@ -1,0 +1,1157 @@
+{
+  "status": "complete",
+  "completed": 15,
+  "total": 15,
+  "protocol": {
+    "mesh_levels": [
+      24,
+      32,
+      48
+    ],
+    "field_relative_l2_tolerance": 0.03,
+    "tip_relative_l2_tolerance": 0.03,
+    "required_successive_refinements": 2,
+    "minimum_motion_px": 2.0,
+    "maximum_motion_px": 30.0,
+    "image_size": 224,
+    "field_of_view_m": 0.08,
+    "workers": 2,
+    "solver_timeout_seconds": 900
+  },
+  "protocol_sha256": "43e489e8159a372d08c9f5966cfa26fea6d6eb407c02515bb29a37d8a933fc5b",
+  "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617",
+  "rows": [
+    {
+      "id": "uipc_5f8a62f02b47509438e6",
+      "path": "data/calibration/g3_convergence/uipc_5f8a62f02b47509438e6",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "8e1a22b630bb89c4b35fe5a916018f85c4c7759c2016c2662102fddcf0b2d726",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 4.440263446940982,
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.010000000000000023,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          24,
+          12,
+          12
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.01,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "8a9b41cc298a4bd400f2a2636fcb3e1ed52d924d7e3c042867b1691770d42c7f",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "cd466725c0c2a0eb8a3f2941b3c47ac8449177892298d8be80a76dafac71be38",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9764885984556503,
+      "max_displacement_gradient": 0.07845134430723624,
+      "tip_displacement_m": [
+        -2.6004949620668728e-05,
+        0.0014953565202076623,
+        -1.2574918144445595e-05
+      ],
+      "wall_seconds": 19.600966520840302,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_47adea8e210e24af3eca",
+      "path": "data/calibration/g3_convergence/uipc_47adea8e210e24af3eca",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "8e1a22b630bb89c4b35fe5a916018f85c4c7759c2016c2662102fddcf0b2d726",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 4.50383657280539,
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.009999999999999974,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 1.7355703022298208e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.01,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "cd466725c0c2a0eb8a3f2941b3c47ac8449177892298d8be80a76dafac71be38",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9741061318277627,
+      "max_displacement_gradient": 0.08098753572440791,
+      "tip_displacement_m": [
+        -2.7038158451606183e-05,
+        0.0015156618487179245,
+        -7.343289224351121e-06
+      ],
+      "wall_seconds": 23.236262789927423,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_ea0456cdc0d3f53aa1d4",
+      "path": "data/calibration/g3_convergence/uipc_ea0456cdc0d3f53aa1d4",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "9aedbae7f5d1a60f7d02cf1ecbf406f3808405035dcd2abf551ae89453aab0fe",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 8.878941595339901,
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.020000000000000046,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          24,
+          12,
+          12
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.02,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "8a9b41cc298a4bd400f2a2636fcb3e1ed52d924d7e3c042867b1691770d42c7f",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "047b14daa0d5e8558a39d1bbeb113c193d6593dbb3fbb77dcf909b66e0e11c15",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9527860565597094,
+      "max_displacement_gradient": 0.15656636384635464,
+      "tip_displacement_m": [
+        -0.00010496915589955174,
+        0.0029833247175678353,
+        -2.5073117228733287e-05
+      ],
+      "wall_seconds": 25.135155383963138,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_a43d23989beef581825c",
+      "path": "data/calibration/g3_convergence/uipc_a43d23989beef581825c",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "9aedbae7f5d1a60f7d02cf1ecbf406f3808405035dcd2abf551ae89453aab0fe",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 9.006210335366992,
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.01999999999999995,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.02,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "047b14daa0d5e8558a39d1bbeb113c193d6593dbb3fbb77dcf909b66e0e11c15",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9479357423099658,
+      "max_displacement_gradient": 0.1616139047313003,
+      "tip_displacement_m": [
+        -0.00010857624903568987,
+        0.003023754409911083,
+        -1.4642582080765954e-05
+      ],
+      "wall_seconds": 23.611342513933778,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_a5e03b22b574ae032e81",
+      "path": "data/calibration/g3_convergence/uipc_a5e03b22b574ae032e81",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "8e1a22b630bb89c4b35fe5a916018f85c4c7759c2016c2662102fddcf0b2d726",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 4.55440650899102,
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.009999999999999933,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          48,
+          24,
+          24
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.01,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "6b7b18d8688d70788eae62c7a7b4626adcb0b50bdbb60dc5f7ace58cd48ead2e",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "cd466725c0c2a0eb8a3f2941b3c47ac8449177892298d8be80a76dafac71be38",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9703102721085793,
+      "max_displacement_gradient": 0.08400565323242916,
+      "tip_displacement_m": [
+        -2.7854665945629538e-05,
+        0.0015314316240519182,
+        -3.37322467418711e-06
+      ],
+      "wall_seconds": 54.33504260703921,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_fced74632877d233c4e3",
+      "path": "data/calibration/g3_convergence/uipc_fced74632877d233c4e3",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "14277d93907e988c55751fe0c4c4bb54a018582d07f59c796f01b84934b971ae",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 22.01457789407509,
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.04999999999999989,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.576224061345498e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          24,
+          12,
+          12
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "8a9b41cc298a4bd400f2a2636fcb3e1ed52d924d7e3c042867b1691770d42c7f",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "d4835f46166fa7a949a18bd8734f58bd81a8a6c835d705b55756f243c8984919",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.8814422268984701,
+      "max_displacement_gradient": 0.3850140044335042,
+      "tip_displacement_m": [
+        -0.00064295099677725,
+        0.007336195864494383,
+        -6.0956284519132535e-05
+      ],
+      "wall_seconds": 23.744880483020097,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_4916c652808f735f54e7",
+      "path": "data/calibration/g3_convergence/uipc_4916c652808f735f54e7",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "14277d93907e988c55751fe0c4c4bb54a018582d07f59c796f01b84934b971ae",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 22.325326062325022,
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.05000000000000021,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.4762166109799766e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "d4835f46166fa7a949a18bd8734f58bd81a8a6c835d705b55756f243c8984919",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.8688239327396091,
+      "max_displacement_gradient": 0.3970969230616309,
+      "tip_displacement_m": [
+        -0.0006626226051417182,
+        0.007432877727185251,
+        -3.557980958572904e-05
+      ],
+      "wall_seconds": 32.806816027034074,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_dcabd57d8581ba8f4a07",
+      "path": "data/calibration/g3_convergence/uipc_dcabd57d8581ba8f4a07",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "9aedbae7f5d1a60f7d02cf1ecbf406f3808405035dcd2abf551ae89453aab0fe",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 9.107402624915183,
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.019999999999999865,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469870442581002e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          48,
+          24,
+          24
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.02,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "6b7b18d8688d70788eae62c7a7b4626adcb0b50bdbb60dc5f7ace58cd48ead2e",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "047b14daa0d5e8558a39d1bbeb113c193d6593dbb3fbb77dcf909b66e0e11c15",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9401693532073493,
+      "max_displacement_gradient": 0.16761658100135662,
+      "tip_displacement_m": [
+        -0.00011141002283879756,
+        0.0030551276214515256,
+        -6.727900878138722e-06
+      ],
+      "wall_seconds": 60.04849839885719,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_24d0e5d994f19295716c",
+      "path": "data/calibration/g3_convergence/uipc_24d0e5d994f19295716c",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "8ac1f5ba099abccd4fb9419c99e9800ce70bd1fcb885cc8a788f2452d2e62e32",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 2.219224237635763,
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.020000000000000046,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          24,
+          12,
+          12
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.02,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "8a9b41cc298a4bd400f2a2636fcb3e1ed52d924d7e3c042867b1691770d42c7f",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "047b14daa0d5e8558a39d1bbeb113c193d6593dbb3fbb77dcf909b66e0e11c15",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9882738367825274,
+      "max_displacement_gradient": 0.03924228588186861,
+      "tip_displacement_m": [
+        -6.334410087107233e-06,
+        0.000748160962628227,
+        -6.289437729464695e-06
+      ],
+      "wall_seconds": 5.461521649034694,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_83240f7471d46403ca0d",
+      "path": "data/calibration/g3_convergence/uipc_83240f7471d46403ca0d",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "8ac1f5ba099abccd4fb9419c99e9800ce70bd1fcb885cc8a788f2452d2e62e32",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 2.250940583131736,
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.01999999999999995,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469870442581002e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.02,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "047b14daa0d5e8558a39d1bbeb113c193d6593dbb3fbb77dcf909b66e0e11c15",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9870940867881018,
+      "max_displacement_gradient": 0.040511142109301436,
+      "tip_displacement_m": [
+        -6.656219011956291e-06,
+        0.0007583156396297068,
+        -3.672547031882051e-06
+      ],
+      "wall_seconds": 20.33175166277215,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_aec618230e1b4ee52a71",
+      "path": "data/calibration/g3_convergence/uipc_aec618230e1b4ee52a71",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "14277d93907e988c55751fe0c4c4bb54a018582d07f59c796f01b84934b971ae",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 22.571823249754882,
+      "native_coefficients_pa": {
+        "mu": 4615.384615384615,
+        "lambda_snk1": 11538.461538461539
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.04999999999999984,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.4694478825316786e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          48,
+          24,
+          24
+        ],
+        "young_pa": 12000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "6b7b18d8688d70788eae62c7a7b4626adcb0b50bdbb60dc5f7ace58cd48ead2e",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "d4835f46166fa7a949a18bd8734f58bd81a8a6c835d705b55756f243c8984919",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.8483399557765277,
+      "max_displacement_gradient": 0.41143017267765963,
+      "tip_displacement_m": [
+        -0.0006779619952403234,
+        0.007507652813388261,
+        -1.634880945049495e-05
+      ],
+      "wall_seconds": 66.13478705706075,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_648cd884470a33ddd83d",
+      "path": "data/calibration/g3_convergence/uipc_648cd884470a33ddd83d",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "8ac1f5ba099abccd4fb9419c99e9800ce70bd1fcb885cc8a788f2452d2e62e32",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 2.276173528796414,
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.019999999999999865,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469699014779725e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          48,
+          24,
+          24
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.02,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "6b7b18d8688d70788eae62c7a7b4626adcb0b50bdbb60dc5f7ace58cd48ead2e",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "047b14daa0d5e8558a39d1bbeb113c193d6593dbb3fbb77dcf909b66e0e11c15",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9852192267361304,
+      "max_displacement_gradient": 0.042021552831618354,
+      "tip_displacement_m": [
+        -6.91243073440111e-06,
+        0.0007662048459614692,
+        -1.6867563191654407e-06
+      ],
+      "wall_seconds": 40.394859100924805,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_93e8401a49cefb0b2081",
+      "path": "data/calibration/g3_convergence/uipc_93e8401a49cefb0b2081",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "af01f7053c550c5abf1469593ed52da32ed5b78f4b24fa866d698ac8bf7120e9",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 5.550771165720176,
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.04999999999999989,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469446951953614e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          24,
+          12,
+          12
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "8a9b41cc298a4bd400f2a2636fcb3e1ed52d924d7e3c042867b1691770d42c7f",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "d4835f46166fa7a949a18bd8734f58bd81a8a6c835d705b55756f243c8984919",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9705773359356034,
+      "max_displacement_gradient": 0.09802746006213885,
+      "tip_displacement_m": [
+        -4.081736446065825e-05,
+        0.001868315270617156,
+        -1.5711396983613153e-05
+      ],
+      "wall_seconds": 5.467043281998485,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_1446c59e1e3cfdf387d8",
+      "path": "data/calibration/g3_convergence/uipc_1446c59e1e3cfdf387d8",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "af01f7053c550c5abf1469593ed52da32ed5b78f4b24fa866d698ac8bf7120e9",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 5.630290955474995,
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.05000000000000021,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469466634015237e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          32,
+          16,
+          16
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "e23686b91bc7d9c0f2b510c9d0c3cfa32db62041162397e810a89a546b817194",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "d4835f46166fa7a949a18bd8734f58bd81a8a6c835d705b55756f243c8984919",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9675853909299665,
+      "max_displacement_gradient": 0.10119527579888714,
+      "tip_displacement_m": [
+        -4.235137585556226e-05,
+        0.0018936814477869418,
+        -9.175099397986355e-06
+      ],
+      "wall_seconds": 9.79342122003436,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    },
+    {
+      "id": "uipc_b25501c397881bc150ac",
+      "path": "data/calibration/g3_convergence/uipc_b25501c397881bc150ac",
+      "fixture": "\u6536\u655b\u5ba1\u8ba1",
+      "split": "calibration",
+      "source": "G3c",
+      "material_pair": "af01f7053c550c5abf1469593ed52da32ed5b78f4b24fa866d698ac8bf7120e9",
+      "axis": 1,
+      "healthy": true,
+      "ideal_max_motion_px": 5.693539910495927,
+      "native_coefficients_pa": {
+        "mu": 18461.53846153846,
+        "lambda_snk1": 46153.846153846156
+      },
+      "assembled_resultant_n": [
+        0.0,
+        0.04999999999999984,
+        0.0
+      ],
+      "completed": true,
+      "final_max_speed_m_s": 3.469870442581002e-16,
+      "last20_displacement_change_m": 6.938893903907228e-18,
+      "engine_version": "0.0.29",
+      "engine": "uipc",
+      "case": {
+        "dimensions_m": [
+          0.04,
+          0.02,
+          0.02
+        ],
+        "cells": [
+          48,
+          24,
+          24
+        ],
+        "young_pa": 48000.0,
+        "poisson": 0.3,
+        "force_n": 0.05,
+        "axis": 1,
+        "dt_seconds": 0.02,
+        "steps": 200
+      },
+      "response_provenance": {
+        "protocol_sha256": "0a52733f88b423955d1a538351fa4358b28e1252e34927053b5dbafe55b70de2",
+        "fixture_geometry_sha256": "6b7b18d8688d70788eae62c7a7b4626adcb0b50bdbb60dc5f7ace58cd48ead2e",
+        "length_scale_m": 0.04,
+        "load_history_sha256": "d4835f46166fa7a949a18bd8734f58bd81a8a6c835d705b55756f243c8984919",
+        "boundary_sha256": "67c71a00a94db62f6f6dff25f0f9fe01311a158f8dcac3981af936a4c19a6d31",
+        "observable": "settled full nodal displacement",
+        "units": "m"
+      },
+      "fixed_vertex_max_error_m": 0.0,
+      "min_jacobian": 0.9628124695866938,
+      "max_displacement_gradient": 0.10496444579395302,
+      "tip_displacement_m": [
+        -4.356115898026669e-05,
+        0.0019133778941691675,
+        -4.214988321558009e-06
+      ],
+      "wall_seconds": 27.50142704998143,
+      "solver_source_sha256": "7a2ba88ff5d78b596b30b1f4c15f662dad2b14a3df857cc95989bfee0854b617"
+    }
+  ],
+  "groups": [
+    {
+      "young_pa": 12000.0,
+      "force_n": 0.01,
+      "comparisons": [
+        {
+          "coarse": [
+            24,
+            12,
+            12
+          ],
+          "fine": [
+            32,
+            16,
+            16
+          ],
+          "field_relative_l2": 0.013764953878248975,
+          "tip_relative_l2": 0.013848942491967166
+        },
+        {
+          "coarse": [
+            32,
+            16,
+            16
+          ],
+          "fine": [
+            48,
+            24,
+            24
+          ],
+          "field_relative_l2": 0.010638584987792533,
+          "tip_relative_l2": 0.010630306042894546
+        }
+      ],
+      "numerically_converged": true,
+      "selected_case_id": "uipc_47adea8e210e24af3eca",
+      "selected_path": "data/calibration/g3_convergence/uipc_47adea8e210e24af3eca",
+      "reference_case_id": "uipc_a5e03b22b574ae032e81",
+      "eligible_for_render": true
+    },
+    {
+      "young_pa": 12000.0,
+      "force_n": 0.02,
+      "comparisons": [
+        {
+          "coarse": [
+            24,
+            12,
+            12
+          ],
+          "fine": [
+            32,
+            16,
+            16
+          ],
+          "field_relative_l2": 0.01378374490777078,
+          "tip_relative_l2": 0.013850844625688058
+        },
+        {
+          "coarse": [
+            32,
+            16,
+            16
+          ],
+          "fine": [
+            48,
+            24,
+            24
+          ],
+          "field_relative_l2": 0.010644835785002402,
+          "tip_relative_l2": 0.010624221901651841
+        }
+      ],
+      "numerically_converged": true,
+      "selected_case_id": "uipc_a43d23989beef581825c",
+      "selected_path": "data/calibration/g3_convergence/uipc_a43d23989beef581825c",
+      "reference_case_id": "uipc_dcabd57d8581ba8f4a07",
+      "eligible_for_render": true
+    },
+    {
+      "young_pa": 12000.0,
+      "force_n": 0.05,
+      "comparisons": [
+        {
+          "coarse": [
+            24,
+            12,
+            12
+          ],
+          "fine": [
+            32,
+            16,
+            16
+          ],
+          "field_relative_l2": 0.013654749613946053,
+          "tip_relative_l2": 0.013651573130716558
+        },
+        {
+          "coarse": [
+            32,
+            16,
+            16
+          ],
+          "fine": [
+            48,
+            24,
+            24
+          ],
+          "field_relative_l2": 0.010515377643314616,
+          "tip_relative_l2": 0.010442450316398576
+        }
+      ],
+      "numerically_converged": true,
+      "selected_case_id": "uipc_4916c652808f735f54e7",
+      "selected_path": "data/calibration/g3_convergence/uipc_4916c652808f735f54e7",
+      "reference_case_id": "uipc_aec618230e1b4ee52a71",
+      "eligible_for_render": true
+    },
+    {
+      "young_pa": 48000.0,
+      "force_n": 0.02,
+      "comparisons": [
+        {
+          "coarse": [
+            24,
+            12,
+            12
+          ],
+          "fine": [
+            32,
+            16,
+            16
+          ],
+          "field_relative_l2": 0.013743287131067738,
+          "tip_relative_l2": 0.013834420012604222
+        },
+        {
+          "coarse": [
+            32,
+            16,
+            16
+          ],
+          "fine": [
+            48,
+            24,
+            24
+          ],
+          "field_relative_l2": 0.010625580011610118,
+          "tip_relative_l2": 0.01062244977036604
+        }
+      ],
+      "numerically_converged": true,
+      "selected_case_id": "uipc_83240f7471d46403ca0d",
+      "selected_path": "data/calibration/g3_convergence/uipc_83240f7471d46403ca0d",
+      "reference_case_id": "uipc_648cd884470a33ddd83d",
+      "eligible_for_render": true
+    },
+    {
+      "young_pa": 48000.0,
+      "force_n": 0.05,
+      "comparisons": [
+        {
+          "coarse": [
+            24,
+            12,
+            12
+          ],
+          "fine": [
+            32,
+            16,
+            16
+          ],
+          "field_relative_l2": 0.013772707118825675,
+          "tip_relative_l2": 0.013852796752273534
+        },
+        {
+          "coarse": [
+            32,
+            16,
+            16
+          ],
+          "fine": [
+            48,
+            24,
+            24
+          ],
+          "field_relative_l2": 0.010642605474926932,
+          "tip_relative_l2": 0.010631496000982527
+        }
+      ],
+      "numerically_converged": true,
+      "selected_case_id": "uipc_1446c59e1e3cfdf387d8",
+      "selected_path": "data/calibration/g3_convergence/uipc_1446c59e1e3cfdf387d8",
+      "reference_case_id": "uipc_b25501c397881bc150ac",
+      "eligible_for_render": true
+    }
+  ],
+  "scope": "Single-engine UIPC known-load blocks; convergence is a local discretization check, not continuum ground truth or RGB success.",
+  "updated_unix": 1794060936.0903025,
+  "wall_seconds": 235.77058291435242,
+  "detail": "\u7ec6\u7f51\u683c\u5b9e\u9645\u6c42\u89e3 15/15\uff1b\u8fde\u7eed\u4e24\u7ea7\u5168\u573a\u53ca\u7aef\u9762\u54cd\u5e94\u53d8\u5316\u5747 <3% \u624d\u5141\u8bb8\u6e32\u67d3\u3002",
+  "accepted_groups": 5
+}

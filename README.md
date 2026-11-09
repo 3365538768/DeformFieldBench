@@ -4,6 +4,8 @@
 
 核心入口：[模型](src/fieldbridge/model.py)、[训练与早停](src/fieldbridge/train.py)、[验证](src/fieldbridge/evaluation.py)、[实验队列](scripts/optimization_manager.py)、[Web 监控](monitor/README.md)、[G0/G1 配置](configs/)。
 
+Claude 接手资料：[codex_plan/README.md](codex_plan/README.md)，包含截至 2026-11-09 的目标、已核实结果、调研与证据快照、核心 rebuttal 顺序、V2 转向授权及无空闲机器期间的暂停约束。资料包为静态交接快照，不代表远程运行状态已重新核实。
+
 目标：静态材料先验 + 动态物理场推断可用于指定仿真器的材料参数，以未见受力和真实交互验证。当前项目部署在 A800-2 的 `/kairos-yangsen/kairis-vepfs-6t/linrui/rsi_real_test`。
 
 2026-11-09 rebuttal 更新（用户截止日期 11 月 15 日）：[逐项 reviewer 回应与执行方案](docs/REBUTTAL_PRIORITY_PLAN_2026-11-09_ZH.md)、[阶段与交付清单](docs/REBUTTAL_EXECUTION_PLAN_2026-11-09.json)、[文献/官方实现索引](docs/REBUTTAL_SOURCES_2026-11-09.json)。优先核实原论文运行版本，补“保留 bottleneck 与场监督、仅切断反馈”的重训对照、原 MPM 物理校验、独立方法公平比较。已完成本地源码审计；公开默认配置关闭 consistency loss，但论文实际运行是否使用仍待检查点/日志确认。现有 M2 不能证明桥接优于匹配无桥控制；不把后续 Qwen/多引擎计划当作原稿结论的证据。A800-2 与监控继续暂停，本轮没有启动 GPU 实验。[可复跑审计脚本](scripts/audit_rebuttal_provenance.py)不加载模型、不连接服务器。
