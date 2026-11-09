@@ -138,5 +138,44 @@
         "artifact_index.json"
       ]
     }
+  ],
+  "scope": "core_rebuttal_only",
+  "scope_update_user_authorized_local_date": "2026-11-09",
+  "review_attachment_same_sha256_as_previous": true,
+  "decision_policy": "docs/REBUTTAL_CORE_AND_V2_DECISION_ZH.md",
+  "responses_working_draft": "docs/REBUTTAL_RESPONSES_WORKING_DRAFT.md",
+  "resource_resume_clarification": "user_confirmed_no_free_machine_continue_planning_only",
+  "v2_transition": {
+    "authorized_by_user": true,
+    "state": "conditional_not_triggered",
+    "notify_user_before_starting_v2": true,
+    "do_not_wait_for_v2_success_to_report_negative_results": true,
+    "trigger_evidence": "Strict audited original-model comparison; distinguish no feedback benefit, no overall system benefit and inconclusive evidence.",
+    "practical_relative_improvement_threshold": 0.02,
+    "threshold_role": "previous_project_engineering_threshold_not_a_universal_statistical_or_physical_constant",
+    "preserve_v1_evidence": true,
+    "heavy_compute_remains_subject_to_active_resource_constraints": true
+  },
+  "decision_checkpoint": {
+    "state": "not_enough_original_protocol_evidence",
+    "current_m2_bridge_relative_error_increase_vs_aux": 0.005721224976781958,
+    "m2_is_single_seed_restructured_diagnostic": true,
+    "original_strict_C_D_results_available": false,
+    "v1_no_benefit_proven": false,
+    "v2_started": false
+  },
+  "resource_constraint_confirmed_local_date": "2026-11-09",
+  "compute_minimal_protocol": "docs/REBUTTAL_COMPUTE_MINIMAL_PROTOCOL_ZH.md",
+  "target_dates_conditional_on_compute_availability": true,
+  "blocking_evidence_missing": [
+    "Original manuscript-to-checkpoint identity and resolved runtime configs",
+    "Original per-sample predictions/replay receipts and object/split manifest",
+    "Independent strict original C/D retraining results",
+    "Original MPM physical validation receipts"
+  ],
+  "extra_source_audit_risks": [
+    "GT object mask passed by historical forward wrapper; actual evaluation input contract unverified",
+    "Training supports optional mixed GT/predicted fields; default ratio zero, actual runtime unverified",
+    "Optional shared decoder latent must be separated from predicted-map feedback in ablation definition"
   ]
 }

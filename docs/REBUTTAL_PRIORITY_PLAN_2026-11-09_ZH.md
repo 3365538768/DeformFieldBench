@@ -6,6 +6,8 @@
 
 本轮只读取本地记录、Git 历史和公开论文/官方代码，并运行无模型、无 GPU 的来源审计。没有连接 A800-2，没有恢复训练、仿真生成、监控服务或下载权重。既有暂停要求继续有效。本文的 GPU 实验日期均以之后恢复资源可用为前提；当前没有正在执行的实验队列。
 
+同日用户补充确认“目前没有空闲机器”，继续优化方案，并要求只优先完成核心 rebuttal。执行范围与条件性 V2 转向以[决策规则](REBUTTAL_CORE_AND_V2_DECISION_ZH.md)为准，算力释放后的先后顺序见[最小算力协议](REBUTTAL_COMPUTE_MINIMAL_PROTOCOL_ZH.md)。原稿实际 mask/GT 场使用与 shared-latent 旁路需额外审计；预测场图反馈与所有 decoder 信息反馈应分开定义。
+
 ## 1. 先确定 rebuttal 在回答哪一份论文
 
 本次完整阅读了用户粘贴的三份 review。三位均为 weak reject，主要质疑可以归为四项：桥接的独立收益、原仿真的物理可信度、外部比较、可复现性及不成立的损失假设。AKYF 对 soundness 的评价最严，不能只用新增 qualitative figure 回应。

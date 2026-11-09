@@ -2,9 +2,9 @@
   "status": "complete",
   "kind": "research_review_not_experiment",
   "updated_utc": "2026-11-08T06:14:42.853087+00:00",
-  "recommendation": "优先原论文严格反馈消融、物理校验与独立方法公平比较；长期Qwen/few-shot路线后置",
-  "next_gate": "R0 原稿版本、检查点、运行配置与逐样本证据对应审计",
-  "next_gate_state": "paused",
+  "recommendation": "仅推进核心rebuttal；严格证据不支持实质收益时立即报告并转入已授权V2",
+  "next_gate": "L0 原稿回执清单、控制定义和最小算力执行协议；当前只做本地方案",
+  "next_gate_state": "paused_no_free_machine",
   "new_training_started": false,
   "a8002_deployment_for_this_review": false,
   "resource_pause": {
@@ -30,5 +30,11 @@
   "latest_rebuttal_plan": "docs/REBUTTAL_EXECUTION_PLAN_2026-11-09.json",
   "latest_rebuttal_sources": "docs/REBUTTAL_SOURCES_2026-11-09.json",
   "rebuttal_deadline_user_supplied": "2026-11-15",
-  "latest_local_research_date": "2026-11-09"
+  "latest_local_research_date": "2026-11-09",
+  "latest_rebuttal_decision_policy": "docs/REBUTTAL_CORE_AND_V2_DECISION_ZH.md",
+  "latest_rebuttal_working_responses": "docs/REBUTTAL_RESPONSES_WORKING_DRAFT.md",
+  "resource_resume_clarification": "user_confirmed_no_free_machine_continue_planning_only",
+  "v2_transition_authorized": true,
+  "v2_transition_triggered": false,
+  "latest_rebuttal_compute_protocol": "docs/REBUTTAL_COMPUTE_MINIMAL_PROTOCOL_ZH.md"
 }
