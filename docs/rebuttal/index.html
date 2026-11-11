@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FieldBench 审稿回复证据</title>
+<style>
+/* Layout: one reading column; evidence first (main table), then reviewer-by-reviewer concern cards, then open work.
+   Tokens follow the FieldBench monitor page (monitor_r/index.html) so the two pages read as one project. */
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --text: #1d2330; --muted: #667085; --line: #e3e6ec;
+  --accent: #2f6fde; --good: #1f8a5b; --warn: #b7791f; --bad: #c2413b; --track: #edf0f5;
+  --good-bg: #e6f4ed; --warn-bg: #fbf1df; --bad-bg: #fbe9e8;
+  --font-body: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-data: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12151b; --panel: #1a1f27; --text: #e6e9ef; --muted: #98a2b3; --line: #2a313c;
+    --accent: #6b9cff; --good: #4cc38a; --warn: #e0a84a; --bad: #f07167; --track: #252c36;
+    --good-bg: #183026; --warn-bg: #33291a; --bad-bg: #3a1f1e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12151b; --panel: #1a1f27; --text: #e6e9ef; --muted: #98a2b3; --line: #2a313c;
+  --accent: #6b9cff; --good: #4cc38a; --warn: #e0a84a; --bad: #f07167; --track: #252c36;
+  --good-bg: #183026; --warn-bg: #33291a; --bad-bg: #3a1f1e; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.65 var(--font-body); }
+main { max-width: 960px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 36px; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.3; margin: 0; }
+h1 { font-size: 26px; }
+h2 { font-size: 19px; }
+h3 { font-size: 15px; }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code, .num { font-family: var(--font-data); font-size: 0.88em; }
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.eyebrow { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+section { display: grid; gap: 14px; min-width: 0; }
+header { display: grid; gap: 10px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
+.lede { font-size: 16px; }
+
+/* status pills encode how far each concern is answered */
+.pill { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; white-space: nowrap; border: 1px solid transparent; }
+.pill.good { color: var(--good); background: var(--good-bg); }
+.pill.warn { color: var(--warn); background: var(--warn-bg); }
+.pill.bad { color: var(--bad); background: var(--bad-bg); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--muted); align-items: center; }
+
+/* main-table bar chart: one shared scale 0 - 0.9 normalized MAE */
+.chart { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 6px; overflow-x: auto; }
+.row { display: grid; grid-template-columns: minmax(150px, 15rem) 1fr 7.5rem; gap: 12px; align-items: center; min-width: 520px; }
+.row .label { font-size: 13px; }
+.row .track { position: relative; height: 16px; background: var(--track); border-radius: 3px; }
+.row .bar { position: absolute; inset: 0 auto 0 0; background: var(--muted); border-radius: 3px; opacity: 0.55; }
+.row.ours .bar { background: var(--accent); opacity: 1; }
+.row.ours .label { font-weight: 600; }
+.row .ref { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 1px dashed var(--text); opacity: 0.45; }
+.row .val { font-family: var(--font-data); font-size: 13px; font-variant-numeric: tabular-nums; text-align: right; }
+.row .off { position: absolute; right: 4px; top: -1px; font-size: 11px; color: var(--bad); }
+.axis { display: grid; grid-template-columns: minmax(150px, 15rem) 1fr 7.5rem; gap: 12px; min-width: 520px; font-size: 11px; color: var(--muted); }
+.axis .ticks { display: flex; justify-content: space-between; font-family: var(--font-data); }
+
+.tablewrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: 12px; }
+td.n { font-family: var(--font-data); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+.hi { font-weight: 600; }
+
+/* reviewer blocks */
+.reviewer { display: grid; gap: 12px; }
+.reviewer-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.concerns { display: grid; gap: 10px; }
+.concern { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 8px; min-width: 0; }
+.concern-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.concern-head h3 { min-width: 0; }
+.concern ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+.concern .src { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.fact { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.fact .big { font-family: var(--font-data); font-size: 22px; font-variant-numeric: tabular-nums; }
+
+footer { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
+footer code { overflow-wrap: anywhere; }
+@media (max-width: 560px) { .concern-head { flex-direction: column; } }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <span class="eyebrow">ICLR · Submission 19436 · DeformFieldBench</span>
+  <h1>FieldBench 审稿回复证据</h1>
+  <p class="lede">三位审稿人（a1nG、AKYF、Nxg5）均为 2 分。这一页把每条意见对应到已经跑完的实验，并标出还缺什么。</p>
+  <div class="meta">
+    <span>更新 2026-11-11</span>
+    <span>回复截止 2026-11-15</span>
+    <span>实验平台 A800-2 · 8 × A800</span>
+    <span><a href="./">实验进度监视页</a></span>
+  </div>
+  <div class="legend">
+    <span><span class="pill good">已有证据</span> 实验完成，数字可直接写进回复</span>
+    <span><span class="pill warn">部分</span> 有支撑证据，仍需补实验或改写</span>
+    <span><span class="pill bad">未解决</span> 还没有对应实验</span>
+  </div>
+</header>
+
+<section id="main-table">
+  <span class="eyebrow">主结果 · test 只评估一次</span>
+  <h2>换成视频骨干后，test 误差下降 15%</h2>
+  <p>协议在评估前写定，每个 run 取验证集最佳轮，test 不参与任何选择。test 共 494 条，物体与 train / val 不重叠。指标是原论文参数空间（E、ν、ρ、σ<sub>y</sub>）的标准化 MAE，越低越好；3 个 seed 的均值 ± 标准差。B = 无场，C = 加场监督，D = 再加场反馈（≈原论文结构）。</p>
+  <div class="chart" role="img" aria-label="test MAE bar chart, scale 0 to 0.9">
+    <div class="row"><span class="label">Qwen3-VL-8B 零样本</span><span class="track"><span class="bar" style="width:100%"></span><span class="off">3.105，超出刻度</span></span><span class="val">3.105</span></div>
+    <div class="row"><span class="label">常数（训练均值）</span><span class="track"><span class="bar" style="width:92.8%"></span></span><span class="val">0.835</span></div>
+    <div class="row"><span class="label">首帧静态（DINOv3）</span><span class="track"><span class="bar" style="width:90.6%"></span></span><span class="val">0.815 ± 0.002</span></div>
+    <div class="row"><span class="label">DINOv3 B</span><span class="track"><span class="bar" style="width:82.3%"></span></span><span class="val">0.741 ± 0.019</span></div>
+    <div class="row"><span class="label">DINOv3 C</span><span class="track"><span class="bar" style="width:80.8%"></span></span><span class="val">0.727 ± 0.010</span></div>
+    <div class="row"><span class="label">DINOv3 D（原论文结构）</span><span class="track"><span class="bar" style="width:78.4%"></span></span><span class="val">0.706 ± 0.004</span></div>
+    <div class="row ours"><span class="label">V-JEPA 2 ViT-L B</span><span class="track"><span class="bar" style="width:70.3%"></span></span><span class="val">0.633 ± 0.011</span></div>
+    <div class="row ours"><span class="label">V-JEPA 2 ViT-L C（主模型）</span><span class="track"><span class="bar" style="width:68.6%"></span></span><span class="val">0.617 ± 0.017</span></div>
+    <div class="row ours"><span class="label">V-JEPA 2 ViT-L D</span><span class="track"><span class="bar" style="width:68.1%"></span></span><span class="val">0.613 ± 0.021</span></div>
+    <div class="row"><span class="label">已知真实族 → 族均值（不可部署的参照）</span><span class="track"><span class="bar" style="width:59.4%"></span></span><span class="val">0.535</span></div>
+    <div class="axis"><span></span><span class="ticks"><span>0</span><span>0.3</span><span>0.6</span><span>0.9</span></span><span></span></div>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>配对比较（物体级 bootstrap，每个 seed 的 95% 区间）</th><th style="text-align:right">相对改善</th><th>区间</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">DINOv3 C → V-JEPA C</td><td class="n hi">15.1%</td><td><span class="pill good">3/3 不跨 0</span></td></tr>
+        <tr><td>首帧静态 → V-JEPA B</td><td class="n">22.4%</td><td><span class="pill good">3/3 不跨 0</span></td></tr>
+        <tr><td>DINOv3 B → C（场监督）</td><td class="n">1.8%</td><td><span class="pill warn">3/3 跨 0</span></td></tr>
+        <tr><td>V-JEPA B → C（场监督）</td><td class="n">2.6%</td><td><span class="pill warn">3/3 跨 0</span></td></tr>
+        <tr><td>DINOv3 C → D（场反馈）</td><td class="n">2.9%</td><td><span class="pill warn">3/3 跨 0</span></td></tr>
+        <tr><td>V-JEPA C → D（场反馈）</td><td class="n">0.5%</td><td><span class="pill warn">3/3 跨 0</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">族准确率：DINOv3 C 0.58 → V-JEPA C 0.69（test）。来源 <code>docs/P2_TEST_RESULTS_2026-11-10_ZH.md</code>、<code>docs/p2/P2_TEST_RESULTS.json</code>。</p>
+</section>
+
+<section id="identifiability">
+  <span class="eyebrow">为什么族内散点看起来不相关</span>
+  <h2>仿真器只让比值可见，而原数据的阻尼把动态抹掉了</h2>
+  <div class="facts">
+    <div class="fact">
+      <span class="eyebrow">R2 · 尺度不变</span>
+      <span class="big">1.2 × 10<sup>−6</sup></span>
+      <p>E、ρ、σ<sub>y</sub> 同时 ×4 后，所有粒子轨迹的相对 RMS 变化。单独 E×4 为 0.47、单独 ρ×4 为 0.39。只有 E/ρ、σ<sub>y</sub>/ρ 可从视频辨识，ρ 本身不可辨识。</p>
+      <span class="src muted"><code>docs/r2/MPM_IDENTIFIABILITY_jelly.json</code></span>
+    </div>
+    <div class="fact">
+      <span class="eyebrow">P4a · 阻尼</span>
+      <span class="big">&lt; 1%</span>
+      <p>V1 视频中 8 Hz 以上的运动能量。上游 <code>grid_v_damping</code> 每个子步施加一次，jelly 每秒速度衰减到 5×10<sup>−5</sup>，释放后 0.3 s 内静止，运动几乎全是位移控制的准静态。这也解释了 AKYF 指出的回弹 &lt; 5%。</p>
+      <span class="src muted"><code>docs/notes_r.json</code>（11-11 P3 / P4a 条目）</span>
+    </div>
+    <div class="fact">
+      <span class="eyebrow">P1 · 标签先验</span>
+      <span class="big">−0.84</span>
+      <p>jelly 训练标签中 ln ρ 与 ln(E/ρ) 的相关。V1 里族内 ρ 相关 0.4–0.6 来自这个采样先验，不是模型看见了密度；P4d 把 ρ 独立采样后，族内 r(ρ) ≈ 0。</p>
+      <span class="src muted"><code>docs/P1_RESULTS_2026-11-10_ZH.md</code> §3</span>
+    </div>
+  </div>
+
+  <h3>P4d：只改阻尼的配对试点（验证集）</h3>
+  <p>两组数据的物体、动作（press / tap）、参数和视角完全相同，只差阻尼。472 train / 112 val，V-JEPA 2 ViT-L 冻结特征 + C 头，3 个 seed。</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>指标</th><th style="text-align:right">V1 阻尼</th><th style="text-align:right">低阻尼</th></tr></thead>
+      <tbody>
+        <tr><td>验证 MAE（可辨识目标）</td><td class="n">0.855 ± 0.008</td><td class="n hi">0.801 ± 0.008</td></tr>
+        <tr><td>相对改善</td><td class="n"></td><td class="n hi">6.3%，3/3 不跨 0</td></tr>
+        <tr><td>族准确率</td><td class="n">0.48</td><td class="n">0.57</td></tr>
+        <tr><td>族内 r(E/ρ)：jelly / metal / plasticine</td><td class="n">0.12 / 0.18 / 0.21</td><td class="n hi">0.24 / 0.34 / 0.32</td></tr>
+        <tr><td>族内 r(σ<sub>y</sub>/ρ)：metal / plasticine</td><td class="n">0.26 / −0.18</td><td class="n hi">0.60 / 0.65</td></tr>
+        <tr><td>族内 r(ρ)（应≈0，对照）</td><td class="n">0.02 / −0.16 / −0.21</td><td class="n">0.02 / 0.09 / −0.09</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">试点只有 V1 约八分之一的样本，绝对 MAE 不能与 V1 直接比较；每族每动作约 19 个验证样本，按动作拆分的相关系数误差约 ±0.2。来源 <code>docs/P4D_RESULTS_AND_NEXT_PLAN_2026-11-11_ZH.md</code>、<code>docs/p4d/P4D_RESULTS.json</code>。</p>
+</section>
+
+<section id="reviewers">
+  <span class="eyebrow">逐条对应</span>
+  <h2>每位审稿人的问题与现有证据</h2>
+
+  <div class="reviewer" id="a1nG">
+    <div class="reviewer-head"><h3>Reviewer a1nG</h3><span class="muted">Rating 2 · Confidence 3</span></div>
+    <div class="concerns">
+      <article class="concern">
+        <div class="concern-head"><h3>预测与真值看起来近乎独立，定量提升也不明显（Fig. 4）</h3><span class="pill warn">部分</span></div>
+        <ul>
+          <li>换成 V-JEPA 2 视频骨干后 test MAE 降 15.1%，族准确率 0.58 → 0.69。</li>
+          <li>族内只有比值可辨识（R2）。V1 的强阻尼让族内参数难学；P4d 只改阻尼，族内 σ<sub>y</sub>/ρ 相关升到 0.60 / 0.65，E/ρ 约翻倍。</li>
+          <li>如实说明：test 上 E 的族内相关只有约 0.1；metal 的 σ<sub>y</sub>/ρ 约 0.64。Fig. 4 应改画可辨识量，并按族分面。</li>
+        </ul>
+        <span class="src">P2 主表 · R2 · P4d · 正式 V2 数据（B2）完成后再补族内散点</span>
+      </article>
+      <article class="concern">
+        <div class="concern-head"><h3>数据集和架构的贡献需要讲清楚</h3><span class="pill good">已有证据</span></div>
+        <ul>
+          <li>基准要求动态证据：只看第 1 帧的模型 MAE 0.815，与常数 0.835 相当，族准确率 0.33（随机水平）。</li>
+          <li>视频模型比首帧静态好 22.4%，3/3 区间不跨 0。</li>
+          <li>架构贡献改写为“视频表征 + 场辅助监督”，场反馈不再作为主要贡献（见 AKYF / Nxg5 的消融）。</li>
+        </ul>
+        <span class="src">P2 主表</span>
+      </article>
+    </div>
+  </div>
+
+  <div class="reviewer" id="AKYF">
+    <div class="reviewer-head"><h3>Reviewer AKYF</h3><span class="muted">Rating 2 · Confidence 4 · Soundness 1</span></div>
+    <div class="concerns">
+      <article class="concern">
+        <div class="concern-head"><h3>物理保真度缺少验证；回弹 &lt; 5%，而 Spring-Gaus 物体 &gt; 60%</h3><span class="pill warn">部分</span></div>
+        <ul>
+          <li>已定位原因：上游每个子步施加网格速度阻尼，释放后 0.3 s 内静止（P4a）。这是配置问题，不是材料范围问题。</li>
+          <li>低阻尼配置已验证能恢复动态，并提升可学性（P4d +6.3%）。</li>
+          <li>B1 正在运行：低阻尼 + 重力，在 10 个真实形状的 3DGS 物体上比较 6 种加载方式，选出正式 V2 的动作集。</li>
+          <li>还缺：与真实回弹或测力数据的定量标定。</li>
+        </ul>
+        <span class="src">P4a · P4d · B1（进行中）</span>
+      </article>
+      <article class="concern">
+        <div class="concern-head"><h3>只去掉“场 → 回归头”反馈的消融</h3><span class="pill good">已有证据</span></div>
+        <ul>
+          <li>C（保留场监督、无反馈）对比 D（加反馈），同一骨干重新训练：DINOv3 改善 2.9%，V-JEPA 改善 0.5%，3 个 seed 区间全部跨 0。</li>
+          <li>验证集上反馈在 4 组实验中都没有收益。回复中如实写成“反馈收益在统计上不可分辨”。</li>
+        </ul>
+        <span class="src">P2 配对比较 · <code>docs/NEXT_PLAN_2026-11-10_ZH.md</code></span>
+      </article>
+      <article class="concern">
+        <div class="concern-head"><h3>缺少独立基线：PIXIE、OmniPhysGS、VoMP、AutoPhyX</h3><span class="pill warn">部分</span></div>
+        <ul>
+          <li>标签与外观独立采样，只看外观的方法在本基准上按构造只能到常数水平；首帧静态对照（0.815 ≈ 常数 0.835）量化了这一点。</li>
+          <li>已有两个独立骨干（DINOv3、V-JEPA 2）和零样本 VLM。</li>
+          <li>还缺：直接运行上述已发表方法。</li>
+        </ul>
+        <span class="src">P1 · P2</span>
+      </article>
+      <article class="concern">
+        <div class="concern-head"><h3>真实世界的定性和定量评估</h3><span class="pill bad">未解决</span></div>
+        <ul><li>当前还没有真实视频上的参数预测结果。</li></ul>
+      </article>
+      <article class="concern">
+        <div class="concern-head"><h3>各阶段的训练配置数值</h3><span class="pill warn">部分</span></div>
+        <ul><li>所有 run 的完整配置在 <code>configs/</code>（帧采样、损失权重、优化器、轮数）。还需整理成附录表格。</li></ul>
+      </article>
+    </div>
+  </div>
+
+  <div class="reviewer" id="Nxg5">
+    <div class="reviewer-head"><h3>Reviewer Nxg5</h3><span class="muted">Rating 2 · Confidence 3</span></div>
+    <div class="concerns">
+      <article class="concern">
+        <div class="concern-head"><h3>物理一致性损失（附录 L.5，式 19–21）的假设与单独效果</h3><span class="pill bad">未解决</span></div>
+        <ul>
+          <li>还没有单独去掉这几项正则的实验，也没有按加载方式和运动阶段（释放、回弹）拆分。</li>
+          <li>可做：在 V-JEPA C 上去掉式 19–21 重新训练，按动作和时间段报告。</li>
+        </ul>
+      </article>
+      <article class="concern">
+        <div class="concern-head"><h3>VLM 基线的实现细节，是否零样本</h3><span class="pill good">已有证据</span></div>
+        <ul>
+          <li>Qwen3-VL-8B，零样本、未微调，3 个视角 × 8 帧。协议见 <code>runs/r5_vlm_qwen3vl8b_val/protocol.json</code>。</li>
+          <li>验证集 399/399 可解析，但 96% 判成 jelly，族准确率 0.30；test MAE 3.105，远差于常数 0.835。</li>
+        </ul>
+        <span class="src"><code>docs/NEXT_PLAN_2026-11-10_ZH.md</code> · P2</span>
+      </article>
+      <article class="concern">
+        <div class="concern-head"><h3>场桥接机制的独立贡献没有被隔离</h3><span class="pill good">已有证据</span></div>
+        <ul>
+          <li>与 AKYF 的问题相同：保留场预测和场监督、只去掉反馈后重新训练，差异在 3 个 seed 上都不显著。</li>
+          <li>场辅助监督有小幅且方向一致的收益（B → C：1.8–2.6%），但单次实验区间跨 0。</li>
+        </ul>
+        <span class="src">P2 配对比较</span>
+      </article>
+      <article class="concern">
+        <div class="concern-head"><h3>核心实验的呈现过于压缩</h3><span class="pill warn">部分</span></div>
+        <ul><li>写作问题：把场预测精度、推理时屏蔽场、组件消融拆成三个问题分别给出目的、对照和结论。</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="negative">
+  <span class="eyebrow">不再继续的方向</span>
+  <h2>试过但没有收益</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>尝试</th><th>结果</th><th>来源</th></tr></thead>
+      <tbody>
+        <tr><td>微调 V-JEPA 末 4 个 block（lr 3e-5）</td><td>val 0.570 ± 0.008 对比冻结 0.576，改善 1.0%，3/3 区间跨 0，未达 2% 门槛，没有做 test</td><td>P3</td></tr>
+        <tr><td>更大的冻结骨干 ViT-g（1B）</td><td>C 组 0.618 对比 ViT-L 0.581，反而更差</td><td>P1c</td></tr>
+        <tr><td>DINOv3 用 64 帧代替 16 帧</td><td>无差别</td><td>R3</td></tr>
+        <tr><td>“轻压后松开”（tap）激励</td><td>在真实形状物体上，手工频率特征与 E/ρ 的族内 |Spearman| ≤ 0.35，方向不一致</td><td>P4d</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="next">
+  <span class="eyebrow">截止前的工作</span>
+  <h2>接下来</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>编号</th><th>内容</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td>B1</td><td>低阻尼 + 重力，6 种加载方式 × 10 个 3DGS 物体 × 4 档 E/ρ，共 240 次仿真；族内 |Spearman| ≥ 0.5 的加载方式进入 B2</td><td><span class="pill warn">运行中</span></td></tr>
+        <tr><td>B2</td><td>正式 V2 数据，约 4000 个样本（与 V1 同规模），ρ 独立采样，V-JEPA C × 3 seeds，与 V1 对比族内相关</td><td><span class="pill bad">等待 B1</span></td></tr>
+        <tr><td>N1</td><td>去掉物理一致性损失（式 19–21）的消融</td><td><span class="pill bad">未排期</span></td></tr>
+        <tr><td>B3</td><td>多引擎（libuipc）接入，写入局限与未来工作</td><td><span class="pill bad">回复之后</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <span>数字均取自 A800-2 上 <code>rsi_real_test/docs/</code> 的结果文件；test 只评估过一次（P2），其余为验证集。</span>
+  <span>本页源文件 <code>docs/rebuttal/index.html</code>。</span>
+</footer>
+
+</main>
+</body>
+</html>
